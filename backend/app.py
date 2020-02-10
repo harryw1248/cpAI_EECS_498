@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for, request
 import pyrebase
 
 config = {
@@ -12,16 +12,35 @@ config = {
   "measurementId": "G-C71QZDCC4E"
 }
 
+
 app = Flask(__name__)
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 db.child("names").push({"name": "Vinny"})
 
+#@app.route('/')
+#def create_new_user():
+#  print("hello")
+
+#@app.route('/hello')
 @app.route('/')
-def hello_world():
-    return 'Thanks, !'
+def home():
+    return 'Welcome to CPai!'
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
 
+@app.route('/user')
+def create_new_user():
+    print("Hello")
+    return "hello"
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
