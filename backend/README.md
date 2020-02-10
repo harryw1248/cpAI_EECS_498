@@ -21,7 +21,7 @@ However, as a temporary solution, you can simply zip the code + config files and
 
 ### Prepare a zip to upload to Elastic Beanstalk
 
-_It's really important that run `zip.sh` wihin your python environment so that requirements.txt (which lists required Python packages/dependencies) is properly generated_
+_It's really important that you run `zip.sh` wihin your python environment so that requirements.txt (which lists required Python packages/dependencies) is properly generated_
 
 ```sh
 > source env/bin/activate
