@@ -19,7 +19,7 @@
 
 ---
 
-**The best way to deploy a Flask app is using Elastic Beanstalk CLI**
+**The best way to deploy a Flask app is by using Elastic Beanstalk CLI**
 
 However, as a temporary solution, you can simply zip the code + config files and upload the zip file directly to AWS.
 
