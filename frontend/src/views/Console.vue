@@ -5,7 +5,7 @@
             <!--<Converse class="w-9/12 mt-32" />-->
         </div>
         <div class="col-span-3">
-            <Form1040 class="border border-blue-600 mt-8 h-64 bg-blue-100 mx-2"> </Form1040>
+            <Form1040 class="border border-blue-600 mt-8 h-64 bg-blue-100 mx-2" style="overflow-y: auto; position: relative;"> </Form1040>
         </div>
     </div>
 </template>
@@ -22,5 +22,6 @@ export default {
     //Converse,
     Form1040
   }
+
 };
 </script>
