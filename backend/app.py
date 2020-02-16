@@ -53,12 +53,13 @@ def star1t():
     pprint.pprint(content)
     return jsonify(content)
 
+def standardize_token(token):
+    new_token = token.lower()
+    return new_token.replace(" ", "_")
+
 
 @app.route('/', methods=['POST'])
 def start():
-    # maintain last city mentioned in last_city
-    global last_city
-
     # get payload
     content = request.json
 
@@ -69,8 +70,13 @@ def start():
 
     # map it (in this case, the slot is mapped to the token)
     extract = content['slots']['_TERMINOLOGY_']['values'][0]['tokens']
-    db.child("TERMINOLOGY").push({extract: "money you can get refunded if you are in a lower income bracket and/or have kids"})
-    content['slots']['_TERMINOLOGY_']['values'][0]['value'] = "money you can get refunded if you are in a lower income bracket and/or have kids"
+    extract = standardize_token(extract)
+    firebase_data = db.child("TERMINOLOGY").get().val()
+
+    if extract not in firebase_data:
+        content['slots']['_TERMINOLOGY_']['values'][0]['value'] = "Sorry, I don't think that's a relevant tax term"
+    else:
+        content['slots']['_TERMINOLOGY_']['values'][0]['value'] = firebase_data[extract]
 
     return jsonify(content)
 
