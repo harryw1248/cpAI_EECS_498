@@ -1,0 +1,41 @@
+{
+    "responseId": "9cd638c7-17e0-4abc-b2f6-2f707e64dd61-2e39b744",
+    "queryResult": {
+      "queryText": "What is earned income credit",
+      "parameters": {
+        "terminology": "earned income credit"
+      },
+      "allRequiredParamsPresent": true,
+      "fulfillmentText": "Great question, earned income credit is a refundable tax credit for low to moderate income working individuals and couples, particularly those with children!",
+      "fulfillmentMessages": [
+        {
+          "text": {
+            "text": [
+              "Great question, earned income credit is a refundable tax credit for low to moderate income working individuals and couples, particularly those with children!"
+            ]
+          }
+        }
+      ],
+      "outputContexts": [
+        {
+          "name": "projects/cpai-dweaie/agent/sessions/eae7b53d-336e-3407-230a-9ad5f089f11a/contexts/__system_counters__",
+          "parameters": {
+            "no-input": 0,
+            "no-match": 0,
+            "terminology": "earned income credit",
+            "terminology.original": "earned income credit"
+          }
+        }
+      ],
+      "intent": {
+        "name": "projects/cpai-dweaie/agent/intents/84ba8dad-7870-43d5-8758-f86d3e7385d1",
+        "displayName": "explain_term"
+      },
+      "intentDetectionConfidence": 1,
+      "languageCode": "en"
+    },
+    "originalDetectIntentRequest": {
+      "payload": {}
+    },
+    "session": "projects/cpai-dweaie/agent/sessions/eae7b53d-336e-3407-230a-9ad5f089f11a"
+  }
