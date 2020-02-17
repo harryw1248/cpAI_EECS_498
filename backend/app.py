@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 import pyrebase
 import pprint
+import json
 
 config = {
   "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
@@ -39,16 +40,19 @@ def explain_term(content):
 
     # map it (in this case, the slot is mapped to the token)
     extract = content['queryResult']['parameters']['terminology']
-    extract = standardize_token(extract)
+
+    tokenized_extract = standardize_token(extract)
     firebase_data = db.child("TERMINOLOGY").get().val()
-    print(content['originalDetectIntentRequest']['payload'])
 
-    if extract not in firebase_data:
-        content['originalDetectIntentRequest']['payload'] = "Sorry, I don't think that's a relevant tax term"
+    with open('response.json') as f:
+        data = json.load(f)
+        
+    if tokenized_extract not in firebase_data:
+        data['fulfillment_text'] = "Sorry, I don't think " + extract + " is a relevant tax term"
     else:
-        content['originalDetectIntentRequest']['payload'] = firebase_data[extract]
+        data['fulfillment_text'] = extract + " is "  + firebase_data[tokenized_extract]
 
-    return jsonify(content)
+    return jsonify(data)
 
 def explain_instructions(content):
     return
