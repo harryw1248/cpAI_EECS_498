@@ -1,0 +1,26 @@
+{
+    "name": "client",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "koeul",
+    "license": "UNLICENSED",
+    "private": true,
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    },
+    "dependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/node": "^7.8.4",
+        "@babel/preset-env": "^7.8.4",
+        "@google-cloud/storage": "^4.3.1",
+        "dialogflow": "^1.2.0",
+        "dotenv": "^8.1.0",
+        "express": "^4.17.1",
+        "yargs": "^15.1.0"
+    },
+    "scripts": {
+        "build": "rm -rf build; babel src -d build",
+        "start": "nodemon --exec babel-node src/index.js",
+        "prod": "node build/index.js"
+    }
+}
