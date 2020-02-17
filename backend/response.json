@@ -1,0 +1,9 @@
+{
+ "fulfillment_text": "This is a text response",
+ "fulfillment_messages": null,
+ "source": "",
+ "payload": null,
+ "output_contexts": null,
+ "followup_event_input": null,
+ "session_entity_types": null
+}
