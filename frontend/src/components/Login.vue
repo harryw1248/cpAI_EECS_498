@@ -57,9 +57,10 @@
 
 <script>
 export default {
-    name: "Login",
-    methods: {
-        login(e) {
+  name: "Login",
+  methods: {
+    login(e) {
+      /*
             this.$store
                 .dispatch("login", {
                     username: e.target.elements.username.value,
@@ -68,7 +69,10 @@ export default {
                 .then(() => {
                     this.$router.push({ name: "Console" });
                 });
-        }
+                */
+      console.log(e);
+      this.$router.push({ name: "Console" });
     }
+  }
 };
 </script>

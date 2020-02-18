@@ -1,6 +1,9 @@
 import express from "express";
+import cors from "cors";
+
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,7 +31,7 @@ async function runQuery(projectId, query) {
         queryInput: {
             text: {
                 // The query to send to the dialogflow agent
-                text: "What is earned income credit?",
+                text: query,
                 // The language used by the client (en-US)
                 languageCode: "en-US"
             }
@@ -77,8 +80,14 @@ async function helloWorld(req, res) {
 app.get("/", helloWorld);
 
 async function query(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+
     await gCloudConnect();
-    const response = await runQuery("cpai-dweaie");
+    const response = await runQuery("cpai-dweaie", req.body.query);
     console.log(response);
     res.send(response);
 }
