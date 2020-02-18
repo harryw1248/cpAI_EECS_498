@@ -18,6 +18,8 @@ app = Flask(__name__)
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+
+
 class Dependent:
     def __init__(self):
         self.full_name = ""
@@ -82,13 +84,54 @@ class User:
         return None
 
 
-#user = User()
-#last_intent = ""
-#last_unfilled_field = ""
+user = User()
+last_intent = ""
+last_unfilled_field = ""
+filled_out  = {'given-name': '',
+                'last-name': '',
+                        'geo-city': '',
+                        'geo-state': '',
+                        'address': '',
+                        'zip-code': '',
+                        'social_security': '',
+                        # 'date': 'Tell me the date, bitch',
+                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
+                        'filing_status': ''
+                        }
+
+demo_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address', 'zip-code', 'social_security', 'filing_status']
+
+demo_hard_coded_responses = {'given-name': 'What is your given name?',
+                        'last-name': 'What is your last name?',
+                        'geo-city': 'What city do you live in?',
+                        'geo-state': 'What state you live in?',
+                        'address': 'What is your street address?',
+                        'zip-code': 'What is your zip code',
+                        'social_security': 'What is your SSN?',
+                        # 'date': 'Tell me the date, bitch',
+                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
+                        'filing_status': 'What is your filing status?'
+                        }
 
 def standardize_token(token):
     new_token = token.lower()
     return new_token.replace(" ", "_")
+
+
+def explain_term_yes(content):
+    with open('response.json') as f:
+        data = json.load(f)
+
+    response = ''
+
+    for key in demo_order:
+        if filled_out[key] == '':
+            response = demo_hard_coded_responses[key]
+            break
+
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on." +  response]}}]
+
+    return jsonify(data)
 
 def explain_term(content):
     # for print debugging
@@ -137,20 +180,26 @@ def third_party_and_sign(content):
 def demographics_fill_self(content):
     # for print debugging
     pprint.pprint(content)
-    extract = content['queryResult']['parameters']['given-name']
+    parameters = content['queryResult']['parameters']
 
-    tokenized_extract = standardize_token(extract)
-    firebase_data = db.child("USERS").get().val()
+
+    #tokenized_extract = standardize_token(extract)
+    #firebase_data = db.child("USERS").get().val()
+
+    response = None
+    for key in demo_order:
+        if parameters[key] == '':
+            response = demo_hard_coded_responses[key]
+            break
+        else:
+            global filled_out
+            filled_out[key] = parameters[key]
+
 
     with open('response.json') as f:
         data = json.load(f)
 
-    if tokenized_extract not in firebase_data:
-        db.child("USERS").push({"name":tokenized_extract})
-        #data['fulfillment_text'] = "Welcome to cpAI, " + extract + "!"
-    else:
-        a = 5
-        #data['fulfillment_text'] = "Welcome back, " + extract + "!"
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     #global last_intent
     #global user
@@ -198,8 +247,6 @@ def push_demographic_info_to_database(content):
     sample_user.field_values = dict()
 
     sample_user_json = sample_user.jsonify_user()
-
-
     users_ref.set(sample_user_json)
     return
 
@@ -209,14 +256,14 @@ def home():
         # get payload
         content = request.json
 
-        # for print debugging
-       # pprint.pprint(content)
         intent = content['queryResult']['intent']['displayName']
         print(intent)
         content = request.json
         
         if intent == 'explain_term':
             return explain_term(content)
+        elif intent == 'explain_term - yes':
+            return explain_term_yes(content)
         elif intent == 'explain_instructions':
             return explain_instructions(content)
         elif intent == 'deductions':
