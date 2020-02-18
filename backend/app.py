@@ -87,36 +87,61 @@ class User:
 user = User()
 last_intent = ""
 last_unfilled_field = ""
-filled_out  = {'given-name': '',
-                'last-name': '',
-                        'geo-city': '',
-                        'geo-state': '',
-                        'address': '',
-                        'zip-code': '',
-                        'social_security': '',
-                        # 'date': 'Tell me the date, bitch',
-                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
-                        'filing_status': ''
-                        }
+demographics_slots_to_fill = ['given-name','last-name','location','social_security', 'filing_status']
+    
 
-demo_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address', 'zip-code', 'social_security', 'filing_status']
+demographic_user_info  = {'given-name': '',
+                'last-name': '',
+                'location': {
+                    'admin-area': '',
+                    'business-name': '',
+                    'city': '',
+                    'country': '',
+                    'island': '',
+                    'shortcut': '',
+                    'street-address': '',
+                    'subadmin-area': '',
+                    'zip-code': ''
+                },
+                'social_security': '',
+                'filing_status': ''
+            }
+
+ignore_location_info = {'business-name', 'island', 'shortcut', 'subadmin-area', 'country'}
 
 demo_hard_coded_responses = {'given-name': 'What is your given name?',
                         'last-name': 'What is your last name?',
-                        'geo-city': 'What city do you live in?',
-                        'geo-state': 'What state you live in?',
-                        'address': 'What is your street address?',
-                        'zip-code': 'What is your zip code',
+                        'location': 'So, where do you currently stay?',
                         'social_security': 'What is your SSN?',
-                        # 'date': 'Tell me the date, bitch',
-                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
-                        'filing_status': 'What is your filing status?'
+                        'filing_status': 'What is your filing status?',
+                        'admin-area': 'What state do you live in?',
+                        'city': 'What city do you live in?',
+                        'street-address': 'Whats your street address?',
+                        'zip-code': 'What is your zip-code?'
                         }
+
+def check_status(slot):
+    global demographic_user_info
+    global ignore_location_info
+
+    if slot not in demographic_user_info:
+        return "ERROR"
+    else:
+        if slot == 'location':
+            for key, value in demographic_user_info[slot].items():
+                if value == '' and key not in ignore_location_info:
+                    return key
+
+            return True
+        else:
+            if demographic_user_info[slot] == '':
+                return slot
+            else:
+                return True
 
 def standardize_token(token):
     new_token = token.lower()
     return new_token.replace(" ", "_")
-
 
 def explain_term_yes(content):
     with open('response.json') as f:
@@ -124,9 +149,10 @@ def explain_term_yes(content):
 
     response = ''
 
-    for key in demo_order:
-        if filled_out[key] == '':
-            response = demo_hard_coded_responses[key]
+    for slot in demographics_slots_to_fill:
+        status = check_status(slot)
+        if status != True:
+            response = demo_hard_coded_responses[status]
             break
 
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
@@ -135,7 +161,7 @@ def explain_term_yes(content):
 
 def explain_term(content):
     # for print debugging
-    pprint.pprint(content)
+    # pprint.pprint(content)
     extract = content['queryResult']['parameters']['terminology']
 
     tokenized_extract = standardize_token(extract)
@@ -179,23 +205,38 @@ def third_party_and_sign(content):
 
 def demographics_fill_self(content):
     # for print debugging
-    pprint.pprint(content)
+    # pprint.pprint(content)
     parameters = content['queryResult']['parameters']
+    pprint.pprint(parameters)
 
 
     #tokenized_extract = standardize_token(extract)
     #firebase_data = db.child("USERS").get().val()
 
     response = None
-    global filled_out
+    global demographic_user_info
+    global demographics_slots_to_fill
 
-    pprint.pprint(filled_out)
+    pprint.pprint(demographic_user_info)
 
-    for key in demo_order:
-        if parameters[key] != '':
-            filled_out[key] = parameters[key]
-        elif parameters[key] == '' and filled_out[key] == '':
-            response = demo_hard_coded_responses[key]
+    #first pass: update params on local user
+    for slot, value in demographic_user_info.items():
+        if slot == 'location':
+            for location_key, location_value in demographic_user_info['location'].items():
+                if location_value == '' and parameters[slot] != '' and parameters[slot][location_key] != '':
+                    demographic_user_info['location'][location_key] = parameters[slot][location_key]
+        else:
+            if value == '' and slot in parameters and parameters[slot] != '':
+                demographic_user_info[slot] = parameters[slot]
+
+
+    pprint.pprint(demographic_user_info)
+
+    #second pass: query next thing needed
+    for slot in demographics_slots_to_fill:
+        status = check_status(slot)
+        if status != True:
+            response = demo_hard_coded_responses[status]
             break
 
 
@@ -263,12 +304,6 @@ def push_demographic_info_to_database(content):
     sample_user_json = sample_user.jsonify_user()
     users_ref.set(sample_user_json)
     return
-
-def clear_map(self):
-    global filled_out
-
-    for key, value in filled_out.items():
-        value = ''
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
