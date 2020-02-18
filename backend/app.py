@@ -18,7 +18,6 @@ app = Flask(__name__)
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
-
 class Dependent:
     def __init__(self):
         self.full_name = ""
@@ -40,16 +39,16 @@ class User:
         self.spouse_last_name = ""
         self.spouse_SSN = ""
         self.home_address = ""
-        self.PO = False
-        self.apt_num = ""
-        self.PES = [False, False]
-        self.is_foreign_address= False
-        self.foreign_country_info= ["", "", ""]
-        self.more_than_four_dependents = False
-        self.standard_deduction_checkbox = []
-        self.user_age_blind = [False, False]
-        self.spouse_age_blind = [False, False]
-        self.list_of_dependents = []
+        self.PO = [[False], False]
+        self.apt_num = ["", False]
+        self.PES = [[False, False], False]
+        self.is_foreign_address= [[False, False]]
+        self.foreign_country_info= [["", "", ""], False]
+        self.more_than_four_dependents = [[False], False]
+        self.standard_deduction_checkbox = [[], False]
+        self.user_age_blind = [[False, False], False]
+        self.spouse_age_blind = [[False, False], False]
+        self.list_of_dependents = [[], False]
         self.field_values = dict()
             
     def jsonify_user(self):
@@ -79,23 +78,21 @@ class User:
         
         return json.dumps(user_dict)
 
-
-@app.route('/new_user')
-def create_new_user():
-    content = request.json
-
-    # for print debugging
-    pprint.pprint(content)
+    def find_last_unfilled_field(self):
+        return None
 
 
-    print("Hello")
-    return "hello"
+#user = User()
+#last_intent = ""
+#last_unfilled_field = ""
 
 def standardize_token(token):
     new_token = token.lower()
     return new_token.replace(" ", "_")
 
 def explain_term(content):
+    # for print debugging
+    pprint.pprint(content)
     extract = content['queryResult']['parameters']['terminology']
 
     tokenized_extract = standardize_token(extract)
@@ -106,12 +103,20 @@ def explain_term(content):
 
     if tokenized_extract not in firebase_data:
         data['fulfillment_messages'] = \
-            [{"text": {"text": ["Sorry, I don't think " + extract + " is a relevant tax term. Do you have another question?"]}}]
+            [{"text": {"text": ["Sorry, I don't think " + extract + " is a relevant tax term. Do you want to go back to filling out the form?"]}}]
 
     else:
-        response = "Great question, " + extract + " is "  + firebase_data[tokenized_extract] + ". Do you have another question?"
+        response = "Great question, " + extract + " is "  + firebase_data[tokenized_extract] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
+    #global last_intent
+    #global user
+    #global last_unfilled_field
+
+    #data[]   #set followup event
+
+
+    #last_intent = 'explain_term'
     return jsonify(data)
 
 def explain_instructions(content):
@@ -129,10 +134,10 @@ def refund_and_owe(content):
 def third_party_and_sign(content):
     return
 
-def demographics_fill(content):
+def demographics_fill_self(content):
     # for print debugging
     pprint.pprint(content)
-    extract = content['queryResult']['parameters']['field']
+    extract = content['queryResult']['parameters']['given-name']
 
     tokenized_extract = standardize_token(extract)
     firebase_data = db.child("USERS").get().val()
@@ -142,16 +147,22 @@ def demographics_fill(content):
 
     if tokenized_extract not in firebase_data:
         db.child("USERS").push({"name":tokenized_extract})
-        data['fulfillment_text'] = "Welcome to cpAI, " + extract + "!"
+        #data['fulfillment_text'] = "Welcome to cpAI, " + extract + "!"
     else:
-        data['fulfillment_text'] = "Welcome back, " + extract + "!"
+        a = 5
+        #data['fulfillment_text'] = "Welcome back, " + extract + "!"
 
+    #global last_intent
+    #global user
+
+    #data[]  # set followup event
+    #last_intent = 'demographics_fill.self'
     return jsonify(data)
 
 
 def welcome(content):
-    current_user = User()
     return "Welcome to cpAI!"
+
 
 def fallback(content):
     return
@@ -216,8 +227,8 @@ def home():
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':
             third_party_and_sign(content)
-        elif intent == 'demographics_fill':
-            return demographics_fill(content)
+        elif intent == 'demographics_fill.self':
+            return demographics_fill_self(content)
         elif intent == 'Default Welcome Intent':
             return welcome(content)
         else:
@@ -225,6 +236,7 @@ def home():
 
     else:
         return "Welcome to CPai!"
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -238,5 +250,4 @@ def login():
 
 
 if __name__ == "__main__":
-    user = User()
     app.run(port=5000, debug=True)

@@ -1,6 +1,6 @@
 {
  "fulfillment_messages": null,
- "fulfillment_text": "This is a text response",
+ "fulfillment_text": "",
  "source": "",
  "payload": null,
  "output_contexts": null,
