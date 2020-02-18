@@ -18,6 +18,41 @@ app = Flask(__name__)
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+
+class Dependent:
+    def __init__(self):
+        self.full_name = ""
+        self.SSN = ""
+        self.relationship_to_filer = ""
+        self.child_tax_credit = False
+        self.credit_for_other_dependents = False
+
+class User:
+    def __init__(self):
+        self.first_name_last_initial = ""
+        self.SSN = ""
+        self.filing_status = -1
+        self.mfs_spouse = ""
+        self.HOH_QW_child = ""
+        self.last_name = ""
+        self.spouse_first_name_middle_initial = ""
+        self.first_name_last_initial = ""
+        self.spouse_last_name = ""
+        self.spouse_SSN = ""
+        self.home_address = ""
+        self.PO = False
+        self.apt_num = ""
+        self.PES = [False, False]
+        self.is_foreign_address= False
+        self.foreign_country_info= ["", "", ""]
+        self.more_than_four_dependents = False
+        self.standard_deduction_checkbox = []
+        self.user_age_blind = [False, False]
+        self.spouse_age_blind = [False, False]
+        self.list_of_dependents = []
+        self.field_values = dict()
+
+
 @app.route('/new_user')
 def create_new_user():
     content = request.json
@@ -34,11 +69,17 @@ def standardize_token(token):
     return new_token.replace(" ", "_")
 
 def explain_term(content):
-   
+    with open('response.json') as f:
+        data = json.load(f)
+
+    data['fulfillment_text'] = ""
+
+    data['fulfillment_messages'] = [{"text": ["Earned Income is." ] }]
+
+
+    return jsonify(data)
     # for print debugging
     pprint.pprint(content)
-
-    # map it (in this case, the slot is mapped to the token)
     extract = content['queryResult']['parameters']['terminology']
 
     tokenized_extract = standardize_token(extract)
@@ -46,7 +87,7 @@ def explain_term(content):
 
     with open('response.json') as f:
         data = json.load(f)
-        
+
     if tokenized_extract not in firebase_data:
         data['fulfillment_text'] = "Sorry, I don't think " + extract + " is a relevant tax term"
     else:
@@ -70,16 +111,35 @@ def third_party_and_sign(content):
     return
 
 def demographics_fill(content):
-    return
+    # for print debugging
+    pprint.pprint(content)
+    extract = content['queryResult']['parameters']['field']
+
+    tokenized_extract = standardize_token(extract)
+    firebase_data = db.child("USERS").get().val()
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    if tokenized_extract not in firebase_data:
+        db.child("USERS").push({"name":tokenized_extract})
+        data['fulfillment_text'] = "Welcome to cpAI, " + extract + "!"
+    else:
+        data['fulfillment_text'] = "Welcome back, " + extract + "!"
+
+    return jsonify(data)
+
 
 def welcome(content):
-    return
+    current_user = User()
+    return "Welcome to cpAI!"
 
 def fallback(content):
     return
 
+def send_back_demographic_info():
+    return
 
-    
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -125,7 +185,6 @@ def login():
     return render_template('login.html', error=error)
 
 
-
-
 if __name__ == "__main__":
+    user = User()
     app.run(port=5000, debug=True)
