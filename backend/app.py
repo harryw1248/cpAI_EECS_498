@@ -166,7 +166,7 @@ def send_back_demographic_info(content):
 
 
     #push to database
-    users_ref = users_ref.child('USERS')
+    users_ref = db.child('USERS')
     sample_user = User()
     sample_user.first_name = ""
     sample_user.last_name = ""
