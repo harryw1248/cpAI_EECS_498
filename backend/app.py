@@ -129,7 +129,7 @@ def explain_term_yes(content):
             response = demo_hard_coded_responses[key]
             break
 
-    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on." +  response]}}]
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
 
     return jsonify(data)
 
@@ -187,13 +187,17 @@ def demographics_fill_self(content):
     #firebase_data = db.child("USERS").get().val()
 
     response = None
+    global filled_out
+
+    pprint.pprint(filled_out)
+
     for key in demo_order:
-        if parameters[key] == '':
+        if parameters[key] != '':
+            filled_out[key] = parameters[key]
+        elif parameters[key] == '' and filled_out[key] == '':
             response = demo_hard_coded_responses[key]
             break
-        else:
-            global filled_out
-            filled_out[key] = parameters[key]
+
 
 
     with open('response.json') as f:
@@ -210,7 +214,17 @@ def demographics_fill_self(content):
 
 
 def welcome(content):
-    return "Welcome to cpAI!"
+    with open('response.json') as f:
+        data = json.load(f)
+
+    data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
+
+    #global last_intent
+    #global user
+
+    #data[]  # set followup event
+    #last_intent = 'demographics_fill.self'
+    return jsonify(data)
 
 
 def fallback(content):
@@ -249,6 +263,12 @@ def push_demographic_info_to_database(content):
     sample_user_json = sample_user.jsonify_user()
     users_ref.set(sample_user_json)
     return
+
+def clear_map(self):
+    global filled_out
+
+    for key, value in filled_out.items():
+        value = ''
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
