@@ -69,17 +69,6 @@ def standardize_token(token):
     return new_token.replace(" ", "_")
 
 def explain_term(content):
-    with open('response.json') as f:
-        data = json.load(f)
-
-    data['fulfillment_text'] = ""
-
-    data['fulfillment_messages'] = [{"text": ["Earned Income is." ] }]
-
-
-    return jsonify(data)
-    # for print debugging
-    pprint.pprint(content)
     extract = content['queryResult']['parameters']['terminology']
 
     tokenized_extract = standardize_token(extract)
@@ -89,9 +78,12 @@ def explain_term(content):
         data = json.load(f)
 
     if tokenized_extract not in firebase_data:
-        data['fulfillment_text'] = "Sorry, I don't think " + extract + " is a relevant tax term"
+        data['fulfillment_messages'] = \
+            [{"text": {"text": ["Sorry, I don't think " + extract + " is a relevant tax term. Do you have another question?"]}}]
+
     else:
-        data['fulfillment_text'] = extract + " is "  + firebase_data[tokenized_extract]
+        response = "Great question, " + extract + " is "  + firebase_data[tokenized_extract] + ". Do you have another question?"
+        data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     return jsonify(data)
 
