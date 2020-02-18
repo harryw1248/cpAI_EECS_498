@@ -156,14 +156,8 @@ def welcome(content):
 def fallback(content):
     return
 
-def send_back_demographic_info(content):
-        # for print debugging
-    pprint.pprint(content)
-
-    extract = content
-    
+def push_demographic_info_to_database(content):
     #change User object based on content
-
 
     #push to database
     users_ref = db.child('USERS')
