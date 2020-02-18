@@ -29,14 +29,14 @@ class Dependent:
 
 class User:
     def __init__(self):
-        self.first_name_last_initial = ""
+        self.first_name_middle_initial = ""
+        self.last_name = ""
         self.SSN = ""
         self.filing_status = -1
         self.mfs_spouse = ""
         self.HOH_QW_child = ""
         self.last_name = ""
         self.spouse_first_name_middle_initial = ""
-        self.first_name_last_initial = ""
         self.spouse_last_name = ""
         self.spouse_SSN = ""
         self.home_address = ""
@@ -51,6 +51,33 @@ class User:
         self.spouse_age_blind = [False, False]
         self.list_of_dependents = []
         self.field_values = dict()
+            
+    def jsonify_user(self):
+        user_dict = {}
+        user_dict['first_name_middle_initial'] = self.first_name_middle_initial
+        user_dict['last_name'] = self.last_name
+        user_dict['SSN'] = self.SSN
+        user_dict['filing_status'] = self.filing_status
+        user_dict['mfs_spouse'] = self.mfs_spouse
+        user_dict['HOH_QW_child'] = self.HOH_QW_child
+        user_dict['last_name'] = self.last_name
+        user_dict['spouse_first_name_middle_initial'] = self.spouse_first_name_middle_initial
+        user_dict['spouse_last_name'] = self.spouse_last_name
+        user_dict['spouse_SSN'] = self.spouse_SSN
+        user_dict['home_address'] = self.home_address
+        user_dict['PO'] = self.PO
+        user_dict['apt_num'] = self.apt_num
+        user_dict['PES'] = self.PES
+        user_dict['is_foreign_address']= self.is_foreign_address
+        user_dict['foreign_country_info']= self.foreign_country_info
+        user_dict['more_than_four_dependents'] = self.more_than_four_dependents
+        user_dict['standard_deduction_checkbox'] = self.standard_deduction_checkbox
+        user_dict['user_age_blind'] = self.user_age_blind
+        user_dict['spouse_age_blind'] = self.spouse_age_blind
+        user_dict['list_of_dependents'] = self.list_of_dependents
+        user_dict['field_values'] = self.field_values
+        
+        return json.dumps(user_dict)
 
 
 @app.route('/new_user')
@@ -129,7 +156,46 @@ def welcome(content):
 def fallback(content):
     return
 
-def send_back_demographic_info():
+def send_back_demographic_info(content):
+        # for print debugging
+    pprint.pprint(content)
+
+    extract = content
+    
+    #change User object based on content
+
+
+    #push to database
+    users_ref = users_ref.child('USERS')
+    sample_user = User()
+    sample_user.first_name = ""
+    sample_user.last_name = ""
+    sample_user.SSN = ""
+    sample_user.filing_status = -1
+    sample_user.mfs_spouse = ""
+    sample_user.HOH_QW_child = ""
+    sample_user.last_name = ""
+    sample_user.spouse_first_name_middle_initial = ""
+    sample_user.spouse_last_name = ""
+    sample_user.spouse_last_name = ""
+    sample_user.spouse_SSN = ""
+    sample_user.home_address = ""
+    sample_user.PO = False
+    sample_user.apt_num = ""
+    sample_user.PES = [False, False]
+    sample_user.is_foreign_address= False
+    sample_user.foreign_country_info= ["", "", ""]
+    sample_user.more_than_four_dependents = False
+    sample_user.standard_deduction_checkbox = []
+    sample_user.user_age_blind = [False, False]
+    sample_user.spouse_age_blind = [False, False]
+    sample_user.list_of_dependents = []
+    sample_user.field_values = dict()
+
+    sample_user_json = sample_user.jsonify_user()
+
+
+    users_ref.set(sample_user_json)
     return
 
 @app.route('/', methods=['GET', 'POST'])
