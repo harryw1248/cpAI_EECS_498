@@ -87,7 +87,19 @@ class User:
 user = User()
 last_intent = ""
 last_unfilled_field = ""
-demographics_slots_to_fill = ['given-name','last-name','location','social_security', 'filing_status']
+demographics_slots_to_fill = [
+    'given-name',
+    'last-name',
+    'location',
+    'social_security',
+    'filing_status',
+    'dual_status_alien',
+    'blind']
+
+bool_statuses = [
+    'dual_status_alien',
+    'blind'
+]
     
 
 demographic_user_info  = {'given-name': '',
@@ -104,7 +116,9 @@ demographic_user_info  = {'given-name': '',
                     'zip-code': ''
                 },
                 'social_security': '',
-                'filing_status': ''
+                'filing_status': '',
+                'blind': '',
+                'dual_status_alien': '',
             }
 
 ignore_location_info = {'business-name', 'island', 'shortcut', 'subadmin-area', 'country'}
@@ -114,11 +128,27 @@ demo_hard_coded_responses = {'given-name': 'What is your given name?',
                         'location': 'So, where do you currently stay?',
                         'social_security': 'What is your SSN?',
                         'filing_status': 'What is your filing status?',
-                        'admin-area': 'What state do you live in?',
-                        'city': 'What city do you live in?',
+                        'admin-area': 'Can I have your city, state, and zip code?',
+                        'city': 'Can I have your city, state, and zip code?',
                         'street-address': 'Whats your street address?',
-                        'zip-code': 'What is your zip-code?'
+                        'zip-code': 'Can I have your city, state, and zip code?',
+                        'dual_status_alien': "Are you a dual-status alien?",
+                        'blind': "Are you blind?"
                         }
+
+slot_to_output_contexts = {
+    'given-name': 'prompt_name',
+    'last-name': 'prompt_name',
+    'location': 'prompt_address',
+    'admin-area': 'prompt_address',
+    'city': 'prompt_address',
+    'street-address': 'prompt_address',
+    'zip-code': 'prompt_address',
+    'social_security': 'prompt_social_security',
+    'filing_status': 'prompt_filing_status',
+    'blind': 'prompt_blind',
+    'dual_status_alien': "prompt_dual_status_alien"
+}
 
 def check_status(slot):
     global demographic_user_info
@@ -144,6 +174,9 @@ def standardize_token(token):
     return new_token.replace(" ", "_")
 
 def explain_term_yes(content):
+    global last_unfilled_field
+    session = content['session']
+
     with open('response.json') as f:
         data = json.load(f)
 
@@ -155,7 +188,9 @@ def explain_term_yes(content):
             response = demo_hard_coded_responses[status]
             break
 
+    output_context = generate_output_context(last_unfilled_field, 1, session)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+    data['output_contexts'] = output_context
 
     return jsonify(data)
 
@@ -205,10 +240,14 @@ def third_party_and_sign(content):
 
 def demographics_fill_self(content):
     # for print debugging
-    # pprint.pprint(content)
+    pprint.pprint(content)
     parameters = content['queryResult']['parameters']
     pprint.pprint(parameters)
 
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    intent = content['queryResult']['intent']['displayName']
 
     #tokenized_extract = standardize_token(extract)
     #firebase_data = db.child("USERS").get().val()
@@ -216,35 +255,57 @@ def demographics_fill_self(content):
     response = None
     global demographic_user_info
     global demographics_slots_to_fill
+    global last_unfilled_field
 
-    pprint.pprint(demographic_user_info)
+    # pprint.pprint(demographic_user_info)
 
-    #first pass: update params on local user
+    # First pass: update params on local user
     for slot, value in demographic_user_info.items():
-        if slot == 'location':
-            for location_key, location_value in demographic_user_info['location'].items():
-                if location_value == '' and parameters[slot] != '' and parameters[slot][location_key] != '':
-                    demographic_user_info['location'][location_key] = parameters[slot][location_key]
+        if 'location' in parameters and slot == 'location':
+            handle_location_parameter(parameters, slot, value)
+        # if 'given-name' in parameters and slot == 'given-name':
+        #     pass
+        # if 'last-name' in parameters and slot == 'last-name':
+        #     pass
+        # if 'social_security' in parameters and slot == 'social_security':
+        #     pass
+        # if 'filing_status' in parameters and slot == 'filing_status':
+        #     pass
         else:
             if value == '' and slot in parameters and parameters[slot] != '':
                 demographic_user_info[slot] = parameters[slot]
 
+    # Check the yes/no answer slots
+    global bool_statuses
+    for status in bool_statuses:
+        if status in intent:
+            demographic_user_info[status] = True if 'yes' in intent else False
 
-    pprint.pprint(demographic_user_info)
+
+    # pprint.pprint(demographic_user_info)
 
     #second pass: query next thing needed
+    next_query = ''
     for slot in demographics_slots_to_fill:
         status = check_status(slot)
         if status != True:
             response = demo_hard_coded_responses[status]
+            next_query = slot
             break
 
+    last_unfilled_field = next_query
 
+    # Generate the appropriate output context for the next query
+    output_context = None
+    if next_query != '':
+        output_context = generate_output_context(next_query, 1, session)
 
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = output_context
+    
 
     #global last_intent
     #global user
@@ -252,6 +313,28 @@ def demographics_fill_self(content):
     #data[]  # set followup event
     #last_intent = 'demographics_fill.self'
     return jsonify(data)
+
+
+def generate_output_context(slot, lifespan, session):
+    global slot_to_output_contexts
+    context_identifier = session
+    context_identifier = context_identifier + "/contexts/" + slot_to_output_contexts[slot]
+    context = [{
+        "name": context_identifier,
+        "lifespan_count": lifespan
+    }]
+    return context
+
+
+def handle_location_parameter(parameters, slot, value):
+    global demographic_user_info
+    global demographics_slots_to_fill
+
+    for location_key, location_value in demographic_user_info['location'].items():
+        # There may be multiple location parameters per utterance
+        for location_object in parameters[slot]:
+            if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
+                demographic_user_info['location'][location_key] = location_object[location_key]
 
 
 def welcome(content):
@@ -329,7 +412,7 @@ def home():
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':
             third_party_and_sign(content)
-        elif intent == 'demographics_fill.self':
+        elif intent.startswith('demographics_fill.self'):
             return demographics_fill_self(content)
         elif intent == 'Default Welcome Intent':
             return welcome(content)
