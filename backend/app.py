@@ -2,116 +2,163 @@ from flask import Flask, render_template, redirect, url_for, request, jsonify
 import pyrebase
 import pprint
 import json
+import copy
 
 config = {
-  "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
-  "authDomain": "cpai-bf71c.firebaseapp.com",
-  "databaseURL": "https://cpai-bf71c.firebaseio.com",
-  "projectId": "cpai-bf71c",
-  "storageBucket": "cpai-bf71c.appspot.com",
-  "messagingSenderId": "305447636105",
-  "appId": "1:305447636105:web:195858d535ea28ffb10a58",
-  "measurementId": "G-C71QZDCC4E"
+    "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
+    "authDomain": "cpai-bf71c.firebaseapp.com",
+    "databaseURL": "https://cpai-bf71c.firebaseio.com",
+    "projectId": "cpai-bf71c",
+    "storageBucket": "cpai-bf71c.appspot.com",
+    "messagingSenderId": "305447636105",
+    "appId": "1:305447636105:web:195858d535ea28ffb10a58",
+    "measurementId": "G-C71QZDCC4E"
 }
 
 app = Flask(__name__)
 firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
+class Document:
+    def __init__(self):
+        self.demographic_user_info = {'given-name': '',
+                         'last-name': '',
+                         'location': {
+                             'admin-area': '',
+                             'business-name': '',
+                             'city': '',
+                             'country': '',
+                             'island': '',
+                             'shortcut': '',
+                             'street-address': '',
+                             'subadmin-area': '',
+                             'zip-code': ''
+                         },
+                         'social_security': '',
+                         'filing_status': ''
+                         }
+        self.demographics_slots_to_fill = ['given-name', 'last-name', 'location', 'social_security', 'filing_status']
+        self.ignore_location_info = {'business-name', 'island', 'shortcut', 'subadmin-area', 'country'}
+        self.last_unfilled_field = ""
+
+    def check_status(self, slot):
+        if slot not in self.demographic_user_info:
+            return "Error"
+        elif slot == 'location':
+            for key, value in self.demographic_user_info['location'].items():
+                if value == '' and key not in self.ignore_location_info:
+                    return key
+
+            return None
+        elif self.demographic_user_info[slot] == '':
+            return slot
+        else:
+            return None
+
+    def find_next_unfilled_slot_demographics(self):
+        for slot in self.demographics_slots_to_fill:
+            status = self.check_status(slot)
+            if status is not None:
+                return status
+
+        return None
+
+    def update_document_demographics(self, parameters):
+        for slot, value in self.demographic_user_info.items():
+            if slot == 'location':
+                for location_key, location_value in self.demographic_user_info['location'].items():
+                    if location_value == '' and parameters[slot] != '' and parameters[slot][location_key] != '':
+                        self.demographic_user_info['location'][location_key] = parameters[slot][location_key]
+            elif value == '' and slot in parameters and parameters[slot] != '':
+                self.demographic_user_info[slot] = parameters[slot]
 
 
 class Dependent:
     def __init__(self):
-        self.full_name = ""
-        self.SSN = ""
-        self.relationship_to_filer = ""
-        self.child_tax_credit = False
-        self.credit_for_other_dependents = False
+        self.info = {'dependent-name': '', 'dependent-SSN': '', 'dependent-relationship': '',
+                     'dependent-child-tax-credit': [[False], False], 'depedent-credit-for-others': [[False], False]}
+
 
 class User:
     def __init__(self):
-        self.first_name_middle_initial = ""
-        self.last_name = ""
-        self.SSN = ""
-        self.filing_status = -1
-        self.mfs_spouse = ""
+        self.demographics = {'given-name': '', 'last-name': '', 'city': '', 'admin-area': '',
+                             'street-address': '', 'zip-code': '', 'social_security': '', 'country': '', 'filing_status': -1}
+        self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
+                                     'mfs_spouse': ''}], False]
+
         self.HOH_QW_child = ""
-        self.last_name = ""
-        self.spouse_first_name_middle_initial = ""
-        self.spouse_last_name = ""
-        self.spouse_SSN = ""
-        self.home_address = ""
         self.PO = [[False], False]
         self.apt_num = ["", False]
         self.PES = [[False, False], False]
-        self.is_foreign_address= [[False, False]]
-        self.foreign_country_info= [["", "", ""], False]
+        self.is_foreign_address = [[False, False]]
+        self.foreign_country_info = [["", "", ""], False]
         self.more_than_four_dependents = [[False], False]
         self.standard_deduction_checkbox = [[], False]
         self.user_age_blind = [[False, False], False]
         self.spouse_age_blind = [[False, False], False]
         self.list_of_dependents = [[], False]
         self.field_values = dict()
-            
+
     def jsonify_user(self):
         user_dict = {}
-        user_dict['first_name_middle_initial'] = self.first_name_middle_initial
-        user_dict['last_name'] = self.last_name
-        user_dict['SSN'] = self.SSN
-        user_dict['filing_status'] = self.filing_status
-        user_dict['mfs_spouse'] = self.mfs_spouse
+        user_dict['first_name_middle_initial'] = self.demographics['given-name']
+        user_dict['last_name'] = self.demographics['last-name']
+        user_dict['social_security'] = self.demographics['social_security']
+        user_dict['filing_status'] = self.demographics['filing_status']
+        user_dict['mfs_spouse'] = self.spouse_info[0][1]['mfs_spouse']
         user_dict['HOH_QW_child'] = self.HOH_QW_child
-        user_dict['last_name'] = self.last_name
-        user_dict['spouse_first_name_middle_initial'] = self.spouse_first_name_middle_initial
-        user_dict['spouse_last_name'] = self.spouse_last_name
-        user_dict['spouse_SSN'] = self.spouse_SSN
-        user_dict['home_address'] = self.home_address
-        user_dict['PO'] = self.PO
+        user_dict['has_spouse'] = self.spouse_info[0][0]
+        user_dict['spouse_first_name_middle_initial'] = self.spouse_info[0][1]['mfs_spouse']
+        user_dict['spouse_last_name'] = self.spouse_info[0][1]['spouse-last-name']
+        user_dict['spouse_SSN'] = self.spouse_info[0][1]['spouse-social_security']
+        user_dict['street-address'] = self.demographics['address']
+        user_dict['city'] = self.demographics['city']
+        user_dict['state'] = self.demographics['admin-area']
+        user_dict['PO'] = self.PO[0][1]
         user_dict['apt_num'] = self.apt_num
         user_dict['PES'] = self.PES
-        user_dict['is_foreign_address']= self.is_foreign_address
-        user_dict['foreign_country_info']= self.foreign_country_info
+        user_dict['is_foreign_address'] = self.is_foreign_address
+        user_dict['foreign_country_info'] = self.foreign_country_info
         user_dict['more_than_four_dependents'] = self.more_than_four_dependents
         user_dict['standard_deduction_checkbox'] = self.standard_deduction_checkbox
         user_dict['user_age_blind'] = self.user_age_blind
         user_dict['spouse_age_blind'] = self.spouse_age_blind
         user_dict['list_of_dependents'] = self.list_of_dependents
         user_dict['field_values'] = self.field_values
-        
         return json.dumps(user_dict)
 
-    def find_last_unfilled_field(self):
-        return None
+    def update_demographic_info(self, document):
+        for slot in document.demographics_slots_to_fill:
+            if slot is not 'location':
+                self.demographics[slot] = document.demographic_user_info[slot]
+            elif slot == 'location':
+                location_vals = document.demographic_user_info['location']
+                for inner_slot, inner_slot_val in location_vals.items():
+                    if inner_slot in self.demographics:
+                        self.demographics[inner_slot] = inner_slot_val
+
+
+class Response:
+    def __init__(self):
+        self.demographics = {'given-name': 'What is your given name?',
+                        'last-name': 'What is your last name?',
+                        'city': 'What city do you live in?',
+                        'admin-area': 'What state you live in?',
+                        'street-address': 'What is your street address?',
+                        'zip-code': 'What is your zip code',
+                        'social_security': 'What is your SSN?',
+                        'filing_status': 'What is your filing status?'
+                        }
+        self.demographics_question_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address',
+                                            'zip-code', 'social_security', 'filing_status']
 
 
 user = User()
+document = Document()
+responses = Response()
 last_intent = ""
 last_unfilled_field = ""
-filled_out  = {'given-name': '',
-                'last-name': '',
-                        'geo-city': '',
-                        'geo-state': '',
-                        'address': '',
-                        'zip-code': '',
-                        'social_security': '',
-                        # 'date': 'Tell me the date, bitch',
-                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
-                        'filing_status': ''
-                        }
 
-demo_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address', 'zip-code', 'social_security', 'filing_status']
-
-demo_hard_coded_responses = {'given-name': 'What is your given name?',
-                        'last-name': 'What is your last name?',
-                        'geo-city': 'What city do you live in?',
-                        'geo-state': 'What state you live in?',
-                        'address': 'What is your street address?',
-                        'zip-code': 'What is your zip code',
-                        'social_security': 'What is your SSN?',
-                        # 'date': 'Tell me the date, bitch',
-                        # 'blind-status': 'Are you blind, dumbass? I be walking here.',
-                        'filing_status': 'What is your filing status?'
-                        }
 
 def standardize_token(token):
     new_token = token.lower()
@@ -119,23 +166,43 @@ def standardize_token(token):
 
 
 def explain_term_yes(content):
+    global responses
+    global document
+    global last_intent
+
     with open('response.json') as f:
         data = json.load(f)
 
-    response = ''
+    if "demographics" in last_intent:
+        for slot in document.demographics_slots_to_fill:
+            status = document.check_status(slot)
+            if status is not None:
+                data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +
+                                                                   responses.demographics[status]]}}]
+                return jsonify(data)
+    else:
+        data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on to actually doing the math! "]}}]
+        return jsonify(data)
 
-    for key in demo_order:
-        if filled_out[key] == '':
-            response = demo_hard_coded_responses[key]
-            break
 
-    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+def clear():
+    global user
+    global document
+
+    dummy_user = User()
+    user = copy.deepcopy(dummy_user)
+    dummy_document = Document()
+    document = copy.deepcopy(dummy_document)
+
+    with open('response.json') as f:
+        data = json.load(f)
 
     return jsonify(data)
 
+
 def explain_term(content):
     # for print debugging
-    pprint.pprint(content)
+    # pprint.pprint(content)
     extract = content['queryResult']['parameters']['terminology']
 
     tokenized_extract = standardize_token(extract)
@@ -146,72 +213,53 @@ def explain_term(content):
 
     if tokenized_extract not in firebase_data:
         data['fulfillment_messages'] = \
-            [{"text": {"text": ["Sorry, I don't think " + extract + " is a relevant tax term. Do you want to go back to filling out the form?"]}}]
+            [{"text": {"text": [
+                "Sorry, I don't think " + extract + " is a relevant tax term. Do you want to go back to filling out the form?"]}}]
 
     else:
-        response = "Great question, " + extract + " is "  + firebase_data[tokenized_extract] + ". Does that make sense?"
+        response = "Great question, " + extract + " is " + firebase_data[tokenized_extract] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
-    #global last_intent
-    #global user
-    #global last_unfilled_field
-
-    #data[]   #set followup event
-
-
-    #last_intent = 'explain_term'
     return jsonify(data)
 
-def explain_instructions(content):
-    return
-
-def deductions(content):
-    return 
-
-def income_and_finances(content):
-    return
-
-def refund_and_owe(content):
-    return
-
-def third_party_and_sign(content):
-    return
 
 def demographics_fill_self(content):
     # for print debugging
-    pprint.pprint(content)
+    # pprint.pprint(content)
     parameters = content['queryResult']['parameters']
-
-
-    #tokenized_extract = standardize_token(extract)
-    #firebase_data = db.child("USERS").get().val()
+    global responses
+    global user
+    global document
+    global last_intent
 
     response = None
-    global filled_out
 
-    pprint.pprint(filled_out)
+    # first pass: update params on document object
+    document.update_document_demographics(parameters)
 
-    for key in demo_order:
-        if parameters[key] != '':
-            filled_out[key] = parameters[key]
-        elif parameters[key] == '' and filled_out[key] == '':
-            response = demo_hard_coded_responses[key]
-            break
+    # second pass: query next thing needed
+    next_unfilled_slot = document.find_next_unfilled_slot_demographics()
 
-
+    if next_unfilled_slot is None:
+        response = "We're all done filling out your demographics. Let's move on."
+        last_intent = 'demographic_fill.dependents'
+    else:
+        response = responses.demographics[next_unfilled_slot]
 
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
-    #global last_intent
-    #global user
+    global user
 
-    #data[]  # set followup event
-    #last_intent = 'demographics_fill.self'
+    # data[]  # set followup event
+    last_intent = 'demographics_fill.self'
+    user.update_demographic_info(document)
     return jsonify(data)
 
+def demographics_fill_dependents(content):
+    return None
 
 def welcome(content):
     with open('response.json') as f:
@@ -219,56 +267,45 @@ def welcome(content):
 
     data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
 
-    #global last_intent
-    #global user
 
-    #data[]  # set followup event
-    #last_intent = 'demographics_fill.self'
     return jsonify(data)
+
+
+def explain_instructions(content):
+    return
+
+
+def deductions(content):
+    return
+
+
+def income_and_finances(content):
+    return
+
+
+def refund_and_owe(content):
+    return
+
+
+def third_party_and_sign(content):
+    return
 
 
 def fallback(content):
     return
 
+
 def push_demographic_info_to_database(content):
-    #change User object based on content
+    # change User object based on content
 
-    #push to database
+    # push to database
     users_ref = db.child('USERS')
-    sample_user = User()
-    sample_user.first_name = ""
-    sample_user.last_name = ""
-    sample_user.SSN = ""
-    sample_user.filing_status = -1
-    sample_user.mfs_spouse = ""
-    sample_user.HOH_QW_child = ""
-    sample_user.last_name = ""
-    sample_user.spouse_first_name_middle_initial = ""
-    sample_user.spouse_last_name = ""
-    sample_user.spouse_last_name = ""
-    sample_user.spouse_SSN = ""
-    sample_user.home_address = ""
-    sample_user.PO = False
-    sample_user.apt_num = ""
-    sample_user.PES = [False, False]
-    sample_user.is_foreign_address= False
-    sample_user.foreign_country_info= ["", "", ""]
-    sample_user.more_than_four_dependents = False
-    sample_user.standard_deduction_checkbox = []
-    sample_user.user_age_blind = [False, False]
-    sample_user.spouse_age_blind = [False, False]
-    sample_user.list_of_dependents = []
-    sample_user.field_values = dict()
+    global user
 
-    sample_user_json = sample_user.jsonify_user()
-    users_ref.set(sample_user_json)
+    user_json = user.jsonify_user()
+    users_ref.set(user_json)
     return
 
-def clear_map(self):
-    global filled_out
-
-    for key, value in filled_out.items():
-        value = ''
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -277,9 +314,7 @@ def home():
         content = request.json
 
         intent = content['queryResult']['intent']['displayName']
-        print(intent)
-        content = request.json
-        
+
         if intent == 'explain_term':
             return explain_term(content)
         elif intent == 'explain_term - yes':
@@ -296,8 +331,12 @@ def home():
             third_party_and_sign(content)
         elif intent == 'demographics_fill.self':
             return demographics_fill_self(content)
+        elif intent == 'demographics_fill.dependents':
+            return demographics_fill_dependents(content)
         elif intent == 'Default Welcome Intent':
             return welcome(content)
+        elif intent == 'goodbye':
+            return clear()
         else:
             return fallback(content)
 
