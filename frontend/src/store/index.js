@@ -20,13 +20,10 @@ export default new Vuex.Store({
     actions: {
         login({ commit }, credentials) {
             const params = new URLSearchParams();
-            params.append("institution", "w20_team6");
             params.append("username", credentials["username"]);
             params.append("password", credentials["password"]);
-            params.append("grant_type", "password");
-            params.append("scope", "query");
             return axios
-                .post("https://api.clinc.ai/v1/oauth", params)
+                .post("http://localhost:3000/", params)
                 .then(response => {
                     console.log(response); // eslint-disable-line no-console
                     commit("SET_USER_DATA", response.data);

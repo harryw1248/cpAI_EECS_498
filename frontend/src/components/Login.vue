@@ -12,7 +12,6 @@
                 </div>
                 <div class="text-xs">
                     <div>*Not optimized for mobile screen (non-responsive)</div>
-                    <div>*Use your Clinc credentials</div>
                 </div>
                 <form class="mt-6" @submit.prevent="login" autocomplete="on">
                     <div class="mt-4 flex flex-col items-start">
@@ -60,14 +59,18 @@ export default {
     name: "Login",
     methods: {
         login(e) {
-            this.$store
-                .dispatch("login", {
-                    username: e.target.elements.username.value,
-                    password: e.target.elements.password.value
-                })
-                .then(() => {
-                    this.$router.push({ name: "Console" });
-                });
+            /*
+        this.$store
+            .dispatch("login", {
+                username: e.target.elements.username.value,
+                password: e.target.elements.password.value
+            })
+            .then(() => {
+                this.$router.push({ name: "Console" });
+            });
+       */
+            console.log(e);
+            this.$router.push({ name: "Console" });
         }
     }
 };
