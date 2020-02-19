@@ -31,6 +31,49 @@
         <input class="formField" v-model="userInfo.foreignCountry.state" style="top: 285px; left: 362px;" size="50" disabled>
         <input class="formField" v-model="userInfo.foreignCountry.po" style="top: 285px; left: 561px;" size="50" disabled>
 
+        <!-- Dependent Info -->
+        <input class="formField" v-model="dependentInfo.one.firstName" style="top: 396px; left: 55px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.one.lastName" style="top: 396px; left: 227px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.one.ssn.first" style="top: 396px; left: 342px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.one.ssn.second" style="top: 396px; left: 378px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.one.ssn.third" style="top: 396px; left: 405px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.one.relationship" style="top: 396px; left: 465px; font-size: 14px" size="50" disabled>
+
+        <input class="formField" v-model="dependentInfo.two.firstName" style="top: 413px; left: 55px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.two.lastName" style="top: 413px; left: 227px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.two.ssn.first" style="top: 413px; left: 342px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.two.ssn.second" style="top: 413px; left: 378px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.two.ssn.third" style="top: 413px; left: 405px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.two.relationship" style="top: 413px; left: 465px; font-size: 14px" size="50" disabled>
+
+        <input class="formField" v-model="dependentInfo.three.firstName" style="top: 430px; left: 55px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.three.lastName" style="top: 430px; left: 227px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.three.ssn.first" style="top: 430px; left: 342px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.three.ssn.second" style="top: 430px; left: 378px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.three.ssn.third" style="top: 430px; left: 405px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.three.relationship" style="top: 430px; left: 465px; font-size: 14px" size="50" disabled>
+
+        <input class="formField" v-model="dependentInfo.four.firstName" style="top: 447px; left: 55px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.four.lastName" style="top: 447px; left: 227px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.four.ssn.first" style="top: 447px; left: 342px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.four.ssn.second" style="top: 447px; left: 378px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.four.ssn.third" style="top: 447px; left: 405px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="dependentInfo.four.relationship" style="top: 447px; left: 465px; font-size: 14px" size="50" disabled>
+
+
+        <!-- Money Info -->
+        <input class="formField" v-model="money.one" style="top: 463px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.twoB" style="top: 479px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.threeB" style="top: 496px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.fourB" style="top: 513px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.fourD" style="top: 529px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.fiveB" style="top: 547px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.six" style="top: 563px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.sevenA" style="top: 579px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.sevenB" style="top: 596px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.eightA" style="top: 613px; left: 700px; font-size: 14px" size="50" disabled>
+        <input class="formField" v-model="money.eightB" style="top: 629px; left: 700px; font-size: 14px" size="50" disabled>
+
 
 
 
@@ -68,9 +111,81 @@ export default {
                 ssn: {
                     first: 444,
                     second: 55,
-                    third: 666
+                    third: 6666
                 }
-            }
+            },
+            dependentInfo: {
+                one: {
+                    firstName: "Rishabh",
+                    lastName: "Nayak",
+                    ssn: {
+                        first: 444,
+                        second: 55,
+                        third: 6666
+                    },
+                    relationship: "Child",
+                    childCredit: true,
+                    otherCredit: true,
+                },
+                two: {
+                    firstName: "Vinod",
+                    lastName: "Raman",
+                    ssn: {
+                        first: 420,
+                        second: 69,
+                        third: 8008
+                    },
+                    relationship: "Homie",
+                    childCredit: false,
+                    otherCredit: true,
+                },
+                three: {
+                    firstName: "Gloria",
+                    lastName: "Kang",
+                    ssn: {
+                        first: 111,
+                        second: 22,
+                        third: 3333
+                    },
+                    relationship: "Parent",
+                    childCredit: true,
+                    otherCredit: false,
+                },
+                four: {
+                    firstName: "Harry",
+                    lastName: "Wang",
+                    ssn: {
+                        first: 123,
+                        second: 45,
+                        third: 6789
+                    },
+                    relationship: "Uncle",
+                    childCredit: true,
+                    otherCredit: false,
+                },
+            },
+            money: {
+                one: 100000,
+                twoA: 200,
+                twoB: 200000,
+                threeA: 300,
+                threeB: 300,
+                fourA: 400,
+                fourB: 4000,
+                fourC: 40000,
+                fourD: 400000,
+                fiveA: 500,
+                fiveB: 500000,
+                six: 600,
+                sevenA: 700,
+                sevenB: 700000,
+                eightA: 800,
+                eightB: 800000,
+                nine: 900,
+                ten: 1000,
+                elevenA: 110,
+                elevenB: 110000
+            },
         };
     },
 };
