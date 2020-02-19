@@ -1,11 +1,37 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
+/*
+import session from "express-session";
+
+const { CPAI_CLIENT_SECRET = CPAI_CLIENT_SECRET } = process.env;
+app.use(
+    session({
+        secret: CPAI_CLIENT_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 // 24 hours,
+        }
+    })
+);
+*/
 
 const app = express();
 
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/*
+const users = [{ id: 1, username: "cpai", password: "superduper" }];
+
+app.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    console.log(username, password);
+});
+*/
 
 // Imports the Google Cloud client library.
 const { Storage } = require("@google-cloud/storage");
@@ -42,15 +68,18 @@ async function runQuery(projectId, query) {
     const responses = await sessionClient.detectIntent(request);
     console.log("Detected intent");
     const result = responses[0].queryResult;
-    console.log(`  Query: ${result.queryText}`);
-    console.log(`  Response: ${result.fulfillmentText}`);
+    //console.log(`  Query: ${result.queryText}`);
+    //console.log(`  Response: ${result.fulfillmentText}`);
+    //console.log(result.fulfillmentMessages[0]["text"]["text"][0]);
+    //console.log(result);
+    console.log(result.parameters);
     if (result.intent) {
         console.log(`  Intent: ${result.intent.displayName}`);
     } else {
         console.log(`  No intent matched.`);
     }
 
-    return result.fulfillmentText;
+    return result.fulfillmentMessages[0]["text"]["text"][0];
 }
 
 async function gCloudConnect() {
