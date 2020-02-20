@@ -77,16 +77,18 @@ class Document:
 
     def update_document_demographics(self, parameters, current_intent):
         for slot, value in self.demographic_user_info.items():
-            if slot == 'location':
+            if 'location' in parameters and slot == 'location':
                 for location_key, location_value in self.demographic_user_info['location'].items():
-                    if location_value == '' and parameters[slot] != '' and parameters[slot][location_key] != '':
-                        self.demographic_user_info['location'][location_key] = parameters[slot][location_key]
+                    # There may be multiple location parameters per utterance
+                    for location_object in parameters[slot]:
+                        if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
+                            self.demographic_user_info['location'][location_key] = location_object[location_key]
             elif value == '' and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
         for status in self.bool_statuses:
             if status in current_intent:
-                self.demographic_user_info[status] = True if 'yes' in intent else False
+                self.demographic_user_info[status] = True if 'yes' in current_intent else False
 
 class Dependent:
     def __init__(self):
@@ -183,9 +185,11 @@ class Response:
         self.demographics_question_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address',
                                             'zip-code', 'social_security', 'filing_status']
 
-    def generate_output_context(slot, lifespan, session):
-        context_identifier = session
-        context_identifier = context_identifier + "/contexts/" + self.slot_to_output_contexts[slot]
+    def generate_output_context(self, slot, lifespan, session):
+        print("slot:", slot)
+        print("lifespan:", lifespan)
+        print("session:", session)
+        context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
         context = [{
             "name": context_identifier,
             "lifespan_count": lifespan
@@ -225,6 +229,7 @@ def explain_term_yes(content):
                 break
 
         output_context = responses.generate_output_context(last_unfilled_field, 1, session)
+        print("response:", response)
         data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
         data['output_contexts'] = output_context
         return jsonify(data)
@@ -271,7 +276,7 @@ def explain_term(content):
     return jsonify(data)
 
 
-def demographics_fill_self(content):
+def demographics_fill(content):
     # for print debugging
     pprint.pprint(content)
     parameters = content['queryResult']['parameters']
@@ -279,6 +284,7 @@ def demographics_fill_self(content):
     global user
     global document
     global last_intent
+    global last_unfilled_field
 
     response = None
 
@@ -301,34 +307,25 @@ def demographics_fill_self(content):
 
     output_context = None
     if next_unfilled_slot is not None:
-        output_context = responses.generate_output_context(next_query, 1, session)
-    
+        print("next_unfilled_slot:", next_unfilled_slot)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
+    last_unfilled_field = next_unfilled_slot
+
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
-    
 
     global user
 
     # data[]  # set followup event
-    last_intent = 'demographics_fill.self'
+    last_intent = 'demographics_fill'
     user.update_demographic_info(document)
     return jsonify(data)
 
 def demographics_fill_dependents(content):
     return None
-
-def generate_output_context(slot, lifespan, session):
-    global slot_to_output_contexts
-    context_identifier = session
-    context_identifier = context_identifier + "/contexts/" + slot_to_output_contexts[slot]
-    context = [{
-        "name": context_identifier,
-        "lifespan_count": lifespan
-    }]
-    return context
 
 
 def handle_location_parameter(parameters, slot, value):
@@ -390,7 +387,9 @@ def push_demographic_info_to_database(content):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    print("inside home")
     if request.method == 'POST':
+        print("inside post")
         # get payload
         content = request.json
 
@@ -410,8 +409,8 @@ def home():
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':
             third_party_and_sign(content)
-        elif intent.startswith('demographics_fill.self'):
-            return demographics_fill_self(content)
+        elif intent.startswith('demographics_fill'):
+            return demographics_fill(content)
         elif intent == 'demographics_fill.dependents':
             return demographics_fill_dependents(content)
         elif intent == 'Default Welcome Intent':
