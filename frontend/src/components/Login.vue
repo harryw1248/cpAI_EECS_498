@@ -1,6 +1,10 @@
 <template>
-    <div class="flex flex-col md:flex-row justify-center">
-        <div class="w-10/12 lg:w-6/12 block md:flex md:shadow-lg rounded-lg">
+    <div
+        class="flex flex-col md:flex-row justify-center animated bounceInDown slower delay-1s"
+    >
+        <div
+            class=" bg-white w-10/12 lg:w-6/12 block md:flex md:shadow-lg rounded-lg"
+        >
             <div
                 class="w-64 flex md:border-r border-gray-200 justify-center items-center"
             >
@@ -12,7 +16,6 @@
                 </div>
                 <div class="text-xs">
                     <div>*Not optimized for mobile screen (non-responsive)</div>
-                    <div>*Use your Clinc credentials</div>
                 </div>
                 <form class="mt-6" @submit.prevent="login" autocomplete="on">
                     <div class="mt-4 flex flex-col items-start">
@@ -60,14 +63,18 @@ export default {
     name: "Login",
     methods: {
         login(e) {
-            this.$store
-                .dispatch("login", {
-                    username: e.target.elements.username.value,
-                    password: e.target.elements.password.value
-                })
-                .then(() => {
-                    this.$router.push({ name: "Console" });
-                });
+            /*
+        this.$store
+            .dispatch("login", {
+                username: e.target.elements.username.value,
+                password: e.target.elements.password.value
+            })
+            .then(() => {
+                this.$router.push({ name: "Console" });
+            });
+       */
+            console.log(e);
+            this.$router.push({ name: "Console" });
         }
     }
 };
