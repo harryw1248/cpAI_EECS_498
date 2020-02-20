@@ -35,11 +35,23 @@ class Document:
                              'zip-code': ''
                          },
                          'social_security': '',
-                         'filing_status': ''
+                         'filing_status': '',
+                         'blind': '',
+                         'dual_status_alien': ''
                          }
-        self.demographics_slots_to_fill = ['given-name', 'last-name', 'location', 'social_security', 'filing_status']
+        self.demographics_slots_to_fill = ['given-name',
+                                            'last-name',
+                                            'location',
+                                            'social_security',
+                                            'filing_status',
+                                            'dual_status_alien',
+                                            'blind']
+        self.bool_statuses = ['dual_status_alien',
+                              'blind']
+
         self.ignore_location_info = {'business-name', 'island', 'shortcut', 'subadmin-area', 'country'}
         self.last_unfilled_field = ""
+        self.last_intent = ""
 
     def check_status(self, slot):
         if slot not in self.demographic_user_info:
@@ -63,7 +75,7 @@ class Document:
 
         return None
 
-    def update_document_demographics(self, parameters):
+    def update_document_demographics(self, parameters, current_intent):
         for slot, value in self.demographic_user_info.items():
             if slot == 'location':
                 for location_key, location_value in self.demographic_user_info['location'].items():
@@ -72,6 +84,9 @@ class Document:
             elif value == '' and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
+        for status in self.bool_statuses:
+            if status in current_intent:
+                self.demographic_user_info[status] = True if 'yes' in intent else False
 
 class Dependent:
     def __init__(self):
@@ -142,15 +157,40 @@ class Response:
     def __init__(self):
         self.demographics = {'given-name': 'What is your given name?',
                         'last-name': 'What is your last name?',
-                        'city': 'What city do you live in?',
-                        'admin-area': 'What state you live in?',
-                        'street-address': 'What is your street address?',
-                        'zip-code': 'What is your zip code',
+                        'location': 'So, where do you currently stay?',
                         'social_security': 'What is your SSN?',
-                        'filing_status': 'What is your filing status?'
+                        'filing_status': 'What is your filing status?',
+                        'admin-area': 'Can I have your city, state, and zip code?',
+                        'city': 'Can I have your city, state, and zip code?',
+                        'street-address': 'Whats your street address?',
+                        'zip-code': 'Can I have your city, state, and zip code?',
+                        'dual_status_alien': "Are you a dual-status alien?",
+                        'blind': "Are you blind?"
                         }
+
+        self.slot_to_output_contexts = { 'given-name': 'prompt_name',
+                                         'last-name': 'prompt_name',
+                                         'location': 'prompt_address',
+                                         'admin-area': 'prompt_address',
+                                         'city': 'prompt_address',
+                                         'street-address': 'prompt_address',
+                                         'zip-code': 'prompt_address',
+                                         'social_security': 'prompt_social_security',
+                                         'filing_status': 'prompt_filing_status',
+                                         'blind': 'prompt_blind',
+                                         'dual_status_alien': "prompt_dual_status_alien"}
+
         self.demographics_question_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address',
                                             'zip-code', 'social_security', 'filing_status']
+
+    def generate_output_context(slot, lifespan, session):
+        context_identifier = session
+        context_identifier = context_identifier + "/contexts/" + self.slot_to_output_contexts[slot]
+        context = [{
+            "name": context_identifier,
+            "lifespan_count": lifespan
+        }]
+        return context
 
 
 user = User()
@@ -166,20 +206,28 @@ def standardize_token(token):
 
 
 def explain_term_yes(content):
+    global last_unfilled_field
     global responses
     global document
     global last_intent
+    session = content['session']
 
     with open('response.json') as f:
         data = json.load(f)
+
+    response = ''
 
     if "demographics" in last_intent:
         for slot in document.demographics_slots_to_fill:
             status = document.check_status(slot)
             if status is not None:
-                data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +
-                                                                   responses.demographics[status]]}}]
-                return jsonify(data)
+                response = responses.demographics[status]
+                break
+
+        output_context = responses.generate_output_context(last_unfilled_field, 1, session)
+        data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+        data['output_contexts'] = output_context
+        return jsonify(data)
     else:
         data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on to actually doing the math! "]}}]
         return jsonify(data)
@@ -234,8 +282,13 @@ def demographics_fill_self(content):
 
     response = None
 
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
     # first pass: update params on document object
-    document.update_document_demographics(parameters)
+    document.update_document_demographics(parameters, current_intent)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot_demographics()
@@ -246,6 +299,10 @@ def demographics_fill_self(content):
     else:
         response = responses.demographics[next_unfilled_slot]
 
+    output_context = None
+    if next_unfilled_slot is not None:
+        output_context = responses.generate_output_context(next_query, 1, session)
+    
     with open('response.json') as f:
         data = json.load(f)
 
