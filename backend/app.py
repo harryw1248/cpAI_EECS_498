@@ -1,5 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
-from backend_classes import Document, Dependent, User, Response
+from document import Document
+from dependent import Dependent
+from user import User
+from response import Response
 import pyrebase
 import pprint
 import json
