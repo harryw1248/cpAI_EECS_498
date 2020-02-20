@@ -1,6 +1,10 @@
 <template>
-    <div class="flex flex-col md:flex-row justify-center">
-        <div class="w-10/12 lg:w-6/12 block md:flex md:shadow-lg rounded-lg">
+    <div
+        class="flex flex-col md:flex-row justify-center animated bounceInDown slower delay-1s"
+    >
+        <div
+            class=" bg-white w-10/12 lg:w-6/12 block md:flex md:shadow-lg rounded-lg"
+        >
             <div
                 class="w-64 flex md:border-r border-gray-200 justify-center items-center"
             >

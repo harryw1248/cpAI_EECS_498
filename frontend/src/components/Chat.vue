@@ -20,22 +20,25 @@
                     <p>
                         {{ message["text"] }}
                     </p>
-                    <p class="text-xs text-gray-700">
+                    <p class="pt-2 text-xs text-gray-700">
                         {{ message["timestamp"] }}
                     </p>
                 </div>
                 <div
                     v-if="message['who'] === 'CPai'"
-                    class="flex flex-col items-end pr-4 py-1 self-end py-1 w-8/12 bg-blue-100 rounded"
+                    class="flex flex-col items-end pr-4 self-end pl-2 py-1 w-8/12 bg-blue-100 rounded"
                     v-on:click="debugModal = !debugModal"
                 >
-                    <p class="font-semibold">
+                    <p v-if="message['loadingState']">
+                        <beat-loader></beat-loader>
+                    </p>
+                    <p v-if="!message['loadingState']" class="font-semibold">
                         {{ message["who"] }}
                     </p>
-                    <p>
+                    <p class="">
                         {{ message["text"] }}
                     </p>
-                    <p class="text-xs text-gray-700">
+                    <p class="mt-2 text-xs text-gray-700">
                         {{ message["timestamp"] }}
                     </p>
                 </div>
@@ -43,10 +46,10 @@
         </section>
         <form @submit.prevent="sendUtterance" class="mt-4 h-16 flex">
             <label for="utterance" class="font-semibold"></label>
-            <textarea
+            <input
                 type="text"
                 name="utterance"
-                class="resize-y border w-full rounded-lg py-2 px-4 outline-none text-xl"
+                class="resize-y w-full px-4 outline-none text-xl border-b-2 border-blue-400"
                 placeholder="Enter your response"
                 required
             />
@@ -63,26 +66,62 @@
 
 <script>
 import axios from "axios";
+import BeatLoader from "vue-spinner/src/PulseLoader.vue";
 
 function keepScrollDown() {
     const elem = document.getElementById("chat");
     elem.scrollTop = elem.scrollHeight - elem.clientHeight;
 }
 
+function fillInUserData(data) {
+    const retData = {};
+    if (data["given-name"]) {
+        retData["firstName"] = data["given-name"];
+    }
+    if (data["last-name"]) {
+        retData["lastName"] = data["last-name"];
+    }
+    if (data["social_security"]) {
+        retData["ssn"] = {
+            first: data["social_security"].slice(0, 3),
+            second: data["social_security"].slice(3, 6),
+            third: data["social_security"].slice(6, 9)
+        };
+    }
+    if (data["location"]) {
+        retData["address"] = {
+            street: data["location"]["street-address"]["stringValue"],
+            cityState:
+                data["location"]["city"]["stringValue"] +
+                " " +
+                data["location"]["admin-area"]["stringValue"] +
+                " " +
+                data["location"]["zip-code"]["stringValue"]
+        };
+    }
+    return retData;
+}
+
 export default {
     name: "Chat",
+    components: {
+        /* eslint-disable vue/no-unused-components */
+        BeatLoader
+    },
     updated() {
         keepScrollDown();
     },
     data() {
         return {
             debugModal: false,
+            formDisplay: false,
             messages: [
                 {
                     id: 0,
                     who: "CPai",
                     text: "How may I help you?",
-                    timestamp: Date.now()
+                    timestamp: Date(),
+                    loadingState: false
                 }
             ]
         };
@@ -92,7 +131,7 @@ export default {
             this.messages.push({
                 who: "You",
                 text: e.target.elements.utterance.value,
-                timestamp: Date.now()
+                timestamp: Date()
             });
 
             const headers = {
@@ -104,6 +143,11 @@ export default {
                 query: e.target.elements.utterance.value
             };
 
+            this.messages.push({
+                who: "CPai",
+                loadingState: true
+            });
+
             console.log(headers); // eslint-disable-line no-console
             axios({
                 method: "post",
@@ -113,12 +157,21 @@ export default {
             })
                 .then(response => {
                     console.log(response); // eslint-disable-line no-console
+                    let responseData = response.data;
+                    this.messages.pop();
                     this.messages.push({
                         who: "CPai",
-                        text: response.data,
-                        timestamp: Date().now,
-                        res: response.data
+                        text: responseData.responseText,
+                        timestamp: Date(),
+                        res: responseData,
+                        loadingState: false
                     });
+
+                    const newUserData = fillInUserData(responseData.data);
+                    this.$store.commit("SET_USER_DATA", newUserData);
+                    if (!this.formDisplay) {
+                        this.$store.commit("toggleForm");
+                    }
                 })
                 .catch(e => {
                     alert("error - see console msg.");
