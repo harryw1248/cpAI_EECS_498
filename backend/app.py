@@ -8,21 +8,6 @@ import pprint
 import json
 import copy
 
-config = {
-    "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
-    "authDomain": "cpai-bf71c.firebaseapp.com",
-    "databaseURL": "https://cpai-bf71c.firebaseio.com",
-    "projectId": "cpai-bf71c",
-    "storageBucket": "cpai-bf71c.appspot.com",
-    "messagingSenderId": "305447636105",
-    "appId": "1:305447636105:web:195858d535ea28ffb10a58",
-    "measurementId": "G-C71QZDCC4E"
-}
-
-app = Flask(__name__)
-firebase = pyrebase.initialize_app(config)
-db = firebase.database()
-
 user = User()
 document = Document()
 responses = Response()
@@ -36,20 +21,29 @@ def standardize_token(token):
 
 
 def explain_term_yes(content):
+    global last_unfilled_field
     global responses
     global document
     global last_intent
+    session = content['session']
 
     with open('response.json') as f:
         data = json.load(f)
+
+    response = ''
 
     if "demographics" in last_intent:
         for slot in document.demographics_slots_to_fill:
             status = document.check_status(slot)
             if status is not None:
-                data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +
-                                                                   responses.demographics[status]]}}]
-                return jsonify(data)
+                response = responses.demographics[status]
+                break
+
+        output_context = responses.generate_output_context(last_unfilled_field, 1, session)
+        print("response:", response)
+        data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+        data['output_contexts'] = output_context
+        return jsonify(data)
     else:
         data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on to actually doing the math! "]}}]
         return jsonify(data)
@@ -93,19 +87,25 @@ def explain_term(content):
     return jsonify(data)
 
 
-def demographics_fill_self(content):
+def demographics_fill(content):
     # for print debugging
-    # pprint.pprint(content)
+    pprint.pprint(content)
     parameters = content['queryResult']['parameters']
     global responses
     global user
     global document
     global last_intent
+    global last_unfilled_field
 
     response = None
 
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
     # first pass: update params on document object
-    document.update_document_demographics(parameters)
+    document.update_document_demographics(parameters, current_intent)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot_demographics()
@@ -116,20 +116,39 @@ def demographics_fill_self(content):
     else:
         response = responses.demographics[next_unfilled_slot]
 
+    output_context = None
+    if next_unfilled_slot is not None:
+        print("next_unfilled_slot:", next_unfilled_slot)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
+    last_unfilled_field = next_unfilled_slot
+
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = output_context
 
     global user
 
     # data[]  # set followup event
-    last_intent = 'demographics_fill.self'
+    last_intent = 'demographics_fill'
     user.update_demographic_info(document)
     return jsonify(data)
 
 def demographics_fill_dependents(content):
     return None
+
+
+def handle_location_parameter(parameters, slot, value):
+    global demographic_user_info
+    global demographics_slots_to_fill
+
+    for location_key, location_value in demographic_user_info['location'].items():
+        # There may be multiple location parameters per utterance
+        for location_object in parameters[slot]:
+            if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
+                demographic_user_info['location'][location_key] = location_object[location_key]
+
 
 def welcome(content):
     with open('response.json') as f:
@@ -179,7 +198,9 @@ def push_demographic_info_to_database(content):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    print("inside home")
     if request.method == 'POST':
+        print("inside post")
         # get payload
         content = request.json
 
@@ -199,8 +220,8 @@ def home():
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':
             third_party_and_sign(content)
-        elif intent == 'demographics_fill.self':
-            return demographics_fill_self(content)
+        elif intent.startswith('demographics_fill'):
+            return demographics_fill(content)
         elif intent == 'demographics_fill.dependents':
             return demographics_fill_dependents(content)
         elif intent == 'Default Welcome Intent':
