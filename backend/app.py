@@ -32,6 +32,7 @@ last_unfilled_field = ""
 
 def standardize_token(token):
     new_token = token.lower()
+    new_token = new_token.replace("-", " ")
     return new_token.replace(" ", "_")
 
 
