@@ -1,3 +1,5 @@
+import json
+
 class User:
     def __init__(self):
         self.demographics = {'given-name': '', 'last-name': '', 'city': '', 'admin-area': '',

@@ -14,11 +14,23 @@ class Document:
                              'zip-code': ''
                          },
                          'social_security': '',
-                         'filing_status': ''
+                         'filing_status': '',
+                         'blind': '',
+                         'dual_status_alien': ''
                          }
-        self.demographics_slots_to_fill = ['given-name', 'last-name', 'location', 'social_security', 'filing_status']
+        self.demographics_slots_to_fill = ['given-name',
+                                            'last-name',
+                                            'location',
+                                            'social_security',
+                                            'filing_status',
+                                            'dual_status_alien',
+                                            'blind']
+        self.bool_statuses = ['dual_status_alien',
+                              'blind']
+
         self.ignore_location_info = {'business-name', 'island', 'shortcut', 'subadmin-area', 'country'}
         self.last_unfilled_field = ""
+        self.last_intent = ""
 
     def check_status(self, slot):
         if slot not in self.demographic_user_info:
@@ -42,11 +54,17 @@ class Document:
 
         return None
 
-    def update_document_demographics(self, parameters):
+    def update_document_demographics(self, parameters, current_intent):
         for slot, value in self.demographic_user_info.items():
-            if slot == 'location':
+            if 'location' in parameters and slot == 'location':
                 for location_key, location_value in self.demographic_user_info['location'].items():
-                    if location_value == '' and parameters[slot] != '' and parameters[slot][location_key] != '':
-                        self.demographic_user_info['location'][location_key] = parameters[slot][location_key]
+                    # There may be multiple location parameters per utterance
+                    for location_object in parameters[slot]:
+                        if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
+                            self.demographic_user_info['location'][location_key] = location_object[location_key]
             elif value == '' and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
+
+        for status in self.bool_statuses:
+            if status in current_intent:
+                self.demographic_user_info[status] = True if 'yes' in current_intent else False

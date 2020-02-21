@@ -8,6 +8,21 @@ import pprint
 import json
 import copy
 
+config = {
+    "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
+    "authDomain": "cpai-bf71c.firebaseapp.com",
+    "databaseURL": "https://cpai-bf71c.firebaseio.com",
+    "projectId": "cpai-bf71c",
+    "storageBucket": "cpai-bf71c.appspot.com",
+    "messagingSenderId": "305447636105",
+    "appId": "1:305447636105:web:195858d535ea28ffb10a58",
+    "measurementId": "G-C71QZDCC4E"
+}
+
+app = Flask(__name__)
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+
 user = User()
 document = Document()
 responses = Response()
@@ -139,15 +154,15 @@ def demographics_fill_dependents(content):
     return None
 
 
-def handle_location_parameter(parameters, slot, value):
-    global demographic_user_info
-    global demographics_slots_to_fill
+# def handle_location_parameter(parameters, slot, value):
+#     global demographic_user_info
+#     global demographics_slots_to_fill
 
-    for location_key, location_value in demographic_user_info['location'].items():
-        # There may be multiple location parameters per utterance
-        for location_object in parameters[slot]:
-            if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
-                demographic_user_info['location'][location_key] = location_object[location_key]
+#     for location_key, location_value in demographic_user_info['location'].items():
+#         # There may be multiple location parameters per utterance
+#         for location_object in parameters[slot]:
+#             if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
+#                 demographic_user_info['location'][location_key] = location_object[location_key]
 
 
 def welcome(content):
