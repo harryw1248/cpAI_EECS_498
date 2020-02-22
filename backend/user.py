@@ -3,21 +3,25 @@ import json
 class User:
     def __init__(self):
         self.demographics = {'given-name': '', 'last-name': '', 'city': '', 'admin-area': '',
-                             'street-address': '', 'zip-code': '', 'social_security': '', 'country': '', 'filing_status': -1}
+                             'street-address': '', 'zip-code': '', 'social_security': '', 'country': '', 'age': '',
+                             'occupation': '', 'filing_status': -1}
         self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
                                      'mfs_spouse': ''}], False]
 
+        # the second False corresponds to whether or not the user has told you the information yet
+        # i.e., self.PO = [[True], True] means the user told you they have a PO box while
+        # self.PO  = [[False]], True] means the user has told you they don't have a PO box
         self.HOH_QW_child = ""
         self.PO = [[False], False]
         self.apt_num = ["", False]
         self.PES = [[False, False], False]
         self.is_foreign_address = [[False, False]]
         self.foreign_country_info = [["", "", ""], False]
-        self.more_than_four_dependents = [[False], False]
         self.standard_deduction_checkbox = [[], False]
         self.user_age_blind = [[False, False], False]
         self.spouse_age_blind = [[False, False], False]
         self.list_of_dependents = [[], False]
+        self.uses_standardized_deductions = [[False], False]
         self.field_values = dict()
 
     def jsonify_user(self):
@@ -40,7 +44,6 @@ class User:
         user_dict['PES'] = self.PES
         user_dict['is_foreign_address'] = self.is_foreign_address
         user_dict['foreign_country_info'] = self.foreign_country_info
-        user_dict['more_than_four_dependents'] = self.more_than_four_dependents
         user_dict['standard_deduction_checkbox'] = self.standard_deduction_checkbox
         user_dict['user_age_blind'] = self.user_age_blind
         user_dict['spouse_age_blind'] = self.spouse_age_blind
