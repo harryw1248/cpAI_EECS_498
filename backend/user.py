@@ -12,12 +12,11 @@ class User:
         # i.e., self.PO = [[True], True] means the user told you they have a PO box while
         # self.PO  = [[False]], True] means the user has told you they don't have a PO box
         self.HOH_QW_child = ""
-        self.PO = [[False], False]
-        self.apt_num = ["", False]
+        self.PO = [[False], False]   # For now, don't specifically prompt user for this. He/she can modify on own
+        self.apt_num = [[""], False]
         self.PES = [[False, False], False]
         self.is_foreign_address = [[False, False]]
         self.foreign_country_info = [["", "", ""], False]
-        self.standard_deduction_checkbox = [[], False]
         self.user_age_blind = [[False, False], False]
         self.spouse_age_blind = [[False, False], False]
         self.list_of_dependents = [[], False]
@@ -44,7 +43,7 @@ class User:
         user_dict['PES'] = self.PES
         user_dict['is_foreign_address'] = self.is_foreign_address
         user_dict['foreign_country_info'] = self.foreign_country_info
-        user_dict['standard_deduction_checkbox'] = self.standard_deduction_checkbox
+        user_dict['standard_deduction_checkbox'] = self.uses_standardized_deductions
         user_dict['user_age_blind'] = self.user_age_blind
         user_dict['spouse_age_blind'] = self.spouse_age_blind
         user_dict['list_of_dependents'] = self.list_of_dependents
