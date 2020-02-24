@@ -65,21 +65,6 @@ def explain_term_yes(content):
         return jsonify(data)
 
 
-def clear():
-    global user
-    global document
-
-    dummy_user = User()
-    user = copy.deepcopy(dummy_user)
-    dummy_document = Document()
-    document = copy.deepcopy(dummy_document)
-
-    with open('response.json') as f:
-        data = json.load(f)
-
-    return jsonify(data)
-
-
 def explain_term(content):
     # for print debugging
     # pprint.pprint(content)
@@ -101,6 +86,22 @@ def explain_term(content):
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     return jsonify(data)
+
+
+def clear():
+    global user
+    global document
+
+    dummy_user = User()
+    user = copy.deepcopy(dummy_user)
+    dummy_document = Document()
+    document = copy.deepcopy(dummy_document)
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    return jsonify(data)
+
 
 
 def demographics_fill(content):

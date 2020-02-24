@@ -28,6 +28,17 @@ class Response:
         self.demographics_question_order = ['given-name', 'last-name', 'geo-city', 'geo-state', 'address',
                                             'zip-code', 'social_security', 'filing_status']
 
+        self.income_finances = {'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
+                                'capital-gains': 'Do you own any stocks or bonds?',
+                                'owns-business': 'Do you own a business?',
+                                'pensions-annuities': 'What are you pensions and annuities?',
+                                'ss-benefits': 'How much have you claimed in social security this past year?',
+                                'income-confirm': 'Please check the current income section. Are there any modifications you would like to make?',
+                                'income-was-confirmed': "Great, we're almost done!"}
+
+        self.income_finances_order = {'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits',
+                                      'income-confirm', 'income-was-confirmed'}
+
     def generate_output_context(self, slot, lifespan, session):
         print("slot:", slot)
         print("lifespan:", lifespan)
