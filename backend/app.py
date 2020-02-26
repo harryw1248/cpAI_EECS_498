@@ -29,6 +29,11 @@ responses = Response()
 last_intent = ""
 last_unfilled_field = ""
 
+intent_to_explainable_term = {}
+
+
+def unstandardize_token(token):
+    return token.replace("_", " ")
 
 def standardize_token(token):
     new_token = token.lower()
@@ -56,7 +61,6 @@ def explain_term_yes(content):
                 break
 
         output_context = responses.generate_output_context(last_unfilled_field, 1, session)
-        print("response:", response)
         data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
         data['output_contexts'] = output_context
         return jsonify(data)
@@ -65,10 +69,11 @@ def explain_term_yes(content):
         return jsonify(data)
 
 
-def explain_term(content):
-    # for print debugging
-    # pprint.pprint(content)
-    extract = content['queryResult']['parameters']['terminology']
+def explain_term(content, extract=None):
+    if extract is None:
+        extract = content['queryResult']['parameters']['terminology']
+    else:
+        print(extract)
 
     tokenized_extract = standardize_token(extract)
     firebase_data = db.child("TERMINOLOGY").get().val()
@@ -79,12 +84,14 @@ def explain_term(content):
     if tokenized_extract not in firebase_data:
         data['fulfillment_messages'] = \
             [{"text": {"text": [
-                "Sorry, I don't think " + extract + " is a relevant tax term. Do you want to go back to filling out the form?"]}}]
+                "Sorry, I don't have a working definition for " + extract + ". Do you want to go back to filling out the form?"]}}]
 
     else:
         response = "Great question, " + extract + " is " + firebase_data[tokenized_extract] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
+    global last_intent
+    last_intent = 'explain_term'
     return jsonify(data)
 
 
@@ -103,10 +110,8 @@ def clear():
     return jsonify(data)
 
 
-
 def demographics_fill(content):
     # for print debugging
-    pprint.pprint(content)
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -215,20 +220,20 @@ def push_demographic_info_to_database(content):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    print("inside home")
     if request.method == 'POST':
-        print("inside post")
         # get payload
         content = request.json
 
         intent = content['queryResult']['intent']['displayName']
+        global last_unfilled_field
+        print(intent)
 
         if intent == 'explain_term':
             return explain_term(content)
         elif intent == 'explain_term - yes':
             return explain_term_yes(content)
-        elif intent == 'explain_instructions':
-            return explain_instructions(content)
+        elif intent == 'explain_previous_term':
+            return explain_term(content, unstandardize_token(last_unfilled_field))
         elif intent == 'deductions':
             return deductions(content)
         elif intent == 'income_and_finances':
