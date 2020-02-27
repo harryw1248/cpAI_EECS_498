@@ -19,5 +19,5 @@ class Dependent:
 
     def update_slots(self, parameters, current_intent):
         for slot, value in self.slots.items():
-            if value is None and slot in parameters and parameters[slot] is not None:
+            if value is None and slot in parameters and parameters[slot] is not '':
                 self.slots[slot] = parameters[slot]
