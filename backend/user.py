@@ -2,11 +2,11 @@ import json
 
 class User:
     def __init__(self):
-        self.demographics = {'given-name': '', 'last-name': '', 'city': '', 'admin-area': '',
-                             'street-address': '', 'zip-code': '', 'social_security': '', 'country': '', 'age': '',
-                             'occupation': '', 'filing_status': -1}
+        self.demographics = {'given-name': '', 'last-name': '', 'street-address': '', 'city': '',
+                             'state': '', 'zip-code': '', 'social_security': '', 'country': '', 'age': '',
+                             'occupation': '', 'filing_status': ''}
         self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
-                                     'mfs_spouse': ''}], False]
+                                     'mfs_spouse': '', 'spouse-blind': False}], False]
 
         # the second False corresponds to whether or not the user has told you the information yet
         # i.e., self.PO = [[True], True] means the user told you they have a PO box while
@@ -52,10 +52,4 @@ class User:
 
     def update_demographic_info(self, document):
         for slot in document.demographics_slots_to_fill:
-            if slot is not 'location':
-                self.demographics[slot] = document.demographic_user_info[slot]
-            elif slot == 'location':
-                location_vals = document.demographic_user_info['location']
-                for inner_slot, inner_slot_val in location_vals.items():
-                    if inner_slot in self.demographics:
-                        self.demographics[inner_slot] = inner_slot_val
+            self.demographics[slot] = document.demographic_user_info[slot]

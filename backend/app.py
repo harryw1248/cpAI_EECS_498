@@ -35,6 +35,7 @@ intent_to_explainable_term = {}
 def unstandardize_token(token):
     return token.replace("_", " ")
 
+
 def standardize_token(token):
     new_token = token.lower()
     new_token = new_token.replace("-", " ")
@@ -53,20 +54,18 @@ def explain_term_yes(content):
 
     response = ''
 
-    if "demographics" in last_intent:
-        for slot in document.demographics_slots_to_fill:
-            status = document.check_status(slot)
-            if status is not None:
-                response = responses.demographics[status]
-                break
 
-        output_context = responses.generate_output_context(last_unfilled_field, 1, session)
-        data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
-        data['output_contexts'] = output_context
-        return jsonify(data)
-    else:
-        data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on to actually doing the math! "]}}]
-        return jsonify(data)
+    for slot in document.demographics_slots_to_fill:
+        status = document.check_status(slot)
+        if status is not None:
+            response = responses.demographics[status]
+            break
+
+    output_context = responses.generate_output_context(last_unfilled_field, 1, session)
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+    data['output_contexts'] = output_context
+    return jsonify(data)
+
 
 
 def explain_term(content, extract=None):
@@ -136,11 +135,10 @@ def demographics_fill(content):
         response = "We're all done filling out your demographics. Let's move on."
         last_intent = 'demographic_fill.dependents'
     else:
-        response = responses.demographics[next_unfilled_slot]
+        response = responses.get_next_response(next_unfilled_slot)
 
     output_context = None
     if next_unfilled_slot is not None:
-        print("next_unfilled_slot:", next_unfilled_slot)
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
     last_unfilled_field = next_unfilled_slot
 
@@ -230,7 +228,7 @@ def home():
 
         if intent == 'explain_term':
             return explain_term(content)
-        elif intent == 'explain_term - yes':
+        elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
         elif intent == 'explain_previous_term':
             return explain_term(content, unstandardize_token(last_unfilled_field))
