@@ -1,6 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from document import Document
-from dependent import Dependent
 from user import User
 from response import Response
 import pyrebase
@@ -134,6 +133,12 @@ def demographics_fill(content):
     if next_unfilled_slot is None:
         response = "We're all done filling out your demographics. Let's move on."
         last_intent = 'demographic_fill.dependents'
+    elif document.dependent_being_filled is not None:
+        print("about to get the next question for dependent")
+        response = responses.get_next_dependent_response(
+            next_unfilled_slot,
+            document.dependent_being_filled.num
+        )
     else:
         response = responses.get_next_response(next_unfilled_slot)
 
@@ -201,7 +206,21 @@ def third_party_and_sign(content):
 
 
 def fallback(content):
-    return
+    global last_unfilled_field
+    global responses
+    global document
+
+    if last_unfilled_field == '':
+        last_unfilled_field = document.demographics_slots_to_fill[0]
+    
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    data['fulfillment_messages'] = [{"text": {"text": ["I didn't get that. Can you say it again?"]}}]
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session)
+
+    return jsonify(data)
 
 
 def push_demographic_info_to_database(content):
@@ -224,7 +243,6 @@ def home():
 
         intent = content['queryResult']['intent']['displayName']
         global last_unfilled_field
-        print(intent)
 
         if intent == 'explain_term':
             return explain_term(content)
