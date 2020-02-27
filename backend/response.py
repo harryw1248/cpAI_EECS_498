@@ -14,7 +14,7 @@ class Response:
             'filing_status': 'What is your filing status?',
             'dual_status_alien': "Are you a dual-status alien?",
             'blind': "Are you blind?",
-            'num_dependents': "How many dependents do you have?"
+            'num_dependents': "How many dependents are you claiming?"
         }
 
         self.demographics_spouse = {

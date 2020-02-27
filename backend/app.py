@@ -51,14 +51,8 @@ def explain_term_yes(content):
     with open('response.json') as f:
         data = json.load(f)
 
-    response = ''
-
-
-    for slot in document.demographics_slots_to_fill:
-        status = document.check_status(slot)
-        if status is not None:
-            response = responses.demographics[status]
-            break
+    next_unfilled_slot = document.find_next_unfilled_slot_demographics()
+    response = responses.get_next_response(next_unfilled_slot)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
