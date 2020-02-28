@@ -54,7 +54,7 @@ def explain_term_yes(content):
     next_unfilled_slot = document.find_next_unfilled_slot_demographics()
     response = responses.get_next_response(next_unfilled_slot,  document)
 
-    output_context = responses.generate_output_context(last_unfilled_field, 1, session)
+    output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
     data['output_contexts'] = output_context
     return jsonify(data)
@@ -85,8 +85,8 @@ def explain_term(content, extract=None):
     if extract == "filing status":
         global document
         if document.demographic_user_info['is-married']:
-            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately,"\
-                        "each of you will fill out your own tax form. Most of the time, we'll encourage you to file"\
+            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately, "\
+                        "each of you will fill out your own tax form. Most of the time, we'll encourage you to file "\
                         "together, but if one of you has significant itemized deductions, it may be better to file together. " \
                        "Later on, we'll let you know if it's better to file separetely. Does that make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
@@ -152,11 +152,12 @@ def demographics_fill(content):
 
     output_context = None
     if next_unfilled_slot is not None:
-        output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+        '''
         if next_unfilled_slot == 'filing_status' and document.demographic_user_info['filing_status'] == 'single':
             output_context = responses.generate_output_context('dual_status_alien', 1, session)
             next_unfilled_slot = 'dual_status_alien'
-
+        '''
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
@@ -218,7 +219,7 @@ def fallback(content):
 
     session = content['session']
     data['fulfillment_messages'] = [{"text": {"text": ["I didn't get that. Can you say it again?"]}}]
-    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session)
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
 
     return jsonify(data)
 

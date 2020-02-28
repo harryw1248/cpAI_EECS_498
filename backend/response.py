@@ -38,12 +38,11 @@ class Response:
             'zip-code': 'prompt_address',
             'social_security': 'prompt_social_security',
             'is-married': 'prompt_is_married',
-            'filing_status': 'prompt_filing_status',
-            'blind': 'prompt_blind',
             'dual_status_alien': "prompt_dual_status_alien",
+            'blind': 'prompt_blind',
             'num_dependents': 'prompt_num_dependents',
             'filing_status_married': 'prompt_filing_status_married',
-            'filing_status_HOH_widower': 'prompt_filing_status',
+            'filing_status_HOH_widower': 'prompt_filing_status_widower',
             'spouse-given-name': "prompt_spouse_name_age",
             'spouse-last-name': "prompt_spouse_name_age",
             'spouse-age': "prompt_spouse_name_age",
@@ -86,17 +85,19 @@ class Response:
                                       'income-confirm', 'income-was-confirmed'}
 
 
+    #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
+    # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
+    # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
             if current_document.is_married:
                 return self.demographics['filing_status_married']
-            elif not current_document.is_married and len(current_document.dependents) == 0:
+            elif not current_document.is_married and current_document.demographic_user_info['num_dependents'] == 0:
                 current_document.demographic_user_info['filing_status'] = 'single'
-                return self.demographics['dual_status_alien']
+                return "Your filing status is 'single.' " + self.demographics['dual_status_alien']
             else:
-                print("here")
                 return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics:
             return self.demographics[next_unfilled_slot]
@@ -110,9 +111,19 @@ class Response:
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 
-    def generate_output_context(self, slot, lifespan, session):
-        print("inside generate_output_context")
-        context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
+    def generate_output_context(self, slot, lifespan, session, current_document):
+        if slot == "filing_status":
+            if current_document.is_married:
+                context_identifier = session + "/contexts/" + 'prompt_filing_status_married'
+            elif not current_document.is_married and current_document.demographic_user_info['num_dependents'] == 0:
+                context_identifier = session + "/contexts/" + 'prompt_dual_status_alien'
+            else:
+                context_identifier = session + "/contexts/" + 'prompt_filing_status_widower'
+
+        else:
+            context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
+        print("context:" + context_identifier)
+
         context = [{
             "name": context_identifier,
             "lifespan_count": lifespan

@@ -97,6 +97,15 @@ class Document:
                 self.is_married = True
             else:
                 self.is_married = False
+        elif "filing_status_married" in current_intent:
+            self.demographic_user_info['filing_status'] = parameters['filing-status-married']
+        elif "widower" in current_intent:
+            print(parameters['is-widower'])
+
+            if parameters['is-widower'] == 'yes': # May need to slightly tweak in future to enforce dependent is CHILD
+                self.demographic_user_info['filing_status'] = 'qualifying widow'
+            else:
+                self.demographic_user_info['filing_status'] = 'head of household'
 
         elif "spouse" in current_intent:
             for slot, value in self.demographic_spouse_info.items():
