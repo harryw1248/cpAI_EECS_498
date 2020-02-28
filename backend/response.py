@@ -12,11 +12,11 @@ class Response:
             'zip-code': "What's your ZIP code?",
             'social_security': 'Please type in your social security number (SSN).',
             'is-married': 'Are you currently married?',
-            'filing_status': ["Are you filing as 'single', 'head-of-household', or a 'qualified widower'?",
-                              'Are you filing jointly with your spouse or filing separately?'],
+            'num_dependents': "How many dependents are you claiming?",
+            'filing_status_married': 'Are you filing jointly with your spouse or filing separately?',
+            'filing_status_HOH_widower': "Have you had a spouse die within the last two tax years?",
             'dual_status_alien': "Are you a dual-status alien?",
-            'blind': "Are you blind?",
-            'num_dependents': "How many dependents are you claiming?"
+            'blind': "Are you blind?"
         }
 
         self.demographics_spouse = {
@@ -42,6 +42,8 @@ class Response:
             'blind': 'prompt_blind',
             'dual_status_alien': "prompt_dual_status_alien",
             'num_dependents': 'prompt_num_dependents',
+            'filing_status_married': 'prompt_filing_status_married',
+            'filing_status_HOH_widower': 'prompt_filing_status_HOH_widower',
             'spouse-given-name': "prompt_spouse_name_age",
             'spouse-last-name': "prompt_spouse_name_age",
             'spouse-age': "prompt_spouse_name_age",
@@ -51,7 +53,8 @@ class Response:
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
-                                            'social_security', 'is-married', 'filing_status', 'blind', 'dual_status_alien']
+                                            'social_security', 'is-married', 'num-dependents', 'filing_status', 'blind',
+                                            'dual_status_alien']
 
         self.demographics_spouse_question_order = [ 'spouse-given-name', 'spouse-last-name', 'spouse-age','spouse-ssn',
                                                    'spouse-blind']
@@ -83,14 +86,17 @@ class Response:
                                       'income-confirm', 'income-was-confirmed'}
 
 
-    def get_next_response(self, next_unfilled_slot, is_married=None):
+    def get_next_response(self, next_unfilled_slot, current_document):
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
-            if is_married:
-                return self.demographics['filing_status'][1]
+            if current_document.is_married:
+                return self.demographics['filing_status_married']
+            elif not current_document.is_married and len(current_document.num_dependents) == 0:
+                current_document.demographics['filing_status'] = 'single'
+                return self.demographics['dual_status_alien']
             else:
-                return self.demographics['filing_status'][0]
+                return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.demographics_dependent_question:

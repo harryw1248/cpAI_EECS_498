@@ -44,7 +44,7 @@ class Document:
         self.dependent_being_filled = None
         self.dependents = []
         self.demographics_slots_to_fill_if_married = ['spouse-given-name', 'spouse-last-name', 'spouse-age', 'spouse-ssn', 'spouse-blind']
-        self.bool_statuses = ['is-married', 'dual_status_alien', 'blind']
+        self.bool_statuses = ['dual_status_alien', 'blind']
         self.is_married = False
 
     def check_status(self, slot, slot_dictionary):
@@ -91,12 +91,7 @@ class Document:
         for slot, value in self.demographic_user_info.items():
             if value is None and slot in parameters and parameters[slot] is not '':
                 self.demographic_user_info[slot] = parameters[slot]
-        '''
-        if "filing_status" in current_intent:
-            if parameters['filing_status'] == 'married filing jointly' 
-            or parameters['filing_status'] == 'married filing separately':
-                self.is_married = True
-        '''
+
         if "is-married" in current_intent:
             if parameters['is-married'] == 'yes':
                 self.is_married = True

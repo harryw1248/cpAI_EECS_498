@@ -52,7 +52,7 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot_demographics()
-    response = responses.get_next_response(next_unfilled_slot,  is_married=document.is_married)
+    response = responses.get_next_response(next_unfilled_slot,  document)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
@@ -81,6 +81,19 @@ def explain_term(content, extract=None):
     else:
         response = "Great question, " + extract + " is " + firebase_data[tokenized_extract] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+
+    if extract == "filing status":
+        global document
+        if document.demographic_user_info['is-married']:
+            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately,"\
+                        "each of you will fill out your own tax form. Most of the time, we'll encourage you to file"\
+                        "together, but if one of you has significant itemized deductions, it may be better to file together. " \
+                       "Later on, we'll let you know if it's better to file separetely. Does that make sense?"
+            data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+        else:
+            response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
+                       "which brings certain tax deductions.  Does that make sense?"
+            data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     global last_intent
     last_intent = 'explain_term'
@@ -134,11 +147,15 @@ def demographics_fill(content):
             document.dependent_being_filled.num
         )
     else:
-        response = responses.get_next_response(next_unfilled_slot, is_married=document.is_married)
+        response = responses.get_next_response(next_unfilled_slot, document)
+        print("next_unfilled_slot:" + next_unfilled_slot + " " + response)
 
     output_context = None
     if next_unfilled_slot is not None:
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
+        if next_unfilled_slot == 'filing_status' and document.demographic_user_info['filing_status'] == 'single':
+            output_context = responses.generate_output_context('dual_status_alien', 1, session)
+            next_unfilled_slot = 'dual_status_alien'
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
