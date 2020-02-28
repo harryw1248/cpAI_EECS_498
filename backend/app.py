@@ -154,8 +154,9 @@ def demographics_fill(content):
     if next_unfilled_slot is not None:
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
         if next_unfilled_slot == 'filing_status' and document.demographic_user_info['filing_status'] == 'single':
-            output_context = responses.generate_output_context('num_dependents', 1, session)
-            next_unfilled_slot = 'num_dependents'
+            output_context = responses.generate_output_context('dual_status_alien', 1, session)
+            next_unfilled_slot = 'dual_status_alien'
+
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
@@ -171,19 +172,9 @@ def demographics_fill(content):
     user.update_demographic_info(document)
     return jsonify(data)
 
+
 def demographics_fill_dependents(content):
     return None
-
-
-# def handle_location_parameter(parameters, slot, value):
-#     global demographic_user_info
-#     global demographics_slots_to_fill
-
-#     for location_key, location_value in demographic_user_info['location'].items():
-#         # There may be multiple location parameters per utterance
-#         for location_object in parameters[slot]:
-#             if location_value == '' and parameters[slot] != '' and location_object[location_key] != '':
-#                 demographic_user_info['location'][location_key] = location_object[location_key]
 
 
 def welcome(content):
@@ -191,8 +182,6 @@ def welcome(content):
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
-
-
     return jsonify(data)
 
 

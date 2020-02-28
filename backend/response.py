@@ -43,7 +43,7 @@ class Response:
             'dual_status_alien': "prompt_dual_status_alien",
             'num_dependents': 'prompt_num_dependents',
             'filing_status_married': 'prompt_filing_status_married',
-            'filing_status_HOH_widower': 'prompt_filing_status_HOH_widower',
+            'filing_status_HOH_widower': 'prompt_filing_status',
             'spouse-given-name': "prompt_spouse_name_age",
             'spouse-last-name': "prompt_spouse_name_age",
             'spouse-age': "prompt_spouse_name_age",
@@ -53,7 +53,7 @@ class Response:
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
-                                            'social_security', 'is-married', 'num-dependents', 'filing_status', 'blind',
+                                            'social_security',   'is-married', 'num-dependents', 'filing_status', 'blind',
                                             'dual_status_alien']
 
         self.demographics_spouse_question_order = [ 'spouse-given-name', 'spouse-last-name', 'spouse-age','spouse-ssn',
@@ -94,8 +94,9 @@ class Response:
                 return self.demographics['filing_status_married']
             elif not current_document.is_married and len(current_document.dependents) == 0:
                 current_document.demographic_user_info['filing_status'] = 'single'
-                return self.demographics['num_dependents']
+                return self.demographics['dual_status_alien']
             else:
+                print("here")
                 return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics:
             return self.demographics[next_unfilled_slot]

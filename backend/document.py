@@ -12,10 +12,10 @@ class Document:
                                         'zip-code': None,
                                         'social_security': None,
                                         'is-married': None,
+                                        'num_dependents': None,
                                         'filing_status': None,
                                         'blind': None,
                                         'dual_status_alien': None,
-                                        'num_dependents': None,
                                     }
 
         self.demographic_spouse_info = {    'spouse-given-name': None,
@@ -35,10 +35,10 @@ class Document:
                                             'zip-code',
                                             'social_security',
                                             'is-married',
+                                            'num_dependents',
                                             'filing_status',
                                             'dual_status_alien',
                                             'blind',
-                                            'num_dependents',
                                             ]
 
         self.dependent_being_filled = None
