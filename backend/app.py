@@ -154,8 +154,8 @@ def demographics_fill(content):
     if next_unfilled_slot is not None:
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session)
         if next_unfilled_slot == 'filing_status' and document.demographic_user_info['filing_status'] == 'single':
-            output_context = responses.generate_output_context('dual_status_alien', 1, session)
-            next_unfilled_slot = 'dual_status_alien'
+            output_context = responses.generate_output_context('num_dependents', 1, session)
+            next_unfilled_slot = 'num_dependents'
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:

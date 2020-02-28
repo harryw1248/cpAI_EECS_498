@@ -92,9 +92,9 @@ class Response:
         elif "filing_status" in next_unfilled_slot:
             if current_document.is_married:
                 return self.demographics['filing_status_married']
-            elif not current_document.is_married and len(current_document.num_dependents) == 0:
-                current_document.demographics['filing_status'] = 'single'
-                return self.demographics['dual_status_alien']
+            elif not current_document.is_married and len(current_document.dependents) == 0:
+                current_document.demographic_user_info['filing_status'] = 'single'
+                return self.demographics['num_dependents']
             else:
                 return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics:
