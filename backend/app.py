@@ -52,7 +52,7 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot_demographics()
-    response = responses.get_next_response(next_unfilled_slot)
+    response = responses.get_next_response(next_unfilled_slot,  is_married=document.is_married)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
@@ -134,7 +134,7 @@ def demographics_fill(content):
             document.dependent_being_filled.num
         )
     else:
-        response = responses.get_next_response(next_unfilled_slot)
+        response = responses.get_next_response(next_unfilled_slot, is_married=document.is_married)
 
     output_context = None
     if next_unfilled_slot is not None:

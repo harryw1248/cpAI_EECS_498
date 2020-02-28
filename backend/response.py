@@ -11,7 +11,9 @@ class Response:
             'geo-state': 'What state do you live in?',
             'zip-code': "What's your ZIP code?",
             'social_security': 'Please type in your social security number (SSN).',
-            'filing_status': 'What is your filing status?',
+            'is-married': 'Are you currently married?',
+            'filing_status': ["Are you filing as 'single', 'head-of-household', or a 'qualified widower'?",
+                              'Are you filing jointly with your spouse or filing separately?'],
             'dual_status_alien': "Are you a dual-status alien?",
             'blind': "Are you blind?",
             'num_dependents': "How many dependents are you claiming?"
@@ -35,6 +37,7 @@ class Response:
             'city': 'prompt_address',
             'zip-code': 'prompt_address',
             'social_security': 'prompt_social_security',
+            'is-married': 'prompt_is_married',
             'filing_status': 'prompt_filing_status',
             'blind': 'prompt_blind',
             'dual_status_alien': "prompt_dual_status_alien",
@@ -48,7 +51,7 @@ class Response:
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
-                                            'social_security', 'filing_status', 'blind', 'dual_status_alien']
+                                            'social_security', 'is-married', 'filing_status', 'blind', 'dual_status_alien']
 
         self.demographics_spouse_question_order = [ 'spouse-given-name', 'spouse-last-name', 'spouse-age','spouse-ssn',
                                                    'spouse-blind']
@@ -80,9 +83,14 @@ class Response:
                                       'income-confirm', 'income-was-confirmed'}
 
 
-    def get_next_response(self, next_unfilled_slot):
+    def get_next_response(self, next_unfilled_slot, is_married=None):
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
+        elif "filing_status" in next_unfilled_slot:
+            if is_married:
+                return self.demographics['filing_status'][1]
+            else:
+                return self.demographics['filing_status'][0]
         elif next_unfilled_slot in self.demographics:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.demographics_dependent_question:
@@ -91,7 +99,7 @@ class Response:
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num):
         if next_unfilled_slot == 'given-name':
-            return ('What is your ' + self.nth[dependent_num] + " dependent's full name and age?")
+            return ('What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?")
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 
