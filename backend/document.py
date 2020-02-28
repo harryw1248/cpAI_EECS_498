@@ -89,7 +89,7 @@ class Document:
             return
 
         for slot, value in self.demographic_user_info.items():
-            if value is None and slot in parameters and parameters[slot] is not '':
+            if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
         if "is-married" in current_intent:
@@ -100,7 +100,7 @@ class Document:
 
         elif "spouse" in current_intent:
             for slot, value in self.demographic_spouse_info.items():
-                if value is None and slot in parameters and parameters[slot] is not '':
+                if value is None and slot in parameters and parameters[slot] != '':
                     self.demographic_spouse_info[slot] = parameters[slot]
 
         for status in self.bool_statuses:

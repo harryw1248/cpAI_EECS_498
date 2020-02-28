@@ -106,7 +106,7 @@ class Response:
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num):
         if next_unfilled_slot == 'given-name':
-            return ('What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?")
+            return ('What is your ' + self.nth[dependent_num] + " dependent's full name and age?")
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 
