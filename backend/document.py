@@ -47,6 +47,12 @@ class Document:
         self.bool_statuses = ['dual_status_alien', 'blind']
         self.is_married = False
 
+        self.income_and_finances_slots_to_fill = [ 'total_wages_salaries_tips',
+                                                   'stocks_bonds',
+                                                   'own_business',
+                                                   'pensions_annuities',
+                                                   'social_security_benefits']
+
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
             return "Error"
@@ -115,3 +121,6 @@ class Document:
         for status in self.bool_statuses:
             if status in current_intent:
                 self.demographic_user_info[status] = True if 'yes' in current_intent else False
+
+    def update_document_income_and_finances(self, parameters, current_intent):
+        return
