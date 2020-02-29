@@ -47,6 +47,12 @@ class Document:
         self.bool_statuses = ['dual_status_alien', 'blind']
         self.is_married = False
 
+        self.income_and_finances_user_info = { 'total_wages_salaries_tips': None,
+                                               'stocks_bonds': None,
+                                               'own_business': None,
+                                               'pensions_annuities': None,
+                                               'social_security_benefits': None}
+
         self.income_and_finances_slots_to_fill = [ 'total_wages_salaries_tips',
                                                    'stocks_bonds',
                                                    'own_business',
