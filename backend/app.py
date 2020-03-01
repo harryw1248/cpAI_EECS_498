@@ -218,13 +218,7 @@ def income_and_finances(content):
 
     if next_unfilled_slot is None:
         response = "We're all done filling out your incomes and finances. Let's move on."
-        last_intent = 'demographic_fill.dependents'
-    elif document.dependent_being_filled is not None:
-        print("about to get the next question for dependent")
-        response = responses.get_next_dependent_response(
-            next_unfilled_slot,
-            document.dependent_being_filled.num
-        )
+        last_intent = 'income_and_finances_fill.social_security_benefits'
     else:
         response = responses.get_next_response(next_unfilled_slot, document)
         print("next_unfilled_slot:" + next_unfilled_slot + " " + response)
@@ -243,8 +237,8 @@ def income_and_finances(content):
     global user
 
     # data[]  # set followup event
-    last_intent = 'demographics_fill'
-    user.update_demographic_info(document)
+    last_intent = 'income_finances_fill'
+    user.update_document_income_and_finances(document)
     return jsonify(data)
 
 

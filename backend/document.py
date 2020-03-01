@@ -93,6 +93,13 @@ class Document:
             return self.dependent_being_filled.find_next_unfilled_slot()
         return None
 
+    def find_next_unfilled_slot_income_and_finances(self):
+
+        for slot, value, in self.income_and_finances_user_info.items():
+            if value is None and value != '':
+                return slot
+        return None
+
     def update_document_demographics(self, parameters, current_intent):
         # Check if we are currently working on a dependent
         # Beware of change_field!!!
@@ -129,4 +136,9 @@ class Document:
                 self.demographic_user_info[status] = True if 'yes' in current_intent else False
 
     def update_document_income_and_finances(self, parameters, current_intent):
-        return
+        # Check if we are currently working on a dependent
+        # Beware of change_field!!!
+
+        for slot, value in self.income_and_finances_user_info.items():
+            if value is None and slot in parameters and parameters[slot] != '':
+                self.income_and_finances_user_info[slot] = parameters[slot]
