@@ -153,8 +153,13 @@ class Document:
         
     def update_slot(self, slot_name, new_slot_value):
         if self.sections[self.current_section_index] == 'demographics':
-            self.demographic_user_info[slot_name] = new_slot_value
+            if (self.dependent_being_filled is not None and 
+                slot_name in self.dependent_being_filled.slots):
+                self.dependent_being_filled.slots[slot_name] = new_slot_value
+            elif slot_name in self.demographic_user_info:
+                self.demographic_user_info[slot_name] = new_slot_value
+            elif slot_name in self.demographic_spouse_info:
+                self.demographic_spouse_info[slot_name] = new_slot_value
         elif self.sections[self.current_section_index] == 'income':
+            # TODO
             pass
-
-    
