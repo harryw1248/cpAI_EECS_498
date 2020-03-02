@@ -27,6 +27,7 @@ document = Document()
 responses = Response()
 last_intent = ""
 last_unfilled_field = ""
+last_term_explained = ""
 
 intent_to_explainable_term = {}
 
@@ -60,14 +61,57 @@ def explain_term_yes(content):
     return jsonify(data)
 
 
+def explain_term_repeat(content):
+    global last_unfilled_field
+    global responses
+    global document
+    global last_intent
+    global last_term_explained
+    session = content['session']
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    firebase_data = db.child("TERMINOLOGY").get().val()
+
+    next_unfilled_slot = document.find_next_unfilled_slot_demographics()
+    print(last_unfilled_field)
+    # response = responses.get_next_response(next_unfilled_slot,  document)
+
+    output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    data['fulfillment_messages'] = [
+        {
+        "text": {
+          "text": [
+            "I am sorry to hear that. Here is a link that should provide you with some more details:"
+          ]
+        }
+      },
+      {
+        "card": {
+          "buttons": [
+            {
+              "text": firebase_data[last_term_explained]["link"],
+              "postback": firebase_data[last_term_explained]["link"]
+            }
+          ]
+        }
+      }]
+
+    data['output_contexts'] = output_context
+    return jsonify(data)
+
 
 def explain_term(content, extract=None):
+    global last_term_explained
+
     if extract is None:
         extract = content['queryResult']['parameters']['terminology']
     else:
         print(extract)
 
     tokenized_extract = standardize_token(extract)
+    last_term_explained = tokenized_extract
     firebase_data = db.child("TERMINOLOGY").get().val()
 
     with open('response.json') as f:
@@ -79,7 +123,10 @@ def explain_term(content, extract=None):
                 "Sorry, I don't have a working definition for " + extract + ". Do you want to go back to filling out the form?"]}}]
 
     else:
-        response = "Great question, " + extract + " is " + firebase_data[tokenized_extract] + ". Does that make sense?"
+        print(firebase_data[tokenized_extract]["definition"])
+        print(extract)
+        print(tokenized_extract)
+        response = "Great question, " + extract + " is " + firebase_data[tokenized_extract]["definition"] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     if extract == "filing status":
@@ -249,6 +296,8 @@ def home():
             return explain_term(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
+        elif intent == 'explain_term - repeat':
+            return explain_term_repeat(content)
         elif intent == 'explain_previous_term':
             return explain_term(content, unstandardize_token(last_unfilled_field))
         elif intent == 'deductions':
