@@ -53,3 +53,32 @@ class User:
     def update_demographic_info(self, document):
         for slot in document.demographics_slots_to_fill:
             self.demographics[slot] = document.demographic_user_info[slot]
+
+
+    def update_dummy(self):
+        self.demographics["given-name"] = "Bob"
+        self.demographics["last-name"] = "Jones"
+        self.demographics["street-address"] = "64 Reinhart Street"
+        self.demographics["city"] = "Oakland"
+        self.demographics['state'] = "California"
+        self.demographics['zip-code'] = "08894"
+        self.demographics['social_security'] = "123456789"
+        self.demographics['country'] = "USA"
+        self.demographics["age"] = "67"
+        self.demographics['occupation'] = "Plumber"
+        self.demographics["filing_status"] = "Single"
+
+
+        self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
+                                     'mfs_spouse': '', 'spouse-blind': False}], True]
+
+        self.HOH_QW_child = ""
+        self.PO = [[False], True]   # For now, don't specifically prompt user for this. He/she can modify on own
+        self.apt_num = [["3"], True]
+        self.PES = [[False, False], True]
+        self.is_foreign_address = [[False, False], True]
+        self.foreign_country_info = [["", "", ""], True]
+        self.user_age_blind = [[False, False], True]
+        self.spouse_age_blind = [[False, False], True]
+        self.list_of_dependents = [[], True]
+        self.uses_standardized_deductions = [[True], True]
