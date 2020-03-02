@@ -122,7 +122,6 @@ class Response:
 
         else:
             context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
-        print("context:" + context_identifier)
 
         context = [{
             "name": context_identifier,
