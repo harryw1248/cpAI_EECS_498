@@ -213,6 +213,9 @@ def demographics_fill(content):
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
 
+    if next_unfilled_slot is 'total_wages_salaries_tips':
+        data['output_contexts'] = 'prompt_wages_salaries_tips'
+
     global user
 
     # data[]  # set followup event
@@ -272,7 +275,7 @@ def income_and_finances(content):
 
     output_context = None
     if next_unfilled_slot is not None:
-        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)=
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:

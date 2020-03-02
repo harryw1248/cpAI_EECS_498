@@ -48,7 +48,8 @@ class Response:
             'spouse-age': "prompt_spouse_name_age",
             'spouse-ssn': "prompt_spouse_SSN",
             'spouse-blind': "prompt_spouse_blind",
-            'relationship_to_filer': "prompt_dependent_relation"
+            'relationship_to_filer': "prompt_dependent_relation",
+            'total_wages_salaries_tips': "prompt_wages_salaries_tips"
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -103,6 +104,8 @@ class Response:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.demographics_dependent_question:
             return self.demographics_dependent_question[next_unfilled_slot]
+        else:
+            return self.income_finances['wages']
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num):

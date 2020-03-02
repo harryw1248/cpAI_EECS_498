@@ -91,13 +91,15 @@ class Document:
             self.dependent_being_filled = Dependent()
             self.dependent_being_filled.num = len(self.dependents) + 1
             return self.dependent_being_filled.find_next_unfilled_slot()
-        return None
+
+        return self.income_and_finances_slots_to_fill[0]
 
     def find_next_unfilled_slot_income_and_finances(self):
 
         for slot, value, in self.income_and_finances_user_info.items():
             if value is None and value != '':
                 return slot
+
         return None
 
     def update_document_demographics(self, parameters, current_intent):
