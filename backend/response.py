@@ -49,7 +49,11 @@ class Response:
             'spouse-ssn': "prompt_spouse_SSN",
             'spouse-blind': "prompt_spouse_blind",
             'relationship_to_filer': "prompt_dependent_relation",
-            'total_wages_salaries_tips': "prompt_wages_salaries_tips"
+            'change_field_value': "prompt_change_field_value",
+            'change_field_confirm': "prompt_change_field_confirm",
+            'confirm_section': "prompt_confirm",
+            'wages': "prompt_money_value",
+            'capital-gains': "prompt_money_value"
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -74,16 +78,20 @@ class Response:
             4: "fourth",
         }
 
-        self.income_finances = {'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
-                                'capital-gains': 'Do you own any stocks or bonds?',
-                                'owns-business': 'Do you own a business?',
-                                'pensions-annuities': 'What are you pensions and annuities?',
-                                'ss-benefits': 'How much have you claimed in social security this past year?',
-                                'income-confirm': 'Please check the current income section. Are there any modifications you would like to make?',
-                                'income-was-confirmed': "Great, we're almost done!"}
+        self.income_finances = {
+            'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
+            'capital-gains': 'Do you own any stocks or bonds?',
+            'owns-business': 'Do you own a business?',
+            'pensions-annuities': 'What are you pensions and annuities?',
+            'ss-benefits': 'How much have you claimed in social security this past year?',
+            'income-confirm': 'Please check the current income section. Are there any modifications you would like to make?',
+            'income-was-confirmed': "Great, we're almost done!"
+        }
 
-        self.income_finances_order = {'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits',
-                                      'income-confirm', 'income-was-confirmed'}
+        self.income_finances_order = [
+            'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits',
+            'income-confirm', 'income-was-confirmed'
+        ]
 
 
     #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
@@ -102,10 +110,9 @@ class Response:
                 return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics:
             return self.demographics[next_unfilled_slot]
-        elif next_unfilled_slot in self.demographics_dependent_question:
-            return self.demographics_dependent_question[next_unfilled_slot]
-        else:
-            return self.income_finances['wages']
+        elif next_unfilled_slot in self.income_finances:
+            return self.income_finances[next_unfilled_slot]
+        print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num):
