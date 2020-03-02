@@ -76,7 +76,6 @@ def explain_term_repeat(content):
     firebase_data = db.child("TERMINOLOGY").get().val()
 
     next_unfilled_slot = document.find_next_unfilled_slot()
-    print(last_unfilled_field)
     # response = responses.get_next_response(next_unfilled_slot,  document)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
@@ -153,7 +152,6 @@ def change_field(content):
     global last_field_changed
     global document
     global responses
-    print("woo inside change_field")
     parameters = content['queryResult']['parameters']
     session = content['session']
     intent = content['queryResult']['intent']['displayName']
@@ -192,7 +190,6 @@ def change_field_repeat_and_value(content):
     global last_field_changed
     global document
     global responses
-    print("woo inside change_field_repeat")
     parameters = content['queryResult']['parameters']
     session = content['session']
     intent = content['queryResult']['intent']['displayName']
@@ -207,6 +204,7 @@ def change_field_repeat_and_value(content):
         response = "Sorry, let's try that again. Can you tell me what you want the new value to be?"
         output_context = responses.generate_output_context('change_field_value', 1, session, document)
     else:
+        print("New value is", parameters['value'])
         if intent == 'change_field - repeat':
             response = "Sorry, does this look better?"
         else:
@@ -228,20 +226,24 @@ def change_field_confirm(content):
     global document
     global responses
     global last_field_changed
-
+    session = content['session']
+    output_context = None
     next_unfilled_slot = document.find_next_unfilled_slot()
     if document.dependent_being_filled is not None:
         response = responses.get_next_dependent_response(
             next_unfilled_slot,
             document.dependent_being_filled.num
         )
-    else:
+    elif (next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info):
         response = responses.get_next_response(next_unfilled_slot, document)
+    # TODO: change this :c 
+    else:
+        response = "We're all done filling out your demographics. Does everything look correct?"
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
 
-    output_context = None
     if next_unfilled_slot is not None:
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
-        last_unfilled_field = next_unfilled_slot
+        last_unfilled_field = next_unfilled_slot        
 
     with open('response.json') as f:
         data = json.load(f)
@@ -285,20 +287,21 @@ def confirm_no(content):
     output_context = None
     if parameters['field'] == '':
         response = "What would you like to change?"
+        output_context = responses.generate_output_context('change_field_value', 1, session, document)
     else:
         last_field_changed = parameters['field']
         if parameters['value'] == '':
             response = "What would you like the new value to be?"
             output_context = responses.generate_output_context('change_field_value', 1, session, document)
         else:
+            print("New value is", parameters['value'])
             document.update_slot(last_field_changed, parameters['value'])
             response = "Alright, does this look better?"
-    output_context = responses.generate_output_context('change_field_value', 1, session, document)
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    data['output_contexts'] = None
+    data['output_contexts'] = output_context
     user.update_demographic_info(document)
     return jsonify(data)
 
@@ -351,13 +354,10 @@ def demographics_fill(content):
         response = "We're all done filling out your demographics. Does everything look correct?"
     
     output_context = None
-    if next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
+    if (next_unfilled_slot in document.demographic_user_info 
+        or next_unfilled_slot in document.demographic_spouse_info
+        or document.dependent_being_filled is not None):
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
-        '''
-        if next_unfilled_slot == 'filing_status' and document.demographic_user_info['filing_status'] == 'single':
-            output_context = responses.generate_output_context('dual_status_alien', 1, session)
-            next_unfilled_slot = 'dual_status_alien'
-        '''
     else:
         output_context = responses.generate_output_context('confirm_section', 1, session, document)
     last_unfilled_field = next_unfilled_slot
