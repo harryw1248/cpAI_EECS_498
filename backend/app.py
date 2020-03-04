@@ -274,6 +274,8 @@ def confirm_yes(content):
     data['output_contexts'] = output_context
     last_intent = 'confirm - yes'
     user.update_demographic_info(document)
+    print("output_context: ")
+    print(output_context)
     return jsonify(data)
 
 
@@ -360,16 +362,16 @@ def demographics_fill(content):
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
         output_context = responses.generate_output_context('confirm_section', 1, session, document)
+
     last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context")
+    print(output_context)
     data['output_contexts'] = output_context
-
-    if next_unfilled_slot is 'total_wages_salaries_tips':
-        data['output_contexts'] = 'prompt_wages_salaries_tips'
 
     global user
 
@@ -380,10 +382,54 @@ def demographics_fill(content):
 
 
 def income_finances_fill(content):
-    response = "This is in progress we still gotta code it :^)"
+    # for print debugging
+    print("income_finances_fill called")
+    parameters = content['queryResult']['parameters']
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
+
+    response = None
+
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    # first pass: update params on document object
+    document.update_slot(parameters, current_intent)
+
+    # second pass: query next thing needed
+    next_unfilled_slot = document.find_next_unfilled_slot()
+    print("next_unfilled_slot: " + str(next_unfilled_slot))
+
+    if next_unfilled_slot is None:
+        response = "We're all done filling out your income and finances. Does everything look correct?"
+        last_intent = 'income_and_finances_fill.social_security_benefits'
+    else:
+        response = responses.get_next_response(next_unfilled_slot, document)
+    
+    output_context = None
+    if (next_unfilled_slot in document.income_user_info):
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+    else:
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
+    last_unfilled_field = next_unfilled_slot
+
     with open('response.json') as f:
         data = json.load(f)
+
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context")
+    print(output_context)
+    data['output_contexts'] = output_context
+
+    global user
+
+    last_intent = 'income_and_finances_fill'
+    user.update_income_info(document)
     return jsonify(data)
 
 
@@ -408,51 +454,7 @@ def deductions(content):
 
 
 def income_and_finances(content):
-    # for print debugging
-    parameters = content['queryResult']['parameters']
-    global responses
-    global user
-    global document
-    global last_intent
-    global last_unfilled_field
-
-    response = None
-
-    current_intent = content['queryResult']['intent']['displayName']
-
-    # Session necessary to generate context identifier
-    session = content['session']
-
-    # first pass: update params on document object
-    document.update_document_income_and_finances(parameters, current_intent)
-
-    # second pass: query next thing needed
-    next_unfilled_slot = document.find_next_unfilled_slot_demographics()
-
-    if next_unfilled_slot is None:
-        response = "We're all done filling out your incomes and finances. Let's move on."
-        last_intent = 'income_and_finances_fill.social_security_benefits'
-    else:
-        response = responses.get_next_response(next_unfilled_slot, document)
-        print("next_unfilled_slot:" + next_unfilled_slot + " " + response)
-
-    output_context = None
-    if next_unfilled_slot is not None:
-        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
-    last_unfilled_field = next_unfilled_slot
-
-    with open('response.json') as f:
-        data = json.load(f)
-
-    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    data['output_contexts'] = output_context
-
-    global user
-
-    # data[]  # set followup event
-    last_intent = 'income_finances_fill'
-    user.update_document_income_and_finances(document)
-    return jsonify(data)
+    return
 
 
 def refund_and_owe(content):
@@ -517,7 +519,7 @@ def home():
         elif intent == 'deductions':
             return deductions(content)
         elif intent == 'income_and_finances':
-            return income_and_finances(content)
+            return income_and_finances_fill(content)
         elif intent == 'refund_and_owe':
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':
