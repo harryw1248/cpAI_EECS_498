@@ -4,7 +4,8 @@ class Document:
     def __init__(self):
         self.sections = [
             'demographics',
-            'income'
+            'income',
+            'refund'
         ]
 
         self.demographic_user_info = {  
@@ -51,12 +52,18 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            'capital-gain': None
+            'capital-gains': None,
+            'owns-business': None,
+            'pensions-annuities': None,
+            'ss-benefits': None
         }
 
         self.income_slots_to_fill = [
             'wages',
             'capital-gains',
+            'owns-business',
+            'pensions-annuities',
+            'ss-benefits',
         ]
 
         self.dependent_being_filled = None
@@ -65,18 +72,6 @@ class Document:
         self.bool_statuses = ['dual_status_alien', 'blind']
         self.is_married = False
         self.current_section_index = 0
-
-        self.income_and_finances_user_info = { 'total_wages_salaries_tips': None,
-                                               'stocks_bonds': None,
-                                               'own_business': None,
-                                               'pensions_annuities': None,
-                                               'social_security_benefits': None}
-
-        self.income_and_finances_slots_to_fill = [ 'total_wages_salaries_tips',
-                                                   'stocks_bonds',
-                                                   'own_business',
-                                                   'pensions_annuities',
-                                                   'social_security_benefits']
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -117,15 +112,6 @@ class Document:
             self.dependent_being_filled = Dependent()
             self.dependent_being_filled.num = len(self.dependents) + 1
             return self.dependent_being_filled.find_next_unfilled_slot()
-
-        return self.income_and_finances_slots_to_fill[0]
-
-    def find_next_unfilled_slot_income_and_finances(self):
-
-        for slot, value, in self.income_and_finances_user_info.items():
-            if value is None and value != '':
-                return slot
-
         return None
 
 
@@ -173,14 +159,21 @@ class Document:
 
         
     def update_slot(self, slot_name, new_slot_value):
+        print("update_slot called")
         if self.sections[self.current_section_index] == 'demographics':
+
             if (self.dependent_being_filled is not None and 
                 slot_name in self.dependent_being_filled.slots):
                 self.dependent_being_filled.slots[slot_name] = new_slot_value
+
             elif slot_name in self.demographic_user_info:
                 self.demographic_user_info[slot_name] = new_slot_value
+
             elif slot_name in self.demographic_spouse_info:
                 self.demographic_spouse_info[slot_name] = new_slot_value
+
         elif self.sections[self.current_section_index] == 'income':
-            # TODO
-            pass
+            print("slot_name: " + str(slot_name))
+
+            self.income_user_info[list(slot_name.keys())[0]] = slot_name[list(slot_name.keys())[0]]
+            print("income updated")
