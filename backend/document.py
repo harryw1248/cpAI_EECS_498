@@ -4,7 +4,8 @@ class Document:
     def __init__(self):
         self.sections = [
             'demographics',
-            'income'
+            'income',
+            'refund'
         ]
 
         self.demographic_user_info = {  
@@ -51,12 +52,18 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            'capital-gain': None
+            'capital-gains': None,
+            'owns-business': None,
+            'pensions-annuities': None,
+            'ss-benefits': None
         }
 
         self.income_slots_to_fill = [
             'wages',
             'capital-gains',
+            'owns-business',
+            'pensions-annuities',
+            'ss-benefits',
         ]
 
         self.dependent_being_filled = None
@@ -152,14 +159,21 @@ class Document:
 
         
     def update_slot(self, slot_name, new_slot_value):
+        print("update_slot called")
         if self.sections[self.current_section_index] == 'demographics':
+
             if (self.dependent_being_filled is not None and 
                 slot_name in self.dependent_being_filled.slots):
                 self.dependent_being_filled.slots[slot_name] = new_slot_value
+
             elif slot_name in self.demographic_user_info:
                 self.demographic_user_info[slot_name] = new_slot_value
+
             elif slot_name in self.demographic_spouse_info:
                 self.demographic_spouse_info[slot_name] = new_slot_value
+
         elif self.sections[self.current_section_index] == 'income':
-            # TODO
-            pass
+            print("slot_name: " + str(slot_name))
+
+            self.income_user_info[list(slot_name.keys())[0]] = slot_name[list(slot_name.keys())[0]]
+            print("income updated")

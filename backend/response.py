@@ -52,8 +52,11 @@ class Response:
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
-            'wages': "prompt_money_value",
-            'capital-gains': "prompt_money_value"
+            'wages': "prompt_wages",
+            'capital-gains': "prompt_capital_gains",
+            'owns-business': 'prompt_owns_business',
+            'pensions-annuities': 'prompt_pensions_annuities',
+            'ss-benefits': 'prompt_ss_benefits'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -80,17 +83,14 @@ class Response:
 
         self.income_finances = {
             'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
-            'capital-gains': 'Do you own any stocks or bonds?',
+            'capital-gains': 'What is the amount of stocks or bonds you own?',
             'owns-business': 'Do you own a business?',
-            'pensions-annuities': 'What are you pensions and annuities?',
-            'ss-benefits': 'How much have you claimed in social security this past year?',
-            'income-confirm': 'Please check the current income section. Are there any modifications you would like to make?',
-            'income-was-confirmed': "Great, we're almost done!"
+            'pensions-annuities': 'What is the amount of your pensions and annuities?',
+            'ss-benefits': 'How much have you claimed in social security this past year?'
         }
 
         self.income_finances_order = [
-            'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits',
-            'income-confirm', 'income-was-confirmed'
+            'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits'
         ]
 
 
@@ -98,6 +98,7 @@ class Response:
     # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
     # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
+        print("get_next_response called")
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
@@ -122,6 +123,8 @@ class Response:
             return self.demographics_dependent_question[next_unfilled_slot]
 
     def generate_output_context(self, slot, lifespan, session, current_document):
+        print("generate_output_context called")
+
         if slot == "filing_status":
             if current_document.is_married:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_married'
@@ -131,6 +134,7 @@ class Response:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_widower'
 
         else:
+            print("context: " + str(self.slot_to_output_contexts[slot]))
             context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
 
         context = [{

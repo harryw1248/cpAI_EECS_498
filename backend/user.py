@@ -7,6 +7,8 @@ class User:
                              'occupation': '', 'filing_status': ''}
         self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
                                      'mfs_spouse': '', 'spouse-blind': False}], False]
+        self.income = {'wages': None, 'capital-gains': None, 'owns-business': None,
+                       'pensions-annuities': None, 'ss-benefits': None}
 
         # the second False corresponds to whether or not the user has told you the information yet
         # i.e., self.PO = [[True], True] means the user told you they have a PO box while
@@ -54,6 +56,9 @@ class User:
         for slot in document.demographics_slots_to_fill:
             self.demographics[slot] = document.demographic_user_info[slot]
 
+    def update_income_info(self, document):
+        for slot in document.income_slots_to_fill:
+            self.income[slot] = document.income_user_info[slot]
 
     def update_dummy(self):
         self.demographics["given-name"] = "Bob"
