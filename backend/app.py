@@ -430,6 +430,7 @@ def income_finances_fill(content):
 
     last_intent = 'income_and_finances_fill'
     user.update_income_info(document)
+
     return jsonify(data)
 
 
