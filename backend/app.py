@@ -8,7 +8,7 @@ import json
 import copy
 
 config = {
-    "apiKey": "AIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
+    "apiKey": "AeIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
     "authDomain": "cpai-bf71c.firebaseapp.com",
     "databaseURL": "https://cpai-bf71c.firebaseio.com",
     "projectId": "cpai-bf71c",
@@ -466,6 +466,25 @@ def third_party_and_sign(content):
     return
 
 
+def autofill(content):
+    global last_unfilled_field
+    global responses
+    global document
+
+    document.update_dummy()
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    next_unfilled_slot = 'wages'
+    last_unfilled_field = 'wages'
+    response = responses.get_next_response(next_unfilled_slot, document)
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+
+    return jsonify(data)
+
 def fallback(content):
     global last_unfilled_field
     global responses
@@ -509,7 +528,9 @@ def home():
         print("intent:", intent)
         global last_unfilled_field
 
-        if intent == 'explain_term':
+        if intent == 'autofill':
+            return autofill(content)
+        elif intent == 'explain_term':
             return explain_term(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
@@ -520,7 +541,7 @@ def home():
         elif intent == 'deductions':
             return deductions(content)
         elif intent == 'income_and_finances':
-            return income_and_finances_fill(content)
+            return income_finances_fill(content)
         elif intent == 'refund_and_owe':
             return refund_and_owe(content)
         elif intent == 'third_party_and_sign':

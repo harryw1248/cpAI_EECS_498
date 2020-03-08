@@ -4,7 +4,7 @@ class Response:
             'given-name': 'What is your first name?',
             'last-name': 'What is your last name?',
             'age': 'How old are you?',
-            'occupation': 'What is your occupation?',
+            'occupation': 'What is your occupation? If you are retired, please say so.',
             'street-address': 'What is your full home address and ZIP code?',
             'city': 'What city do you live in?',
             'geo-country': 'What country do you live in?',
@@ -55,8 +55,14 @@ class Response:
             'wages': "prompt_wages",
             'capital-gains': "prompt_capital_gains",
             'owns-business': 'prompt_owns_business',
+            'owns-stocks-bonds': "prompt_stocks_bonds",
             'pensions-annuities': 'prompt_pensions_annuities',
-            'ss-benefits': 'prompt_ss_benefits'
+            'ss-benefits': 'prompt_ss_benefits',
+            'has-1099-DIV': 'prompt_has_1099_DIV',
+            'qualified-dividends': 'prompt_qualified_dividends',
+            'ordinary-dividends': 'prompt_ordinary_dividends',
+            'IRA-distributions': 'prompt_IRA_distributions',
+            'IRA-distributions-taxable': 'prompt_IRA_distributions_taxable'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -83,14 +89,22 @@ class Response:
 
         self.income_finances = {
             'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
-            'capital-gains': 'What is the amount of stocks or bonds you own?',
             'owns-business': 'Do you own a business?',
+            'owns-stocks-bonds': 'Do you own any stocks or bonds?',
+            'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
+            'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
+            'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
+            'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. Please '
+                                 'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
+            'IRA-distributions-taxable': '. Please indicate the taxable amount in field 2a of form 1099-R.',
+            'capital-gains': 'What is the amount of stocks or bonds you own?',
             'pensions-annuities': 'What is the amount of your pensions and annuities?',
             'ss-benefits': 'How much have you claimed in social security this past year?'
         }
 
         self.income_finances_order = [
-            'wages', 'capital_gains', 'owns-business', 'pensions-annuities', 'ss-benefits'
+            'wages',  'owns-business', 'owns-stocks-bonds', 'has-1099-DIV', 'qualified-dividends', 'ordinary-dividends',
+            'IRA-distributions', 'IRA-distributions-taxable', 'capital-gains', 'pensions-annuities', 'ss-benefits'
         ]
 
 
@@ -98,7 +112,7 @@ class Response:
     # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
     # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
-        print("get_next_response called")
+        #print("get_next_response called")
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
@@ -113,7 +127,7 @@ class Response:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
-        print("couldn't find the response for slot:", next_unfilled_slot)
+        #print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num):
@@ -123,7 +137,7 @@ class Response:
             return self.demographics_dependent_question[next_unfilled_slot]
 
     def generate_output_context(self, slot, lifespan, session, current_document):
-        print("generate_output_context called")
+        #print("generate_output_context called")
 
         if slot == "filing_status":
             if current_document.is_married:

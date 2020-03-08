@@ -52,16 +52,28 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            'capital-gains': None,
             'owns-business': None,
+            'owns-stocks-bonds': None,
+            'has-1099-DIV': None,
+            'qualified-dividends': None,
+            'ordinary-dividends': None,
+            'IRA-distributions': None,
+            'IRA-distributions-taxable': None,
+            'capital-gains': None,
             'pensions-annuities': None,
             'ss-benefits': None
         }
 
         self.income_slots_to_fill = [
             'wages',
-            'capital-gains',
             'owns-business',
+            'owns-stocks-bonds',
+            'has-1099-DIV',
+            'qualified-dividends',
+            'ordinary-dividends',
+            'IRA-distributions',
+            'IRA-distributions-taxable',
+            'capital-gains',
             'pensions-annuities',
             'ss-benefits',
         ]
@@ -141,8 +153,6 @@ class Document:
         elif "filing_status_married" in current_intent:
             self.demographic_user_info['filing_status'] = parameters['filing-status-married']
         elif "widower" in current_intent:
-            print(parameters['is-widower'])
-
             if parameters['is-widower'] == 'yes': # May need to slightly tweak in future to enforce dependent is CHILD
                 self.demographic_user_info['filing_status'] = 'qualifying widow'
             else:
@@ -157,13 +167,11 @@ class Document:
             if status in current_intent:
                 self.demographic_user_info[status] = True if 'yes' in current_intent else False
 
-        
+
     def update_slot(self, slot_name, new_slot_value):
-        print("update_slot called")
         if self.sections[self.current_section_index] == 'demographics':
 
-            if (self.dependent_being_filled is not None and 
-                slot_name in self.dependent_being_filled.slots):
+            if self.dependent_being_filled is not None and slot_name in self.dependent_being_filled.slots:
                 self.dependent_being_filled.slots[slot_name] = new_slot_value
 
             elif slot_name in self.demographic_user_info:
@@ -173,7 +181,47 @@ class Document:
                 self.demographic_spouse_info[slot_name] = new_slot_value
 
         elif self.sections[self.current_section_index] == 'income':
-            print("slot_name: " + str(slot_name))
+            extracted_slot_name = list(slot_name.keys())[0]
+            extracted_slot_value = slot_name[extracted_slot_name]
 
-            self.income_user_info[list(slot_name.keys())[0]] = slot_name[list(slot_name.keys())[0]]
-            print("income updated")
+            if extracted_slot_value == 'yes':
+                self.income_user_info[extracted_slot_name] = True
+            elif extracted_slot_value == 'no':
+                self.income_user_info[extracted_slot_name] = False
+                if extracted_slot_name == 'has-1099-DIV' and not self.income_user_info['owns-stocks-bonds']:
+                    self.income_user_info['ordinary-dividends'] = False
+                    self.income_user_info['qualified-dividends'] = False
+                    self.income_user_info['capital-gains'] = False
+            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0'\
+                    or extracted_slot_value == 0:
+                self.income_user_info['IRA-distributions'] = 0
+                self.income_user_info['IRA-distributions-taxable'] = 0
+            else:
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+
+    def update_dummy(self):
+        self.demographic_user_info["given-name"] = "Bob"
+        self.demographic_user_info["last-name"] = "Jones"
+        self.demographic_user_info["street-address"] = "64 Reinhart Street"
+        self.demographic_user_info["city"] = "Oakland"
+        self.demographic_user_info['state'] = "California"
+        self.demographic_user_info['zip-code'] = "08894"
+        self.demographic_user_info['social_security'] = "123456789"
+        self.demographic_user_info['country'] = "USA"
+        self.demographic_user_info["age"] = "67"
+        self.demographic_user_info['occupation'] = "Plumber"
+        self.demographic_user_info["filing_status"] = "Single"
+        self.demographic_user_info["is-married"] = False
+        self.demographic_user_info["num-dependents"] = 0
+        self.demographic_user_info["blind"] = False
+        self.demographic_user_info["dual_status_alien"] = False
+
+        self.demographic_spouse_info = {
+            'spouse-given-name': "Jane",
+            'spouse-last-name': "Foster",
+            'spouse-age': "56",
+            'spouse-ssn': "123987654",
+            'spouse-blind': False
+        }
+
+        self.current_section_index = 1
