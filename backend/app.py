@@ -396,6 +396,8 @@ def income_finances_fill(content):
     # Session necessary to generate context identifier
     session = content['session']
 
+    # print(parameters)
+
     # first pass: update params on document object
     document.update_slot(parameters, current_intent)
 

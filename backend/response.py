@@ -54,6 +54,10 @@ class Response:
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
             'wages': "prompt_wages",
+            'tax-exempt-interest': 'prompt_tax_exempt_interest',
+            'taxable-interest': 'prompt_taxable_interest', 
+            'has-1099-R': 'prompt_has_1099_R',
+            'pensions-and-annuities': 'prompt_pensions_and_annuities',
             'capital-gains': "prompt_capital_gains",
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
@@ -101,9 +105,14 @@ class Response:
         }
 
         self.income_finances = {
-            'wages': 'Now look at your W-2 form. What are your total wages, salaries, and tips?',
+            'wages': 'Please take out your W-2 form. What are your total wages, salaries, and tips as indicated in Box 1?',
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
+            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
+                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11?',
+            'taxable-interest': 'What is your total taxable interest income from Form 1099-INT or Form 1099-OID?', 
+            'has-1099-R': 'Have you recieved a 1099-R form this year?',
+            'pensions-and-annuities': 'What is your total pension or annuity payments from Form 1099-R, box 1?',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
@@ -127,14 +136,19 @@ class Response:
         }
 
         self.income_finances_order = [
-            'wages',  
-            'owns-business', 
+            'wages',
+            'tax-exempt-interest',
+            'taxable-interest', 
+            'has-1099-R',
+            'pensions-and-annuities', 
+            # 'owns-business', 
             'owns-stocks-bonds', 
             'has-1099-DIV', 
             'qualified-dividends', 
             'ordinary-dividends',
             'IRA-distributions', 
-            'IRA-distributions-taxable', 
+            'IRA-distributions-taxable',
+            'ss-benefits', 
             'capital-gains', 
             'educator-expenses',
             'business-expenses',
@@ -147,8 +161,6 @@ class Response:
             'tuition-fees',
             'federal-income-tax-withheld',
             'earned-income-credit',
-            'pensions-annuities', 
-            'ss-benefits'
         ]
 
 

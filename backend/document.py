@@ -52,7 +52,11 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            'owns-business': None,
+            # 'owns-business': None,
+            'tax-exempt-interest': None,
+            'taxable-interest': None, 
+            'has-1099-R': None,
+            'pensions-and-annuities': None, 
             'owns-stocks-bonds': None,
             'has-1099-DIV': None,
             'qualified-dividends': None,
@@ -78,7 +82,11 @@ class Document:
 
         self.income_slots_to_fill = [
             'wages',
-            'owns-business',
+            # 'owns-business': None,
+            'tax-exempt-interest',
+            'taxable-interest', 
+            'has-1099-R',
+            'pensions-and-annuities', 
             'owns-stocks-bonds',
             'has-1099-DIV',
             'qualified-dividends',
@@ -193,6 +201,8 @@ class Document:
 
 
     def update_slot(self, slot_name, new_slot_value):
+        print(slot_name)
+        print(new_slot_value)
         if self.sections[self.current_section_index] == 'demographics':
 
             if self.dependent_being_filled is not None and slot_name in self.dependent_being_filled.slots:
@@ -206,7 +216,9 @@ class Document:
 
         elif self.sections[self.current_section_index] == 'income':
             extracted_slot_name = list(slot_name.keys())[0]
+            print(extracted_slot_name)
             extracted_slot_value = slot_name[extracted_slot_name]
+            print(extracted_slot_value)
 
             if extracted_slot_value == 'yes':
                 self.income_user_info[extracted_slot_name] = True
@@ -216,6 +228,8 @@ class Document:
                     self.income_user_info['ordinary-dividends'] = False
                     self.income_user_info['qualified-dividends'] = False
                     self.income_user_info['capital-gains'] = False
+                elif extracted_slot_name == "has-1099-R":
+                    self.income_user_info['pensions-and-annuities'] = 0
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0'\
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
@@ -226,6 +240,11 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
+            elif extracted_slot_name == 'tax-exempt-interest':
+                overall_sum = 0
+                for val in extracted_slot_value:
+                    overall_sum += val
+                self.income_user_info[extracted_slot_name] = overall_sum
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
