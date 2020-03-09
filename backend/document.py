@@ -60,6 +60,18 @@ class Document:
             'IRA-distributions': None,
             'IRA-distributions-taxable': None,
             'capital-gains': None,
+            'educator-expenses': None,
+            'business-expenses': None,
+            'health-savings-deductions': None,
+            'moving-expenses-armed-forces': None,
+            'self-employed-health-insurance': None,
+            #'penalty-early-withdrawal-savings': None,
+            'IRA-deductions': None,
+            #'student-loan-interest-deduction': None,
+            'tuition-fees': None,
+            'adjustments-to-income': 0,
+            'federal-income-tax-withheld': None,
+            'earned-income-credit': None,
             'pensions-annuities': None,
             'ss-benefits': None
         }
@@ -74,6 +86,18 @@ class Document:
             'IRA-distributions',
             'IRA-distributions-taxable',
             'capital-gains',
+            'educator-expenses',
+            'business-expenses',
+            'health-savings-deductions',
+            'moving-expenses-armed-forces',
+            'self-employed-health-insurance',
+            #'penalty-early-withdrawal-savings',
+            'IRA-deductions',
+            #'student-loan-interest-deduction',
+            'tuition-fees',
+            'adjustments-to-income',
+            'federal-income-tax-withheld',
+            'earned-income-credit',
             'pensions-annuities',
             'ss-benefits',
         ]
@@ -196,6 +220,12 @@ class Document:
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
+            elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
+                    extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
+                    extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
+                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info['adjustments-to-income'] += extracted_slot_value
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 

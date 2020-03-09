@@ -63,7 +63,18 @@ class Response:
             'qualified-dividends': 'prompt_qualified_dividends',
             'ordinary-dividends': 'prompt_ordinary_dividends',
             'IRA-distributions': 'prompt_IRA_distributions',
-            'IRA-distributions-taxable': 'prompt_IRA_distributions_taxable'
+            'IRA-distributions-taxable': 'prompt_IRA_distributions_taxable',
+            'educator-expenses': 'prompt_educator_expenses',
+            'business-expenses': 'prompt_business_expenses',
+            'health-savings-deductions': 'prompt_health_savings_deductions',
+            'moving-expenses-armed-forces': 'prompt_moving_expenses_armed_forces',
+            'self-employed-health-insurance': 'prompt_self_employed_health_insurance',
+            #'penalty-early-withdrawal-savings': 'prompt_penalty_early_withdrawal_savings',
+            'IRA-deductions': 'prompt_IRA_deductions',
+            #'student-loan-interest-deduction': 'prompt_student_loan_interest_deduction',
+            'tuition-fees': 'prompt_tuition_fees',
+            'federal-income-tax-withheld': 'prompt_federal_income_tax_withheld',
+            'earned-income-credit': 'prompt_earned_income_credit',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -100,13 +111,44 @@ class Response:
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': '. Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
+            'educator-expenses': 'What is your amount of educator expenses?',
+            'business-expenses': 'What is your amount of business expenses?',
+            'health-savings-deductions': 'What is your amount of health savings deductions?',
+            'moving-expenses-armed-forces': 'What is your amount of moving expenses from the armed forces?',
+            'self-employed-health-insurance': 'What is your amount of self employed health insurance?',
+            #'penalty-early-withdrawal-savings': 'What is your amount of penalty from early withdrawal from our savings?',
+            'IRA-deductions': 'What is your IRA-deductions amount?',
+            #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
+            'tuition-fees': 'What is your amount of tuition and fees?',
+            'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
+            'earned-income-credit': 'What is your amount of earned-income-credit?',
             'pensions-annuities': 'What is the amount of your pensions and annuities?',
             'ss-benefits': 'How much have you claimed in social security this past year?'
         }
 
         self.income_finances_order = [
-            'wages',  'owns-business', 'owns-stocks-bonds', 'has-1099-DIV', 'qualified-dividends', 'ordinary-dividends',
-            'IRA-distributions', 'IRA-distributions-taxable', 'capital-gains', 'pensions-annuities', 'ss-benefits'
+            'wages',  
+            'owns-business', 
+            'owns-stocks-bonds', 
+            'has-1099-DIV', 
+            'qualified-dividends', 
+            'ordinary-dividends',
+            'IRA-distributions', 
+            'IRA-distributions-taxable', 
+            'capital-gains', 
+            'educator-expenses',
+            'business-expenses',
+            'health-savings-deductions',
+            'moving-expenses-armed-forces',
+            'self-employed-health-insurance',
+            #'penalty-early-withdrawal-savings',
+            'IRA-deductions',
+            #'student-loan-interest-deduction',
+            'tuition-fees',
+            'federal-income-tax-withheld',
+            'earned-income-credit',
+            'pensions-annuities', 
+            'ss-benefits'
         ]
 
 
