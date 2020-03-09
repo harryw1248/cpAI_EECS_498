@@ -1,14 +1,39 @@
 # cpAI_EECS_498
 
-# TODOs
+## How to run frontend
 
-# Backend
+### Install "yarn"
 
 ```sh
-> pwd
-> <user>/cpAI_EECS_498/backend
-> source env/bin/activate
-> pip install requirements.txt
+curl -o- -L https://yarnpkg.com/install.sh | bash
 ```
 
-# Frontend
+### 1. Run the client
+
+```sh
+cd client
+yarn install
+```
+
+Then run the following (copy/paste them into your terminal)
+
+```
+export GOOGLE_APPLICATION_CREDENTIALS="cpAI-24a315a29ddb.json"
+export CPAI_CLIENT_SECRET="rZBCihS0FEG84jnHGh8XD9Z5lGWg0GQe"
+```
+
+Finally to run:
+
+```
+yarn start
+```
+
+### 2. run the actual frontend (on another terminal window)
+
+```
+yarn install
+yarn serve
+```
+
+Then go to http://localhost:8080/
+(use chrome)
