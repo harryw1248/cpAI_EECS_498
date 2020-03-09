@@ -1,9 +1,6 @@
 <template>
     <div class="w-full h-screen">
         Chat History
-        <div v-if="this.debugModal">
-            asdfas
-        </div>
         <section id="chat" class="overflow-y-auto py-4 px-2 mt-2 rounded">
             <div
                 v-for="(message, index) in messages"
@@ -27,7 +24,6 @@
                 <div
                     v-if="message['who'] === 'CPai'"
                     class="flex flex-col items-end pr-4 self-end pl-2 py-1 w-8/12 bg-blue-100 rounded"
-                    v-on:click="debugModal = !debugModal"
                 >
                     <p v-if="message['loadingState']">
                         <beat-loader></beat-loader>
@@ -61,132 +57,65 @@
                 Send
             </button>
         </form>
+
+        <!--<button
+            name="button"
+            class="mt-2 ml-1 w-16 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
+            @click="speechToTextOn"
+        >
+            Stream Speech
+        </button>
+        <button
+            name="button"
+            class="mt-2 ml-1 w-16 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
+            @click="speechToTextOff"
+        >
+            Stop Stream</button
+        >-->
     </div>
 </template>
 
 <script>
-import axios from "axios";
 import BeatLoader from "vue-spinner/src/PulseLoader.vue";
+import { mapState } from "vuex";
+//import SpeechService from "@/services/SpeechService.js";
 
 function keepScrollDown() {
-    const elem = document.getElementById("chat");
-    elem.scrollTop = elem.scrollHeight - elem.clientHeight;
-}
-
-function fillInUserData(data) {
-    const retData = {};
-    if (data["given-name"]) {
-        retData["firstName"] = data["given-name"];
-    }
-    if (data["last-name"]) {
-        retData["lastName"] = data["last-name"];
-    }
-    if (data["social_security"]) {
-        retData["ssn"] = {
-            first: data["social_security"].slice(0, 3),
-            second: data["social_security"].slice(3, 6),
-            third: data["social_security"].slice(6, 9)
-        };
-    }
-    if (data["location"]) {
-        retData["address"] = {
-            street: data["location"]["street-address"]["stringValue"],
-            cityState:
-                data["location"]["city"]["stringValue"] +
-                " " +
-                data["location"]["admin-area"]["stringValue"] +
-                " " +
-                data["location"]["zip-code"]["stringValue"]
-        };
-    }
-    return retData;
+  const elem = document.getElementById("chat");
+  elem.scrollTop = elem.scrollHeight - elem.clientHeight;
 }
 
 export default {
-    name: "Chat",
-    components: {
-        /* eslint-disable vue/no-unused-components */
-        BeatLoader
-    },
-    updated() {
-        keepScrollDown();
-    },
-    data() {
-        return {
-            debugModal: false,
-            formDisplay: false,
-            messages: [
-                {
-                    id: 0,
-                    who: "CPai",
-                    text: "How may I help you?",
-                    timestamp: Date(),
-                    loadingState: false
-                }
-            ]
-        };
-    },
-    methods: {
-        sendUtterance(e) {
-            this.messages.push({
-                who: "You",
-                text: e.target.elements.utterance.value,
-                timestamp: Date()
-            });
-
-            const headers = {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*"
-            };
-
-            const data = {
-                query: e.target.elements.utterance.value
-            };
-
-            this.messages.push({
-                who: "CPai",
-                loadingState: true
-            });
-
-            console.log(headers); // eslint-disable-line no-console
-            axios({
-                method: "post",
-                url: "http://localhost:3000/query",
-                headers,
-                data
-            })
-                .then(response => {
-                    console.log(response); // eslint-disable-line no-console
-                    let responseData = response.data;
-                    this.messages.pop();
-                    this.messages.push({
-                        who: "CPai",
-                        text: responseData.responseText,
-                        timestamp: Date(),
-                        res: responseData,
-                        loadingState: false
-                    });
-
-                    const newUserData = fillInUserData(responseData.data);
-                    this.$store.commit("SET_USER_DATA", newUserData);
-                    if (!this.formDisplay) {
-                        this.$store.commit("toggleForm");
-                    }
-                })
-                .catch(e => {
-                    alert("error - see console msg.");
-                    console.log(e); // eslint-disable-line no-console
-                });
-
-            e.target.elements.utterance.value = null;
-        }
+  name: "Chat",
+  components: {
+    /* eslint-disable vue/no-unused-components */
+    BeatLoader
+  },
+  updated() {
+    keepScrollDown();
+  },
+  computed: mapState({
+    messages: state => state.conversation.history
+  }),
+  methods: {
+    /*speechToTextOn() {
+            SpeechService.startStream();
+        },
+        speechToTextOff() {
+            SpeechService.stopStream();
+        },*/
+    sendUtterance(e) {
+      const utterance = e.target.elements.utterance.value;
+      this.$store.dispatch("conversation/speak", utterance);
+      e.target.elements.utterance.value = null;
     }
+  }
 };
 </script>
 
 <style scoped>
 #chat {
-    min-height: 30%;
-    max-height: 70%;
+  min-height: 30%;
+  max-height: 70%;
 }
 </style>
