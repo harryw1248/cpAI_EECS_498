@@ -60,6 +60,18 @@ class Document:
             'IRA-distributions': None,
             'IRA-distributions-taxable': None,
             'capital-gains': None,
+            'educator-expenses': None,
+            'business-expenses': None,
+            'health-savings-deductions': None,
+            'moving-expenses-armed-forces': None,
+            'self-employed-health-insurance': None,
+            #'penalty-early-withdrawal-savings': None,
+            'IRA-deductions': None,
+            #'student-loan-interest-deduction': None,
+            'tuition-fees': None,
+            'adjustments-to-income': 0,
+            'federal-income-tax-withheld': None,
+            'earned-income-credit': None,
             'pensions-annuities': None,
             'ss-benefits': None
         }
@@ -74,6 +86,18 @@ class Document:
             'IRA-distributions',
             'IRA-distributions-taxable',
             'capital-gains',
+            'educator-expenses',
+            'business-expenses',
+            'health-savings-deductions',
+            'moving-expenses-armed-forces',
+            'self-employed-health-insurance',
+            #'penalty-early-withdrawal-savings',
+            'IRA-deductions',
+            #'student-loan-interest-deduction',
+            'tuition-fees',
+            'adjustments-to-income',
+            'federal-income-tax-withheld',
+            'earned-income-credit',
             'pensions-annuities',
             'ss-benefits',
         ]
@@ -196,8 +220,57 @@ class Document:
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
+            elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
+                    extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
+                    extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
+                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info['adjustments-to-income'] += extracted_slot_value
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+
+    def dependents_worksheet(self):
+        num_dependents_under_17_citizens = 0
+        num_dependents_under_17_non_citizens = 0
+        for dependent in self.dependents:
+            if dependent.slots['age'] < 17 and dependent.slots['dependent-citizenship']:
+                num_dependents_under_17_citizens += 1
+            elif dependent.slots['age'] < 17 and not dependent.slots['dependent-citizenship']:
+                num_dependents_under_17_non_citizens += 1
+
+        line3 = num_dependents_under_17_citizens * 2000.0 + num_dependents_under_17_non_citizens * 500.0
+        line4 = self.income_user_info['adjusted-gross-income']
+        if self.demographic_user_info['filing_status'] is 'married filing jointly':
+            line5 = 400000.0
+        else:
+            line5 = 200000.0
+
+        line7 = -1
+        if line4 > line5:
+            line6 = line4 - line5
+            if line6 % 1000 is not 0:
+                line6 = (int(line6/1000) + 1) * 1000.0
+                line7 = 0.05 * line6
+        else:
+            line6 = 0
+            line7 = 0
+
+        if line3 > line7:
+            line8 = line3 - line7
+        else:
+            return 0
+
+        line9 = self.income_user_info['12b']
+        line10 = 0
+        if line9 == line10:
+            return 0
+        else:
+            line11 = line9 - line10
+
+        if line8 > line11:
+            return line11
+        else:
+            return line8
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
@@ -211,9 +284,12 @@ class Document:
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
         self.demographic_user_info["filing_status"] = "Single"
+
         self.demographic_user_info["is-married"] = False
-        self.demographic_user_info["num-dependents"] = 0
+        
+        self.demographic_user_info["num-dependents"] = 2
         self.demographic_user_info["blind"] = False
+
         self.demographic_user_info["dual_status_alien"] = False
 
         self.demographic_spouse_info = {
@@ -225,3 +301,4 @@ class Document:
         }
 
         self.current_section_index = 1
+

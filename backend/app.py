@@ -346,14 +346,12 @@ def demographics_fill(content):
     next_unfilled_slot = document.find_next_unfilled_slot()
 
     if document.dependent_being_filled is not None:
-        response = responses.get_next_dependent_response(
-            next_unfilled_slot,
-            document.dependent_being_filled.num
-        )
-    elif (next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info):
+        response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num, document.dependents)
+    elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
         response = responses.get_next_response(next_unfilled_slot, document)
     else:
         response = "We're all done filling out your demographics. Does everything look correct?"
+        print(document)
     
     output_context = None
     if (next_unfilled_slot in document.demographic_user_info 
