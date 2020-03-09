@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="relative" style="width: 856px; height: 1476px">
         <img
             src="../assets/1040combined.jpg"
             style="position:absolute; top:0;"
@@ -7,31 +7,31 @@
 
         <!-- Filing Status -->
         <img
-            v-if="userInfo.filingStatus === 'Single'"
+            v-if="dummy === 'Single'"
             class="check"
             src="../assets/check.png"
             style="top:90px; left: 132px;"
         />
         <img
-            v-if="userInfo.filingStatus === 'MFJ'"
+            v-if="dummy === 'MFJ'"
             class="check"
             src="../assets/check.png"
             style="top:90px; left: 192px;"
         />
         <img
-            v-if="userInfo.filingStatus === 'MFS'"
+            v-if="dummy === 'MFS'"
             class="check"
             src="../assets/check.png"
             style="top:90px; left: 311px;"
         />
         <img
-            v-if="userInfo.filingStatus === 'HOH'"
+            v-if="dummy === 'HOH'"
             class="check"
             src="../assets/check.png"
             style="top:90px; left: 470px;"
         />
         <img
-            v-if="userInfo.filingStatus === 'QW'"
+            v-if="dummy === 'QW'"
             class="check"
             src="../assets/check.png"
             style="top:90px; left: 609px;"
@@ -39,58 +39,43 @@
 
         <!-- User Info -->
         <input
-            class="formField"
-            v-model="userInfo.firstName"
+            class="absolute formField"
+            v-model="params['given-name']"
             style="top: 153px; left: 54px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.lastName"
+            v-model="params['last-name']"
             style="top: 153px; left: 332px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.address.apt"
             style="top: 219px; left: 584px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.address.street"
+            v-model="params['street-address']"
             style="top: 219px; left: 54px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.address.cityState"
+            v-model="cityState"
             style="top: 253px; left: 54px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.ssn.first"
+            v-model="params['social_security']"
             style="top: 153px; left: 652px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="userInfo.ssn.second"
-            style="top: 153px; left: 696px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="userInfo.ssn.third"
-            style="top: 153px; left: 728px;"
             size="50"
             disabled
         />
@@ -98,35 +83,35 @@
         <!-- User Spouse Info -->
         <input
             class="formField"
-            v-model="spouseInfo.firstName"
+            v-model="dummy"
             style="top: 186px; left: 54px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="spouseInfo.lastName"
+            v-model="dummy"
             style="top: 186px; left: 332px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="spouseInfo.ssn.first"
+            v-model="dummy"
             style="top: 186px; left: 652px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="spouseInfo.ssn.second"
+            v-model="dummy"
             style="top: 186px; left: 696px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="spouseInfo.ssn.third"
+            v-model="dummy"
             style="top: 186px; left: 728px;"
             size="50"
             disabled
@@ -135,21 +120,18 @@
         <!-- Foreign Country Info -->
         <input
             class="formField"
-            v-model="userInfo.foreignCountry.country"
             style="top: 285px; left: 54px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.foreignCountry.state"
             style="top: 285px; left: 362px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="userInfo.foreignCountry.po"
             style="top: 285px; left: 561px;"
             size="50"
             disabled
@@ -371,137 +353,79 @@
             size="50"
             disabled
         />
+        <!-- Don't touch this - this is a crucical hack -->
+        <input class="hidden" v-model="dirtyBit"/>
     </div>
 </template>
-<script>
-export default {
-    name: "Form1040",
-    computed: {
-        userInfo() {
-            /*
-            return {
-                firstName: "Rishabh",
-                lastName: "Nayak",
-                address: {
-                    street: "6680 Oakhills Drive",
-                    cityState: "Bloomfield Hills, MI 48301",
-                    apt: 505
-                },
-                filingStatus: "Single",
-                ssn: {
-                    first: 111,
-                    second: 22,
-                    third: 3333
-                },
-                foreignCountry: {
-                    country: "USA",
-                    state: "MI",
-                    po: 48301
-                }
-            };*/
-            return this.$store.state.userInfo;
-        }
-    },
-    data() {
-        return {
-            debugModal: false,
 
-            spouseInfo: {
-                firstName: "",
-                lastName: "",
-                ssn: {
-                    first: 0,
-                    second: 0,
-                    third: 0
-                }
-            },
-            dependentInfo: {
-                one: {
-                    firstName: "",
-                    lastName: "",
-                    ssn: {
-                        first: 444,
-                        second: 55,
-                        third: 6666
-                    },
-                    relationship: "Child",
-                    childCredit: true,
-                    otherCredit: true
-                },
-                two: {
-                    firstName: "Vinod",
-                    lastName: "Raman",
-                    ssn: {
-                        first: 420,
-                        second: 69,
-                        third: 8008
-                    },
-                    relationship: "Homie",
-                    childCredit: false,
-                    otherCredit: true
-                },
-                three: {
-                    firstName: "Gloria",
-                    lastName: "Kang",
-                    ssn: {
-                        first: 111,
-                        second: 22,
-                        third: 3333
-                    },
-                    relationship: "Parent",
-                    childCredit: true,
-                    otherCredit: false
-                },
-                four: {
-                    firstName: "Harry",
-                    lastName: "Wang",
-                    ssn: {
-                        first: 123,
-                        second: 45,
-                        third: 6789
-                    },
-                    relationship: "Uncle",
-                    childCredit: true,
-                    otherCredit: false
-                }
-            },
-            money: {
-                one: 100000,
-                twoA: 200,
-                twoB: 200000,
-                threeA: 300,
-                threeB: 300,
-                fourA: 400,
-                fourB: 4000,
-                fourC: 40000,
-                fourD: 400000,
-                fiveA: 500,
-                fiveB: 500000,
-                six: 600,
-                sevenA: 700,
-                sevenB: 700000,
-                eightA: 800,
-                eightB: 800000,
-                nine: 900,
-                ten: 1000,
-                elevenA: 110,
-                elevenB: 110000
-            }
-        };
+<script>
+import { mapState } from "vuex";
+
+export default {
+  name: "Form1040",
+  computed: {
+    cityState: function() {
+      const city = this.params["city"];
+      const state = this.params["state"];
+      if (city && state) {
+        return city + " " + state;
+      }
+      if (city) {
+        return city;
+      }
+      if (state) {
+        return state;
+      }
+      return "";
+    },
+    ...mapState({
+      params: state => state.formData,
+      dirtyBit: state => state.dirtyBit
+    })
+  },
+  created: function() {
+    const fields = [
+      "age",
+      "capital-gains",
+      "city",
+      "given-name",
+      "is-married",
+      "last-name",
+      "num_dependents",
+      "occupation",
+      "owns-business",
+      "pensions-annuities",
+      "social_security",
+      "ss-benefits",
+      "state",
+      "street-address",
+      "wages",
+      "zip-code"
+    ];
+    const dummyObj = {};
+    for (const field of fields) {
+      dummyObj[field] = null;
     }
+    this.$store.dispatch("updateForm1040", dummyObj);
+  },
+  data() {
+    return {
+      dummy: ""
+    };
+  }
 };
 </script>
 
 <style scoped>
 .formField {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0);
-    line-height: 3px;
-    color: red;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  line-height: 3px;
+  color: red;
 }
 
 .check {
-    position: absolute;
-    width: 15px;
+  position: absolute;
+  width: 15px;
 }
 </style>

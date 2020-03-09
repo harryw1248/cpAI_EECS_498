@@ -7,6 +7,9 @@ import "@/assets/css/animate.css";
 
 Vue.config.productionTip = false;
 
+Vue.prototype.speechSynthesis = window.speechSynthesis || {};
+Vue.prototype.winNavigator = window.navigator || {};
+
 new Vue({
     router,
     store,
