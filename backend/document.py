@@ -199,6 +199,49 @@ class Document:
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
+    def dependents_worksheet(self):
+        num_dependents_under_17_citizens = 0
+        num_dependents_under_17_non_citizens = 0
+        for dependent in self.dependents:
+            if dependent.slots['age'] < 17 and dependent.slots['dependent-citizenship']:
+                num_dependents_under_17_citizens += 1
+            elif dependent.slots['age'] < 17 and not dependent.slots['dependent-citizenship']:
+                num_dependents_under_17_non_citizens += 1
+
+        line3 = num_dependents_under_17_citizens * 2000.0 + num_dependents_under_17_non_citizens * 500.0
+        line4 = self.income_user_info['adjusted-gross-income']
+        if self.demographic_user_info['filing_status'] is 'married filing jointly':
+            line5 = 400000.0
+        else:
+            line5 = 200000.0
+
+        line7 = -1
+        if line4 > line5:
+            line6 = line4 - line5
+            if line6 % 1000 is not 0:
+                line6 = (int(line6/1000) + 1) * 1000.0
+                line7 = 0.05 * line6
+        else:
+            line6 = 0
+            line7 = 0
+
+        if line3 > line7:
+            line8 = line3 - line7
+        else:
+            return 0
+
+        line9 = self.income_user_info['12b']
+        line10 = 0
+        if line9 == line10:
+            return 0
+        else:
+            line11 = line9 - line10
+
+        if line8 > line11:
+            return line11
+        else:
+            return line8
+
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
         self.demographic_user_info["last-name"] = "Jones"
@@ -228,3 +271,4 @@ class Document:
         }
 
         self.current_section_index = 1
+
