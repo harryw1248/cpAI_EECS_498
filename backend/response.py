@@ -41,6 +41,7 @@ class Response:
             'dual_status_alien': "prompt_dual_status_alien",
             'blind': 'prompt_blind',
             'num_dependents': 'prompt_num_dependents',
+            'dependent-citizenship': 'prompt_dependent_citizenship',
             'filing_status_married': 'prompt_filing_status_married',
             'filing_status_HOH_widower': 'prompt_filing_status_widower',
             'spouse-given-name': "prompt_spouse_name_age",
@@ -76,8 +77,9 @@ class Response:
             'given-name': '',
             'last-name': 'What is their last name?',
             'age': 'How old are they?',
-            'social_security': "What is their social security number?",
-            'relationship_to_filer': 'What is their relationship to you? e.g. "She is my daughter"'
+            'social_security': "What is their social security number, ITIN or ATIN?",
+            'relationship_to_filer': 'What is their relationship to you? e.g. "She is my daughter"',
+            'dependent-citizenship': 'Is this dependent a U.S. citizen, national, or resident alien?'
         }
 
         self.nth = {
@@ -130,9 +132,20 @@ class Response:
         #print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
-    def get_next_dependent_response(self, next_unfilled_slot, dependent_num):
+    def get_next_dependent_response(self, next_unfilled_slot, dependent_num, dependents):
         if next_unfilled_slot == 'given-name':
-            return ('What is your ' + self.nth[dependent_num] + " dependent's full name and age?")
+            if dependent_num > 1:
+                if dependents[dependent_num-2].dependent_child_tax_credit:
+                    return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a child tax credit. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                elif dependents[dependent_num-2].dependent_credit_for_others:
+                    return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a dependent credit for others. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                else:
+                    return 'Unforunately, ' + dependents[dependent_num-2].slots['given-name'] +' does not qualify you for a tax credit. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+            else:
+                return 'What is your ' + self.nth[dependent_num] + " dependent's full name?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 

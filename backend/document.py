@@ -211,9 +211,12 @@ class Document:
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
         self.demographic_user_info["filing_status"] = "Single"
+
         self.demographic_user_info["is-married"] = False
-        self.demographic_user_info["num-dependents"] = 0
+        
+        self.demographic_user_info["num-dependents"] = 2
         self.demographic_user_info["blind"] = False
+
         self.demographic_user_info["dual_status_alien"] = False
 
         self.demographic_spouse_info = {
