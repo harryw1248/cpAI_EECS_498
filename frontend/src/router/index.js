@@ -7,7 +7,8 @@ const routes = [
     {
         path: "/",
         name: "Welcome",
-        component: Welcome
+        component: Welcome,
+        redirect: { name: "Console" }
     },
     {
         path: "/console",

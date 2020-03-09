@@ -52,50 +52,6 @@ async function newSession(projectId) {
 
 let sessionInfo = null;
 
-function checkParams(resultFields, responseData) {
-    // TODO rewrite
-    if (
-        resultFields["given-name"] &&
-        resultFields["given-name"]["stringValue"] !== ""
-    ) {
-        responseData["data"]["given-name"] =
-            resultFields["given-name"]["stringValue"];
-        console.log(responseData["data"]["given-name"]);
-    }
-    if (
-        resultFields["last-name"] &&
-        resultFields["last-name"]["stringValue"] !== ""
-    ) {
-        responseData["data"]["last-name"] =
-            resultFields["last-name"]["stringValue"];
-        console.log(responseData["data"]["last-name"]);
-    }
-    if (
-        resultFields["zip-code"] &&
-        resultFields["zip-code"]["stringValue"] !== ""
-    ) {
-        responseData["data"]["zip-code"] =
-            resultFields["zip-code"]["stringValue"];
-        console.log(responseData["data"]["zip-code"]);
-    }
-    if (
-        resultFields["social_security"] &&
-        resultFields["social_security"]["stringValue"] !== ""
-    ) {
-        responseData["data"]["social_security"] =
-            resultFields["social_security"]["stringValue"];
-        console.log(responseData["data"]["social_security"]);
-    }
-    if (
-        resultFields["location"] &&
-        resultFields["location"]["kind"] === "structValue"
-    ) {
-        console.log(resultFields["location"]["structValue"]["fields"]);
-        responseData["data"]["location"] =
-            resultFields["location"]["structValue"]["fields"];
-        console.log(responseData["data"]["location"]);
-    }
-}
 /**
  * Send a query to the dialogflow agent, and return the query result.
  */
@@ -120,10 +76,7 @@ async function runQuery(sessionInfo, query) {
     console.log("Detected intent");
     const result = responses[0].queryResult;
     const responseText = result.fulfillmentMessages[0]["text"]["text"][0];
-    //console.log(`  Query: ${result.queryText}`);
-    //console.log(`  Response: ${result.fulfillmentText}`);
-    //console.log(result.fulfillmentMessages[0]["text"]["text"][0]);
-    //console.log(result);
+
     let resultFields = result.parameters.fields;
     console.log("parametres:", resultFields);
 
@@ -136,10 +89,10 @@ async function runQuery(sessionInfo, query) {
     console.log(responseText);
     const responseData = {
         responseText,
-        data: {},
-        intent: result.intent.displayName
+        intent: result.intent.displayName,
+        params: resultFields
     };
-    checkParams(resultFields, responseData);
+
     return responseData;
 }
 

@@ -1,56 +1,67 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import * as form1040 from "@/store/form1040.js";
+import * as conversation from "@/store/conversation.js";
 
 Vue.use(Vuex);
 
+const parse = param => {
+    if (!param) return null;
+    if (param["kind"] === "stringValue") {
+        if (param["stringValue"] === "yes") return true;
+        if (param["stringValue"] === "no") return false;
+        return param["stringValue"];
+    } else if (param["kind"] === "numberValue") {
+        return param["numberValue"];
+    }
+    return null;
+};
+
 export default new Vuex.Store({
+    modules: {
+        form1040,
+        conversation
+    },
     state: {
-        userInfo: {
-            firstName: "",
-            lastName: "",
-            address: {
-                street: "",
-                cityState: "",
-                apt: null
-            },
-            filingStatus: "",
-            ssn: {
-                first: 0,
-                second: 0,
-                third: 0
-            },
-            foreignCountry: {
-                country: "",
-                state: "",
-                po: 0
-            }
-        },
-        logged: false,
+        formData: {},
+        dirtyBit: 0,
         displayForm1040: false,
-        count: 0
+        logged: false
     },
     mutations: {
-        /*
-        SET_USER_DATA(state, userData) {
+        SET_USER_DATA: (state, userData) => {
+            /*
             state.user = userData;
             localStorage.setItem("user", JSON.stringify(userData));
             axios.defaults.headers.common[
                 "Authorization"
             ] = `Bearer ${userData.access_token}`;
+            */
         },
-        */
-        toggleForm(state) {
-            if (!state.displayForm1040) state.displayForm1040 = true;
+        UPDATE_FORM_DATA: (state, params) => {
+            for (const key of Object.keys(params)) {
+                state.formData[key] = parse(params[key]);
+            }
+            state.dirtyBit += 1;
         },
-        SET_USER_DATA(state, userData) {
-            console.log("before", state);
-            Object.assign(state.userInfo, userData);
-            console.log("after", state);
+        TOGGLE_FORM1040_DISPLAY: state => {
+            state.displayForm1040 = !state.displayForm1040;
+        }
+    },
+    getters: {
+        isForm1040Toggled: state => {
+            return state.displayForm1040;
         }
     },
     actions: {
-        /*
-        login({ commit }, credentials) {
+        displayForm1040: ({ commit, state }) => {
+            if (!state.displayForm1040) commit("TOGGLE_FORM1040_DISPLAY");
+        },
+        updateForm1040: ({ commit }, params) => {
+            commit("UPDATE_FORM_DATA", params);
+        },
+        login: ({ commit }, credentials) => {
+            /*
             const params = new URLSearchParams();
             params.append("username", credentials["username"]);
             params.append("password", credentials["password"]);
@@ -64,8 +75,7 @@ export default new Vuex.Store({
                     alert("error - see console msg.");
                     console.log(e);
                 });
-        },
-        */
-    },
-    modules: {}
+            */
+        }
+    }
 });
