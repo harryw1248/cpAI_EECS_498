@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import SpeechService from "@/services/SpeechService.js";
 export const namespaced = true;
 
 export const state = {
@@ -64,6 +64,7 @@ export const actions = {
             timestamp: Date(),
             params: response.data.params
         });
+        SpeechService.textToSpeech(response.data.responseText);
         commit("TOGGLE_LOADING");
         dispatch("displayForm1040", null, { root: true });
         dispatch("updateForm1040", response.data.params, { root: true });

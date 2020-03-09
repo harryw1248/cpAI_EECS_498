@@ -3,15 +3,15 @@ import Vue from "vue";
 /*******************************/
 /*       Text-to-speech        */
 /*******************************/
-const speechSynthesis = Vue.prototype.speechSynthesis;
 
 let textToSpeech = text => {
     let speech = new SpeechSynthesisUtterance();
-    speech.text = message;
+    speech.voice = speechSynthesis.getVoices()[33];
+    speech.text = text;
     speech.volume = 1;
     speech.rate = 1;
     speech.pitch = 1;
-
+    console.log(speech);
     speechSynthesis.speak(speech);
 };
 
@@ -22,6 +22,7 @@ let textToSpeech = text => {
 //const { MediaPresenter } = require("sfmediastream");
 const navigator = Vue.prototype.winNavigator;
 //let micStream = null;
+/*
 let presenterMedia = new MediaPresenter(
     {
         audio: {
@@ -44,18 +45,17 @@ presenterMedia.onBufferProcess = function(packet) {
     console.log("Buffer sent: " + packet[0].size + "bytes");
     //mySocket.emit("stream", packet);
 };
-
+*/
 function stopStream() {
     /*console.log("micStream.stop()");
     micStream.stop();*/
-    console.log("stopStream()");
-    presenterMedia.stopRecording();
+    //console.log("stopStream()");
+    //presenterMedia.stopRecording();
     //presenter.stopRecording();
 }
 
 function startStream() {
-    presenterMedia.startRecording();
-
+    //presenterMedia.startRecording();
     /*
     const handleSuccess = stream => {
         micStream = new MicrophoneStream();
