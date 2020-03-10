@@ -10,109 +10,115 @@
             v-if="dummy === 'Single'"
             class="check"
             src="../assets/check.png"
-            style="top:90px; left: 132px;"
+            style="top:92px; left: 134px;"
         />
         <img
             v-if="dummy === 'MFJ'"
             class="check"
             src="../assets/check.png"
-            style="top:90px; left: 192px;"
+            style="top:92px; left: 194px;"
         />
         <img
             v-if="dummy === 'MFS'"
             class="check"
             src="../assets/check.png"
-            style="top:90px; left: 311px;"
+            style="top:92px; left: 315px;"
         />
         <img
             v-if="dummy === 'HOH'"
             class="check"
             src="../assets/check.png"
-            style="top:90px; left: 470px;"
+            style="top:92px; left: 476px;"
         />
         <img
             v-if="dummy === 'QW'"
             class="check"
             src="../assets/check.png"
-            style="top:90px; left: 609px;"
+            style="top:92px; left: 616px;"
         />
 
         <!-- User Info -->
         <input
             class="absolute formField"
-            v-model="params['given-name']"
-            style="top: 153px; left: 54px;"
+            v-model="params['first-name']"
+            style="top: 155px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="params['last-name']"
-            style="top: 153px; left: 332px;"
+            style="top: 155px; left: 336px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 219px; left: 584px;"
+            style="top: 221px; left: 584px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="params['street-address']"
-            style="top: 219px; left: 54px;"
+            style="top: 221px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="cityState"
-            style="top: 253px; left: 54px;"
+            style="top: 255px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="params['social_security']"
-            style="top: 153px; left: 652px;"
+            style="top: 155px; left: 658px;"
             size="50"
             disabled
+        />
+        <img
+            v-if="campaignFund"
+            class="check"
+            src="../assets/check.png"
+            style="top:259px; left: 717px;"
         />
 
         <!-- User Spouse Info -->
         <input
             class="formField"
             v-model="dummy"
-            style="top: 186px; left: 54px;"
+            style="top: 188px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="dummy"
-            style="top: 186px; left: 332px;"
+            style="top: 188px; left: 336px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="dummy"
-            style="top: 186px; left: 652px;"
+            style="top: 188px; left: 658px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="dummy"
-            style="top: 186px; left: 696px;"
+            style="top: 188px; left: 696px;"
             size="50"
             disabled
         />
         <input
             class="formField"
             v-model="dummy"
-            style="top: 186px; left: 728px;"
+            style="top: 188px; left: 728px;"
             size="50"
             disabled
         />
@@ -120,239 +126,362 @@
         <!-- Foreign Country Info -->
         <input
             class="formField"
-            style="top: 285px; left: 54px;"
+            v-model="dummy"
+            style="top: 288px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 285px; left: 362px;"
+            v-model="dummy"
+            style="top: 288px; left: 367px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 285px; left: 561px;"
+            v-model="dummy"
+            style="top: 288px; left: 568px;"
             size="50"
             disabled
         />
+
+        <!-- Standard Deduction/Blindess -->
+        <img
+            v-if="claimDependent === 'you'"
+            class="check"
+            src="../assets/check.png"
+            style="top:310px; left: 234px;"
+        />
+        <img
+            v-if="claimDependent === 'spouse'"
+            class="check"
+            src="../assets/check.png"
+            style="top:310px; left: 365px;"
+        />
+
+        <img
+            v-if="blindness.you.bornBefore"
+            class="check"
+            src="../assets/check.png"
+            style="top:352px; left: 164px;"
+        />
+        <img
+            v-if="blindness.you.blind"
+            class="check"
+            src="../assets/check.png"
+            style="top:352px; left: 345px;"
+        />
+        <img
+            v-if="blindness.you.bornBefore"
+            class="check"
+            src="../assets/check.png"
+            style="top:352px; left: 475px;"
+        />
+        <img
+            v-if="blindness.you.bornBefore"
+            class="check"
+            src="../assets/check.png"
+            style="top:352px; left: 656px;"
+        />
+
 
         <!-- Dependent Info -->
+        <img
+            v-if="moreThan4"
+            class="check"
+            src="../assets/check.png"
+            style="top:292px; left: 793px;"
+        />
         <input
             class="formField"
-            style="top: 396px; left: 55px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 55px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 396px; left: 227px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 227px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 396px; left: 342px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 342px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 396px; left: 378px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 378px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 396px; left: 405px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 405px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 396px; left: 465px; font-size: 14px"
+            v-model="dummy"
+            style="top: 401px; left: 465px; font-size: 14px"
             size="50"
             disabled
         />
-
-        <input
-            class="formField"
-            style="top: 413px; left: 55px; font-size: 14px"
-            size="50"
-            disabled
+        <img
+            v-if="dependentCredit.d1.child"
+            class="check"
+            src="../assets/check.png"
+            style="top: 402px; left: 633px;"
         />
-        <input
-            class="formField"
-            style="top: 413px; left: 227px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 413px; left: 342px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 413px; left: 378px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 413px; left: 405px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 413px; left: 465px; font-size: 14px"
-            size="50"
-            disabled
+        <img
+            v-if="dependentCredit.d1.other"
+            class="check"
+            src="../assets/check.png"
+            style="top: 402px; left: 744px;"
         />
 
         <input
             class="formField"
-            style="top: 430px; left: 55px; font-size: 14px"
+            style="top: 418px; left: 55px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 430px; left: 227px; font-size: 14px"
+            style="top: 418px; left: 227px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 430px; left: 342px; font-size: 14px"
+            style="top: 418px; left: 342px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 430px; left: 378px; font-size: 14px"
+            style="top: 418px; left: 378px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 430px; left: 405px; font-size: 14px"
+            style="top: 418px; left: 405px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 430px; left: 465px; font-size: 14px"
+            style="top: 418px; left: 465px; font-size: 14px"
             size="50"
             disabled
+        />
+        <img
+            v-if="dependentCredit.d2.child"
+            class="check"
+            src="../assets/check.png"
+            style="top: 419px; left: 633px;"
+        />
+        <img
+            v-if="dependentCredit.d2.other"
+            class="check"
+            src="../assets/check.png"
+            style="top: 419px; left: 744px;"
         />
 
         <input
             class="formField"
-            style="top: 447px; left: 55px; font-size: 14px"
+            style="top: 435px; left: 55px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 447px; left: 227px; font-size: 14px"
+            style="top: 435px; left: 227px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 447px; left: 342px; font-size: 14px"
+            style="top: 435px; left: 342px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 447px; left: 378px; font-size: 14px"
+            style="top: 435px; left: 378px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 447px; left: 405px; font-size: 14px"
+            style="top: 435px; left: 405px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            style="top: 447px; left: 465px; font-size: 14px"
+            style="top: 435px; left: 465px; font-size: 14px"
             size="50"
             disabled
+        />
+        <img
+            v-if="dependentCredit.d3.child"
+            class="check"
+            src="../assets/check.png"
+            style="top: 436px; left: 633px;"
+        />
+        <img
+            v-if="dependentCredit.d3.other"
+            class="check"
+            src="../assets/check.png"
+            style="top: 436px; left: 744px;"
+        />
+
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 55px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 227px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 342px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 378px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 405px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <input
+            class="formField"
+            v-model="dummy"
+            style="top: 452px; left: 465px; font-size: 14px"
+            size="50"
+            disabled
+        />
+        <img
+            v-if="dependentCredit.d4.child"
+            class="check"
+            src="../assets/check.png"
+            style="top: 453px; left: 633px;"
+        />
+        <img
+            v-if="dependentCredit.d4.other"
+            class="check"
+            src="../assets/check.png"
+            style="top: 453px; left: 744px;"
         />
 
         <!-- Money Info -->
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 463px; left: 700px; font-size: 14px"
+            style="top: 469px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 479px; left: 700px; font-size: 14px"
+            style="top: 485px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 496px; left: 700px; font-size: 14px"
+            style="top: 502px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 513px; left: 700px; font-size: 14px"
+            style="top: 519px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 529px; left: 700px; font-size: 14px"
+            style="top: 536px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 547px; left: 700px; font-size: 14px"
+            style="top: 553px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 563px; left: 700px; font-size: 14px"
+            style="top: 570px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 579px; left: 700px; font-size: 14px"
+            style="top: 586px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 596px; left: 700px; font-size: 14px"
+            style="top: 603px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 613px; left: 700px; font-size: 14px"
+            style="top: 620px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
         <input
+            v-model="dummyNum"
             class="formField"
-            style="top: 629px; left: 700px; font-size: 14px"
+            style="top: 636px; left: 708px; font-size: 14px"
             size="50"
             disabled
         />
+
+
+
         <!-- Don't touch this - this is a crucical hack -->
         <input class="hidden" v-model="dirtyBit"/>
     </div>
@@ -410,7 +539,39 @@ export default {
   },
   data() {
     return {
-      dummy: ""
+      dummy: "Rishabh",
+      dummyNum: 100,
+      campaignFund: true,
+      moreThan4: true,
+      claimDependent: "spouse",
+      blindness: {
+        you: {
+            bornBefore: true,
+            blind: true,
+        },
+        spouse: {
+            bornBefore: true,
+            blind: true,
+        }
+      },
+      dependentCredit: {
+        d1: {
+            child: true,
+            other: true,
+        },
+        d2: {
+            child: true,
+            other: true,
+        },
+        d3: {
+            child: true,
+            other: true,
+        },
+        d4: {
+            child: true,
+            other: true,
+        }
+      }
     };
   }
 };
