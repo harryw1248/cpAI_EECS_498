@@ -30,13 +30,13 @@
             disabled
         />
         <img
-            v-if="true"
+            v-if="false"
             class="check"
             src="@/assets/check.png"
             style="left: 633px;"
         />
         <img
-            v-if="true"
+            v-if="false"
             class="check"
             src="@/assets/check.png"
             style="left: 744px;"
