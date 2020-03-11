@@ -194,6 +194,8 @@ class Document:
             for slot, value in self.demographic_spouse_info.items():
                 if value is None and slot in parameters and parameters[slot] != '':
                     self.demographic_spouse_info[slot] = parameters[slot]
+                    if slot == 'spouse-blind':
+                        self.demographic_spouse_info['spouse-blind'] = True if 'yes' in parameters[slot] else False
 
         for status in self.bool_statuses:
             if status in current_intent:
@@ -213,6 +215,8 @@ class Document:
 
             elif slot_name in self.demographic_spouse_info:
                 self.demographic_spouse_info[slot_name] = new_slot_value
+                if slot_name == 'spouse-blind':
+                    self.demographic_spouse_info['spouse-blind'] = True if 'yes' in new_slot_value else False
 
         elif self.sections[self.current_section_index] == 'income':
             extracted_slot_name = list(slot_name.keys())[0]
