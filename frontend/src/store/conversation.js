@@ -57,16 +57,19 @@ export const actions = {
     },
     listen: ({ commit, dispatch }, response) => {
         console.log(response); // eslint-disable-line no-console
+        dispatch("document/queryDocument", null, { root: true });
+
         commit("ADD_TO_HISTORY", {
             who: "CPai",
             text: response.data.responseText,
             intent: response.data.intent,
-            timestamp: Date(),
-            params: response.data.params
+            timestamp: Date()
+            //params: response.data.params
         });
         SpeechService.textToSpeech(response.data.responseText);
         commit("TOGGLE_LOADING");
+
         dispatch("displayForm1040", null, { root: true });
-        dispatch("updateForm1040", response.data.params, { root: true });
+        //dispatch("updateForm1040", response.data.params, { root: true });
     }
 };

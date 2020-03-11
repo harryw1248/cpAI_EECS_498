@@ -1,30 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import * as form1040 from "@/store/form1040.js";
+import * as document from "@/store/document.js";
 import * as conversation from "@/store/conversation.js";
 
 Vue.use(Vuex);
 
-const parse = param => {
-    if (!param) return null;
-    if (param["kind"] === "stringValue") {
-        if (param["stringValue"] === "yes") return true;
-        if (param["stringValue"] === "no") return false;
-        return param["stringValue"];
-    } else if (param["kind"] === "numberValue") {
-        return param["numberValue"];
-    }
-    return null;
-};
-
 export default new Vuex.Store({
     modules: {
-        form1040,
+        document,
         conversation
     },
     state: {
-        formData: {},
-        dirtyBit: 0,
         displayForm1040: false,
         logged: false
     },
@@ -38,12 +24,6 @@ export default new Vuex.Store({
             ] = `Bearer ${userData.access_token}`;
             */
         },
-        UPDATE_FORM_DATA: (state, params) => {
-            for (const key of Object.keys(params)) {
-                state.formData[key] = parse(params[key]);
-            }
-            state.dirtyBit += 1;
-        },
         TOGGLE_FORM1040_DISPLAY: state => {
             state.displayForm1040 = !state.displayForm1040;
         }
@@ -56,9 +36,6 @@ export default new Vuex.Store({
     actions: {
         displayForm1040: ({ commit, state }) => {
             if (!state.displayForm1040) commit("TOGGLE_FORM1040_DISPLAY");
-        },
-        updateForm1040: ({ commit }, params) => {
-            commit("UPDATE_FORM_DATA", params);
         },
         login: ({ commit }, credentials) => {
             /*

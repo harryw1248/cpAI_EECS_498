@@ -78,8 +78,6 @@ async function runQuery(sessionInfo, query) {
     const responseText = result.fulfillmentMessages[0]["text"]["text"][0];
 
     let resultFields = result.parameters.fields;
-    console.log("parametres:", resultFields);
-
     if (result.intent) {
         console.log(`  Intent: ${result.intent.displayName}`);
     } else {

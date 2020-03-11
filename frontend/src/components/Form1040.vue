@@ -1,37 +1,37 @@
 <template>
-    <div class="relative" style="width: 856px; height: 1476px">
+    <div class="relative" style="width: 868px; height: 1476px">
         <img
             src="../assets/1040combined.jpg"
-            style="position:absolute; top:0;"
+            style="position:absolute; top:0; right:0;"
         />
 
         <!-- Filing Status -->
         <img
-            v-if="dummy === 'Single'"
+            v-if="filingStatus === 'SINGLE'"
             class="check"
             src="../assets/check.png"
             style="top:92px; left: 134px;"
         />
         <img
-            v-if="dummy === 'MFJ'"
+            v-if="filingStatus === 'MFJ'"
             class="check"
             src="../assets/check.png"
             style="top:92px; left: 194px;"
         />
         <img
-            v-if="dummy === 'MFS'"
+            v-if="filingStatus === 'MFS'"
             class="check"
             src="../assets/check.png"
             style="top:92px; left: 315px;"
         />
         <img
-            v-if="dummy === 'HOH'"
+            v-if="filingStatus === 'HOH'"
             class="check"
             src="../assets/check.png"
             style="top:92px; left: 476px;"
         />
         <img
-            v-if="dummy === 'QW'"
+            v-if="filingStatus === 'QW'"
             class="check"
             src="../assets/check.png"
             style="top:92px; left: 616px;"
@@ -40,14 +40,14 @@
         <!-- User Info -->
         <input
             class="absolute formField"
-            v-model="params['first-name']"
+            v-model="user['given-name']"
             style="top: 155px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="params['last-name']"
+            v-model="user['last-name']"
             style="top: 155px; left: 336px;"
             size="50"
             disabled
@@ -60,21 +60,21 @@
         />
         <input
             class="formField"
-            v-model="params['street-address']"
+            v-model="user['street-address']"
             style="top: 221px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="cityState"
+            :value="cityState"
             style="top: 255px; left: 56px;"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="params['social_security']"
+            v-model="socialSecurity"
             style="top: 155px; left: 658px;"
             size="50"
             disabled
@@ -167,11 +167,12 @@
             style="top:352px; left: 164px;"
         />
         <img
-            v-if="blindness.you.blind"
+            v-if="user['blind']"
             class="check"
             src="../assets/check.png"
             style="top:352px; left: 345px;"
         />
+
         <img
             v-if="blindness.you.bornBefore"
             class="check"
@@ -179,226 +180,25 @@
             style="top:352px; left: 475px;"
         />
         <img
-            v-if="blindness.you.bornBefore"
+            v-if="spouse['spouse-blind']"
             class="check"
             src="../assets/check.png"
             style="top:352px; left: 656px;"
         />
 
-
         <!-- Dependent Info -->
         <img
             v-if="moreThan4"
             class="check"
-            src="../assets/check.png"
+            src="@/assets/check.png"
             style="top:292px; left: 793px;"
         />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 55px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 227px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 342px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 378px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 405px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 401px; left: 465px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <img
-            v-if="dependentCredit.d1.child"
-            class="check"
-            src="../assets/check.png"
-            style="top: 402px; left: 633px;"
-        />
-        <img
-            v-if="dependentCredit.d1.other"
-            class="check"
-            src="../assets/check.png"
-            style="top: 402px; left: 744px;"
-        />
-
-        <input
-            class="formField"
-            style="top: 418px; left: 55px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 418px; left: 227px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 418px; left: 342px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 418px; left: 378px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 418px; left: 405px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 418px; left: 465px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <img
-            v-if="dependentCredit.d2.child"
-            class="check"
-            src="../assets/check.png"
-            style="top: 419px; left: 633px;"
-        />
-        <img
-            v-if="dependentCredit.d2.other"
-            class="check"
-            src="../assets/check.png"
-            style="top: 419px; left: 744px;"
-        />
-
-        <input
-            class="formField"
-            style="top: 435px; left: 55px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 435px; left: 227px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 435px; left: 342px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 435px; left: 378px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 435px; left: 405px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            style="top: 435px; left: 465px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <img
-            v-if="dependentCredit.d3.child"
-            class="check"
-            src="../assets/check.png"
-            style="top: 436px; left: 633px;"
-        />
-        <img
-            v-if="dependentCredit.d3.other"
-            class="check"
-            src="../assets/check.png"
-            style="top: 436px; left: 744px;"
-        />
-
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 55px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 227px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 342px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 378px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 405px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 452px; left: 465px; font-size: 14px"
-            size="50"
-            disabled
-        />
-        <img
-            v-if="dependentCredit.d4.child"
-            class="check"
-            src="../assets/check.png"
-            style="top: 453px; left: 633px;"
-        />
-        <img
-            v-if="dependentCredit.d4.other"
-            class="check"
-            src="../assets/check.png"
-            style="top: 453px; left: 744px;"
+        <DependentField 
+            class="absolute" 
+            v-for="(dep, index) in dependents"
+            v-bind:key="index"
+            :depIndex="index"
+            style="height: 15px; width:868px; top: 401px; left: 0px"
         />
 
         <!-- Money Info -->
@@ -488,88 +288,80 @@
 </template>
 
 <script>
+import DependentField from "@/components/DependentField.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "Form1040",
+  components: {
+    DependentField
+  },
   computed: {
+    filingStatus: function() {
+      const db = this.dirtyBit; //hack
+      if (this.user["filing_status"] === "qualifying widow") return "QW";
+      else if (this.user["filing_status"] === "head of household") return "HOH";
+      else return null;
+    },
     cityState: function() {
-      const city = this.params["city"];
-      const state = this.params["state"];
-      if (city && state) {
-        return city + " " + state;
-      }
-      if (city) {
-        return city;
-      }
-      if (state) {
-        return state;
+      const db = this.dirtyBit; //hack
+      const city = this.user["city"];
+      const state = this.user["state"];
+      const zip = this.user["zip-code"];
+
+      if (city && state && zip) {
+        return city + ", " + state + ", " + zip;
       }
       return "";
     },
+    socialSecurity: function() {
+      const db = this.dirtyBit; //hack
+      if (!this.user["social_security"]) return "";
+      let str = "";
+      for (let i = 0; i < 9; i++) {
+        str += this.user["social_security"][i] + " ";
+      }
+      str = str.slice(0, 5) + " " + str.slice(5, 9) + " " + str.slice(9);
+      return str;
+    },
     ...mapState({
-      params: state => state.formData,
-      dirtyBit: state => state.dirtyBit
+      user: state => state.document.user,
+      spouse: state => state.document.spouse,
+      dependents: state => state.document.dependents,
+      dirtyBit: state => state.document.dirtyBit
     })
-  },
-  created: function() {
-    const fields = [
-      "age",
-      "capital-gains",
-      "city",
-      "given-name",
-      "is-married",
-      "last-name",
-      "num_dependents",
-      "occupation",
-      "owns-business",
-      "pensions-annuities",
-      "social_security",
-      "ss-benefits",
-      "state",
-      "street-address",
-      "wages",
-      "zip-code"
-    ];
-    const dummyObj = {};
-    for (const field of fields) {
-      dummyObj[field] = null;
-    }
-    this.$store.dispatch("updateForm1040", dummyObj);
   },
   data() {
     return {
-      dummy: "Rishabh",
-      dummyNum: 100,
-      campaignFund: true,
-      moreThan4: true,
-      claimDependent: "spouse",
+      dummy: null,
+      dummyNum: null,
+      campaignFund: false,
+      moreThan4: false,
+      claimDependent: null, //"spouse",
       blindness: {
         you: {
-            bornBefore: true,
-            blind: true,
+          bornBefore: false
         },
         spouse: {
-            bornBefore: true,
-            blind: true,
+          bornBefore: false
         }
       },
       dependentCredit: {
         d1: {
-            child: true,
-            other: true,
+          child: false,
+          other: false
         },
         d2: {
-            child: true,
-            other: true,
+          child: false,
+          other: false
         },
         d3: {
-            child: true,
-            other: true,
+          child: false,
+          other: false
         },
         d4: {
-            child: true,
-            other: true,
+          child: false,
+          other: false
         }
       }
     };
