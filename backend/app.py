@@ -134,8 +134,8 @@ def explain_term(content, extract=None):
         if document.demographic_user_info['is-married']:
             response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately, "\
                         "each of you will fill out your own tax form. Most of the time, we'll encourage you to file "\
-                        "together, but if one of you has significant itemized deductions, it may be better to file together. " \
-                       "Later on, we'll let you know if it's better to file separetely. Does that make sense?"
+                        "together, but if one of you has significant itemized deductions, it may be better to file separately. " \
+                       "Later on, we'll let you know if it's better to file separately. Does that make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
         else:
             response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
