@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
 from document import Document
 from user import User
 from response import Response
@@ -578,6 +578,27 @@ def login():
         else:
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
+
+@app.route('/document', methods=['GET'])
+def getDocument():
+    global document
+
+    payload = dict()
+
+    payload['demographics'] = {
+        'user': document.demographic_user_info,
+        'spouse': document.demographic_spouse_info,
+        'dependents': [dep.slots for dep in document.dependents]
+    }
+
+    payload['income'] = {
+        'user': document.income_user_info 
+    }
+
+    response = make_response(payload)
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 if __name__ == "__main__":
