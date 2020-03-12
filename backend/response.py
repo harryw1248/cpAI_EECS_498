@@ -53,32 +53,32 @@ class Response:
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
-            'wages': "prompt_wages",
-            'tax-exempt-interest': 'prompt_tax_exempt_interest',
-            'taxable-interest': 'prompt_taxable_interest', 
+            'wages': "prompt_monetary_value",
+            'tax-exempt-interest': 'prompt_monetary_value',
+            'taxable-interest': 'prompt_monetary_value', 
             'has-1099-R': 'prompt_has_1099_R',
             'pensions-and-annuities': 'prompt_pensions_and_annuities',
-            'capital-gains': "prompt_capital_gains",
+            'capital-gains': "prompt_gains_losses",
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
             'pensions-annuities': 'prompt_pensions_annuities',
-            'ss-benefits': 'prompt_ss_benefits',
+            'ss-benefits': 'prompt_monetary_value',
             'has-1099-DIV': 'prompt_has_1099_DIV',
             'qualified-dividends': 'prompt_qualified_dividends',
             'ordinary-dividends': 'prompt_ordinary_dividends',
-            'IRA-distributions': 'prompt_IRA_distributions',
-            'IRA-distributions-taxable': 'prompt_IRA_distributions_taxable',
-            'educator-expenses': 'prompt_educator_expenses',
-            'business-expenses': 'prompt_business_expenses',
-            'health-savings-deductions': 'prompt_health_savings_deductions',
-            'moving-expenses-armed-forces': 'prompt_moving_expenses_armed_forces',
-            'self-employed-health-insurance': 'prompt_self_employed_health_insurance',
+            'IRA-distributions': 'prompt_monetary_value',
+            'IRA-distributions-taxable': 'prompt_monetary_value',
+            'educator-expenses': 'prompt_monetary_value',
+            'business-expenses': 'prompt_monetary_value',
+            'health-savings-deductions': 'prompt_monetary_value',
+            'moving-expenses-armed-forces': 'prompt_monetary_value',
+            'self-employed-health-insurance': 'prompt_monetary_value',
             #'penalty-early-withdrawal-savings': 'prompt_penalty_early_withdrawal_savings',
-            'IRA-deductions': 'prompt_IRA_deductions',
+            'IRA-deductions': 'prompt_monetary_value',
             #'student-loan-interest-deduction': 'prompt_student_loan_interest_deduction',
-            'tuition-fees': 'prompt_tuition_fees',
-            'federal-income-tax-withheld': 'prompt_federal_income_tax_withheld',
-            'earned-income-credit': 'prompt_earned_income_credit',
+            'tuition-fees': 'prompt_monetary_value',
+            'federal-income-tax-withheld': 'prompt_monetary_value',
+            'earned-income-credit': 'prompt_monetary_value',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -199,7 +199,7 @@ class Response:
                     return 'Unforunately, ' + dependents[dependent_num-2].slots['given-name'] +' does not qualify you for a tax credit. ' \
                                                     'What is your ' + self.nth[dependent_num] + " dependent's full name?"
             else:
-                return 'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                return 'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 
