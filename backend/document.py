@@ -246,11 +246,10 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-            elif extracted_slot_name == 'tax-exempt-interest':
-                overall_sum = extracted_slot_value
-                # TODO: revert
-                # for val in extracted_slot_value:
-                #     overall_sum += val
+            elif extracted_slot_name == 'tax-exempt-interest' or extracted_slot_name == 'taxable-interest':
+                overall_sum = 0
+                for val in extracted_slot_value:
+                    overall_sum += val
                 self.income_user_info[extracted_slot_name] = overall_sum
                 print("extracted slot name is", extracted_slot_name)
                 print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])

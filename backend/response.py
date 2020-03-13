@@ -54,8 +54,8 @@ class Response:
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
             'wages': "prompt_monetary_value",
-            'tax-exempt-interest': 'prompt_monetary_value',
-            'taxable-interest': 'prompt_monetary_value', 
+            'tax-exempt-interest': 'prompt_monetary_value_list',
+            'taxable-interest': 'prompt_monetary_value_list', 
             'has-1099-R': 'prompt_has_1099_R',
             'pensions-and-annuities': 'prompt_pensions_and_annuities',
             'capital-gains': "prompt_gains_losses",
@@ -109,8 +109,9 @@ class Response:
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
-                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11?',
-            'taxable-interest': 'What is your total taxable interest income from Form 1099-INT or Form 1099-OID?', 
+                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
+                                    ' the value in Box 11. If you received none of these forms, report 0.',
+            'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.', 
             'has-1099-R': 'Have you recieved a 1099-R form this year?',
             'pensions-and-annuities': 'What is your total pension or annuity payments from Form 1099-R, box 1?',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
