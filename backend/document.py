@@ -207,13 +207,14 @@ class Document:
                 self.demographic_user_info[status] = True if 'yes' in current_intent else False
 
 
-    def update_slot(self, parameters, current_intent):
+    def update_slot(self, parameters, current_intent, last_unfilled_field= None):
         if self.sections[self.current_section_index] == 'demographics':
             self.update_document_demographics(parameters, current_intent)
 
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
-            extracted_slot_name = self.last_unfilled_field
+            # extracted_slot_name = self.last_unfilled_field
+            extracted_slot_name = last_unfilled_field
             # extracted_slot_name = list(parameters.keys())[0]
             # print(extracted_slot_name)
             # extracted_slot_value = parameters[extracted_slot_name]
@@ -224,7 +225,6 @@ class Document:
                 print("extracted slot value is", extracted_slot_value)
             else:
                 extracted_slot_value = parameters[extracted_slot_name]
-
 
             if extracted_slot_value == 'yes':
                 self.income_user_info[extracted_slot_name] = True

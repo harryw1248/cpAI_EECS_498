@@ -343,7 +343,7 @@ def demographics_fill(content):
     session = content['session']
 
     # first pass: update params on document object
-    document.update_slot(parameters, current_intent)
+    document.update_slot(parameters, current_intent, last_unfilled_field)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot()
@@ -403,7 +403,7 @@ def income_finances_fill(content):
     # print(parameters)
 
     # first pass: update params on document object
-    document.update_slot(parameters, current_intent)
+    document.update_slot(parameters, current_intent, last_unfilled_field)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot()
