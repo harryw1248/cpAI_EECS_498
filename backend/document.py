@@ -101,8 +101,8 @@ class Document:
             'IRA-distributions-taxable',
             'has-1099-R',
             'pensions-and-annuities',
-            'ss-benefits', 
             'capital-gains',
+            #adjustments-to-income' STARTS here
             'educator-expenses',
             'business-expenses',
             'health-savings-deductions',
@@ -112,7 +112,8 @@ class Document:
             'IRA-deductions',
             #'student-loan-interest-deduction',
             'tuition-fees',
-            'adjustments-to-income',
+            # 'adjustments-to-income' ENDS here,
+            'ss-benefits', 
             'federal-income-tax-withheld',
             'earned-income-credit',
         ]
@@ -326,7 +327,12 @@ class Document:
         
         line_4 = self.income_user_info["tax-exempt-interest"]
         line_5 = line_2 + line_3 + line_4
-        line_6 = 0 #need to wait till line 7a and line 8a are completed. 
+        line_6 = (self.income_user_info['educator-expenses'] + 
+                 self.income_user_info['business-expenses'] +
+                 self.income_user_info['health-savings-deductions'] +
+                 self.income_user_info['moving-expenses-armed-forces'] +
+                 self.income_user_info['self-employed-health-insurance'] +
+                 self.income_user_info['IRA-deductions'])
 
         if line_6 < line_5:
             return 0
@@ -342,7 +348,7 @@ class Document:
         else:
             line_8 = "skip"
 
-        line_9, line_16 = None, None, None
+        line_9, line_16 = None, None
         if line_8 == "skip":
             line_16 = line_7 * 0.85
         else:
