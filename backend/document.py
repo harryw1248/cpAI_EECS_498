@@ -21,6 +21,7 @@ class Document:
             'is-married': None,
             'num_dependents': None,
             'filing_status': None,
+            'lived-apart': None, 
             'blind': None,
             'dual_status_alien': None,
         }
@@ -46,6 +47,7 @@ class Document:
             'is-married',
             'num_dependents',
             'filing_status',
+            'lived-apart',
             'dual_status_alien',
             'blind',
         ]
@@ -57,6 +59,7 @@ class Document:
             'taxable-interest': None, 
             'has-1099-R': None,
             'pensions-and-annuities': None, 
+            'pensions-and-annuities-taxable': 0, 
             'owns-stocks-bonds': None,
             'has-1099-DIV': None,
             'qualified-dividends': None,
@@ -78,6 +81,7 @@ class Document:
             'earned-income-credit': None,
             'pensions-annuities': None,
             'ss-benefits': None,
+            'ss-benefits-taxable': None,
             'taxable-refunds': None,
             'business-gains': None,
             'unemployment-compensation': None,
@@ -89,14 +93,15 @@ class Document:
             # 'owns-business': None,
             'tax-exempt-interest',
             'taxable-interest', 
-            'has-1099-R',
-            'pensions-and-annuities', 
             'owns-stocks-bonds',
             'has-1099-DIV',
             'qualified-dividends',
             'ordinary-dividends',
             'IRA-distributions',
             'IRA-distributions-taxable',
+            'has-1099-R',
+            'pensions-and-annuities',
+            'ss-benefits', 
             'capital-gains',
             'educator-expenses',
             'business-expenses',
@@ -110,8 +115,6 @@ class Document:
             'adjustments-to-income',
             'federal-income-tax-withheld',
             'earned-income-credit',
-            'pensions-annuities',
-            'ss-benefits',
         ]
 
         self.dependent_being_filled = None
@@ -189,6 +192,7 @@ class Document:
                 self.is_married = True
             else:
                 self.is_married = False
+                self.demographic_user_info['lived-apart'] = True
         elif "filing_status_married" in current_intent:
             self.demographic_user_info['filing_status'] = parameters['filing-status-married']
         elif "widower" in current_intent:
@@ -253,6 +257,14 @@ class Document:
                 self.income_user_info[extracted_slot_name] = overall_sum
                 print("extracted slot name is", extracted_slot_name)
                 print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
+            elif extracted_slot_name == "ss-benefits":
+                overall_sum = 0
+                for val in extracted_slot_value:
+                    overall_sum += val
+                
+                self.income_user_info[extracted_slot_name] = overall_sum
+                final_value = self.compute_ss_benefits(overall_sum)
+                self.income_user_info['ss-benefits-taxable'] = final_value
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
@@ -303,6 +315,61 @@ class Document:
         else:
             return line8
 
+    def compute_ss_benefits(self, overall_sum= 0):
+        line_1 = overall_sum
+        line_2 = 0.50 * line_1
+        line_3 = (self.income_user_info["wages"] + self.income_user_info["taxable-interest"] +
+                 self.income_user_info["ordinary-dividends"] + self.income_user_info["IRA-distributions-taxable"] +
+                 self.income_user_info["pensions-and-annuities-taxable"])
+        if self.income_user_info["capital-gains"] != None:
+            line_3 += self.income_user_info["capital-gains"]
+        
+        line_4 = self.income_user_info["tax-exempt-interest"]
+        line_5 = line_2 + line_3 + line_4
+        line_6 = 0 #need to wait till line 7a and line 8a are completed. 
+
+        if line_6 < line_5:
+            return 0
+        
+        line_7 = line_5 - line_6
+        line_8 = 0
+        if self.demographic_user_info["filing_status"] is 'married filing jointly':
+            line_8 = 32000
+        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+            line_8 = 25000 
+        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+            line_8 = 25000
+        else:
+            line_8 = "skip"
+
+        line_9, line_16 = None, None, None
+        if line_8 == "skip":
+            line_16 = line_7 * 0.85
+        else:
+            if line_8 < line_7:
+                return 0
+            else:
+                line_9 = line_7 - line_8
+
+        line_10 = 0
+        if self.demographic_user_info["filing_status"] is 'married filing jointly':
+            line_10 = 12000
+        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+            line_10 = 9000
+        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+            line_10 = 9000
+
+        line_11 = max(0, line_9 - line_10)
+        line_12 = min(line_9, line_10)
+        line_13 = 0.5 * line_12
+        line_14 = min(line_2, line_13)
+        line_15 = line_11 * 0.85
+        if line_16 is not None:
+            line_16 = line_14 + line_15
+        line_17 = line_1 * 0.85
+        line_18 = min(line_16, line_17)
+        return line_18
+
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
         self.demographic_user_info["last-name"] = "Jones"
@@ -315,6 +382,7 @@ class Document:
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
         self.demographic_user_info["filing_status"] = "Single"
+        self.demographic_user_info["lived-apart"] = True
 
         self.demographic_user_info["is-married"] = False
 

@@ -16,7 +16,8 @@ class Response:
             'filing_status_married': 'Are you filing jointly with your spouse or filing separately?',
             'filing_status_HOH_widower': "Have you had a spouse die within the last two tax years?",
             'dual_status_alien': "Are you a dual-status alien?",
-            'blind': "Are you blind?"
+            'blind': "Are you blind?",
+            'lived-apart': "Have you lived apart from your spouse for all of this year?"
         }
 
         self.demographics_spouse = {
@@ -40,6 +41,7 @@ class Response:
             'is-married': 'prompt_is_married',
             'dual_status_alien': "prompt_dual_status_alien",
             'blind': 'prompt_blind',
+            'lived-apart': 'prompt_lived_apart',
             'num_dependents': 'prompt_num_dependents',
             'dependent-citizenship': 'prompt_dependent_citizenship',
             'filing_status_married': 'prompt_filing_status_married',
@@ -79,6 +81,7 @@ class Response:
             'tuition-fees': 'prompt_monetary_value',
             'federal-income-tax-withheld': 'prompt_monetary_value',
             'earned-income-credit': 'prompt_monetary_value',
+            'ss-benefits': 'prompt_monetary_value_list',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -119,7 +122,7 @@ class Response:
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. Please '
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': '. Please indicate the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'educator-expenses': 'What is your amount of educator expenses?',
             'business-expenses': 'What is your amount of business expenses?',
@@ -133,7 +136,7 @@ class Response:
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
             'earned-income-credit': 'What is your amount of earned-income-credit?',
             'pensions-annuities': 'What is the amount of your pensions and annuities?',
-            'ss-benefits': 'How much have you claimed in social security this past year?'
+            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.'
         }
 
         self.income_finances_order = [
