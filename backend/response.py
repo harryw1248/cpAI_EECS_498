@@ -61,6 +61,10 @@ class Response:
             'has-1099-R': 'prompt_has_1099_R',
             'pensions-and-annuities': 'prompt_pensions_and_annuities',
             'capital-gains': "prompt_gains_losses",
+            'taxable-refunds': "prompt_monetary_value",
+            'business-income': "prompt_gains_losses",
+            'unemployment-compensation':  'prompt_monetary_value',
+            'other-income': 'prompt_monetary_value',
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
             'pensions-annuities': 'prompt_pensions_annuities',
@@ -124,6 +128,10 @@ class Response:
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
+            'taxable-refunds': 'What is the amount of taxable refunds you received?',
+            'business-income': 'How much money did you gain/lose from your business?',
+            'unemployment-compensation': 'How much did you collect in unemployment compensation?',
+            'other-income': 'How much did you make or receieve in forms of other income?',
             'educator-expenses': 'What is your amount of educator expenses?',
             'business-expenses': 'What is your amount of business expenses?',
             'health-savings-deductions': 'What is your amount of health savings deductions?',
@@ -154,6 +162,10 @@ class Response:
             'IRA-distributions-taxable',
             'ss-benefits', 
             'capital-gains', 
+            'taxable-refunds',
+            'business-income',
+            'unemployment-compensation',
+            'other-income',
             'educator-expenses',
             'business-expenses',
             'health-savings-deductions',
@@ -195,13 +207,13 @@ class Response:
             if dependent_num > 1:
                 if dependents[dependent_num-2].dependent_child_tax_credit:
                     return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a child tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
                 elif dependents[dependent_num-2].dependent_credit_for_others:
                     return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a dependent credit for others. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
                 else:
                     return 'Unforunately, ' + dependents[dependent_num-2].slots['given-name'] +' does not qualify you for a tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
             else:
                 return 'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
         else:   
