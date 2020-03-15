@@ -1,3 +1,4 @@
+
 class Response:
     def __init__(self):
         self.demographics = {
@@ -68,10 +69,9 @@ class Response:
             'other-income': 'prompt_monetary_value',
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
-            'ss-benefits': 'prompt_monetary_value',
             'has-1099-DIV': 'prompt_has_1099_DIV',
-            'qualified-dividends': 'prompt_qualified_dividends',
-            'ordinary-dividends': 'prompt_ordinary_dividends',
+            'qualified-dividends': 'prompt_monetary_value',
+            'ordinary-dividends': 'prompt_monetary_value',
             'IRA-distributions': 'prompt_monetary_value',
             'IRA-distributions-taxable': 'prompt_monetary_value',
             'educator-expenses': 'prompt_monetary_value',
