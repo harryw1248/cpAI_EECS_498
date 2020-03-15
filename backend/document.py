@@ -21,6 +21,7 @@ class Document:
             'is-married': None,
             'num_dependents': None,
             'filing_status': None,
+            'lived-apart': None, 
             'blind': None,
             'dual_status_alien': None,
         }
@@ -46,6 +47,7 @@ class Document:
             'is-married',
             'num_dependents',
             'filing_status',
+            'lived-apart',
             'dual_status_alien',
             'blind',
         ]
@@ -57,6 +59,7 @@ class Document:
             'taxable-interest': None, 
             'has-1099-R': None,
             'pensions-and-annuities': None, 
+            'pensions-and-annuities-taxable': 0, 
             'owns-stocks-bonds': None,
             'has-1099-DIV': None,
             'qualified-dividends': None,
@@ -64,6 +67,11 @@ class Document:
             'IRA-distributions': None,
             'IRA-distributions-taxable': None,
             'capital-gains': None,
+            # additional income STARTS here
+            'taxable-refunds': None,
+            'business-income': None,
+            'unemployment-compensation': None,
+            'other-income': None,
             'educator-expenses': None,
             'business-expenses': None,
             'health-savings-deductions': None,
@@ -77,7 +85,12 @@ class Document:
             'federal-income-tax-withheld': None,
             'earned-income-credit': None,
             'pensions-annuities': None,
-            'ss-benefits': None
+            'ss-benefits': None,
+            'ss-benefits-taxable': None,
+            'taxable-refunds': None,
+            'business-gains': None,
+            'unemployment-compensation': None,
+            'other-income': None
         }
 
         self.income_slots_to_fill = [
@@ -85,15 +98,21 @@ class Document:
             # 'owns-business': None,
             'tax-exempt-interest',
             'taxable-interest', 
-            'has-1099-R',
-            'pensions-and-annuities', 
             'owns-stocks-bonds',
             'has-1099-DIV',
             'qualified-dividends',
             'ordinary-dividends',
             'IRA-distributions',
             'IRA-distributions-taxable',
+            'has-1099-R',
+            'pensions-and-annuities',
             'capital-gains',
+            # Additional income STARTS here
+            'taxable-refunds',
+            'business-income',
+            'unemployment-compensation',
+            'other-income',
+            #adjustments-to-income' STARTS here
             'educator-expenses',
             'business-expenses',
             'health-savings-deductions',
@@ -103,19 +122,19 @@ class Document:
             'IRA-deductions',
             #'student-loan-interest-deduction',
             'tuition-fees',
-            'adjustments-to-income',
+            # 'adjustments-to-income' ENDS here,
+            'ss-benefits', 
             'federal-income-tax-withheld',
             'earned-income-credit',
-            'pensions-annuities',
-            'ss-benefits',
         ]
 
         self.dependent_being_filled = None
+        self.number_of_dependents_completed = 0
         self.dependents = []
         self.demographics_slots_to_fill_if_married = ['spouse-given-name', 'spouse-last-name', 'spouse-age', 'spouse-ssn', 'spouse-blind']
-        self.bool_statuses = ['dual_status_alien', 'blind']
         self.is_married = False
         self.current_section_index = 0
+        self.last_unfilled_field = ""
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -128,16 +147,19 @@ class Document:
     
     def find_next_unfilled_slot(self):
         if self.sections[self.current_section_index] == 'demographics':
-            return self.find_next_unfilled_slot_demographics()
+            self.last_unfilled_field = self.find_next_unfilled_slot_demographics()
+            return self.last_unfilled_field
         elif self.sections[self.current_section_index] == 'income':
-            return self.find_next_unfilled_slot_income()
+            self.last_unfilled_field = self.find_next_unfilled_slot_income()
+            return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
         # Get the next unfilled slot for the current dependent
         if self.dependent_being_filled is not None:
             slot = self.dependent_being_filled.find_next_unfilled_slot()
             if not slot:
-                self.dependents.append(self.dependent_being_filled)
+                self.number_of_dependents_completed +=1
+                #self.dependents.append(self.dependent_being_filled)
                 self.dependent_being_filled = None
             else:
                 return slot
@@ -151,10 +173,11 @@ class Document:
                 status = self.check_status(slot, self.demographic_spouse_info)
                 if status is not None:
                     return status
-        if len(self.dependents) < self.demographic_user_info['num_dependents']:
+        if self.number_of_dependents_completed < self.demographic_user_info['num_dependents']:
             print("Creating a dependent!!")
             self.dependent_being_filled = Dependent()
-            self.dependent_being_filled.num = len(self.dependents) + 1
+            self.dependent_being_filled.num = self.number_of_dependents_completed + 1
+            self.dependents.append(self.dependent_being_filled)
             return self.dependent_being_filled.find_next_unfilled_slot()
         return None
 
@@ -177,11 +200,20 @@ class Document:
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
-        if "is-married" in current_intent:
+        if 'name' in current_intent and parameters['occupation'] != '':
+            if parameters['occupation'] != 'unemployed':
+                self.income_user_info['unemployment-compensation'] = 0
+        elif current_intent == 'demographics_fill.blind_status':
+            self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
+        elif current_intent == 'demographics_fill.dual_status_alien':
+            self.demographic_user_info['dual_status_alien'] = True if parameters['dual_status_alien'] == 'yes' else False
+
+        elif "is-married" in current_intent:
             if parameters['is-married'] == 'yes':
                 self.is_married = True
             else:
                 self.is_married = False
+                self.demographic_user_info['lived-apart'] = True
         elif "filing_status_married" in current_intent:
             self.demographic_user_info['filing_status'] = parameters['filing-status-married']
         elif "widower" in current_intent:
@@ -197,15 +229,10 @@ class Document:
                     if slot == 'spouse-blind':
                         self.demographic_spouse_info['spouse-blind'] = True if 'yes' in parameters[slot] else False
 
-        for status in self.bool_statuses:
-            if status in current_intent:
-                self.demographic_user_info[status] = True if 'yes' in current_intent else False
 
-
-    def update_slot(self, slot_name, new_slot_value):
-        print(slot_name)
-        print(new_slot_value)
+    def update_slot(self, parameters, current_intent, last_unfilled_field= None):
         if self.sections[self.current_section_index] == 'demographics':
+<<<<<<< HEAD
 
             if self.dependent_being_filled is not None and slot_name in self.dependent_being_filled.slots:
                 self.dependent_being_filled.slots[slot_name] = new_slot_value
@@ -217,12 +244,29 @@ class Document:
                 self.demographic_spouse_info[slot_name] = new_slot_value
                 if slot_name == 'spouse-blind':
                     self.demographic_spouse_info['spouse-blind'] = True if 'yes' in new_slot_value else False
+=======
+            self.update_document_demographics(parameters, current_intent)
+>>>>>>> d00d92e5c791f0dad9eb3612bd106e0603e0ae2d
 
         elif self.sections[self.current_section_index] == 'income':
-            extracted_slot_name = list(slot_name.keys())[0]
-            print(extracted_slot_name)
-            extracted_slot_value = slot_name[extracted_slot_name]
-            print(extracted_slot_value)
+            print("last unfilled field:", self.last_unfilled_field)
+            # extracted_slot_name = self.last_unfilled_field
+            extracted_slot_name = last_unfilled_field
+            # extracted_slot_name = list(parameters.keys())[0]
+            # print(extracted_slot_name)
+            # extracted_slot_value = parameters[extracted_slot_name]
+            # print(extracted_slot_value)
+            if 'monetary_value' in current_intent:
+                print("monetary value!")
+                extracted_slot_value = parameters['value']
+                print("extracted slot value is", extracted_slot_value)
+            elif 'gains_losses' in current_intent:
+                if parameters['gain-or-loss'] == 'loss':
+                    extracted_slot_value = parameters['value'] * -1
+                else:
+                    extracted_slot_value = parameters['value']
+            else:
+                extracted_slot_value = parameters[extracted_slot_name]
 
             if extracted_slot_value == 'yes':
                 self.income_user_info[extracted_slot_name] = True
@@ -234,8 +278,8 @@ class Document:
                     self.income_user_info['capital-gains'] = False
                 elif extracted_slot_name == "has-1099-R":
                     self.income_user_info['pensions-and-annuities'] = 0
-            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0'\
-                    or extracted_slot_value == 0:
+            elif extracted_slot_name == 'IRA-distributions' and (extracted_slot_value == 'zero' or extracted_slot_value == '0'\
+                    or extracted_slot_value == 0):
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
             elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
@@ -244,13 +288,24 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-            elif extracted_slot_name == 'tax-exempt-interest':
+            elif extracted_slot_name == 'tax-exempt-interest' or extracted_slot_name == 'taxable-interest':
                 overall_sum = 0
                 for val in extracted_slot_value:
                     overall_sum += val
                 self.income_user_info[extracted_slot_name] = overall_sum
+                print("extracted slot name is", extracted_slot_name)
+                print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
+            elif extracted_slot_name == "ss-benefits":
+                overall_sum = 0
+                for val in extracted_slot_value:
+                    overall_sum += val
+                
+                self.income_user_info[extracted_slot_name] = overall_sum
+                final_value = self.compute_ss_benefits(overall_sum)
+                self.income_user_info['ss-benefits-taxable'] = final_value
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+
 
     def dependents_worksheet(self):
         num_dependents_under_17_citizens = 0
@@ -295,6 +350,66 @@ class Document:
         else:
             return line8
 
+    def compute_ss_benefits(self, overall_sum= 0):
+        line_1 = overall_sum
+        line_2 = 0.50 * line_1
+        line_3 = (self.income_user_info["wages"] + self.income_user_info["taxable-interest"] +
+                 self.income_user_info["ordinary-dividends"] + self.income_user_info["IRA-distributions-taxable"] +
+                 self.income_user_info["pensions-and-annuities-taxable"])
+        if self.income_user_info["capital-gains"] != None:
+            line_3 += self.income_user_info["capital-gains"]
+        
+        line_4 = self.income_user_info["tax-exempt-interest"]
+        line_5 = line_2 + line_3 + line_4
+        line_6 = (self.income_user_info['educator-expenses'] + 
+                 self.income_user_info['business-expenses'] +
+                 self.income_user_info['health-savings-deductions'] +
+                 self.income_user_info['moving-expenses-armed-forces'] +
+                 self.income_user_info['self-employed-health-insurance'] +
+                 self.income_user_info['IRA-deductions'])
+
+        if line_6 < line_5:
+            return 0
+        
+        line_7 = line_5 - line_6
+        line_8 = 0
+        if self.demographic_user_info["filing_status"] is 'married filing jointly':
+            line_8 = 32000
+        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+            line_8 = 25000 
+        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+            line_8 = 25000
+        else:
+            line_8 = "skip"
+
+        line_9, line_16 = None, None
+        if line_8 == "skip":
+            line_16 = line_7 * 0.85
+        else:
+            if line_8 < line_7:
+                return 0
+            else:
+                line_9 = line_7 - line_8
+
+        line_10 = 0
+        if self.demographic_user_info["filing_status"] is 'married filing jointly':
+            line_10 = 12000
+        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+            line_10 = 9000
+        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+            line_10 = 9000
+
+        line_11 = max(0, line_9 - line_10)
+        line_12 = min(line_9, line_10)
+        line_13 = 0.5 * line_12
+        line_14 = min(line_2, line_13)
+        line_15 = line_11 * 0.85
+        if line_16 is not None:
+            line_16 = line_14 + line_15
+        line_17 = line_1 * 0.85
+        line_18 = min(line_16, line_17)
+        return line_18
+
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
         self.demographic_user_info["last-name"] = "Jones"
@@ -307,9 +422,10 @@ class Document:
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
         self.demographic_user_info["filing_status"] = "Single"
+        self.demographic_user_info["lived-apart"] = True
 
         self.demographic_user_info["is-married"] = False
-        
+
         self.demographic_user_info["num-dependents"] = 2
         self.demographic_user_info["blind"] = False
 

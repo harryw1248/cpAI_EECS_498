@@ -16,7 +16,8 @@ class Response:
             'filing_status_married': 'Are you filing jointly with your spouse or filing separately?',
             'filing_status_HOH_widower': "Have you had a spouse die within the last two tax years?",
             'dual_status_alien': "Are you a dual-status alien?",
-            'blind': "Are you blind?"
+            'blind': "Are you blind?",
+            'lived-apart': "Have you lived apart from your spouse for all of this year?"
         }
 
         self.demographics_spouse = {
@@ -40,6 +41,7 @@ class Response:
             'is-married': 'prompt_is_married',
             'dual_status_alien': "prompt_dual_status_alien",
             'blind': 'prompt_blind',
+            'lived-apart': 'prompt_lived_apart',
             'num_dependents': 'prompt_num_dependents',
             'dependent-citizenship': 'prompt_dependent_citizenship',
             'filing_status_married': 'prompt_filing_status_married',
@@ -53,32 +55,37 @@ class Response:
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
-            'wages': "prompt_wages",
-            'tax-exempt-interest': 'prompt_tax_exempt_interest',
-            'taxable-interest': 'prompt_taxable_interest', 
+            'wages': "prompt_monetary_value",
+            'tax-exempt-interest': 'prompt_monetary_value_list',
+            'taxable-interest': 'prompt_monetary_value_list', 
             'has-1099-R': 'prompt_has_1099_R',
             'pensions-and-annuities': 'prompt_pensions_and_annuities',
-            'capital-gains': "prompt_capital_gains",
+            'capital-gains': "prompt_gains_losses",
+            'taxable-refunds': "prompt_monetary_value",
+            'business-income': "prompt_gains_losses",
+            'unemployment-compensation':  'prompt_monetary_value',
+            'other-income': 'prompt_monetary_value',
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
             'pensions-annuities': 'prompt_pensions_annuities',
-            'ss-benefits': 'prompt_ss_benefits',
+            'ss-benefits': 'prompt_monetary_value',
             'has-1099-DIV': 'prompt_has_1099_DIV',
             'qualified-dividends': 'prompt_qualified_dividends',
             'ordinary-dividends': 'prompt_ordinary_dividends',
-            'IRA-distributions': 'prompt_IRA_distributions',
-            'IRA-distributions-taxable': 'prompt_IRA_distributions_taxable',
-            'educator-expenses': 'prompt_educator_expenses',
-            'business-expenses': 'prompt_business_expenses',
-            'health-savings-deductions': 'prompt_health_savings_deductions',
-            'moving-expenses-armed-forces': 'prompt_moving_expenses_armed_forces',
-            'self-employed-health-insurance': 'prompt_self_employed_health_insurance',
+            'IRA-distributions': 'prompt_monetary_value',
+            'IRA-distributions-taxable': 'prompt_monetary_value',
+            'educator-expenses': 'prompt_monetary_value',
+            'business-expenses': 'prompt_monetary_value',
+            'health-savings-deductions': 'prompt_monetary_value',
+            'moving-expenses-armed-forces': 'prompt_monetary_value',
+            'self-employed-health-insurance': 'prompt_monetary_value',
             #'penalty-early-withdrawal-savings': 'prompt_penalty_early_withdrawal_savings',
-            'IRA-deductions': 'prompt_IRA_deductions',
+            'IRA-deductions': 'prompt_monetary_value',
             #'student-loan-interest-deduction': 'prompt_student_loan_interest_deduction',
-            'tuition-fees': 'prompt_tuition_fees',
-            'federal-income-tax-withheld': 'prompt_federal_income_tax_withheld',
-            'earned-income-credit': 'prompt_earned_income_credit',
+            'tuition-fees': 'prompt_monetary_value',
+            'federal-income-tax-withheld': 'prompt_monetary_value',
+            'earned-income-credit': 'prompt_monetary_value',
+            'ss-benefits': 'prompt_monetary_value_list',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
@@ -109,8 +116,9 @@ class Response:
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
-                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11?',
-            'taxable-interest': 'What is your total taxable interest income from Form 1099-INT or Form 1099-OID?', 
+                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
+                                    ' the value in Box 11. If you received none of these forms, report 0.',
+            'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.', 
             'has-1099-R': 'Have you recieved a 1099-R form this year?',
             'pensions-and-annuities': 'What is your total pension or annuity payments from Form 1099-R, box 1?',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
@@ -118,8 +126,12 @@ class Response:
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. Please '
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': '. Please indicate the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
+            'taxable-refunds': 'What is the amount of taxable refunds you received?',
+            'business-income': 'How much money did you gain/lose from your business?',
+            'unemployment-compensation': 'How much did you collect in unemployment compensation?',
+            'other-income': 'How much did you make or receieve in forms of other income?',
             'educator-expenses': 'What is your amount of educator expenses?',
             'business-expenses': 'What is your amount of business expenses?',
             'health-savings-deductions': 'What is your amount of health savings deductions?',
@@ -132,7 +144,7 @@ class Response:
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
             'earned-income-credit': 'What is your amount of earned-income-credit?',
             'pensions-annuities': 'What is the amount of your pensions and annuities?',
-            'ss-benefits': 'How much have you claimed in social security this past year?'
+            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.'
         }
 
         self.income_finances_order = [
@@ -150,6 +162,10 @@ class Response:
             'IRA-distributions-taxable',
             'ss-benefits', 
             'capital-gains', 
+            'taxable-refunds',
+            'business-income',
+            'unemployment-compensation',
+            'other-income',
             'educator-expenses',
             'business-expenses',
             'health-savings-deductions',
@@ -191,15 +207,15 @@ class Response:
             if dependent_num > 1:
                 if dependents[dependent_num-2].dependent_child_tax_credit:
                     return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a child tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
                 elif dependents[dependent_num-2].dependent_credit_for_others:
                     return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a dependent credit for others. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
                 else:
                     return 'Unforunately, ' + dependents[dependent_num-2].slots['given-name'] +' does not qualify you for a tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
             else:
-                return 'What is your ' + self.nth[dependent_num] + " dependent's full name?"
+                return 'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 

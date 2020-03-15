@@ -7,8 +7,14 @@ class User:
                              'occupation': '', 'filing_status': ''}
         self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
                                      'mfs_spouse': '', 'spouse-blind': False}], False]
-        self.income = {'wages': None, 'capital-gains': None, 'owns-business': None,
-                       'pensions-annuities': None, 'ss-benefits': None}
+        self.income = {
+            'wages': None,
+            'capital-gains': None,
+            'owns-business': None,
+            'pensions-annuities': None,
+            'ss-benefits': None,
+            'business-income': None
+        }
 
         # the second False corresponds to whether or not the user has told you the information yet
         # i.e., self.PO = [[True], True] means the user told you they have a PO box while

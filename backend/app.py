@@ -173,7 +173,7 @@ def change_field(content):
         output_context = responses.generate_output_context('change_field_value', 1, session, document)
     else:
         print("New value is", parameters['value'])
-        document.update_slot(field_to_change, parameters['value'])
+        document.update_slot(parameters, intent)
         response = "Alright, does this look better?"
         output_context = responses.generate_output_context('change_field_confirm', 1, session, document)
 
@@ -184,7 +184,7 @@ def change_field(content):
     data['output_contexts'] = output_context
     return jsonify(data)
 
-
+# TODO: it's broken right now
 def change_field_repeat_and_value(content):
     global next_unfilled_field
     global last_field_changed
@@ -261,10 +261,14 @@ def confirm_yes(content):
     global user
     global document
     global responses
+    global last_unfilled_field
     session = content['session']
     document.current_section_index += 1
     response = "Great, let's move on! "
+    print("current section:", document.sections[document.current_section_index])
     next_unfilled_slot = document.find_next_unfilled_slot()
+    last_unfilled_field = next_unfilled_slot
+    print("next unfilled slot:", next_unfilled_slot)
     response += responses.get_next_response(next_unfilled_slot, document)
     with open('response.json') as f:
         data = json.load(f)
@@ -274,11 +278,10 @@ def confirm_yes(content):
     data['output_contexts'] = output_context
     last_intent = 'confirm - yes'
     user.update_demographic_info(document)
-    print("output_context: ")
-    print(output_context)
+    print("output_context: ", output_context)
     return jsonify(data)
 
-
+# TODO: broken right now
 def confirm_no(content):
     global document
     global responses
@@ -340,7 +343,7 @@ def demographics_fill(content):
     session = content['session']
 
     # first pass: update params on document object
-    document.update_document_demographics(parameters, current_intent)
+    document.update_slot(parameters, current_intent, last_unfilled_field)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot()
@@ -362,6 +365,7 @@ def demographics_fill(content):
         output_context = responses.generate_output_context('confirm_section', 1, session, document)
 
     last_unfilled_field = next_unfilled_slot
+    print("inside demographics_fill, last_unfilled field is", last_unfilled_field)
 
     with open('response.json') as f:
         data = json.load(f)
@@ -399,7 +403,7 @@ def income_finances_fill(content):
     # print(parameters)
 
     # first pass: update params on document object
-    document.update_slot(parameters, current_intent)
+    document.update_slot(parameters, current_intent, last_unfilled_field)
 
     # second pass: query next thing needed
     next_unfilled_slot = document.find_next_unfilled_slot()
@@ -428,6 +432,7 @@ def income_finances_fill(content):
 
     global user
 
+    last_unfilled_field = next_unfilled_slot
     last_intent = 'income_and_finances_fill'
     user.update_income_info(document)
 
