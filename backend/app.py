@@ -54,10 +54,10 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot()
-    response = responses.get_next_response(next_unfilled_slot,  document)
+    response = responses.get_next_response(next_unfilled_slot, document)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
-    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " +  response]}}]
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " + response]}}]
     data['output_contexts'] = output_context
     return jsonify(data)
 
@@ -81,22 +81,22 @@ def explain_term_repeat(content):
     output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
     data['fulfillment_messages'] = [
         {
-        "text": {
-          "text": [
-            "I am sorry to hear that. Here is a link that should provide you with some more details:"
-          ]
-        }
-      },
-      {
-        "card": {
-          "buttons": [
-            {
-              "text": firebase_data[last_term_explained]["link"],
-              "postback": firebase_data[last_term_explained]["link"]
+            "text": {
+                "text": [
+                    "I am sorry to hear that. Here is a link that should provide you with some more details:"
+                ]
             }
-          ]
-        }
-      }]
+        },
+        {
+            "card": {
+                "buttons": [
+                    {
+                        "text": firebase_data[last_term_explained]["link"],
+                        "postback": firebase_data[last_term_explained]["link"]
+                    }
+                ]
+            }
+        }]
 
     data['output_contexts'] = output_context
     return jsonify(data)
@@ -126,16 +126,17 @@ def explain_term(content, extract=None):
         print(firebase_data[tokenized_extract]["definition"])
         print(extract)
         print(tokenized_extract)
-        response = "Great question, " + extract + " is " + firebase_data[tokenized_extract]["definition"] + ". Does that make sense?"
+        response = "Great question, " + extract + " is " + firebase_data[tokenized_extract][
+            "definition"] + ". Does that make sense?"
         data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     if extract == "filing status":
         global document
         if document.demographic_user_info['is-married']:
-            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately, "\
-                        "each of you will fill out your own tax form. Most of the time, we'll encourage you to file "\
-                        "together, but if one of you has significant itemized deductions, it may be better to file separately. " \
-                       "Later on, we'll let you know if it's better to file separately. Does that make sense?"
+            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately, " \
+                       "each of you will fill out your own tax form. Most of the time, we'll encourage you to file " \
+                       "together, but if one of you has significant itemized deductions, it may be better to file together. " \
+                       "Later on, we'll let you know if it's better to file separetely. Does that make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
         else:
             response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
@@ -160,7 +161,7 @@ def change_field(content):
         return change_field_repeat_and_value(content)
     elif intent == 'change_field - confirm':
         return change_field_confirm(content)
-    
+
     if parameters['field'] == '':
         field_to_change = last_unfilled_field
     else:
@@ -168,7 +169,7 @@ def change_field(content):
     last_field_changed = field_to_change
 
     output_context = None
-    if parameters['value'] == '': 
+    if parameters['value'] == '':
         response = "No problem, let's go back to change that. Can you tell me what you want the new value to be?"
         output_context = responses.generate_output_context('change_field_value', 1, session, document)
     else:
@@ -179,10 +180,11 @@ def change_field(content):
 
     with open('response.json') as f:
         data = json.load(f)
-    
+
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
     return jsonify(data)
+
 
 # TODO: it's broken right now
 def change_field_repeat_and_value(content):
@@ -200,7 +202,7 @@ def change_field_repeat_and_value(content):
     if last_field_changed is None:
         response = "Can you tell me what you want to change the value to?"
         output_context = responses.generate_output_context('change_field_value', 1, session, document)
-    elif parameters['value'] == '': 
+    elif parameters['value'] == '':
         response = "Sorry, let's try that again. Can you tell me what you want the new value to be?"
         output_context = responses.generate_output_context('change_field_value', 1, session, document)
     else:
@@ -212,10 +214,9 @@ def change_field_repeat_and_value(content):
         document.update_slot(last_field_changed, parameters['value'])
         output_context = responses.generate_output_context('change_field_confirm', 1, session, document)
 
-
     with open('response.json') as f:
         data = json.load(f)
-    
+
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
     return jsonify(data)
@@ -234,16 +235,17 @@ def change_field_confirm(content):
             next_unfilled_slot,
             document.dependent_being_filled.num
         )
-    elif (next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info):
+    elif (
+            next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info):
         response = responses.get_next_response(next_unfilled_slot, document)
-    # TODO: change this :c 
+    # TODO: change this :c
     else:
         response = "We're all done filling out your demographics. Does everything look correct?"
         output_context = responses.generate_output_context('confirm_section', 1, session, document)
 
     if next_unfilled_slot is not None:
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
-        last_unfilled_field = next_unfilled_slot        
+        last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
         data = json.load(f)
@@ -280,6 +282,7 @@ def confirm_yes(content):
     user.update_demographic_info(document)
     print("output_context: ", output_context)
     return jsonify(data)
+
 
 # TODO: broken right now
 def confirm_no(content):
@@ -349,17 +352,18 @@ def demographics_fill(content):
     next_unfilled_slot = document.find_next_unfilled_slot()
 
     if document.dependent_being_filled is not None:
-        response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num, document.dependents)
+        response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num,
+                                                         document.dependents)
     elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
         response = responses.get_next_response(next_unfilled_slot, document)
     else:
         response = "We're all done filling out your demographics. Does everything look correct?"
         print(document)
-    
+
     output_context = None
-    if (next_unfilled_slot in document.demographic_user_info 
-        or next_unfilled_slot in document.demographic_spouse_info
-        or document.dependent_being_filled is not None):
+    if (next_unfilled_slot in document.demographic_user_info
+            or next_unfilled_slot in document.demographic_spouse_info
+            or document.dependent_being_filled is not None):
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
         output_context = responses.generate_output_context('confirm_section', 1, session, document)
@@ -414,7 +418,7 @@ def income_finances_fill(content):
         last_intent = 'income_and_finances_fill.social_security_benefits'
     else:
         response = responses.get_next_response(next_unfilled_slot, document)
-    
+
     output_context = None
     if (next_unfilled_slot in document.income_user_info):
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
@@ -490,6 +494,7 @@ def autofill(content):
 
     return jsonify(data)
 
+
 def fallback(content):
     global last_unfilled_field
     global responses
@@ -497,7 +502,7 @@ def fallback(content):
 
     if last_unfilled_field == '':
         last_unfilled_field = document.demographics_slots_to_fill[0]
-    
+
     with open('response.json') as f:
         data = json.load(f)
 
@@ -598,7 +603,7 @@ def getDocument():
     }
 
     payload['income'] = {
-        'user': document.income_user_info 
+        'user': document.income_user_info
     }
 
     response = make_response(payload)
