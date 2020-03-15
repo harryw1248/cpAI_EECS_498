@@ -59,7 +59,7 @@ class Document:
             'taxable-interest': None, 
             'has-1099-R': None,
             'pensions-and-annuities': None, 
-            'pensions-and-annuities-taxable': 0, 
+            'pensions-and-annuities-taxable': None, 
             'owns-stocks-bonds': None,
             'has-1099-DIV': None,
             'qualified-dividends': None,
@@ -84,7 +84,6 @@ class Document:
             'adjustments-to-income': 0,
             'federal-income-tax-withheld': None,
             'earned-income-credit': None,
-            'pensions-annuities': None,
             'ss-benefits': None,
             'ss-benefits-taxable': None,
             'taxable-refunds': None,
@@ -106,6 +105,7 @@ class Document:
             'IRA-distributions-taxable',
             'has-1099-R',
             'pensions-and-annuities',
+            'pensions-and-annuities-taxable',
             'capital-gains',
             # Additional income STARTS here
             'taxable-refunds',
@@ -135,6 +135,7 @@ class Document:
         self.is_married = False
         self.current_section_index = 0
         self.last_unfilled_field = ""
+        self.monetary_list_fields = ["tax-exempt-interest","taxable-interest","pensions-and-annuities","pensions-and-annuities-taxable"]
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -262,6 +263,7 @@ class Document:
                     self.income_user_info['capital-gains'] = False
                 elif extracted_slot_name == "has-1099-R":
                     self.income_user_info['pensions-and-annuities'] = 0
+                    self.income_user_info['pensions-and-annuities-taxable'] = 0
             elif extracted_slot_name == 'IRA-distributions' and (extracted_slot_value == 'zero' or extracted_slot_value == '0'\
                     or extracted_slot_value == 0):
                 self.income_user_info['IRA-distributions'] = 0
@@ -272,7 +274,7 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-            elif extracted_slot_name == 'tax-exempt-interest' or extracted_slot_name == 'taxable-interest':
+            elif extracted_slot_name in self.monetary_list_fields:
                 overall_sum = 0
                 for val in extracted_slot_value:
                     overall_sum += val
@@ -366,7 +368,7 @@ class Document:
         else:
             line_8 = "skip"
 
-        line_9, line_16 = None, None
+        line_9, line_16 = 0, None
         if line_8 == "skip":
             line_16 = line_7 * 0.85
         else:
@@ -375,21 +377,21 @@ class Document:
             else:
                 line_9 = line_7 - line_8
 
-        line_10 = 0
-        if self.demographic_user_info["filing_status"] is 'married filing jointly':
-            line_10 = 12000
-        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
-            line_10 = 9000
-        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
-            line_10 = 9000
+            line_10 = 0
+            if self.demographic_user_info["filing_status"] is 'married filing jointly':
+                line_10 = 12000
+            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+                line_10 = 9000
+            elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+                line_10 = 9000
 
-        line_11 = max(0, line_9 - line_10)
-        line_12 = min(line_9, line_10)
-        line_13 = 0.5 * line_12
-        line_14 = min(line_2, line_13)
-        line_15 = line_11 * 0.85
-        if line_16 is not None:
+            line_11 = max(0, line_9 - line_10)
+            line_12 = min(line_9, line_10)
+            line_13 = 0.5 * line_12
+            line_14 = min(line_2, line_13)
+            line_15 = line_11 * 0.85
             line_16 = line_14 + line_15
+            
         line_17 = line_1 * 0.85
         line_18 = min(line_16, line_17)
         return line_18

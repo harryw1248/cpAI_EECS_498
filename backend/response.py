@@ -59,7 +59,8 @@ class Response:
             'tax-exempt-interest': 'prompt_monetary_value_list',
             'taxable-interest': 'prompt_monetary_value_list', 
             'has-1099-R': 'prompt_has_1099_R',
-            'pensions-and-annuities': 'prompt_pensions_and_annuities',
+            'pensions-and-annuities': 'prompt_monetary_value_list',
+            'pensions-and-annuities-taxable': 'prompt_monetary_value_list',
             'capital-gains': "prompt_gains_losses",
             'taxable-refunds': "prompt_monetary_value",
             'business-income': "prompt_gains_losses",
@@ -67,7 +68,6 @@ class Response:
             'other-income': 'prompt_monetary_value',
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
-            'pensions-annuities': 'prompt_pensions_annuities',
             'ss-benefits': 'prompt_monetary_value',
             'has-1099-DIV': 'prompt_has_1099_DIV',
             'qualified-dividends': 'prompt_qualified_dividends',
@@ -119,8 +119,9 @@ class Response:
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
             'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.', 
-            'has-1099-R': 'Have you recieved a 1099-R form this year?',
-            'pensions-and-annuities': 'What is your total pension or annuity payments from Form 1099-R, box 1?',
+            'has-1099-R': 'Have you recieved 1099-R form(s) this year?',
+            'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
+            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
@@ -143,7 +144,6 @@ class Response:
             'tuition-fees': 'What is your amount of tuition and fees?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
             'earned-income-credit': 'What is your amount of earned-income-credit?',
-            'pensions-annuities': 'What is the amount of your pensions and annuities?',
             'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.'
         }
 
