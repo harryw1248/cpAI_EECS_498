@@ -143,7 +143,7 @@ class Document:
         self.monetary_list_fields = ["tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
-        self.monetary_list_fields = ["tax-exempt-interest","taxable-interest","pensions-and-annuities","pensions-and-annuities-taxable"]
+        self.adjusted_gross_income = 0
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -303,7 +303,7 @@ class Document:
             else:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
-    def dependents_worksheet(self):
+    def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
         num_dependents_under_17_non_citizens = 0
         for dependent in self.dependents:
@@ -313,7 +313,7 @@ class Document:
                 num_dependents_under_17_non_citizens += 1
 
         line3 = num_dependents_under_17_citizens * 2000.0 + num_dependents_under_17_non_citizens * 500.0
-        line4 = self.income_user_info['adjusted-gross-income']
+        line4 = self.adjusted_gross_income
         if self.demographic_user_info['filing_status'] is 'married filing jointly':
             line5 = 400000.0
         else:
@@ -334,7 +334,7 @@ class Document:
         else:
             return 0
 
-        line9 = self.income_user_info['12b']
+        line9 = self.tax_amount
         line10 = 0
         if line9 == line10:
             return 0
