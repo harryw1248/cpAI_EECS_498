@@ -56,7 +56,7 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            # 'owns-business': None,
+            'owns-business': None,
             'tax-exempt-interest': None,
             'taxable-interest': None,
             'has-1099-R': None,
@@ -71,6 +71,7 @@ class Document:
             'IRA-distributions': None,
             'IRA-distributions-taxable': None,
             'capital-gains': None,
+
             # additional income STARTS here
             'taxable-refunds': None,
             'business-income': None,
@@ -98,7 +99,7 @@ class Document:
 
         self.income_slots_to_fill = [
             'wages',
-            # 'owns-business': None,
+            'owns-business',
             'tax-exempt-interest',
             'taxable-interest',
             'owns-stocks-bonds',
@@ -111,11 +112,13 @@ class Document:
             'pensions-and-annuities',
             'pensions-and-annuities-taxable',
             'capital-gains',
+
             # Additional income STARTS here
             'taxable-refunds',
             'business-income',
             'unemployment-compensation',
             'other-income',
+
             # adjustments-to-income' STARTS here
             'educator-expenses',
             'business-expenses',
@@ -128,6 +131,7 @@ class Document:
             'tuition-fees',
             # 'adjustments-to-income' ENDS here,
             'ss-benefits',
+
             'federal-income-tax-withheld',
             'earned-income-credit',
         ]
@@ -209,6 +213,8 @@ class Document:
         if 'name' in current_intent and parameters['occupation'] != '':
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
+            if parameters['occupation'] != 'teacher' and parameters['occupation'] != 'educator':
+                self.income_user_info['educator-expenses'] = 0
         elif current_intent == 'demographics_fill.blind_status':
             self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
         elif current_intent == 'demographics_fill.dual_status_alien':
@@ -266,9 +272,11 @@ class Document:
                     self.income_user_info['ordinary-dividends'] = False
                     self.income_user_info['qualified-dividends'] = False
                     self.income_user_info['capital-gains'] = False
-                elif extracted_slot_name == "has-1099-R":
+                elif extracted_slot_name == 'has-1099-R':
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
+                elif extracted_slot_name == 'owns-business':
+                    self.income_user_info['business-expenses'] = 0
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0'\
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
@@ -285,6 +293,8 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
+                self.adjusted_gross_income = self.income_user_info['wages'] + self.income_user_info['adjustments-to-income']
+                self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             elif extracted_slot_name in self.monetary_list_fields:
                 overall_sum = 0
                 for val in extracted_slot_value:
@@ -443,6 +453,41 @@ class Document:
                     else:
                         self.tax_amount = int(row[filing_status])
         self.tax_amount =  self.tax_computation_worksheet(taxable_income, filing_status)
+    
+    def compute_earned_income_credit(self):
+        earned_income_credit = 0
+        if self.demographic_user_info["filing_status"] is 'head of household' or\
+           self.demographic_user_info["filing_status"] is 'qualifying widow' or\
+           self.demographic_user_info["filing_status"] is 'Single':
+
+            if self.number_of_dependents_completed == 0:
+                if self.adjusted_gross_income <= 15820:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.adjusted_gross_income <= 41756:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.adjusted_gross_income <= 47440:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.adjusted_gross_income <= 50594:
+                    earned_income_credit = 6660
+
+        elif self.demographic_user_info["filing_status"] is 'married filing jointly':
+            if self.number_of_dependents_completed == 0:
+                if self.adjusted_gross_income <= 21710:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.adjusted_gross_income <= 47646:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.adjusted_gross_income <= 53330:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.adjusted_gross_income <= 56844:
+                    earned_income_credit = 6660
+        print("earned income credit: " + str(earned_income_credit))
+        return earned_income_credit
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
