@@ -1,4 +1,3 @@
-
 class Response:
     def __init__(self):
         self.demographics = {
@@ -129,12 +128,12 @@ class Response:
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
-            'taxable-refunds': 'What is the amount of taxable refunds you received?',
-            'business-income': 'How much money did you gain/lose from your business?',
-            'unemployment-compensation': 'How much did you collect in unemployment compensation?',
-            'other-income': 'How much did you make or receive in forms of other income?',
-            'educator-expenses': 'What is your amount of educator expenses? These include books, supplies, and computers for classroom use. If you need more details, refer to: https://www.irs.gov/taxtopics/tc458',
-            'business-expenses': 'What is your amount of business expenses? These include the cost of storage, material costs, renting office, etc. For more detials, see https://www.irs.gov/publications/p535.',
+            'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1, and read out the taxable refunds or credits.',
+            'business-income': 'Please go to line 3 of Schedule 1 and read out how much money you gained or lost from your business. If you do not have a business, put zero.',
+            'unemployment-compensation': 'Please go to line 7 of Schedule 1 and read out how much you collected in unemployment compensation.',
+            'other-income': 'Please go to line 8 of Schedule 1 and read out the total you made or receieved in forms of other income. Ignore the type of income.',
+            'educator-expenses': 'What is your amount of educator expenses?',
+            'business-expenses': 'What is your amount of business expenses?',
             'health-savings-deductions': 'What is your amount of health savings deductions?',
             'moving-expenses-armed-forces': 'What is your amount of moving expenses from the armed forces?',
             'self-employed-health-insurance': 'What is your amount of self employed health insurance?',
