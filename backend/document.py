@@ -62,8 +62,6 @@ class Document:
             'has-1099-R': None,
             'pensions-and-annuities': None,
             'pensions-and-annuities-taxable': None,
-            'pensions-and-annuities': None,
-            'pensions-and-annuities-taxable': None, 
             'owns-stocks-bonds': None,
             'has-1099-DIV': None,
             'qualified-dividends': None,
@@ -90,10 +88,7 @@ class Document:
             'earned-income-credit': None,
             'ss-benefits': None,
             'ss-benefits-taxable': None,
-            'taxable-refunds': None,
             'business-gains': None,
-            'unemployment-compensation': None,
-            'other-income': None
         }
 
         self.income_slots_to_fill = [
