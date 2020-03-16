@@ -342,6 +342,9 @@ class Document:
         else:
             return line8
 
+    def set_line_13a(self):
+        self.child_dependent_tax_credit = self.compute_dependents_worksheet_13a()
+
     def compute_ss_benefits(self, overall_sum=0):
         line_1 = overall_sum
         line_2 = 0.50 * line_1
