@@ -329,6 +329,67 @@ def clear():
     return jsonify(data)
 
 
+def error_checking(parameters, intent, last_unfilled):
+    #possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
+    digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+    if 'address' in intent:
+        value = str(parameters['zip-code'])
+        if len(value) != 5:
+            return 'street-address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
+        for digit in value:
+            if digit not in digits:
+                return 'street-address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
+
+    elif 'social_security' in intent:
+        value = str(parameters['social_security'])
+        num_digits = 0
+        num_hyphens = 0
+
+        for digit in value:
+            if digit in digits:
+                num_digits += 1
+
+                if num_digits > 9:
+                    return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+            elif digit == '-':
+                num_hyphens += 1
+            else:
+                return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+        if num_digits != 9:
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+    elif 'spouse_SSN' in intent:
+        value = str(parameters['spouse-ssn'])
+        num_digits = 0
+        num_hyphens = 0
+
+        for digit in value:
+            if digit in digits:
+                num_digits += 1
+
+                if num_digits > 9:
+                    return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+            elif digit == '-':
+                num_hyphens += 1
+            else:
+                return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+        if num_digits != 9:
+            return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+    elif intent == 'income_and_finances_fill.monetary_value':
+        dollar_value =  str(parameters['value'])
+        if '-' in dollar_value:
+            return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
+
+
+    return None, None
+
+
 def demographics_fill(content):
     # for print debugging
     parameters = content['queryResult']['parameters']
@@ -345,17 +406,28 @@ def demographics_fill(content):
     # Session necessary to generate context identifier
     session = content['session']
 
-    # first pass: update params on document object
-    document.update_slot(parameters, current_intent, last_unfilled_field)
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
-    # second pass: query next thing needed
-    next_unfilled_slot = document.find_next_unfilled_slot()
+    if error_field is None and error_message is None:
+        # first pass: update params on document object
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
 
     if document.dependent_being_filled is not None:
         response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num,
                                                          document.dependents)
+        if error_field == 'social_security':
+            response = error_message + response
+
     elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
         response = responses.get_next_response(next_unfilled_slot, document)
+
+        if error_message is not None:
+            response = error_message + response
     else:
         response = "We're all done filling out your demographics. Does everything look correct?"
         print(document)
@@ -407,10 +479,15 @@ def income_finances_fill(content):
     # print(parameters)
 
     # first pass: update params on document object
-    document.update_slot(parameters, current_intent, last_unfilled_field)
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
-    # second pass: query next thing needed
-    next_unfilled_slot = document.find_next_unfilled_slot()
+    if error_field is None and error_message is None:
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
     print("next_unfilled_slot: " + str(next_unfilled_slot))
 
     if next_unfilled_slot is None:
@@ -418,6 +495,8 @@ def income_finances_fill(content):
         last_intent = 'income_and_finances_fill.social_security_benefits'
     else:
         response = responses.get_next_response(next_unfilled_slot, document)
+        if error_message is not None:
+            response = error_message + response
 
     output_context = None
     if (next_unfilled_slot in document.income_user_info):
@@ -510,6 +589,9 @@ def fallback(content):
     data['fulfillment_messages'] = [{"text": {"text": ["I didn't get that. Can you say it again?"]}}]
     if last_unfilled_field is not None:
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+        redo_response = responses.get_next_response(last_unfilled_field, document)
+        data['fulfillment_messages'] = [{"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
+
     else:
         # TODO: fix this
         print('something went wrong, last_unfilled_field is none')
