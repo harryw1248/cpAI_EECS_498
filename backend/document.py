@@ -246,6 +246,8 @@ class Document:
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
             extracted_slot_name = last_unfilled_field
+
+            #compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
                 extracted_slot_value = parameters['value']
             elif current_intent == "income_and_finances_fill.monetary_value_list":
@@ -296,19 +298,12 @@ class Document:
                 self.adjusted_gross_income = self.income_user_info['wages'] + self.income_user_info['adjustments-to-income']
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             elif extracted_slot_name in self.monetary_list_fields:
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
-                self.income_user_info[extracted_slot_name] = overall_sum
-                print("extracted slot name is", extracted_slot_name)
-                print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                # print("extracted slot name is", extracted_slot_name)
+                # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
             elif extracted_slot_name == "ss-benefits":
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
-
-                self.income_user_info[extracted_slot_name] = overall_sum
-                final_value = self.compute_ss_benefits(overall_sum)
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                final_value = self.compute_ss_benefits(extracted_slot_value)
                 self.income_user_info['ss-benefits-taxable'] = final_value
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
