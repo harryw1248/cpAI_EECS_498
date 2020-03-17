@@ -1,11 +1,11 @@
 class Dependent:
     def __init__(self):
         self.slots = {
-                    'given-name': None,
-                    'last-name': None,
-                    'age': None,
-                    'social_security': None,
-                    'relationship_to_filer': None,
+                    'dependent-given-name': None,
+                    'dependent-last-name': None,
+                    'dependent-age': None,
+                    'dependent-ssn': None,
+                    'dependent-relation': None,
                     'dependent-citizenship': None
                     }
         self.num = 0
@@ -20,7 +20,7 @@ class Dependent:
         return None
 
     def determine_tax_credit(self):
-        age_num = self.slots['age']
+        age_num = self.slots['dependent-age']
         print(self.slots['dependent-citizenship'])
         if self.slots['dependent-citizenship'] and age_num < 17:
             self.dependent_child_tax_credit = True

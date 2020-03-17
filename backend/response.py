@@ -51,13 +51,17 @@ class Response:
             'spouse-age': "prompt_spouse_name_age",
             'spouse-ssn': "prompt_spouse_SSN",
             'spouse-blind': "prompt_spouse_blind",
-            'relationship_to_filer': "prompt_dependent_relation",
+            'dependent-given-name': "prompt_dependent_info",
+            'dependent-last-name': "prompt_dependent_info",
+            'dependent-age': "prompt_dependent_info",
+            'dependent-relation': "prompt_dependent_info",
+            'dependent-ssn': "prompt_dependent_ssn",
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
             'wages': "prompt_monetary_value",
             'tax-exempt-interest': 'prompt_monetary_value_list',
-            'taxable-interest': 'prompt_monetary_value_list', 
+            'taxable-interest': 'prompt_monetary_value_list',
             'has-1099-R': 'prompt_has_1099_R',
             'pensions-and-annuities': 'prompt_monetary_value_list',
             'pensions-and-annuities-taxable': 'prompt_monetary_value_list',
@@ -94,13 +98,22 @@ class Response:
         self.demographics_spouse_question_order = [ 'spouse-given-name', 'spouse-last-name', 'spouse-age','spouse-ssn',
                                                    'spouse-blind']
 
+        self.demographics_dependent_slots = [
+            'dependent-given-name',
+            'dependent-last-name',
+            'dependent-age',
+            'dependent-ssn',
+            'dependent-relation',
+            'dependent-citizenship'
+        ]
+
         self.demographics_dependent_question = {
-            'given-name': '',
-            'last-name': 'What is their last name?',
-            'age': 'How old are they?',
-            'social_security': "What is their social security number, ITIN or ATIN?",
-            'relationship_to_filer': 'What is their relationship to you? e.g. "She is my daughter"',
-            'dependent-citizenship': 'Is this dependent a U.S. citizen, national, or resident alien?'
+            'dependent-given-name': 'What is their first name?',
+            'dependent-last-name': 'What is their last name?',
+            'dependent-age': 'How old are they?',
+            'dependent-ssn': "What is their social security number, ITIN or ATIN?",
+            'dependent-relation': 'What is their relationship to you? e.g. "She is my daughter"',
+            'dependent-citizenship': 'Is this dependent a U.S. citizen, national, or resident alien (yes or no)?'
         }
 
         self.nth = {
@@ -117,7 +130,7 @@ class Response:
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.', 
+            'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.',
             'has-1099-R': 'Have you recieved 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
             'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
@@ -149,18 +162,18 @@ class Response:
         self.income_finances_order = [
             'wages',
             'tax-exempt-interest',
-            'taxable-interest', 
+            'taxable-interest',
             'has-1099-R',
-            'pensions-and-annuities', 
-            # 'owns-business', 
-            'owns-stocks-bonds', 
-            'has-1099-DIV', 
-            'qualified-dividends', 
+            'pensions-and-annuities',
+            # 'owns-business',
+            'owns-stocks-bonds',
+            'has-1099-DIV',
+            'qualified-dividends',
             'ordinary-dividends',
-            'IRA-distributions', 
+            'IRA-distributions',
             'IRA-distributions-taxable',
-            'ss-benefits', 
-            'capital-gains', 
+            'ss-benefits',
+            'capital-gains',
             'taxable-refunds',
             'business-income',
             'unemployment-compensation',
@@ -194,7 +207,7 @@ class Response:
                 return "Your filing status is 'single.' " + self.demographics['dual_status_alien']
             else:
                 return self.demographics['filing_status_HOH_widower']
-        elif next_unfilled_slot in self.demographics:
+        elif next_unfilled_slot in self.demographics or next_unfilled_slot in self.demographics_dependent_slots:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
@@ -202,19 +215,19 @@ class Response:
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num, dependents):
-        if next_unfilled_slot == 'given-name':
+        if next_unfilled_slot == 'dependent-given-name':
             if dependent_num > 1:
                 if dependents[dependent_num-2].dependent_child_tax_credit:
-                    return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a child tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
+                    return dependents[dependent_num-2].slots['dependent-given-name'] +' qualifies you for a child tax credit. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
                 elif dependents[dependent_num-2].dependent_credit_for_others:
-                    return dependents[dependent_num-2].slots['given-name'] +' qualifies you for a dependent credit for others. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
+                    return dependents[dependent_num-2].slots['dependent-given-name'] +' qualifies you for a dependent credit for others. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
                 else:
-                    return 'Unforunately, ' + dependents[dependent_num-2].slots['given-name'] +' does not qualify you for a tax credit. ' \
-                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
+                    return 'Unforunately, ' + dependents[dependent_num-2].slots['dependent-given-name'] +' does not qualify you for a tax credit. ' \
+                                                    'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
             else:
-                return 'What is your ' + self.nth[dependent_num] + " dependent's full name and age?"
+                return 'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 

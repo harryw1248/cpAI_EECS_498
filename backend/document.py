@@ -2,6 +2,7 @@ from dependent import Dependent
 import pandas as pd
 import xlrd
 
+
 class Document:
     def __init__(self):
         self.sections = [
@@ -209,7 +210,7 @@ class Document:
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
-        if current_intent == 'demographics_fill.name' and parameters['occupation'] != '':
+        if 'name' in current_intent and "occupation" in parameters:
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
             if parameters['occupation'] != 'teacher' and parameters['occupation'] != 'educator':
@@ -217,7 +218,8 @@ class Document:
         elif current_intent == 'demographics_fill.blind_status':
             self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
         elif current_intent == 'demographics_fill.dual_status_alien':
-            self.demographic_user_info['dual_status_alien'] = True if parameters['dual_status_alien'] == 'yes' else False
+            self.demographic_user_info['dual_status_alien'] = True if parameters[
+                                                                          'dual_status_alien'] == 'yes' else False
 
         elif "is-married" in current_intent:
             if parameters['is-married'] == 'yes':
@@ -245,10 +247,12 @@ class Document:
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
             extracted_slot_name = last_unfilled_field
+
+            # compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
                 extracted_slot_value = parameters['value']
             elif current_intent == "income_and_finances_fill.monetary_value_list":
-                print("inside monetary value list")          
+                print("inside monetary value list")
                 total = 0
                 for value in parameters['value']:
                     total += value
@@ -275,7 +279,7 @@ class Document:
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
                 elif extracted_slot_name == 'owns-business':
                     self.income_user_info['business-expenses'] = 0
-            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0'\
+            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
@@ -285,29 +289,24 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                self.income_user_info['adjusted-gross-income'] = self.income_user_info['adjustments-to-income'] - self.income_user_info['total-income']
+                self.income_user_info['adjusted-gross-income'] = self.income_user_info['adjustments-to-income'] - \
+                                                                 self.income_user_info['total-income']
             elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
                     extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                self.adjusted_gross_income = self.income_user_info['wages'] + self.income_user_info['adjustments-to-income']
+                self.adjusted_gross_income = self.income_user_info['wages'] + self.income_user_info[
+                    'adjustments-to-income']
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             elif extracted_slot_name in self.monetary_list_fields:
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
-                self.income_user_info[extracted_slot_name] = overall_sum
-                print("extracted slot name is", extracted_slot_name)
-                print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                # print("extracted slot name is", extracted_slot_name)
+                # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
             elif extracted_slot_name == "ss-benefits":
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
-
-                self.income_user_info[extracted_slot_name] = overall_sum
-                final_value = self.compute_ss_benefits(overall_sum)
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                final_value = self.compute_ss_benefits(extracted_slot_value)
                 self.income_user_info['ss-benefits-taxable'] = final_value
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
@@ -413,9 +412,11 @@ class Document:
             elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
-            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info["filing_status"] is 'qualifying widow':
+            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info[
+                "filing_status"] is 'qualifying widow':
                 line_10 = 9000
-            elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info["lived-apart"] == True:
+            elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
+                    self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
 
             line_11 = max(0, line_9 - line_10)
@@ -449,20 +450,20 @@ class Document:
 
     def compute_total_other_income(self):
         self.income_user_info["total-other-income"] = (
-            self.income_user_info['taxable-refunds'] +
-            self.income_user_info['business-income'] +
-            self.income_user_info['unemployment-compensation'] + 
-            self.income_user_info['other-income']
+                self.income_user_info['taxable-refunds'] +
+                self.income_user_info['business-income'] +
+                self.income_user_info['unemployment-compensation'] +
+                self.income_user_info['other-income']
         )
         # TODO: add ss-benefits
         self.income_user_info['total-income'] = (
-            self.income_user_info['wages'] + 
-            self.income_user_info['taxable-interest'] + 
-            self.income_user_info['ordinary-dividends'] + 
-            self.income_user_info['IRA-distributions-taxable'] + 
-            self.income_user_info['pensions-and-annuities-taxable'] + 
-            self.income_user_info['capital-gains'] + 
-            self.income_user_info['total-other-income']
+                self.income_user_info['wages'] +
+                self.income_user_info['taxable-interest'] +
+                self.income_user_info['ordinary-dividends'] +
+                self.income_user_info['IRA-distributions-taxable'] +
+                self.income_user_info['pensions-and-annuities-taxable'] +
+                self.income_user_info['capital-gains'] +
+                self.income_user_info['total-other-income']
         )
 
     def compute_11a_and_11b(self):
@@ -471,7 +472,8 @@ class Document:
         deduction = 0
         # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction
-        self.income_user_info["taxable-income"] = self.income_user_info["11a"] - self.income_user_info["adjustments-to-income"]
+        self.income_user_info["taxable-income"] = self.income_user_info["11a"] - self.income_user_info[
+            "adjustments-to-income"]
 
     def compute_tax_amount_12a(self, taxable_income, filing_status):
         taxable_income = self.income_user_info["taxable-income"]
@@ -485,13 +487,13 @@ class Document:
                         self.tax_amount = int(row["married filing jointly"])
                     else:
                         self.tax_amount = int(row[filing_status])
-        self.tax_amount =  self.tax_computation_worksheet(taxable_income, filing_status)
-    
+        self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
+
     def compute_earned_income_credit(self):
         earned_income_credit = 0
-        if self.demographic_user_info["filing_status"] is 'head of household' or\
-           self.demographic_user_info["filing_status"] is 'qualifying widow' or\
-           self.demographic_user_info["filing_status"] is 'Single':
+        if self.demographic_user_info["filing_status"] is 'head of household' or \
+                self.demographic_user_info["filing_status"] is 'qualifying widow' or \
+                self.demographic_user_info["filing_status"] is 'Single':
 
             if self.number_of_dependents_completed == 0:
                 if self.adjusted_gross_income <= 15820:
