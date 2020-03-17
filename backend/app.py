@@ -29,6 +29,7 @@ last_intent = ""
 last_unfilled_field = ""
 last_term_explained = ""
 last_field_changed = ""
+last_output_context = ""
 
 intent_to_explainable_term = {}
 
@@ -48,6 +49,7 @@ def explain_term_yes(content):
     global responses
     global document
     global last_intent
+    global last_output_context
     session = content['session']
 
     with open('response.json') as f:
@@ -59,6 +61,7 @@ def explain_term_yes(content):
     output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " + response]}}]
     data['output_contexts'] = output_context
+    last_output_context = output_context
     return jsonify(data)
 
 
@@ -68,6 +71,7 @@ def explain_term_repeat(content):
     global document
     global last_intent
     global last_term_explained
+    global last_output_context
     session = content['session']
 
     with open('response.json') as f:
@@ -79,6 +83,7 @@ def explain_term_repeat(content):
     # response = responses.get_next_response(next_unfilled_slot,  document)
 
     output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    last_output_context = output_context
     data['fulfillment_messages'] = [
         {
             "text": {
@@ -98,7 +103,9 @@ def explain_term_repeat(content):
             }
         }]
 
+
     data['output_contexts'] = output_context
+    last_output_context = output_context
     return jsonify(data)
 
 
@@ -153,6 +160,7 @@ def change_field(content):
     global last_field_changed
     global document
     global responses
+    global last_output_context
     parameters = content['queryResult']['parameters']
     session = content['session']
     intent = content['queryResult']['intent']['displayName']
@@ -183,6 +191,7 @@ def change_field(content):
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
+    last_output_context = output_context
     return jsonify(data)
 
 
@@ -192,6 +201,7 @@ def change_field_repeat_and_value(content):
     global last_field_changed
     global document
     global responses
+    global last_output_context
     parameters = content['queryResult']['parameters']
     session = content['session']
     intent = content['queryResult']['intent']['displayName']
@@ -219,6 +229,7 @@ def change_field_repeat_and_value(content):
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
+    last_output_context = output_context
     return jsonify(data)
 
 
@@ -227,6 +238,7 @@ def change_field_confirm(content):
     global document
     global responses
     global last_field_changed
+    global last_output_context
     session = content['session']
     output_context = None
     next_unfilled_slot = document.find_next_unfilled_slot()
@@ -252,6 +264,7 @@ def change_field_confirm(content):
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
+    last_output_context = output_context
     last_intent = 'change_field - confirm'
     user.update_demographic_info(document)
     last_field_changed = None
@@ -290,6 +303,7 @@ def confirm_no(content):
     global responses
     global last_field_changed
     global user
+    global last_output_context
     parameters = content['queryResult']['parameters']
     session = content['session']
     output_context = None
@@ -310,6 +324,7 @@ def confirm_no(content):
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = output_context
+    last_output_context = output_context
     user.update_demographic_info(document)
     return jsonify(data)
 
@@ -332,6 +347,14 @@ def clear():
 def error_checking(parameters, intent, last_unfilled):
     #possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
     digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    requires_money_values = ['wages', 'tax-exempt-interest', 'taxable-interest', 'pensions-and-annuities',
+            'pensions-and-annuities-taxable', 'qualified-dividends', 'ordinary-dividends', 'IRA-distributions',
+            'IRA-distributions-taxable', 'capital-gains','taxable-refunds', 'business-income','unemployment-compensation',
+            'other-income', 'total-other-income', 'total-income', 'educator-expenses', 'business-expenses',
+            'health-savings-deductions', 'moving-expenses-armed-forces', 'self-employed-health-insurance',
+            'IRA-deductions', 'tuition-fees', 'adjustments-to-income', 'adjusted-gross-income', 'federal-income-tax-withheld',
+            'earned-income-credit',  'ss-benefits', 'ss-benefits-taxable', 'business-gains', '11a', 'taxable-income']
+
 
     if 'address' in intent:
         value = str(parameters['zip-code'])
@@ -386,6 +409,9 @@ def error_checking(parameters, intent, last_unfilled):
         if '-' in dollar_value:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
 
+    elif intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list' and \
+            last_unfilled in requires_money_values:
+        return last_unfilled, 'This field requires a numerical value. '
 
     return None, None
 
@@ -398,7 +424,7 @@ def demographics_fill(content):
     global document
     global last_intent
     global last_unfilled_field
-
+    global last_output_context
     response = None
 
     current_intent = content['queryResult']['intent']['displayName']
@@ -450,7 +476,7 @@ def demographics_fill(content):
     print("output_context")
     print(output_context)
     data['output_contexts'] = output_context
-
+    last_output_context = output_context
     global user
 
     # data[]  # set followup event
@@ -468,7 +494,7 @@ def income_finances_fill(content):
     global document
     global last_intent
     global last_unfilled_field
-
+    global last_output_context
     response = None
 
     current_intent = content['queryResult']['intent']['displayName']
@@ -479,6 +505,7 @@ def income_finances_fill(content):
     # print(parameters)
 
     # first pass: update params on document object
+    print("last unfilled: " + last_unfilled_field)
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
     if error_field is None and error_message is None:
@@ -512,7 +539,7 @@ def income_finances_fill(content):
     print("output_context")
     print(output_context)
     data['output_contexts'] = output_context
-
+    last_output_context = output_context
     global user
 
     last_unfilled_field = next_unfilled_slot
@@ -522,27 +549,7 @@ def income_finances_fill(content):
     return jsonify(data)
 
 
-def demographics_fill_dependents(content):
-    return None
-
-
-def welcome(content):
-    with open('response.json') as f:
-        data = json.load(f)
-
-    data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
-    return jsonify(data)
-
-
-def explain_instructions(content):
-    return
-
-
 def deductions(content):
-    return
-
-
-def income_and_finances(content):
     return
 
 
@@ -570,6 +577,11 @@ def autofill(content):
     response = responses.get_next_response(next_unfilled_slot, document)
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    global last_output_context
+    last_output_context = data['output_contexts']
+    print(last_output_context)
+    print(last_unfilled_field)
+
 
     return jsonify(data)
 
@@ -578,6 +590,7 @@ def fallback(content):
     global last_unfilled_field
     global responses
     global document
+    global last_output_context
 
     if last_unfilled_field == '':
         last_unfilled_field = document.demographics_slots_to_fill[0]
@@ -589,12 +602,31 @@ def fallback(content):
     data['fulfillment_messages'] = [{"text": {"text": ["I didn't get that. Can you say it again?"]}}]
     if last_unfilled_field is not None:
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+        last_output_context = data['output_contexts']
         redo_response = responses.get_next_response(last_unfilled_field, document)
         data['fulfillment_messages'] = [{"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
 
     else:
         # TODO: fix this
         print('something went wrong, last_unfilled_field is none')
+    return jsonify(data)
+
+
+def misclassified_money_intent(content):
+    global last_unfilled_field
+    global responses
+    global document
+    global last_output_context
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    redo_response = responses.get_next_response(last_unfilled_field, document)
+    data['fulfillment_messages'] = [{"text": {"text": ["Sorry, this field only accepts nonnegative numerical values. "
+                                                       "Please try again. " + redo_response]}}]
+
     return jsonify(data)
 
 
@@ -613,14 +645,23 @@ def push_demographic_info_to_database(content):
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        # get payload
         content = request.json
 
         intent = content['queryResult']['intent']['displayName']
         print("intent:", intent)
         global last_unfilled_field
+        global last_output_context
+        print("global last output context: " + str(last_output_context))
 
-        if intent == 'autofill':
+        if "monetary" in str(last_output_context):
+            if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
+                return misclassified_money_intent(content)
+            elif (intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
+                    and content['queryResult']['queryText'] == 'no':
+                return misclassified_money_intent(content)
+            else:
+                return income_finances_fill(content)
+        elif intent == 'autofill':
             return autofill(content)
         elif intent == 'explain_term':
             return explain_term(content)
@@ -640,8 +681,6 @@ def home():
             third_party_and_sign(content)
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
-        elif intent == 'demographics_fill.dependents':
-            return demographics_fill_dependents(content)
         elif intent.startswith('income_and_finances_fill'):
             return income_finances_fill(content)
         elif intent == 'confirm - yes':
@@ -650,8 +689,6 @@ def home():
             return confirm_no(content)
         elif intent.startswith('change_field'):
             return change_field(content)
-        elif intent == 'Default Welcome Intent':
-            return welcome(content)
         elif intent == 'goodbye':
             return clear()
         else:

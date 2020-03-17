@@ -209,7 +209,7 @@ class Document:
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
-        if 'name' in current_intent and parameters['occupation'] != '':
+        if current_intent == 'demographics_fill.name' and parameters['occupation'] != '':
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
             if parameters['occupation'] != 'teacher' and parameters['occupation'] != 'educator':
@@ -217,8 +217,7 @@ class Document:
         elif current_intent == 'demographics_fill.blind_status':
             self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
         elif current_intent == 'demographics_fill.dual_status_alien':
-            self.demographic_user_info['dual_status_alien'] = True if parameters[
-                                                                          'dual_status_alien'] == 'yes' else False
+            self.demographic_user_info['dual_status_alien'] = True if parameters['dual_status_alien'] == 'yes' else False
 
         elif "is-married" in current_intent:
             if parameters['is-married'] == 'yes':
