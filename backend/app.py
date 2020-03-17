@@ -416,11 +416,12 @@ def demographics_fill(content):
         next_unfilled_slot = document.find_next_unfilled_slot()
     else:
         next_unfilled_slot = error_field
+    last_unfilled_field = next_unfilled_slot
 
     if document.dependent_being_filled is not None:
         response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num,
                                                          document.dependents)
-        if error_field == 'social_security':
+        if error_field == 'dependent-ssn':
             response = error_message + response
 
     elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:

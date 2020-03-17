@@ -209,7 +209,7 @@ class Document:
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
-        if 'name' in current_intent and parameters['occupation'] != '':
+        if 'name' in current_intent and "occupation" in parameters:
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
             if parameters['occupation'] != 'teacher' and parameters['occupation'] != 'educator':
