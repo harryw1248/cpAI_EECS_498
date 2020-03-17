@@ -294,6 +294,41 @@ class Document:
             return line11
         else:
             return line8
+            
+    def compute_earned_income_credit(self):
+        earned_income_credit = 0
+        if self.demographic_user_info["filing_status"] is 'head of household' or\
+           self.demographic_user_info["filing_status"] is 'qualifying widow' or\
+           self.demographic_user_info["filing_status"] is 'Single':
+
+            if self.number_of_dependents_completed == 0:
+                if self.adjusted_gross_income <= 15820:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.adjusted_gross_income <= 41756:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.adjusted_gross_income <= 47440:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.adjusted_gross_income <= 50594:
+                    earned_income_credit = 6660
+
+        elif self.demographic_user_info["filing_status"] is 'married filing jointly':
+            if self.number_of_dependents_completed == 0:
+                if self.adjusted_gross_income <= 21710:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.adjusted_gross_income <= 47646:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.adjusted_gross_income <= 53330:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.adjusted_gross_income <= 56844:
+                    earned_income_credit = 6660
+        print("earned income credit: " + str(earned_income_credit))
+        return earned_income_credit
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"

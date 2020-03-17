@@ -141,7 +141,7 @@ class Response:
             'taxable-interest', 
             'has-1099-R',
             'pensions-and-annuities', 
-            # 'owns-business', 
+            'owns-business', 
             'owns-stocks-bonds', 
             'has-1099-DIV', 
             'qualified-dividends', 
