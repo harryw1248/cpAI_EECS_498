@@ -315,7 +315,7 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
+                # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
                                                                  
 
             # compute all other fields
@@ -324,9 +324,17 @@ class Document:
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info['occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
             if extracted_slot_name == 'tuition-fees':
+                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.compute_11a_and_11b()
+                self.income_user_info["12a"] = self.compute_tax_amount_12a()
+
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
                 ##DONT DELETE THE COMMENTED LINE BELOW
                 # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                # self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                # self.compute_11a_and_11b()
+                # self.income_user_info["12a"] = self.compute_tax_amount_12a()
             elif extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 # print("extracted slot name is", extracted_slot_name)
@@ -336,7 +344,8 @@ class Document:
                 final_value = self.compute_ss_benefits(extracted_slot_value)
                 self.income_user_info['ss-benefits-taxable'] = final_value
                 ##DONT DELETE THE COMMENTED LINE BELOW
-                # self.income_user_info["7b"] = self.compute_line_7b() ##DONT DELETE THIS
+                self.income_user_info["7b"] = self.compute_line_7b()
+                self.income_user_info["total-income"] = self.compute_line_7b() ##DONT DELETE THIS
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.compute_total_other_income()
@@ -345,6 +354,7 @@ class Document:
                 self.income_user_info["12b"] = extracted_slot_value + self.income_user_info["12a"]
             elif extracted_slot_name == 'schedule-3-line-7':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info["13a"] = self.set_line_13a()
                 self.income_user_info["13b"] = extracted_slot_value + self.income_user_info["13a"]
                 self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
             elif extracted_slot_name == 'schedule-2-line-10':
@@ -404,6 +414,7 @@ class Document:
 
     def set_line_13a(self):
         self.child_dependent_tax_credit = self.compute_dependents_worksheet_13a()
+        return self.child_dependent_tax_credit
 
     def compute_ss_benefits(self, overall_sum=0):
         line_1 = overall_sum
@@ -500,27 +511,30 @@ class Document:
                 self.income_user_info['unemployment-compensation'] +
                 self.income_user_info['other-income']
         )
-        # TODO: add ss-benefits
-        self.income_user_info['total-income'] = (
-                self.income_user_info['wages'] +
-                self.income_user_info['taxable-interest'] +
-                self.income_user_info['ordinary-dividends'] +
-                self.income_user_info['IRA-distributions-taxable'] +
-                self.income_user_info['pensions-and-annuities-taxable'] +
-                self.income_user_info['capital-gains'] +
-                self.income_user_info['total-other-income']
-        )
+        # # TODO: add ss-benefits
+        # self.income_user_info['total-income'] = (
+        #         self.income_user_info['wages'] +
+        #         self.income_user_info['taxable-interest'] +
+        #         self.income_user_info['ordinary-dividends'] +
+        #         self.income_user_info['IRA-distributions-taxable'] +
+        #         self.income_user_info['pensions-and-annuities-taxable'] +
+        #         self.income_user_info['capital-gains'] +
+        #         self.income_user_info['total-other-income']
+        # )
 
     def compute_11a_and_11b(self):
         # Line 9: standard deduction or itemized deduction
         # TODO
         deduction = 0
+        qualified_business_income = 0
         # Line 10: Qualified business income deduction is assumed to be zero
-        self.income_user_info["11a"] = deduction
+        self.income_user_info["11a"] = deduction + qualified_business_income
         self.income_user_info["taxable-income"] = max(self.income_user_info[
-            "adjustments-to-income"] - self.income_user_info["11a"], 0)
+            "8b"] - self.income_user_info["11a"], 0)
+        self.income_user_info["11b"] = max(self.income_user_info[
+            "8b"] - self.income_user_info["11a"], 0)
 
-    def compute_tax_amount_12a(self, taxable_income, filing_status):
+    def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
         filing_status = self.demographic_user_info["filing_status"]
         if taxable_income < 100000:
@@ -533,6 +547,7 @@ class Document:
                     else:
                         self.tax_amount = int(row[filing_status])
         self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
+        return self.tax_amount
 
     def compute_line_7b(self):
         # 1, 2b, 3b, 4b, 4d, 5b, 6, and 7a. T
@@ -543,7 +558,7 @@ class Document:
         line_4d = self.income_user_info["pensions-and-annuities-taxable"]
         line_5b = self.income_user_info["ss-benefits-taxable"]
         line_6 = self.income_user_info["capital-gains"]
-        line_7a = self.income_user_info["other-income"]
+        line_7a = self.income_user_info["total-other-income"]
 
         return line_1 + line_2b + line_3b + line_4b + line_4d + line_5b + line_6 + line_7a
 
