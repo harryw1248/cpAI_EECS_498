@@ -538,7 +538,18 @@ class Document:
 
     def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
-        if taxable_income == 0:
+        print("Taxable Income: " + str(taxable_income))
+
+        if taxable_income < 0:
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            return 0
+        elif taxable_income == 0:
             return 0
         filing_status = self.demographic_user_info["filing_status"]
         if taxable_income < 100000:
@@ -613,7 +624,7 @@ class Document:
         self.demographic_user_info['country'] = "USA"
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
-        self.demographic_user_info["filing_status"] = "Single"
+        self.demographic_user_info["filing_status"] = "single"
         self.demographic_user_info["lived-apart"] = True
 
         self.demographic_user_info["is-married"] = False
