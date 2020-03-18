@@ -323,19 +323,14 @@ class Document:
                 print("occupation: " + str(self.demographic_user_info['occupation']))
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info['occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
-            if extracted_slot_name == 'tuition-fees':
-                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
-                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
-                self.compute_11a_and_11b()
-                self.income_user_info["12a"] = self.compute_tax_amount_12a()
-
-                self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
-                ##DONT DELETE THE COMMENTED LINE BELOW
+            # if extracted_slot_name == 'tuition-fees':
+                # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
+                # ##DONT DELETE THE COMMENTED LINE BELOW
                 # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
                 # self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
                 # self.compute_11a_and_11b()
                 # self.income_user_info["12a"] = self.compute_tax_amount_12a()
-            elif extracted_slot_name in self.monetary_list_fields:
+            if extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 # print("extracted slot name is", extracted_slot_name)
                 # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
@@ -345,7 +340,13 @@ class Document:
                 self.income_user_info['ss-benefits-taxable'] = final_value
                 ##DONT DELETE THE COMMENTED LINE BELOW
                 self.income_user_info["7b"] = self.compute_line_7b()
-                self.income_user_info["total-income"] = self.compute_line_7b() ##DONT DELETE THIS
+                self.income_user_info["total-income"] = self.compute_line_7b()
+                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.compute_11a_and_11b()
+                print(self.income_user_info)
+                self.income_user_info["12a"] = self.compute_tax_amount_12a()
+                self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.compute_total_other_income()
