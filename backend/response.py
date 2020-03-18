@@ -87,7 +87,6 @@ class Response:
             #'student-loan-interest-deduction': 'prompt_student_loan_interest_deduction',
             'tuition-fees': 'prompt_monetary_value',
             'federal-income-tax-withheld': 'prompt_monetary_value',
-            'earned-income-credit': 'prompt_monetary_value',
             'ss-benefits': 'prompt_monetary_value_list',
         }
 
@@ -145,8 +144,8 @@ class Response:
             'business-income': 'Please go to line 3 of Schedule 1 and read out how much money you gained or lost from your business. If you do not have a business, put zero.',
             'unemployment-compensation': 'Please go to line 7 of Schedule 1 and read out how much you collected in unemployment compensation.',
             'other-income': 'Please go to line 8 of Schedule 1 and read out the total you made or receieved in forms of other income. Ignore the type of income.',
-            'educator-expenses': 'What is your amount of educator expenses? These include books, supplies, and computers for classroom use. If you need more details, refer to: https://www.irs.gov/taxtopics/tc458',
-            'business-expenses': 'What is your amount of business expenses? These include the cost of storage, material costs, renting office, etc. For more detials, see https://www.irs.gov/publications/p535.',
+            'educator-expenses': 'Please go to line 10 of Schedule 1 and read out how much you have in educator expenses.',
+            'business-expenses': 'Please go to line 11 of Schedule 1 and read out how much you have in educator expenses.',
             'health-savings-deductions': 'What is your amount of health savings deductions?',
             'moving-expenses-armed-forces': 'What is your amount of moving expenses from the armed forces?',
             'self-employed-health-insurance': 'What is your amount of self employed health insurance?',
@@ -155,7 +154,6 @@ class Response:
             #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
             'tuition-fees': 'What is your amount of tuition and fees?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
-            'earned-income-credit': 'What is your amount of earned-income-credit?',
             'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.'
         }
 
@@ -165,7 +163,7 @@ class Response:
             'taxable-interest',
             'has-1099-R',
             'pensions-and-annuities',
-            # 'owns-business',
+            'owns-business',
             'owns-stocks-bonds',
             'has-1099-DIV',
             'qualified-dividends',

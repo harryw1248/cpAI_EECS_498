@@ -247,6 +247,7 @@ class Document:
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
             extracted_slot_name = last_unfilled_field
+            print("extracted_slot_name: " + str(extracted_slot_name))
 
             # compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
@@ -291,14 +292,7 @@ class Document:
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
                 self.income_user_info['adjusted-gross-income'] = self.income_user_info['adjustments-to-income'] - \
                                                                  self.income_user_info['total-income']
-            elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
-                    extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
-                    extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
-                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
-                self.income_user_info[extracted_slot_name] = extracted_slot_value
-                self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                self.adjusted_gross_income = self.income_user_info['wages'] + self.income_user_info[
-                    'adjustments-to-income']
+            if extracted_slot_name == 'tuition-fees':
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             elif extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
@@ -496,30 +490,30 @@ class Document:
                 self.demographic_user_info["filing_status"] is 'Single':
 
             if self.number_of_dependents_completed == 0:
-                if self.adjusted_gross_income <= 15820:
+                if self.income_user_info['adjusted-gross-income'] <= 15820:
                     earned_income_credit = 538
             if self.number_of_dependents_completed == 1:
-                if self.adjusted_gross_income <= 41756:
+                if self.income_user_info['adjusted-gross-income'] <= 41756:
                     earned_income_credit = 3584
             if self.number_of_dependents_completed == 2:
-                if self.adjusted_gross_income <= 47440:
+                if self.income_user_info['adjusted-gross-income'] <= 47440:
                     earned_income_credit = 5920
             if self.number_of_dependents_completed == 3:
-                if self.adjusted_gross_income <= 50594:
+                if self.income_user_info['adjusted-gross-income'] <= 50594:
                     earned_income_credit = 6660
 
         elif self.demographic_user_info["filing_status"] is 'married filing jointly':
             if self.number_of_dependents_completed == 0:
-                if self.adjusted_gross_income <= 21710:
+                if self.income_user_info['adjusted-gross-income'] <= 21710:
                     earned_income_credit = 538
             if self.number_of_dependents_completed == 1:
-                if self.adjusted_gross_income <= 47646:
+                if self.income_user_info['adjusted-gross-income'] <= 47646:
                     earned_income_credit = 3584
             if self.number_of_dependents_completed == 2:
-                if self.adjusted_gross_income <= 53330:
+                if self.income_user_info['adjusted-gross-income'] <= 53330:
                     earned_income_credit = 5920
             if self.number_of_dependents_completed == 3:
-                if self.adjusted_gross_income <= 56844:
+                if self.income_user_info['adjusted-gross-income'] <= 56844:
                     earned_income_credit = 6660
         print("earned income credit: " + str(earned_income_credit))
         return earned_income_credit
