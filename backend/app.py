@@ -362,10 +362,10 @@ def error_checking(parameters, intent, last_unfilled):
     if 'address' in intent:
         value = str(parameters['zip-code'])
         if len(value) != 5:
-            return 'street-address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
+            return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
         for digit in value:
             if digit not in digits:
-                return 'street-address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
+                return 'street_address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
 
     elif 'social_security' in intent:
         value = str(parameters['social_security'])

@@ -5,7 +5,7 @@ class Response:
             'last-name': 'What is your last name?',
             'age': 'How old are you?',
             'occupation': 'What is your occupation? If you are retired, please say so.',
-            'street-address': 'What is your full home address and ZIP code?',
+            'street_address': 'What is your full home address and ZIP code?',
             'city': 'What city do you live in?',
             'geo-country': 'What country do you live in?',
             'geo-state': 'What state do you live in?',
@@ -33,7 +33,7 @@ class Response:
             'last-name': 'prompt_name',
             'age': 'prompt_name',
             'occupation': 'prompt_name',
-            'street-address': 'prompt_address',
+            'street_address': 'prompt_address',
             'geo-state': 'prompt_address',
             'city': 'prompt_address',
             'zip-code': 'prompt_address',
@@ -88,9 +88,13 @@ class Response:
             'tuition-fees': 'prompt_monetary_value',
             'federal-income-tax-withheld': 'prompt_monetary_value',
             'ss-benefits': 'prompt_monetary_value_list',
+            'schedule-2-line-3': 'prompt_monetary_value',
+            'schedule-3-line-7': 'prompt_monetary_value',
+            'schedule-2-line-10': 'prompt_monetary_value',
+            'schedule-3-line-14': 'prompt_monetary_value',
         }
 
-        self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street-address',
+        self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
                                             'social_security',   'is-married', 'num-dependents', 'filing_status', 'blind',
                                             'dual_status_alien']
 
@@ -154,7 +158,11 @@ class Response:
             #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
             'tuition-fees': 'What is your amount of tuition and fees?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
-            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.'
+            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
+            'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in front of you. What is your additional tax as stated in line 3 of Schedule 2?',
+            'schedule-3-line-7': 'What are your nonrefundable credits as specified on line 7 of Schedule 3?',
+            'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
+            'schedule-3-line-14': 'What are your other payements and refundable credits as specified on line 14 of Schedule 3',   
         }
 
         self.income_finances_order = [
