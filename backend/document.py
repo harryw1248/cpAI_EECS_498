@@ -398,9 +398,9 @@ class Document:
             line11 = line9 - line10
 
         if line8 > line11:
-            return line11
+            return max(line11, 0)
         else:
-            return line8
+            return max(line8, 0)
 
     def set_line_13a(self):
         self.child_dependent_tax_credit = self.compute_dependents_worksheet_13a()
@@ -517,8 +517,8 @@ class Document:
         deduction = 0
         # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction
-        self.income_user_info["taxable-income"] = self.income_user_info["11a"] - self.income_user_info[
-            "adjustments-to-income"]
+        self.income_user_info["taxable-income"] = max(self.income_user_info[
+            "adjustments-to-income"] - self.income_user_info["11a"], 0)
 
     def compute_tax_amount_12a(self, taxable_income, filing_status):
         taxable_income = self.income_user_info["taxable-income"]
