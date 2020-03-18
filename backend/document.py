@@ -301,7 +301,7 @@ class Document:
                 elif extracted_slot_name == 'has-1099-R':
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
-                elif extracted_slot_name != 'owns-business':
+                elif extracted_slot_name == 'owns-business':
                     self.income_user_info['business-expenses'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
