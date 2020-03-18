@@ -315,8 +315,8 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                self.income_user_info['adjusted-gross-income'] = self.income_user_info['adjustments-to-income'] - \
-                                                                 self.income_user_info['total-income']
+                self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
+                                                                 
 
             # compute all other fields
             if extracted_slot_name == 'wages':
