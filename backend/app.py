@@ -362,9 +362,11 @@ def error_checking(parameters, intent, last_unfilled):
     if 'address' in intent:
         value = str(parameters['zip-code'])
         if len(value) != 5:
+            print("len")
             return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
         for digit in value:
             if digit not in digits:
+                print("digits")
                 return 'street_address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
 
     elif 'social_security' in intent:
@@ -412,11 +414,6 @@ def error_checking(parameters, intent, last_unfilled):
         if '-' in dollar_value:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
 
-    '''
-    elif intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list' and \
-            last_unfilled in requires_money_values:
-        return last_unfilled, 'This field requires a numerical value. '
-    '''
     return None, None
 
 
@@ -461,6 +458,16 @@ def demographics_fill(content):
             response = error_message + response
     else:
         response = "We're all done filling out your demographics. Does everything look correct?"
+        if len(document.dependents) > 0:
+            name = document.dependents[-1].slots['dependent-given-name']
+            if document.dependents[-1].dependent_child_tax_credit:
+                addition = name + " qualifies for a child tax credit. "
+            elif document.dependents[-1].dependent_credit_for_others:
+                addition = name + " qualifies for a dependent credit for others. "
+            else:
+                addition = name + " unfortunately does not qualify for a tax credit. "
+
+            response = addition + response
         print(document)
 
     output_context = None

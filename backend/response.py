@@ -214,6 +214,17 @@ class Response:
             else:
                 return self.demographics['filing_status_HOH_widower']
         elif next_unfilled_slot in self.demographics or next_unfilled_slot in self.demographics_dependent_slots:
+            if next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info['filing_status'] == 'married filing jointly':
+                return "Your filing status is 'married filing jointly.' " + self.demographics['dual_status_alien']
+            elif next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info['filing_status'] == 'married filing separately':
+                return "Your filing status is 'married filing separately.' " + self.demographics['dual_status_alien']
+            elif next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info[
+                'filing_status'] == 'qualifying widow':
+                return "Your filing status is 'qualifying widow.' " + self.demographics['dual_status_alien']
+            elif next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info[
+                'filing_status'] == 'head of household':
+                return "Your filing status is 'head of houshold.' " + self.demographics['dual_status_alien']
+
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
