@@ -367,6 +367,7 @@ class Document:
                 self.income_user_info["18d"] = extracted_slot_value 
                 self.income_user_info["18e"] = self.income_user_info['earned-income-credit'] + self.income_user_info["18d"]
                 self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + self.income_user_info["18e"]
+                print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
@@ -537,6 +538,8 @@ class Document:
 
     def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
+        if taxable_income == 0:
+            return 0
         filing_status = self.demographic_user_info["filing_status"]
         if taxable_income < 100000:
             data = pd.read_excel("tax_table.xlsx")
