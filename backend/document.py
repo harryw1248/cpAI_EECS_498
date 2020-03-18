@@ -237,8 +237,6 @@ class Document:
         if 'name' in current_intent and "occupation" in parameters:
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
-            if parameters['occupation'] != 'teacher' and parameters['occupation'] != 'educator':
-                self.income_user_info['educator-expenses'] = 0
         elif current_intent == 'demographics_fill.blind_status':
             self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
         elif current_intent == 'demographics_fill.dual_status_alien':
@@ -321,6 +319,10 @@ class Document:
                                                                  self.income_user_info['total-income']
 
             # compute all other fields
+            if extracted_slot_name == 'wages':
+                print("occupation: " + str(self.demographic_user_info['occupation']))
+                if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info['occupation'] != 'educator':
+                    self.income_user_info['educator-expenses'] = 0
             if extracted_slot_name == 'tuition-fees':
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
                 ##DONT DELETE THE COMMENTED LINE BELOW
