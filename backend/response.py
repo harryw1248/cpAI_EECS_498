@@ -128,12 +128,17 @@ class Response:
                                  'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
+<<<<<<< HEAD
             'taxable-refunds': 'What is the amount of taxable refunds you received?',
             'business-income': 'How much money did you gain/lose from your business?',
             'unemployment-compensation': 'How much did you collect in unemployment compensation?',
             'other-income': 'How much did you make or receieve in forms of other income?',
             'educator-expenses': 'What is your amount of educator expenses?',
             'business-expenses': 'What is your amount of business expenses?',
+=======
+            'educator-expenses': 'What is your amount of educator expenses? These include books, supplies, and computers for classroom use. If you need more details, refer to: https://www.irs.gov/taxtopics/tc458',
+            'business-expenses': 'What is your amount of business expenses? These include the cost of storage, material costs, renting office, etc. For more detials, see https://www.irs.gov/publications/p535.',
+>>>>>>> 21022b24dd3b59509707a063536e25c6880ab281
             'health-savings-deductions': 'What is your amount of health savings deductions?',
             'moving-expenses-armed-forces': 'What is your amount of moving expenses from the armed forces?',
             'self-employed-health-insurance': 'What is your amount of self employed health insurance?',
@@ -153,7 +158,7 @@ class Response:
             'taxable-interest', 
             'has-1099-R',
             'pensions-and-annuities', 
-            # 'owns-business', 
+            'owns-business', 
             'owns-stocks-bonds', 
             'has-1099-DIV', 
             'qualified-dividends', 
