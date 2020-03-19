@@ -2,6 +2,7 @@ from dependent import Dependent
 import pandas as pd
 import xlrd
 
+
 class Document:
     def __init__(self):
         self.sections = [
@@ -15,7 +16,7 @@ class Document:
             'last-name': None,
             'age': None,
             'occupation': None,
-            'street-address': None,
+            'street_address': None,
             'city': None,
             'state': None,
             'zip-code': None,
@@ -41,7 +42,7 @@ class Document:
             'last-name',
             'age',
             'occupation',
-            'street-address',
+            'street_address',
             'city',
             'state',
             'zip-code',
@@ -56,7 +57,7 @@ class Document:
 
         self.income_user_info = {
             'wages': None,
-            # 'owns-business': None,
+            'owns-business': None,
             'tax-exempt-interest': None,
             'taxable-interest': None,
             'has-1099-R': None,
@@ -69,11 +70,14 @@ class Document:
             'IRA-distributions': None,
             'IRA-distributions-taxable': None,
             'capital-gains': None,
+
             # additional income STARTS here
             'taxable-refunds': None,
             'business-income': None,
             'unemployment-compensation': None,
             'other-income': None,
+            'total-other-income': None,
+            'total-income': None,
             'educator-expenses': None,
             'business-expenses': None,
             'health-savings-deductions': None,
@@ -84,19 +88,38 @@ class Document:
             # 'student-loan-interest-deduction': None,
             'tuition-fees': None,
             'adjustments-to-income': 0,
+            'adjusted-gross-income': None,
             'federal-income-tax-withheld': None,
             'earned-income-credit': None,
             'ss-benefits': None,
             'ss-benefits-taxable': None,
-            'taxable-refunds': None,
             'business-gains': None,
-            'unemployment-compensation': None,
-            'other-income': None
+            'taxable-income': None,
+            'schedule-2-line-3': None,
+            'schedule-3-line-7': None,
+            'schedule-2-line-10': None,
+            'schedule-3-line-14': None,
+
+            #purely computational fields
+            '7b': 0,
+            '8b': 0,
+            '11a': 0,
+            '11b': 0,
+            '12a': 0, 
+            '12b': 0,
+            '13a': 0, 
+            '13b': 0, 
+            '14': 0,
+            '15': 0,
+            '16': 0,
+            '18d': 0,
+            '18e': 0,
+            '19': 0
         }
 
         self.income_slots_to_fill = [
             'wages',
-            # 'owns-business': None,
+            'owns-business',
             'tax-exempt-interest',
             'taxable-interest',
             'owns-stocks-bonds',
@@ -109,11 +132,14 @@ class Document:
             'pensions-and-annuities',
             'pensions-and-annuities-taxable',
             'capital-gains',
+
             # Additional income STARTS here
             'taxable-refunds',
             'business-income',
             'unemployment-compensation',
             'other-income',
+            # Additional income ENDS here
+
             # adjustments-to-income' STARTS here
             'educator-expenses',
             'business-expenses',
@@ -126,8 +152,13 @@ class Document:
             'tuition-fees',
             # 'adjustments-to-income' ENDS here,
             'ss-benefits',
+
             'federal-income-tax-withheld',
             'earned-income-credit',
+            'schedule-2-line-3',
+            'schedule-3-line-7',
+            'schedule-2-line-10',
+            'schedule-3-line-14'
         ]
 
         self.dependent_being_filled = None
@@ -203,7 +234,7 @@ class Document:
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
 
-        if 'name' in current_intent and parameters['occupation'] != '':
+        if 'name' in current_intent and "occupation" in parameters:
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
         elif current_intent == 'demographics_fill.blind_status':
@@ -237,16 +268,18 @@ class Document:
 
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
-            # extracted_slot_name = self.last_unfilled_field
             extracted_slot_name = last_unfilled_field
-            # extracted_slot_name = list(parameters.keys())[0]
-            # print(extracted_slot_name)
-            # extracted_slot_value = parameters[extracted_slot_name]
-            # print(extracted_slot_value)
-            if 'monetary_value' in current_intent:
-                print("monetary value!")
+            print("extracted_slot_name: " + str(extracted_slot_name))
+
+            # compute extracted slot value
+            if current_intent == "income_and_finances_fill.monetary_value":
                 extracted_slot_value = parameters['value']
-                print("extracted slot value is", extracted_slot_value)
+            elif current_intent == "income_and_finances_fill.monetary_value_list":
+                print("inside monetary value list")
+                total = 0
+                for value in parameters['value']:
+                    total += value
+                extracted_slot_value = total
             elif 'gains_losses' in current_intent:
                 if parameters['gain-or-loss'] == 'loss':
                     extracted_slot_value = parameters['value'] * -1
@@ -254,7 +287,9 @@ class Document:
                     extracted_slot_value = parameters['value']
             else:
                 extracted_slot_value = parameters[extracted_slot_name]
+            print("extracted slot value is", extracted_slot_value)
 
+            #compute yes or no fields
             if extracted_slot_value == 'yes':
                 self.income_user_info[extracted_slot_name] = True
             elif extracted_slot_value == 'no':
@@ -263,12 +298,15 @@ class Document:
                     self.income_user_info['ordinary-dividends'] = False
                     self.income_user_info['qualified-dividends'] = False
                     self.income_user_info['capital-gains'] = False
-                elif extracted_slot_name == "has-1099-R":
+                elif extracted_slot_name == 'has-1099-R':
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
-            elif extracted_slot_name == 'IRA-distributions' and (
-                    extracted_slot_value == 'zero' or extracted_slot_value == '0' \
-                    or extracted_slot_value == 0):
+                elif extracted_slot_name == 'owns-business':
+                    self.income_user_info['business-expenses'] = 0
+                # elif extracted_slot_name == 'owns-stocks-bonds':
+                #     self.income_user_info['capital-gains'] = False
+            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
+                    or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
             elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
@@ -277,25 +315,63 @@ class Document:
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-            elif extracted_slot_name in self.monetary_list_fields:
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
-                self.income_user_info[extracted_slot_name] = overall_sum
-                print("extracted slot name is", extracted_slot_name)
-                print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
-            elif extracted_slot_name == "ss-benefits":
-                overall_sum = 0
-                for val in extracted_slot_value:
-                    overall_sum += val
+                # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
+                                                                 
 
-                self.income_user_info[extracted_slot_name] = overall_sum
-                final_value = self.compute_ss_benefits(overall_sum)
+            # compute all other fields
+            if extracted_slot_name == 'wages':
+                print("occupation: " + str(self.demographic_user_info['occupation']))
+                if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info['occupation'] != 'educator':
+                    self.income_user_info['educator-expenses'] = 0
+            # if extracted_slot_name == 'tuition-fees':
+                # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
+                # ##DONT DELETE THE COMMENTED LINE BELOW
+                # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                # self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                # self.compute_11a_and_11b()
+                # self.income_user_info["12a"] = self.compute_tax_amount_12a()
+            if extracted_slot_name in self.monetary_list_fields:
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                # print("extracted slot name is", extracted_slot_name)
+                # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
+            elif extracted_slot_name == "ss-benefits":
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                final_value = self.compute_ss_benefits(extracted_slot_value)
                 self.income_user_info['ss-benefits-taxable'] = final_value
-            else:
+                ##DONT DELETE THE COMMENTED LINE BELOW
+                self.income_user_info["7b"] = self.compute_line_7b()
+                self.income_user_info["total-income"] = self.compute_line_7b()
+                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.compute_11a_and_11b()
+                print(self.income_user_info)
+                self.income_user_info["12a"] = self.compute_tax_amount_12a()
+                self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
+            elif extracted_slot_name == 'other-income':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.compute_total_other_income()
+            elif extracted_slot_name == 'schedule-2-line-3':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info["12b"] = extracted_slot_value + self.income_user_info["12a"]
+            elif extracted_slot_name == 'schedule-3-line-7':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info["13a"] = self.set_line_13a()
+                self.income_user_info["13b"] = extracted_slot_value + self.income_user_info["13a"]
+                self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
+            elif extracted_slot_name == 'schedule-2-line-10':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info["15"] = extracted_slot_value 
+                self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
+            elif extracted_slot_name == 'schedule-3-line-14':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info["18d"] = extracted_slot_value 
+                self.income_user_info["18e"] = self.income_user_info['earned-income-credit'] + self.income_user_info["18d"]
+                self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + self.income_user_info["18e"]
+                print(self.income_user_info)
+            elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
-    def dependents_worksheet(self):
+    def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
         num_dependents_under_17_non_citizens = 0
         for dependent in self.dependents:
@@ -326,7 +402,7 @@ class Document:
         else:
             return 0
 
-        line9 = self.income_user_info['12b']
+        line9 = self.tax_amount
         line10 = 0
         if line9 == line10:
             return 0
@@ -334,8 +410,9 @@ class Document:
             line11 = line9 - line10
 
         if line8 > line11:
-            return line11
+            return max(line11, 0)
         else:
+<<<<<<< HEAD
             return line8
             
     def compute_earned_income_credit(self):
@@ -372,6 +449,13 @@ class Document:
                     earned_income_credit = 6660
         print("earned income credit: " + str(earned_income_credit))
         return earned_income_credit
+=======
+            return max(line8, 0)
+
+    def set_line_13a(self):
+        self.child_dependent_tax_credit = self.compute_dependents_worksheet_13a()
+        return self.child_dependent_tax_credit
+>>>>>>> money_intent
 
     def compute_ss_benefits(self, overall_sum=0):
         line_1 = overall_sum
@@ -425,6 +509,12 @@ class Document:
             elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
+            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info[
+                "filing_status"] is 'qualifying widow':
+                line_10 = 9000
+            elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
+                    self.demographic_user_info["lived-apart"] == True:
+                line_10 = 9000
 
             line_11 = max(0, line_9 - line_10)
             line_12 = min(line_9, line_10)
@@ -455,7 +545,52 @@ class Document:
                 subtraction_ = float(row[filing_status + ' subtraction'])
                 return taxable_income * mult_ - subtraction_
 
-    def compute_tax_amount_12a(self, taxable_income, filing_status):
+    def compute_total_other_income(self):
+        self.income_user_info["total-other-income"] = (
+                self.income_user_info['taxable-refunds'] +
+                self.income_user_info['business-income'] +
+                self.income_user_info['unemployment-compensation'] +
+                self.income_user_info['other-income']
+        )
+        # # TODO: add ss-benefits
+        # self.income_user_info['total-income'] = (
+        #         self.income_user_info['wages'] +
+        #         self.income_user_info['taxable-interest'] +
+        #         self.income_user_info['ordinary-dividends'] +
+        #         self.income_user_info['IRA-distributions-taxable'] +
+        #         self.income_user_info['pensions-and-annuities-taxable'] +
+        #         self.income_user_info['capital-gains'] +
+        #         self.income_user_info['total-other-income']
+        # )
+
+    def compute_11a_and_11b(self):
+        # Line 9: standard deduction or itemized deduction
+        # TODO
+        deduction = 0
+        qualified_business_income = 0
+        # Line 10: Qualified business income deduction is assumed to be zero
+        self.income_user_info["11a"] = deduction + qualified_business_income
+        self.income_user_info["taxable-income"] = max(self.income_user_info[
+            "8b"] - self.income_user_info["11a"], 0)
+        self.income_user_info["11b"] = max(self.income_user_info[
+            "8b"] - self.income_user_info["11a"], 0)
+
+    def compute_tax_amount_12a(self):
+        taxable_income = self.income_user_info["taxable-income"]
+        print("Taxable Income: " + str(taxable_income))
+
+        if taxable_income < 0:
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
+            return 0
+        elif taxable_income == 0:
+            return 0
+        filing_status = self.demographic_user_info["filing_status"]
         if taxable_income < 100000:
             data = pd.read_excel("tax_table.xlsx")
             tax_data = pd.DataFrame(data=data)
@@ -465,12 +600,62 @@ class Document:
                         self.tax_amount = int(row["married filing jointly"])
                     else:
                         self.tax_amount = int(row[filing_status])
-        self.tax_amount =  self.tax_computation_worksheet(taxable_income, filing_status)
+        self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
+        return self.tax_amount
+
+    def compute_line_7b(self):
+        # 1, 2b, 3b, 4b, 4d, 5b, 6, and 7a. T
+        line_1 = self.income_user_info["wages"]
+        line_2b = self.income_user_info["taxable-interest"]
+        line_3b = self.income_user_info["ordinary-dividends"]
+        line_4b = self.income_user_info["IRA-distributions-taxable"]
+        line_4d = self.income_user_info["pensions-and-annuities-taxable"]
+        line_5b = self.income_user_info["ss-benefits-taxable"]
+        line_6 = self.income_user_info["capital-gains"]
+        line_7a = self.income_user_info["total-other-income"]
+
+        return line_1 + line_2b + line_3b + line_4b + line_4d + line_5b + line_6 + line_7a
+
+
+    def compute_earned_income_credit(self):
+        earned_income_credit = 0
+        if self.demographic_user_info["filing_status"] is 'head of household' or \
+                self.demographic_user_info["filing_status"] is 'qualifying widow' or \
+                self.demographic_user_info["filing_status"] is 'Single':
+
+            if self.number_of_dependents_completed == 0:
+                if self.income_user_info['adjusted-gross-income'] <= 15820:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.income_user_info['adjusted-gross-income'] <= 41756:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.income_user_info['adjusted-gross-income'] <= 47440:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.income_user_info['adjusted-gross-income'] <= 50594:
+                    earned_income_credit = 6660
+
+        elif self.demographic_user_info["filing_status"] is 'married filing jointly':
+            if self.number_of_dependents_completed == 0:
+                if self.income_user_info['adjusted-gross-income'] <= 21710:
+                    earned_income_credit = 538
+            if self.number_of_dependents_completed == 1:
+                if self.income_user_info['adjusted-gross-income'] <= 47646:
+                    earned_income_credit = 3584
+            if self.number_of_dependents_completed == 2:
+                if self.income_user_info['adjusted-gross-income'] <= 53330:
+                    earned_income_credit = 5920
+            if self.number_of_dependents_completed == 3:
+                if self.income_user_info['adjusted-gross-income'] <= 56844:
+                    earned_income_credit = 6660
+        print("earned income credit: " + str(earned_income_credit))
+        return earned_income_credit
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
         self.demographic_user_info["last-name"] = "Jones"
-        self.demographic_user_info["street-address"] = "64 Reinhart Street"
+        self.demographic_user_info["street_address"] = "64 Reinhart Street"
         self.demographic_user_info["city"] = "Oakland"
         self.demographic_user_info['state'] = "California"
         self.demographic_user_info['zip-code'] = "08894"
@@ -478,7 +663,7 @@ class Document:
         self.demographic_user_info['country'] = "USA"
         self.demographic_user_info["age"] = "67"
         self.demographic_user_info['occupation'] = "Plumber"
-        self.demographic_user_info["filing_status"] = "Single"
+        self.demographic_user_info["filing_status"] = "single"
         self.demographic_user_info["lived-apart"] = True
 
         self.demographic_user_info["is-married"] = False
@@ -495,5 +680,7 @@ class Document:
             'spouse-ssn': "123987654",
             'spouse-blind': False
         }
+
+        self.income_user_info['unemployment-compensation'] = 0
 
         self.current_section_index = 1
