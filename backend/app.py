@@ -413,6 +413,8 @@ def error_checking(parameters, intent, last_unfilled):
         dollar_value =  str(parameters['value'])
         if '-' in dollar_value:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
+        elif dollar_value.isnumeric() == False:
+            return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
     return None, None
 
