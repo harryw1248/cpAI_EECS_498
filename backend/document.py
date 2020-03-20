@@ -302,7 +302,9 @@ class Document:
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
                 elif extracted_slot_name == 'owns-business':
+                    print("Hello")
                     self.income_user_info['business-expenses'] = 0
+                    self.income_user_info['business-income'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
