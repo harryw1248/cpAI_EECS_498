@@ -243,7 +243,8 @@ def change_field_confirm(content):
     if document.dependent_being_filled is not None:
         response = responses.get_next_dependent_response(
             next_unfilled_slot,
-            document.dependent_being_filled.num
+            document.dependent_being_filled.num,
+            document.dependents
         )
     elif (
             next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info):
