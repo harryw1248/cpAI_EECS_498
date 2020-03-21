@@ -130,11 +130,11 @@ class Response:
             'wages': 'Please take out your W-2 form. What are your total wages, salaries, and tips as indicated in Box 1?',
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
-            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
+            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not recieve any of these forms, report 0.',
-            'has-1099-R': 'Have you recieved 1099-R form(s) this year?',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not receive any of these forms, report 0.',
+            'has-1099-R': 'Have you received 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
             'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
@@ -158,11 +158,11 @@ class Response:
             #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
             'tuition-fees': 'What is your amount of tuition and fees in line 21 of Schedule 1?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
-            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
+            'ss-benefits': 'Have you received Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
             'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in front of you. What is your additional tax as stated in line 3 of Schedule 2?',
             'schedule-3-line-7': 'What are your nonrefundable credits as specified on line 7 of Schedule 3?',
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
-            'schedule-3-line-14': 'What are your other payements and refundable credits as specified on line 14 of Schedule 3?',   
+            'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of Schedule 3?',   
         }
 
         self.income_finances_order = [
