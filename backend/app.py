@@ -56,9 +56,14 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot()
-    response = responses.get_next_response(next_unfilled_slot, document)
 
-    output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    if last_unfilled_field == "":
+        response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
+        output_context = responses.generate_output_context("given-name", 1, session, document)
+    else:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
+
     data['fulfillment_messages'] = [{"text": {"text": ["Great, let's move on. " + response]}}]
     data['output_contexts'] = output_context
     global last_output_context
@@ -80,9 +85,14 @@ def explain_term_repeat(content):
     firebase_data = db.child("TERMINOLOGY").get().val()
 
     next_unfilled_slot = document.find_next_unfilled_slot()
-    # response = responses.get_next_response(next_unfilled_slot,  document)
+    
+    if last_unfilled_field == "":
+        response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
+        output_context = responses.generate_output_context("given-name", 1, session, document)
+    else:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
 
-    output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
     data['fulfillment_messages'] = [
         {
             "text": {
@@ -100,7 +110,14 @@ def explain_term_repeat(content):
                     }
                 ]
             }
-        }]
+        },
+        {
+            "text": {
+                "text": [
+                    "Whenever you are ready, let's continue. " + response
+                ]
+            }
+        },]
 
     data['output_contexts'] = output_context
     global last_output_context
@@ -355,8 +372,6 @@ def clear():
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
-    data['fulfillment_text'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
-    data['output_contexts'] = ""
     print(data)
     return jsonify(data)
 
@@ -736,7 +751,7 @@ def home():
             print("global last output context: " + str(last_output_context))
             print("got here")
             return clear()
-        elif "monetary" in str(last_output_context):
+        elif "monetary" in str(last_output_context) and "explain_term" not in intent:
             if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
                 return misclassified_money_intent(content)
             elif (intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \

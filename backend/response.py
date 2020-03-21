@@ -268,5 +268,9 @@ class Response:
         context = [{
             "name": context_identifier,
             "lifespan_count": lifespan
+        }, 
+        {
+            "name": session + "/contexts/" + "explain_term",
+            "lifespan_count": 1
         }]
         return context
