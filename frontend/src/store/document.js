@@ -22,10 +22,10 @@ export const mutations = {
 };
 
 export const actions = {
-    queryDocument({ commit }) {
+    queryDocument({ commit, rootGetters }) {
         axios({
             method: "get",
-            url: "http://localhost:5000/document"
+            url: rootGetters.getBackendUrl
         })
             .then(response => {
                 console.log(response);

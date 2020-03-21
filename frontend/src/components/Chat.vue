@@ -1,6 +1,7 @@
 <template>
     <div class="w-full h-screen">
         Chat History
+
         <section id="chat" class="overflow-y-auto py-4 px-2 mt-2 rounded">
             <div
                 v-for="(message, index) in messages"
@@ -56,8 +57,19 @@
             >
                 Send
             </button>
-        </form>
 
+        </form>
+        <div class="text-gray-400 mt-8">
+        Aws-client <input type="checkbox" id="awsclient" v-model="awsClient">
+        Aws-backend <input type="checkbox" id="awsbackend" v-model="awsBackend">
+        <button
+            name="button"
+            class="mt-2 ml-1 w-16 bg-gray-300 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
+            @click="handleResetSession"
+        >
+            Reset
+        </button>
+        </div>
         <!--<button
             name="button"
             class="mt-2 ml-1 w-16 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
@@ -94,9 +106,25 @@ export default {
   updated() {
     keepScrollDown();
   },
-  computed: mapState({
-    messages: state => state.conversation.history
-  }),
+  computed: {
+    awsClient: {
+      get() {
+        return this.$store.state.awsClient;
+      },
+      set(value) {
+        this.$store.commit("TOGGLE_AWS_CLIENT", value);
+      }
+    },
+    awsBackend: {
+      get() {
+        return this.$store.state.awsBackend;
+      },
+      set(value) {
+        this.$store.commit("TOGGLE_AWS_BACKEND", value);
+      }
+    },
+    ...mapState({ messages: state => state.conversation.history })
+  },
   methods: {
     /*speechToTextOn() {
             SpeechService.startStream();
@@ -104,6 +132,9 @@ export default {
         speechToTextOff() {
             SpeechService.stopStream();
         },*/
+    handleResetSession() {
+      this.$store.dispatch("conversation/resetSession");
+    },
     sendUtterance(e) {
       const utterance = e.target.elements.utterance.value;
       this.$store.dispatch("conversation/speak", utterance);

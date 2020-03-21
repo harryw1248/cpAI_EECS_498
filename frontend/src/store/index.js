@@ -12,47 +12,54 @@ export default new Vuex.Store({
     },
     state: {
         displayForm1040: false,
-        logged: false
+        logged: false,
+        clientUrl:
+            "http://ec2-18-191-149-72.us-east-2.compute.amazonaws.com:3000/",
+        backendUrl:
+            "http://ec2-18-189-21-42.us-east-2.compute.amazonaws.com/document",
+        awsClient: true,
+        awsBackend: true
     },
     mutations: {
-        SET_USER_DATA: (state, userData) => {
-            /*
-            state.user = userData;
-            localStorage.setItem("user", JSON.stringify(userData));
-            axios.defaults.headers.common[
-                "Authorization"
-            ] = `Bearer ${userData.access_token}`;
-            */
-        },
         TOGGLE_FORM1040_DISPLAY: state => {
             state.displayForm1040 = !state.displayForm1040;
+        },
+        TOGGLE_AWS_CLIENT: (state, val) => {
+            if (val) {
+                state.clientUrl =
+                    "http://ec2-18-191-149-72.us-east-2.compute.amazonaws.com:3000/";
+                state.awsClient = true;
+            } else {
+                state.clientUrl = "http://localhost:3000/";
+                state.awsClient = false;
+            }
+        },
+        TOGGLE_AWS_BACKEND: (state, val) => {
+            if (val) {
+                state.backendUrl =
+                    "http://ec2-18-189-21-42.us-east-2.compute.amazonaws.com/document";
+                state.awsBackend = true;
+            } else {
+                state.backendUrl = "http://localhost:5000/document";
+                state.awsBackend = false;
+            }
         }
     },
     getters: {
         isForm1040Toggled: state => {
             return state.displayForm1040;
+        },
+        getClientUrl: state => {
+            console.log(state.clientUrl);
+            return state.clientUrl;
+        },
+        getBackendUrl: state => {
+            return state.backendUrl;
         }
     },
     actions: {
         displayForm1040: ({ commit, state }) => {
             if (!state.displayForm1040) commit("TOGGLE_FORM1040_DISPLAY");
-        },
-        login: ({ commit }, credentials) => {
-            /*
-            const params = new URLSearchParams();
-            params.append("username", credentials["username"]);
-            params.append("password", credentials["password"]);
-            return axios
-                .post("http://localhost:3000/", params)
-                .then(response => {
-                    console.log(response); // eslint-disable-line no-console
-                    commit("SET_USER_DATA", response.data);
-                })
-                .catch(e => {
-                    alert("error - see console msg.");
-                    console.log(e);
-                });
-            */
         }
     }
 });
