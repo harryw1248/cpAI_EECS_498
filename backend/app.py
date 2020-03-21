@@ -411,9 +411,15 @@ def error_checking(parameters, intent, last_unfilled):
 
     elif intent == 'income_and_finances_fill.monetary_value':
         dollar_value =  str(parameters['value'])
+        print("adsad:", dollar_value)
         if '-' in dollar_value:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
-        elif dollar_value.isnumeric() == False:
+
+        try:
+            float(dollar_value)
+        except ValueError:
+        #     print('Width is not a number')
+        # elif dollar_value.isdigit() == False:
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
     return None, None

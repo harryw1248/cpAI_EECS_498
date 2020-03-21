@@ -162,7 +162,7 @@ class Response:
             'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in front of you. What is your additional tax as stated in line 3 of Schedule 2?',
             'schedule-3-line-7': 'What are your nonrefundable credits as specified on line 7 of Schedule 3?',
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
-            'schedule-3-line-14': 'What are your other payements and refundable credits as specified on line 14 of Schedule 3',   
+            'schedule-3-line-14': 'What are your other payements and refundable credits as specified on line 14 of Schedule 3?',   
         }
 
         self.income_finances_order = [
