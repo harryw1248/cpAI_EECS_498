@@ -204,6 +204,8 @@ class Response:
     def get_next_response(self, next_unfilled_slot, current_document):
         #print("get_next_response called")
         print("next_unfilled_slot:", next_unfilled_slot)
+        if current_document.dependent_being_filled is not None:
+            return get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
@@ -225,8 +227,6 @@ class Response:
             elif next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info[
                 'filing_status'] == 'head of household':
                 return "Your filing status is 'head of houshold.' " + self.demographics['dual_status_alien']
-            elif next_unfilled_slot in self.demographics_dependent_slots:
-                return self.demographics_dependent_question[next_unfilled_slot]
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
