@@ -335,16 +335,29 @@ def confirm_no(content):
 def clear():
     global user
     global document
+    global responses
+    global last_output_context
+    global last_intent
+    global last_unfilled_field
 
     dummy_user = User()
     user = copy.deepcopy(dummy_user)
     dummy_document = Document()
     document = copy.deepcopy(dummy_document)
+    dummy_responses = Response()
+    responses = copy.deepcopy(dummy_responses)
+
+    last_output_context = ""
+    last_unfilled_field = ""
+    last_intent = "goodbye"
 
     with open('response.json') as f:
         data = json.load(f)
 
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
+    data['fulfillment_text'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
     data['output_contexts'] = ""
+    print(data)
     return jsonify(data)
 
 
@@ -409,6 +422,30 @@ def error_checking(parameters, intent, last_unfilled):
 
         if num_digits != 9:
             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+    elif 'dependent_ssn' in intent:
+        value = str(parameters['dependent-ssn'])
+        num_digits = 0
+        num_hyphens = 0
+
+        for digit in value:
+            if digit in digits:
+                num_digits += 1
+
+                if num_digits > 9:
+                    print("Too many digits")
+                    return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+            elif digit == '-':
+                num_hyphens += 1
+            else:
+                print(value)
+                print("Invalid character: " + str(digit))
+                return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+        if num_digits != 9:
+            print("Too many digits")
+
+            return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
     elif intent == 'income_and_finances_fill.monetary_value':
         dollar_value =  str(parameters['value'])
@@ -622,7 +659,6 @@ def autofill(content):
     print(last_output_context)
     print(last_unfilled_field)
 
-
     return jsonify(data)
 
 
@@ -682,10 +718,10 @@ def misclassified_money_intent(content):
 
     return jsonify(data)
 
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        # get payload
         content = request.json
 
         intent = content['queryResult']['intent']['displayName']
@@ -694,7 +730,11 @@ def home():
         global last_output_context
         print("global last output context: " + str(last_output_context))
 
-        if intent == 'goodbye':
+        if intent == 'goodbye' or 'goodbye' == content['queryResult']['queryText']:
+            last_output_context = ""
+            last_unfilled_field = ""
+            print("global last output context: " + str(last_output_context))
+            print("got here")
             return clear()
         elif "monetary" in str(last_output_context):
             if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
@@ -741,17 +781,6 @@ def home():
 
     else:
         return "Welcome to CPai!"
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
 
 
 @app.route('/document', methods=['GET'])
