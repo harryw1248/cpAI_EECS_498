@@ -100,15 +100,15 @@ class Document:
             'schedule-2-line-10': None,
             'schedule-3-line-14': None,
 
-            #purely computational fields
+            # purely computational fields
             '7b': 0,
             '8b': 0,
             '11a': 0,
             '11b': 0,
-            '12a': 0, 
+            '12a': 0,
             '12b': 0,
-            '13a': 0, 
-            '13b': 0, 
+            '13a': 0,
+            '13b': 0,
             '14': 0,
             '15': 0,
             '16': 0,
@@ -169,7 +169,7 @@ class Document:
         self.is_married = False
         self.current_section_index = 0
         self.last_unfilled_field = ""
-        self.monetary_list_fields = ["tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
+        self.monetary_list_fields = ["wages", "tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
 
@@ -289,7 +289,7 @@ class Document:
                 extracted_slot_value = parameters[extracted_slot_name]
             print("extracted slot value is", extracted_slot_value)
 
-            #compute yes or no fields
+            # compute yes or no fields
             if extracted_slot_value == 'yes':
                 self.income_user_info[extracted_slot_name] = True
             elif extracted_slot_value == 'no':
@@ -302,7 +302,9 @@ class Document:
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
                 elif extracted_slot_name == 'owns-business':
+                    print("Hello")
                     self.income_user_info['business-expenses'] = 0
+                    self.income_user_info['business-income'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
@@ -316,20 +318,20 @@ class Document:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
                 # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
-                                                                 
 
             # compute all other fields
             if extracted_slot_name == 'wages':
                 print("occupation: " + str(self.demographic_user_info['occupation']))
-                if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info['occupation'] != 'educator':
+                if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
+                    'occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
             # if extracted_slot_name == 'tuition-fees':
-                # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
-                # ##DONT DELETE THE COMMENTED LINE BELOW
-                # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
-                # self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
-                # self.compute_11a_and_11b()
-                # self.income_user_info["12a"] = self.compute_tax_amount_12a()
+            # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
+            # ##DONT DELETE THE COMMENTED LINE BELOW
+            # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+            # self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+            # self.compute_11a_and_11b()
+            # self.income_user_info["12a"] = self.compute_tax_amount_12a()
             if extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 # print("extracted slot name is", extracted_slot_name)
@@ -341,8 +343,10 @@ class Document:
                 ##DONT DELETE THE COMMENTED LINE BELOW
                 self.income_user_info["7b"] = self.compute_line_7b()
                 self.income_user_info["total-income"] = self.compute_line_7b()
-                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
-                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
+                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info[
+                    "adjustments-to-income"]
+                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info[
+                    "adjustments-to-income"]
                 self.compute_11a_and_11b()
                 print(self.income_user_info)
                 self.income_user_info["12a"] = self.compute_tax_amount_12a()
@@ -360,13 +364,15 @@ class Document:
                 self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
             elif extracted_slot_name == 'schedule-2-line-10':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                self.income_user_info["15"] = extracted_slot_value 
+                self.income_user_info["15"] = extracted_slot_value
                 self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
             elif extracted_slot_name == 'schedule-3-line-14':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                self.income_user_info["18d"] = extracted_slot_value 
-                self.income_user_info["18e"] = self.income_user_info['earned-income-credit'] + self.income_user_info["18d"]
-                self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + self.income_user_info["18e"]
+                self.income_user_info["18d"] = extracted_slot_value
+                self.income_user_info["18e"] = self.income_user_info['earned-income-credit'] + self.income_user_info[
+                    "18d"]
+                self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + \
+                                              self.income_user_info["18e"]
                 print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
@@ -532,9 +538,9 @@ class Document:
         # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction + qualified_business_income
         self.income_user_info["taxable-income"] = max(self.income_user_info[
-            "8b"] - self.income_user_info["11a"], 0)
+                                                          "8b"] - self.income_user_info["11a"], 0)
         self.income_user_info["11b"] = max(self.income_user_info[
-            "8b"] - self.income_user_info["11a"], 0)
+                                               "8b"] - self.income_user_info["11a"], 0)
 
     def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
@@ -576,7 +582,6 @@ class Document:
         line_7a = self.income_user_info["total-other-income"]
 
         return line_1 + line_2b + line_3b + line_4b + line_4d + line_5b + line_6 + line_7a
-
 
     def compute_earned_income_credit(self):
         earned_income_credit = 0

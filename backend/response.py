@@ -59,7 +59,7 @@ class Response:
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
-            'wages': "prompt_monetary_value",
+            'wages': "prompt_monetary_value_list",
             'tax-exempt-interest': 'prompt_monetary_value_list',
             'taxable-interest': 'prompt_monetary_value_list',
             'has-1099-R': 'prompt_has_1099_R',
@@ -130,11 +130,11 @@ class Response:
             'wages': 'Please take out your W-2 form. What are your total wages, salaries, and tips as indicated in Box 1?',
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
-            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your your tax-exempt stated interest shown in box 8? If you '
+            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'Please list your total taxable interest income from Forms 1099-INT and 1099-OID. If you did not recieve any of these forms, report 0.',
-            'has-1099-R': 'Have you recieved 1099-R form(s) this year?',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not receive any of these forms, report 0.',
+            'has-1099-R': 'Have you received 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
             'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
@@ -148,21 +148,21 @@ class Response:
             'business-income': 'Please go to line 3 of Schedule 1 and read out how much money you gained or lost from your business. If you do not have a business, put zero.',
             'unemployment-compensation': 'Please go to line 7 of Schedule 1 and read out how much you collected in unemployment compensation.',
             'other-income': 'Please go to line 8 of Schedule 1 and read out the total you made or receieved in forms of other income. Ignore the type of income.',
-            'educator-expenses': 'Please go to line 10 of Schedule 1 and read out how much you have in educator expenses.',
-            'business-expenses': 'Please go to line 11 of Schedule 1 and read out how much you have in business expenses.',
-            'health-savings-deductions': 'Please go to line 12 of Schedule 1 and read out how much you have in health savings expenses.',
-            'moving-expenses-armed-forces': 'Please go to line 13 of Schedule 1 and read out how much you have in moving expenses.',
-            'self-employed-health-insurance': 'Please go to line 16 of Schedule 1 and read out how much you have in self employed health insurance.',
+            'educator-expenses': 'What is your amount of educator expenses in line 10 of Schedule 1?',
+            'business-expenses': 'What is your amount of business expenses in line 11 of Schedule 1?',
+            'health-savings-deductions': 'What is your amount in health savings expenses in line 12 of Schedule 1?',
+            'moving-expenses-armed-forces': 'What is your amount of moving expenses in line 13 of Schedule 1?',
+            'self-employed-health-insurance': 'What is your amount in self employed health insurance in line 16 of Schedule 1?',
             #'penalty-early-withdrawal-savings': 'What is your amount of penalty from early withdrawal from our savings?',
-            'IRA-deductions': 'Please go to line 19 of Schedule 1 and read out how much you have in IRA deductions.',
+            'IRA-deductions': 'What is your amount in IRA deductions in line 19 of Schedule 1?',
             #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
-            'tuition-fees': 'Please go to line 21 of Schedule 1 and read out how much you have in tuition and fees.',
+            'tuition-fees': 'What is your amount of tuition and fees in line 21 of Schedule 1?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
-            'ss-benefits': 'Have you recieved Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
+            'ss-benefits': 'Have you received Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
             'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in front of you. What is your additional tax as stated in line 3 of Schedule 2?',
             'schedule-3-line-7': 'What are your nonrefundable credits as specified on line 7 of Schedule 3?',
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
-            'schedule-3-line-14': 'What are your other payements and refundable credits as specified on line 14 of Schedule 3',   
+            'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of Schedule 3?',
         }
 
         self.income_finances_order = [
@@ -203,6 +203,9 @@ class Response:
     # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
         #print("get_next_response called")
+        print("next_unfilled_slot:", next_unfilled_slot)
+        if current_document.dependent_being_filled is not None:
+            return self.get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
@@ -224,7 +227,6 @@ class Response:
             elif next_unfilled_slot == 'dual_status_alien' and current_document.demographic_user_info[
                 'filing_status'] == 'head of household':
                 return "Your filing status is 'head of houshold.' " + self.demographics['dual_status_alien']
-
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
