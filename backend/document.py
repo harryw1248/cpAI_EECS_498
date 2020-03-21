@@ -169,7 +169,7 @@ class Document:
         self.is_married = False
         self.current_section_index = 0
         self.last_unfilled_field = ""
-        self.monetary_list_fields = ["tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
+        self.monetary_list_fields = ["wages", "tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
 

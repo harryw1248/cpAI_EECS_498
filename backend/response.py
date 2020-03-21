@@ -59,7 +59,7 @@ class Response:
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
-            'wages': "prompt_monetary_value",
+            'wages': "prompt_monetary_value_list",
             'tax-exempt-interest': 'prompt_monetary_value_list',
             'taxable-interest': 'prompt_monetary_value_list',
             'has-1099-R': 'prompt_has_1099_R',
@@ -205,7 +205,7 @@ class Response:
         #print("get_next_response called")
         print("next_unfilled_slot:", next_unfilled_slot)
         if current_document.dependent_being_filled is not None:
-            return get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
+            return self.get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
         if "spouse" in next_unfilled_slot:
             return self.demographics_spouse[next_unfilled_slot]
         elif "filing_status" in next_unfilled_slot:
