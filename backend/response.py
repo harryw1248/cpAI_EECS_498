@@ -140,9 +140,9 @@ class Response:
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
-            'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. Please '
-                                 'indicate the gross distributions in field 1. If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': 'Please indicate the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. What '
+                                 'are the gross distributions in field 1? If you do not have an IRA, say zero.',
+            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R.',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1, and read out the taxable refunds or credits.',
             'business-income': 'Please go to line 3 of Schedule 1 and read out how much money you gained or lost from your business. If you do not have a business, put zero.',
