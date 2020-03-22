@@ -8,6 +8,7 @@ class Document:
         self.sections = [
             'demographics',
             'income',
+            'deductions',
             'refund'
         ]
 
@@ -161,6 +162,18 @@ class Document:
             'schedule-3-line-14'
         ]
 
+        self.deduction_user_info = {
+            'deduction-begin': None,
+            '401K': None,
+            'tuition': None
+        }
+
+        self.deduction_slots_to_fill = [
+            'deduction-begin',
+            '401K',
+            'tuition'
+        ]
+
         self.dependent_being_filled = None
         self.number_of_dependents_completed = 0
         self.dependents = []
@@ -184,10 +197,13 @@ class Document:
     def find_next_unfilled_slot(self):
         if self.sections[self.current_section_index] == 'demographics':
             self.last_unfilled_field = self.find_next_unfilled_slot_demographics()
-            return self.last_unfilled_field
         elif self.sections[self.current_section_index] == 'income':
             self.last_unfilled_field = self.find_next_unfilled_slot_income()
-            return self.last_unfilled_field
+        elif self.sections[self.current_section_index] == 'deductions':
+            self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
+        else:
+            return None
+        return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
         # Get the next unfilled slot for the current dependent
@@ -220,6 +236,13 @@ class Document:
     def find_next_unfilled_slot_income(self):
         for slot in self.income_slots_to_fill:
             if self.income_user_info[slot] is None:
+                return slot
+        return None
+
+
+    def find_next_unfilled_slot_deductions(self):
+        for slot in self.deduction_slots_to_fill:
+            if self.deduction_user_info[slot] is None:
                 return slot
         return None
 
@@ -650,3 +673,61 @@ class Document:
         self.income_user_info['unemployment-compensation'] = 0
 
         self.current_section_index = 1
+
+
+    def update_dummy2(self):
+        self.income_user_info['wages'] = 100000
+        self.income_user_info['owns-business'] = False
+        self.income_user_info['tax-exempt-interest'] = 1000
+        self.income_user_info['taxable-interest'] = 50000
+        self.income_user_info['has-1099-R'] = False
+        self.income_user_info['pensions-and-annuities'] = 0
+        self.income_user_info['pensions-and-annuities-taxable'] = 0
+        self.income_user_info['owns-stocks-bonds'] = False
+        self.income_user_info['has-1099-DIV'] = False
+        self.income_user_info['qualified-dividends'] = 0
+        self.income_user_info['ordinary-dividends'] = 0
+        self.income_user_info['IRA-distributions'] = 0
+        self.income_user_info['IRA-distributions-taxable'] = 0
+        self.income_user_info['capital-gains'] = 0
+
+        self.income_user_info['taxable-refunds'] = 0
+        self.income_user_info['business-income'] = 0
+        self.income_user_info['unemployment-compensation'] = 0
+        self.income_user_info['other-income'] = 0
+        self.income_user_info['total-other-income'] = 0
+        self.income_user_info['total-income'] = 100000
+        self.income_user_info['educator-expenses'] = 0
+        self.income_user_info['business-expenses'] = 0
+        self.income_user_info['health-savings-deductions'] = 0
+        self.income_user_info['moving-expenses-armed-forces'] = 0
+        self.income_user_info['self-employed-health-insurance'] = 0
+        self.income_user_info['IRA-deductions'] = 0
+        self.income_user_info['adjustments-to-income'] = 0
+        self.income_user_info['adjusted-gross-income'] = 0
+        self.income_user_info['federal-income-tax-withheld'] = 0
+        self.income_user_info['earned-income-credit'] = 0
+        self.income_user_info['ss-benefits'] = 0
+        self.income_user_info['ss-benefits-taxable'] = 0
+        self.income_user_info['business-gains'] = 0
+        self.income_user_info['schedule-2-line-3'] = 0
+        self.income_user_info['schedule-3-line-7'] = 0
+        self.income_user_info['schedule-2-line-10'] = 0
+        self.income_user_info['schedule-3-line-14'] = 0
+
+        self.income_user_info['7b'] = 0
+        self.income_user_info['8b'] = 0
+        self.income_user_info['11a'] = 0
+        self.income_user_info['11b'] = 0
+        self.income_user_info['12a'] = 0
+        self.income_user_info['12b'] = 0
+        self.income_user_info['13a'] = 0
+        self.income_user_info['13b'] = 0
+        self.income_user_info['14'] = 0
+        self.income_user_info['15'] = 0
+        self.income_user_info['16'] = 0
+        self.income_user_info['18d'] = 0
+        self.income_user_info['18e'] = 0
+        self.income_user_info['19'] = 0
+
+        self.current_section_index = 2

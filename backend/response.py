@@ -92,6 +92,9 @@ class Response:
             'schedule-3-line-7': 'prompt_monetary_value',
             'schedule-2-line-10': 'prompt_monetary_value',
             'schedule-3-line-14': 'prompt_monetary_value',
+            'deduction-begin': 'prompt_deduction_begin',
+            '401K': 'prompt_401K',
+            'tuition': 'prompt_tuition'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -197,6 +200,13 @@ class Response:
             'earned-income-credit',
         ]
 
+        self.deductions = {
+            'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. First, do you have any deductions in mind that you might be eligible for?",
+            '401K': 'todo',
+            'tuition': 'todo'
+        }
+
+
 
     #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
     # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
@@ -230,6 +240,8 @@ class Response:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
+        elif next_unfilled_slot in self.deductions:
+            return self.deductions[next_unfilled_slot]
         #print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 

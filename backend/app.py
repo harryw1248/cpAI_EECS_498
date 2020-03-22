@@ -637,7 +637,8 @@ def explain_instructions(content):
     return
 
 
-def deductions(content):
+def exploit_deductions(content):
+    print("exploiting deductions")
     return
 
 
@@ -667,6 +668,33 @@ def autofill(content):
     next_unfilled_slot = 'wages'
     last_unfilled_field = 'wages'
     response = responses.get_next_response(next_unfilled_slot, document)
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    global last_output_context
+    last_output_context = data['output_contexts']
+    print(last_output_context)
+    print(last_unfilled_field)
+
+    return jsonify(data)
+
+
+def autofill2(content):
+    global last_unfilled_field
+    global responses
+    global document
+
+    print("autofill2")
+    document.update_dummy()
+    document.update_dummy2()
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    next_unfilled_slot = 'deduction-begin'
+    last_unfilled_field = 'deduction-begin'
+    response = responses.get_next_response(next_unfilled_slot, document)
+    print("response:", response)
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
     global last_output_context
@@ -761,6 +789,8 @@ def home():
                 return income_finances_fill(content)
         if intent == 'autofill':
             return autofill(content)
+        elif intent == 'autofill2':
+            return autofill2(content)
         elif intent == 'explain_term':
             return explain_term(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
@@ -783,6 +813,8 @@ def home():
             return demographics_fill_dependents(content)
         elif intent.startswith('income_and_finances_fill'):
             return income_finances_fill(content)
+        elif intent.startswith('exploit_deduction'):
+            return exploit_deductions(content)
         elif intent == 'confirm - yes':
             return confirm_yes(content)
         elif intent == 'confirm - no':
