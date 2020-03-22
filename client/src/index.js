@@ -1,21 +1,6 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-/*
-import session from "express-session";
-
-const { CPAI_CLIENT_SECRET = CPAI_CLIENT_SECRET } = process.env;
-app.use(
-    session({
-        secret: CPAI_CLIENT_SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 // 24 hours,
-        }
-    })
-);
-*/
 
 const app = express();
 
@@ -24,40 +9,35 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/*
-const users = [{ id: 1, username: "cpai", password: "superduper" }];
-
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    console.log(username, password);
-});
-*/
-
 // Imports the Google Cloud client library.
 const { Storage } = require("@google-cloud/storage");
 
 const dialogflow = require("dialogflow");
 const uuid = require("uuid");
 
+var sessionClient = null;
+var sessionPath = null;
+var sessionId = null;
+
+let sessionInfo = null;
+
 async function newSession(projectId) {
     // A unique identifier for the given session
-    const sessionId = uuid.v4();
+    sessionId = uuid.v4();
 
     // Create a new session
-    const sessionClient = new dialogflow.SessionsClient();
-    const sessionPath = sessionClient.sessionPath(projectId, sessionId);
+    sessionClient = new dialogflow.SessionsClient();
+    sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
     return { sessionClient, sessionPath };
 }
-
-let sessionInfo = null;
 
 /**
  * Send a query to the dialogflow agent, and return the query result.
  */
 async function runQuery(sessionInfo, query) {
-    let sessionPath = sessionInfo["sessionPath"];
-    let sessionClient = sessionInfo["sessionClient"];
+    //sessionPath = sessionInfo["sessionPath"];
+    //sessionClient = sessionInfo["sessionClient"];
     // The text query request.
     const request = {
         session: sessionPath,
@@ -120,6 +100,15 @@ async function helloWorld(req, res) {
 }
 app.get("/", helloWorld);
 
+async function reset(req, res) {
+    console.log("resetting");
+    sessionInfo = await newSession("cpai-dweaie");
+    console.log(sessionInfo);
+
+    res.send({ reset: true });
+}
+app.get("/reset", reset);
+
 async function query(req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -130,6 +119,7 @@ async function query(req, res) {
     const response = await runQuery(sessionInfo, req.body.query);
     res.send(response);
 }
+
 app.post("/query", query);
 
 app.listen(3000, async function() {

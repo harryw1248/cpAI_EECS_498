@@ -87,41 +87,43 @@
         />
 
         <!-- User Spouse Info -->
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 188px; left: 56px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 188px; left: 336px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 188px; left: 658px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 188px; left: 696px;"
-            size="50"
-            disabled
-        />
-        <input
-            class="formField"
-            v-model="dummy"
-            style="top: 188px; left: 728px;"
-            size="50"
-            disabled
-        />
+        <div v-if="filingStatus === 'MFJ'">
+          <input
+              class="formField"
+              v-model="spouse['given-name']"
+              style="top: 188px; left: 56px;"
+              size="50"
+              disabled
+          />
+          <input
+              class="formField"
+              v-model="spouse['last-name']"
+              style="top: 188px; left: 336px;"
+              size="50"
+              disabled
+          />
+          <input
+              class="formField"
+              v-model="dummy"
+              style="top: 188px; left: 658px;"
+              size="50"
+              disabled
+          />
+          <input
+              class="formField"
+              v-model="dummy"
+              style="top: 188px; left: 696px;"
+              size="50"
+              disabled
+          />
+          <input
+              class="formField"
+              v-model="dummy"
+              style="top: 188px; left: 728px;"
+              size="50"
+              disabled
+          />
+        </div>
 
         <!-- Foreign Country Info -->
         <input
@@ -198,7 +200,8 @@
             v-for="(dep, index) in dependents"
             v-bind:key="index"
             :depIndex="index"
-            style="height: 15px; width:868px; top: 401px; left: 0px"
+            :style="{ height: 15*(index+1) + 'px' }"
+            style="width:868px; top: 401px; left: 0px"
         />
 
         <!-- Money Info -->
@@ -301,6 +304,10 @@ export default {
       const db = this.dirtyBit; //hack
       if (this.user["filing_status"] === "qualifying widow") return "QW";
       else if (this.user["filing_status"] === "head of household") return "HOH";
+      else if (this.user["filing_status"] === "married filing jointly")
+        return "MFJ";
+      else if (this.user["filing_status"] === "married filing separately")
+        return "MFS";
       else return null;
     },
     cityState: function() {
