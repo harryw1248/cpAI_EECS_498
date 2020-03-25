@@ -2,14 +2,14 @@
     <div>
         <input
             class="formField"
-            v-model="dependents[depIndex]['given-name']"
+            v-model="dependents[depIndex]['dependent-given-name']"
             style="left: 55px; font-size: 14px"
             size="50"
             disabled
         />
         <input
             class="formField"
-            v-model="dependents[depIndex]['last-name']"
+            v-model="dependents[depIndex]['dependent-last-name']"
             style="left: 227px; font-size: 14px"
             size="50"
             disabled
@@ -24,7 +24,7 @@
 
         <input
             class="formField"
-            v-model="dependents[depIndex]['relationship_to_filer']"
+            v-model="dependents[depIndex]['dependent-relation']"
             style="left: 465px; font-size: 14px"
             size="50"
             disabled
@@ -52,10 +52,10 @@ export default {
   computed: {
     socialSecurity: function() {
       const db = this.dirtyBit; //hack
-      if (!this.dependents[this.depIndex]["social_security"]) return "";
+      if (!this.dependents[this.depIndex]["dependent-ssn"]) return "";
       let str = "";
       for (let i = 0; i < 9; i++) {
-        str += this.dependents[this.depIndex]["social_security"][i] + " ";
+        str += this.dependents[this.depIndex]["dependent-ssn"][i] + " ";
       }
       str = str.slice(0, 5) + " " + str.slice(5, 9) + " " + str.slice(9);
       return str;

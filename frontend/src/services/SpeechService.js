@@ -11,7 +11,7 @@ let textToSpeech = text => {
     speech.volume = 1;
     speech.rate = 1;
     speech.pitch = 1;
-    console.log(speech);
+    // console.log(speech);
     speechSynthesis.speak(speech);
 };
 

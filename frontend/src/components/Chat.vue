@@ -70,6 +70,9 @@
             Reset
         </button>
         </div>
+        <div class="mx-auto mt-6">
+          <input class="w-full border" type="text" v-model="backendUrl"/>
+        </div>
         <!--<button
             name="button"
             class="mt-2 ml-1 w-16 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
@@ -123,7 +126,17 @@ export default {
         this.$store.commit("TOGGLE_AWS_BACKEND", value);
       }
     },
-    ...mapState({ messages: state => state.conversation.history })
+    backendUrl: {
+      get() {
+        return this.$store.state.backendUrl;
+      },
+      set(value) {
+        this.$store.commit("SET_CUSTOM_BACKEND", value);
+      }
+    },
+    ...mapState({
+      messages: state => state.conversation.history
+    })
   },
   methods: {
     /*speechToTextOn() {

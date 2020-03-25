@@ -5,6 +5,7 @@ export const state = {
     user: {},
     spouse: {},
     dependents: Array(),
+    user_income: {},
     dirtyBit: 0
 };
 
@@ -13,6 +14,7 @@ export const mutations = {
         const user = data["demographics"]["user"];
         const spouse = data["demographics"]["spouse"];
         const dependents = data["demographics"]["dependents"];
+        state["user_income"] = data["income"]["user"];
 
         for (const key of Object.keys(data["demographics"])) {
             state[key] = data["demographics"][key];

@@ -21,6 +21,10 @@ export default new Vuex.Store({
         awsBackend: true
     },
     mutations: {
+        SET_CUSTOM_BACKEND: (state, val) => {
+            state.backendUrl = val;
+            state.awsBackend = false;
+        },
         TOGGLE_FORM1040_DISPLAY: state => {
             state.displayForm1040 = !state.displayForm1040;
         },
