@@ -92,7 +92,7 @@ class Document:
             'self-employed-health-insurance': None,
             # 'penalty-early-withdrawal-savings': None,
             'IRA-deductions': None,
-            # 'student-loan-interest-deduction': None,
+            'student-loan-interest-deduction': None,
             'tuition-fees': None,
             'adjustments-to-income': 0,
             'adjusted-gross-income': None,
@@ -156,7 +156,7 @@ class Document:
             'self-employed-health-insurance',
             # 'penalty-early-withdrawal-savings',
             'IRA-deductions',
-            # 'student-loan-interest-deduction',
+            'student-loan-interest-deduction',
             'tuition-fees',
             # 'adjustments-to-income' ENDS here,
             'ss-benefits',
@@ -172,13 +172,15 @@ class Document:
         self.deduction_user_info = {
             'deduction-begin': None,
             '401K': None,
-            'tuition': None
+            'tuition': None,
+            'student-loan-interest': None
         }
 
         self.deduction_slots_to_fill = [
             'deduction-begin',
             '401K',
-            'tuition'
+            'tuition',
+            'student-loan-interest'
         ]
 
         self.dependent_being_filled = None
@@ -372,9 +374,14 @@ class Document:
             elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
                     extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
-                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses':
+                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses' or extracted_slot_name == 'student-loan-interest-deduction':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
+                if extracted_slot_name == 'student-loan-interest-deduction':
+                    self.deduction_user_info['student-loan-interest'] = extracted_slot_value
+                if extracted_slot_name == 'tuition-fees':
+                    self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
+                    print('Student related deductions: ' + str(self.deduction_user_info['tuition']+self.deduction_user_info['student-loan-interest']))
                 # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
 
             # compute all other fields
@@ -436,6 +443,7 @@ class Document:
                 print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+        
 
     def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
@@ -738,6 +746,12 @@ class Document:
                     earned_income_credit = 6660
         print("earned income credit: " + str(earned_income_credit))
         return earned_income_credit
+
+    def compute_tuition_deduction(self, amount):
+        if amount >= 4000:
+            return 4000
+        else:
+            return amount
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
