@@ -17,7 +17,10 @@ class Response:
             'filing_status_HOH_widower': "Have you had a spouse die within the last two tax years?",
             'dual_status_alien': "Are you a dual-status alien?",
             'blind': "Are you blind?",
-            'lived-apart': "Have you lived apart from your spouse for all of this year?"
+            'lived-apart': "Have you lived apart from your spouse for all of this year?",
+            'claim-you-dependent': 'Can someone claim you as a dependent?',
+            'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?',
         }
 
         self.demographics_spouse = {
@@ -56,6 +59,9 @@ class Response:
             'dependent-age': "prompt_dependent_info",
             'dependent-relation': "prompt_dependent_info",
             'dependent-ssn': "prompt_dependent_ssn",
+            'claim-you-dependent': 'prompt-claim-you-dependent',
+            'claim-spouse-dependent': 'prompt-claim-spouse-dependent',
+            'spouse-itemize-separate': 'prompt-spouse-itemize-separate',
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
