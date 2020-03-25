@@ -4,7 +4,7 @@ class User:
     def __init__(self):
         self.demographics = {'given-name': '', 'last-name': '', 'street-address': '', 'city': '',
                              'state': '', 'zip-code': '', 'social_security': '', 'country': '', 'age': '',
-                             'occupation': '', 'filing_status': ''}
+                             'occupation': '', 'filing_status': '', 'claim-you-dependent': '', 'claim-spouse-dependent': '', 'spouse-itemize-separate': ''}
         self.spouse_info = [[False, {'spouse-given-name': '', 'spouse-last-name': '', 'spouse-social_security': '',
                                      'mfs_spouse': '', 'spouse-blind': False}], False]
         self.income = {

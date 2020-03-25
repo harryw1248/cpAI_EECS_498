@@ -28,7 +28,9 @@ class Response:
             'spouse-last-name': "What is your spouse's last name?",
             'spouse-age': "What is your spouse's age?",
             'spouse-ssn': "Please type in your spouse's SSN.",
-            'spouse-blind': 'Is your spouse blind?'
+            'spouse-blind': 'Is your spouse blind?',
+            'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?'
         }
 
         self.slot_to_output_contexts = { 
