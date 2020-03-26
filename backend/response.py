@@ -17,7 +17,10 @@ class Response:
             'filing_status_HOH_widower': "Have you had a spouse die within the last two tax years?",
             'dual_status_alien': "Are you a dual-status alien?",
             'blind': "Are you blind?",
-            'lived-apart': "Have you lived apart from your spouse for all of this year?"
+            'lived-apart': "Have you lived apart from your spouse for all of this year?",
+            'claim-you-dependent': 'Can someone claim you as a dependent?',
+            'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?',
         }
 
         self.demographics_spouse = {
@@ -25,7 +28,9 @@ class Response:
             'spouse-last-name': "What is your spouse's last name?",
             'spouse-age': "What is your spouse's age?",
             'spouse-ssn': "Please type in your spouse's SSN.",
-            'spouse-blind': 'Is your spouse blind?'
+            'spouse-blind': 'Is your spouse blind?',
+            'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?'
         }
 
         self.slot_to_output_contexts = { 
@@ -56,6 +61,9 @@ class Response:
             'dependent-age': "prompt_dependent_info",
             'dependent-relation': "prompt_dependent_info",
             'dependent-ssn': "prompt_dependent_ssn",
+            'claim-you-dependent': 'prompt-claim-you-dependent',
+            'claim-spouse-dependent': 'prompt-claim-spouse-dependent',
+            'spouse-itemize-separate': 'prompt-spouse-itemize-separate',
             'change_field_value': "prompt_change_field_value",
             'change_field_confirm': "prompt_change_field_confirm",
             'confirm_section': "prompt_confirm",
@@ -84,7 +92,7 @@ class Response:
             'self-employed-health-insurance': 'prompt_monetary_value',
             #'penalty-early-withdrawal-savings': 'prompt_penalty_early_withdrawal_savings',
             'IRA-deductions': 'prompt_monetary_value',
-            #'student-loan-interest-deduction': 'prompt_student_loan_interest_deduction',
+            'student-loan-interest-deduction': 'prompt_monetary_value',
             'tuition-fees': 'prompt_monetary_value',
             'federal-income-tax-withheld': 'prompt_monetary_value',
             'ss-benefits': 'prompt_monetary_value_list',
@@ -158,7 +166,7 @@ class Response:
             'self-employed-health-insurance': 'What is your amount in self employed health insurance in line 16 of Schedule 1?',
             #'penalty-early-withdrawal-savings': 'What is your amount of penalty from early withdrawal from our savings?',
             'IRA-deductions': 'What is your amount in IRA deductions in line 19 of Schedule 1?',
-            #'student-loan-interest-deduction': 'What is your student loan interest deduction amount?',
+            'student-loan-interest-deduction': 'What is your student loan interest deduction amount in line 20 of Schedule 1?',
             'tuition-fees': 'What is your amount of tuition and fees in line 21 of Schedule 1?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
             'ss-benefits': 'Have you received Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
@@ -194,7 +202,7 @@ class Response:
             'self-employed-health-insurance',
             #'penalty-early-withdrawal-savings',
             'IRA-deductions',
-            #'student-loan-interest-deduction',
+            'student-loan-interest-deduction',
             'tuition-fees',
             'federal-income-tax-withheld',
             'earned-income-credit',
