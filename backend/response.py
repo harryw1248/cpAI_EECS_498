@@ -202,7 +202,6 @@ class Response:
     # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
     # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
-        #print("get_next_response called")
         print("next_unfilled_slot:", next_unfilled_slot)
         if current_document.dependent_being_filled is not None:
             return self.get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
@@ -230,7 +229,7 @@ class Response:
             return self.demographics[next_unfilled_slot]
         elif next_unfilled_slot in self.income_finances:
             return self.income_finances[next_unfilled_slot]
-        #print("couldn't find the response for slot:", next_unfilled_slot)
+        print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num, dependents):
