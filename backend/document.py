@@ -261,6 +261,8 @@ class Document:
             for slot, value in self.demographic_spouse_info.items():
                 if value is None and slot in parameters and parameters[slot] != '':
                     self.demographic_spouse_info[slot] = parameters[slot]
+                    if slot == "spouse-blind":
+                        self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         if self.sections[self.current_section_index] == 'demographics':
