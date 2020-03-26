@@ -16,7 +16,7 @@ export default new Vuex.Store({
         clientUrl:
             "http://ec2-18-191-149-72.us-east-2.compute.amazonaws.com:3000/",
         backendUrl:
-            "http://ec2-18-189-21-42.us-east-2.compute.amazonaws.com/document",
+            "http://ec2-18-220-141-233.us-east-2.compute.amazonaws.com:5000/document",
         awsClient: true,
         awsBackend: true
     },
@@ -41,7 +41,7 @@ export default new Vuex.Store({
         TOGGLE_AWS_BACKEND: (state, val) => {
             if (val) {
                 state.backendUrl =
-                    "http://ec2-18-189-21-42.us-east-2.compute.amazonaws.com/document";
+                    "http://ec2-18-220-141-233.us-east-2.compute.amazonaws.com:5000/document";
                 state.awsBackend = true;
             } else {
                 state.backendUrl = "http://localhost:5000/document";

@@ -30,13 +30,13 @@
             disabled
         />
         <img
-            v-if="false"
+            v-if="dependents[depIndex]['dependent_child_tax_credit']"
             class="check"
             src="@/assets/check.png"
             style="left: 633px;"
         />
         <img
-            v-if="false"
+            v-if="!dependents[depIndex]['dependent_child_for_others']"
             class="check"
             src="@/assets/check.png"
             style="left: 744px;"

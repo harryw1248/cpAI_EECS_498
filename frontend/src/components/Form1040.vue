@@ -426,7 +426,7 @@
             style="top:352px; left: 475px;"
         />
         <img
-            v-if="spouse['spouse-blind']"
+            v-if="spouse['spouse-blind'] !== 'no'"
             class="check"
             src="../assets/check.png"
             style="top:352px; left: 656px;"
@@ -537,99 +537,98 @@ import DependentField from "@/components/DependentField.vue";
 import { mapState } from "vuex";
 
 export default {
-    name: "Form1040",
-    components: {
-        DependentField
+  name: "Form1040",
+  components: {
+    DependentField
+  },
+  computed: {
+    filingStatus: function() {
+      const db = this.dirtyBit; //hack
+      if (this.user["filing_status"] === "qualifying widow") return "QW";
+      else if (this.user["filing_status"] === "head of household") return "HOH";
+      else if (this.user["filing_status"] === "married filing jointly")
+        return "MFJ";
+      else if (this.user["filing_status"] === "married filing separately")
+        return "MFS";
+      else return null;
     },
-    computed: {
-        filingStatus: function() {
-            const db = this.dirtyBit; //hack
-            if (this.user["filing_status"] === "qualifying widow") return "QW";
-            else if (this.user["filing_status"] === "head of household")
-                return "HOH";
-            else if (this.user["filing_status"] === "married filing jointly")
-                return "MFJ";
-            else if (this.user["filing_status"] === "married filing separately")
-                return "MFS";
-            else return null;
-        },
-        cityState: function() {
-            const db = this.dirtyBit; //hack
-            const city = this.user["city"];
-            const state = this.user["state"];
-            const zip = this.user["zip-code"];
+    cityState: function() {
+      const db = this.dirtyBit; //hack
+      const city = this.user["city"];
+      const state = this.user["state"];
+      const zip = this.user["zip-code"];
 
-            if (city && state && zip) {
-                return city + ", " + state + ", " + zip;
-            }
-            return "";
-        },
-        socialSecurity: function() {
-            const db = this.dirtyBit; //hack
-            if (!this.user["social_security"]) return "";
-            let str = "";
-            for (let i = 0; i < 9; i++) {
-                str += this.user["social_security"][i] + " ";
-            }
-            str = str.slice(0, 5) + " " + str.slice(5, 9) + " " + str.slice(9);
-            return str;
-        },
-        ...mapState({
-            user: state => state.document.user,
-            user_income: state => state.document.user_income,
-            spouse: state => state.document.spouse,
-            dependents: state => state.document.dependents,
-            dirtyBit: state => state.document.dirtyBit
-        })
+      if (city && state && zip) {
+        return city + ", " + state + ", " + zip;
+      }
+      return "";
     },
-    data() {
-        return {
-            dummy: null,
-            dummyNum: null,
-            campaignFund: false,
-            moreThan4: false,
-            claimDependent: null, //"spouse",
-            blindness: {
-                you: {
-                    bornBefore: false
-                },
-                spouse: {
-                    bornBefore: false
-                }
-            },
-            dependentCredit: {
-                d1: {
-                    child: false,
-                    other: false
-                },
-                d2: {
-                    child: false,
-                    other: false
-                },
-                d3: {
-                    child: false,
-                    other: false
-                },
-                d4: {
-                    child: false,
-                    other: false
-                }
-            }
-        };
-    }
+    socialSecurity: function() {
+      const db = this.dirtyBit; //hack
+      if (!this.user["social_security"]) return "";
+      let str = "";
+      for (let i = 0; i < 9; i++) {
+        str += this.user["social_security"][i] + " ";
+      }
+      str = str.slice(0, 5) + " " + str.slice(5, 9) + " " + str.slice(9);
+      return str;
+    },
+    ...mapState({
+      user: state => state.document.user,
+      user_income: state => state.document.user_income,
+      spouse: state => state.document.spouse,
+      dependents: state => state.document.dependents,
+      dirtyBit: state => state.document.dirtyBit
+    })
+  },
+  data() {
+    return {
+      dummy: null,
+      dummyNum: null,
+      campaignFund: false,
+      moreThan4: false,
+      claimDependent: null, //"spouse",
+      blindness: {
+        you: {
+          bornBefore: false
+        },
+        spouse: {
+          bornBefore: false
+        }
+      },
+      dependentCredit: {
+        d1: {
+          child: false,
+          other: false
+        },
+        d2: {
+          child: false,
+          other: false
+        },
+        d3: {
+          child: false,
+          other: false
+        },
+        d4: {
+          child: false,
+          other: false
+        }
+      }
+    };
+  }
 };
 </script>
 
 <style scoped>
 .formField {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0);
-    line-height: 3px;
-    color: red;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  line-height: 3px;
+  color: red;
 }
 
 .check {
-    position: absolute;
-    width: 15px;
+  position: absolute;
+  width: 15px;
 }
 </style>
