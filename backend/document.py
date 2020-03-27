@@ -235,7 +235,6 @@ class Document:
                 if status is not None:
                     return status
         if self.number_of_dependents_completed < self.demographic_user_info['num_dependents']:
-            print("Creating a dependent!!")
             self.dependent_being_filled = Dependent()
             self.dependent_being_filled.num = self.number_of_dependents_completed + 1
             self.dependents.append(self.dependent_being_filled)
@@ -321,6 +320,8 @@ class Document:
             for slot, value in self.demographic_spouse_info.items():
                 if value is None and slot in parameters and parameters[slot] != '':
                     self.demographic_spouse_info[slot] = parameters[slot]
+                    if slot == "spouse-blind":
+                        self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         if self.sections[self.current_section_index] == 'demographics':
@@ -335,7 +336,6 @@ class Document:
             if current_intent == "income_and_finances_fill.monetary_value":
                 extracted_slot_value = parameters['value']
             elif current_intent == "income_and_finances_fill.monetary_value_list":
-                print("inside monetary value list")
                 total = 0
                 for value in parameters['value']:
                     total += value
@@ -362,7 +362,6 @@ class Document:
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
                 elif extracted_slot_name == 'owns-business':
-                    print("Hello")
                     self.income_user_info['business-expenses'] = 0
                     self.income_user_info['business-income'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
@@ -386,7 +385,6 @@ class Document:
 
             # compute all other fields
             if extracted_slot_name == 'wages':
-                print("occupation: " + str(self.demographic_user_info['occupation']))
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
                     'occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
@@ -399,8 +397,6 @@ class Document:
             # self.income_user_info["12a"] = self.compute_tax_amount_12a()
             if extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                # print("extracted slot name is", extracted_slot_name)
-                # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
             elif extracted_slot_name == "ss-benefits":
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 final_value = self.compute_ss_benefits(extracted_slot_value)
@@ -673,13 +669,8 @@ class Document:
 
     def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
-        print("Taxable Income: " + str(taxable_income))
 
         if taxable_income < 0:
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
@@ -744,7 +735,6 @@ class Document:
             if self.number_of_dependents_completed == 3:
                 if self.income_user_info['adjusted-gross-income'] <= 56844:
                     earned_income_credit = 6660
-        print("earned income credit: " + str(earned_income_credit))
         return earned_income_credit
 
     def compute_tuition_deduction(self, amount):

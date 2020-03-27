@@ -391,11 +391,9 @@ def error_checking(parameters, intent, last_unfilled):
     if 'address' in intent:
         value = str(parameters['zip-code'])
         if len(value) != 5:
-            print("len")
             return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
         for digit in value:
             if digit not in digits:
-                print("digits")
                 return 'street_address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
 
     elif 'social_security' in intent:
@@ -544,8 +542,7 @@ def demographics_fill(content):
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    print("output_context")
-    print(output_context)
+    print("output_context:", output_context)
     data['output_contexts'] = output_context
     global last_output_context
     last_output_context = output_context
@@ -573,8 +570,6 @@ def income_finances_fill(content):
 
     # Session necessary to generate context identifier
     session = content['session']
-
-    # print(parameters)
 
     # first pass: update params on document object
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
@@ -727,7 +722,6 @@ def fallback(content):
         data['fulfillment_messages'] = [{"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
 
     else:
-        # TODO: fix this
         print('something went wrong, last_unfilled_field is none')
     return jsonify(data)
 
@@ -748,7 +742,7 @@ def misclassified_money_intent(content):
     global responses
     global document
     global last_output_context
-    print("misclassified")
+    print("misclassified money intent")
 
     with open('response.json') as f:
         data = json.load(f)
@@ -777,7 +771,6 @@ def home():
             last_output_context = ""
             last_unfilled_field = ""
             print("global last output context: " + str(last_output_context))
-            print("got here")
             return clear()
         elif "monetary" in str(last_output_context) and "explain_term" not in intent:
             if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
