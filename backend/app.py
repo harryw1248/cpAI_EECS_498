@@ -634,7 +634,18 @@ def explain_instructions(content):
 
 def exploit_deductions(content):
     print("exploiting deductions")
-    return
+    parameters = content['queryResult']['parameters']
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
+    return jsonify(data)
 
 
 def income_and_finances(content):
@@ -780,12 +791,14 @@ def home():
                 return misclassified_money_intent(content)
             else:
                 return income_finances_fill(content)
-        if intent == 'autofill':
+        elif intent == 'autofill':
             return autofill(content)
         elif intent == 'autofill2':
             return autofill2(content)
         elif intent == 'explain_term':
             return explain_term(content)
+        elif intent == 'exploit_deduction':
+            return exploit_deductions(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
         elif intent == 'explain_term - repeat':

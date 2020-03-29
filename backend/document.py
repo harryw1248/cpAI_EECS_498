@@ -170,17 +170,39 @@ class Document:
         ]
 
         self.deduction_user_info = {
-            'deduction-begin': None,
-            '401K': None,
-            'tuition': None,
-            'student-loan-interest': None
+            'charitable-contributions': 0,
+            'state-local-taxes': 0,
+            'mortgage': 0,
+            '401K': 0,
+            'roth-IRA': 0,
+            'medical-dental-expenses': 0,
+            'jury-duty': 0
+            #'student-loans': 0,
+            #'tuition': 0,
         }
 
         self.deduction_slots_to_fill = [
-            'deduction-begin',
+            'charitable-contributions',
+            'state-local-taxes',
+            'mortgage',
             '401K',
-            'tuition',
-            'student-loan-interest'
+            'roth-IRA',
+            'medical-dental-expenses',
+            'jury-duty'
+            # 'student-loans',
+            # 'tuition',
+        ]
+
+        self.available_deductions = [
+            'charitable-contributions',
+            'state-local-taxes',
+            'mortgage',
+            '401K',
+            'roth-IRA',
+            'medical-dental-expenses',
+            'jury-duty'
+            # 'student-loans',
+            # 'tuition',
         ]
 
         self.dependent_being_filled = None
@@ -194,6 +216,7 @@ class Document:
         self.monetary_list_fields = ["wages", "tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
+        self.user_still_providing_deduction_info = True
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -212,7 +235,6 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
         else:
             return None
-        return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
         # Get the next unfilled slot for the current dependent
@@ -249,8 +271,10 @@ class Document:
 
 
     def find_next_unfilled_slot_deductions(self):
+        if self.user_still_providing_deduction_info:
+            return 'deduction-begin'
         for slot in self.deduction_slots_to_fill:
-            if self.deduction_user_info[slot] is None:
+            if self.deduction_user_info[slot] == 0:
                 return slot
         return None
 
@@ -439,6 +463,15 @@ class Document:
                 print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+        elif self.sections[self.current_section_index] == 'deductions':
+            deductions_found = parameters['deduction_types']
+            dollar_values = parameters['dollar_values']
+            for possible_deduction_index in range(len(deductions_found)):
+                possible_deduction = deductions_found[possible_deduction_index]
+                if possible_deduction in self.available_deductions:
+                    self.deduction_user_info[possible_deduction] += dollar_values[possible_deduction_index]
+
+
         
 
     def compute_dependents_worksheet_13a(self):

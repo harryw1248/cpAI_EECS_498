@@ -209,9 +209,22 @@ class Response:
         ]
 
         self.deductions = {
-            'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. First, do you have any deductions in mind that you might be eligible for?",
-            '401K': 'todo',
-            'tuition': 'todo'
+            'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. "
+                               "First, do you have any deductions in mind that you might be eligible for?",
+            'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
+                                        'was the value of the donation? If not, say 0. Keep in mind that donating '
+                                        'clothing, vehicles, or furniture in good condition can also count!',
+            'no-deduction': 'Sorry, either that does not qualify for a deduction or we '
+                            'do not cover that deduction at this time. ',
+            'state-local-taxes': 'What amount have you paid in state and local taxes?',
+            'mortgage': 'What amount have you paid in home or condo mortgages?',
+            '401K': 'How much have you made in contributions to a 401K?',
+            'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
+            'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
+            'jury-duty': 'Have you served jury duty this year?',
+            'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
+            #'tuition': '',
+            #'student-loans': ''
         }
 
 
