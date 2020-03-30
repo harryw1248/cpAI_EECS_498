@@ -102,7 +102,9 @@ class Response:
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
             '401K': 'prompt_401K',
-            'tuition': 'prompt_tuition'
+            'tuition': 'prompt_tuition',
+            'deduction-success': 'prompt_deduction_begin',
+            'deduction-failure': 'prompt_deduction_begin',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -214,8 +216,11 @@ class Response:
             'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
-            'no-deduction': 'Sorry, either that does not qualify for a deduction or we '
-                            'do not cover that deduction at this time. ',
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim?'
+                                    'If you want help from us, just say so!',
+            'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
+                            'this time. What other deductions you want to claim?'
+                                    'If you want help from us, just say so!',
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
             '401K': 'How much have you made in contributions to a 401K?',
@@ -223,8 +228,6 @@ class Response:
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
             'jury-duty': 'Have you served jury duty this year?',
             'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
-            #'tuition': '',
-            #'student-loans': ''
         }
 
 
@@ -262,7 +265,6 @@ class Response:
             return self.income_finances[next_unfilled_slot]
         elif next_unfilled_slot in self.deductions:
             return self.deductions[next_unfilled_slot]
-        #print("couldn't find the response for slot:", next_unfilled_slot)
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
@@ -293,7 +295,6 @@ class Response:
                 context_identifier = session + "/contexts/" + 'prompt_dual_status_alien'
             else:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_widower'
-
         else:
             print("context: " + str(self.slot_to_output_contexts[slot]))
             context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]

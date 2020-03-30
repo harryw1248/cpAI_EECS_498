@@ -635,19 +635,50 @@ def explain_instructions(content):
     return
 
 
-def exploit_deductions(content):
+def exploit_deduction(content):
     print("exploiting deductions")
     parameters = content['queryResult']['parameters']
+    current_intent = content['queryResult']['intent']['displayName']
+
     global responses
     global user
     global document
     global last_intent
     global last_unfilled_field
 
+    deduction_result = None
+    if current_intent == 'exploit_deduction_help':
+        for key, value in document.deduction_user_info:
+            if value == 0:
+                deduction_result = key
+                break
+    else:
+        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+
+    session = content['session']
+
     with open('response.json') as f:
         data = json.load(f)
 
-    data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
+    if deduction_result is None:
+        if current_intent == 'exploit_deduction_help':
+            response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
+        else:
+            response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+    else:
+        response = responses.get_next_response(deduction_result, document)
+        #if error_message is not None:
+         #   response = error_message + response
+
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    if deduction_result is not None:
+        output_context = responses.generate_output_context(deduction_result, 1, session, document)
+    else:
+        output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
+
+    last_unfilled_field = deduction_result
+    global last_output_context
+    last_output_context = output_context
     return jsonify(data)
 
 
@@ -802,16 +833,14 @@ def home():
             return autofill2(content)
         elif intent == 'explain_term':
             return explain_term(content)
-        elif intent == 'exploit_deduction':
-            return exploit_deductions(content)
+        elif intent.startswith('exploit_deduction'):
+            return exploit_deduction(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
         elif intent == 'explain_term - repeat':
             return explain_term_repeat(content)
         elif intent == 'explain_previous_term':
             return explain_term(content, unstandardize_token(last_unfilled_field))
-        elif intent == 'deductions':
-            return deductions(content)
         elif intent == 'income_and_finances':
             return income_finances_fill(content)
         elif intent == 'refund_and_owe':

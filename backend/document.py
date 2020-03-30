@@ -177,8 +177,6 @@ class Document:
             'roth-IRA': 0,
             'medical-dental-expenses': 0,
             'jury-duty': 0
-            # 'student-loans': 0,
-            # 'tuition': 0,
         }
 
         self.deduction_slots_to_fill = [
@@ -189,8 +187,6 @@ class Document:
             'roth-IRA',
             'medical-dental-expenses',
             'jury-duty'
-            # 'student-loans',
-            # 'tuition',
         ]
 
         self.available_deductions = [
@@ -201,8 +197,6 @@ class Document:
             'roth-IRA',
             'medical-dental-expenses',
             'jury-duty'
-            # 'student-loans',
-            # 'tuition',
         ]
 
         self.dependent_being_filled = None
@@ -216,7 +210,7 @@ class Document:
         self.monetary_list_fields = ["wages", "tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
-        self.user_still_providing_deduction_info = True
+        self.deduction_stage = 'deduction-begin'
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -229,10 +223,13 @@ class Document:
     def find_next_unfilled_slot(self):
         if self.sections[self.current_section_index] == 'demographics':
             self.last_unfilled_field = self.find_next_unfilled_slot_demographics()
+            return self.last_unfilled_field
         elif self.sections[self.current_section_index] == 'income':
             self.last_unfilled_field = self.find_next_unfilled_slot_income()
+            return self.last_unfilled_field
         elif self.sections[self.current_section_index] == 'deductions':
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
+            return self.last_unfilled_field
         else:
             return None
 
@@ -269,9 +266,15 @@ class Document:
                 return slot
         return None
 
-    def find_next_unfilled_slot_deductions(self):
-        if self.user_still_providing_deduction_info:
+    def find_next_unfilled_slot_deductions(self, deduction_result=None):
+        print(self.deduction_stage)
+        if self.deduction_stage == 'deduction-begin':
+            self.deduction_stage = 'user-enters-deductions'
             return 'deduction-begin'
+        elif self.deduction_stage == 'user-enters-deductions' and deduction_result == 'deduction-success':
+
+            return 'deduction-success'
+
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] == 0:
                 return slot
@@ -466,10 +469,20 @@ class Document:
         elif self.sections[self.current_section_index] == 'deductions':
             deductions_found = parameters['deduction_types']
             dollar_values = parameters['dollar_values']
+            success = False
             for possible_deduction_index in range(len(deductions_found)):
                 possible_deduction = deductions_found[possible_deduction_index]
                 if possible_deduction in self.available_deductions:
                     self.deduction_user_info[possible_deduction] += dollar_values[possible_deduction_index]
+                    success = True
+            if success:
+                return 'deduction-success'
+            else:
+                return 'deduction-failure'
+
+
+        return None
+
 
     def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
