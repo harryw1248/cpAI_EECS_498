@@ -199,6 +199,28 @@ class Document:
             'jury-duty'
         ]
 
+        self.refund_user_info = {
+            'overpaid': None,
+            'amount-refunded': None,
+            'direct-deposit': None,
+            'routing-number': None,
+            'account-type': None,
+            'account-number': None,
+            'overpaid-applied-tax': None,
+            'amount-owed': None,
+            'estimated-tax-penalty': None
+        }
+
+        self.refund_slots_to_fill = [
+            'amount-refunded',
+            'overpaid-applied-tax'
+            'direct-deposit',
+            'account-type',
+            'routing-number',
+            'account-number',
+            'estimated-tax-penalty'
+        ]
+
         self.dependent_being_filled = None
         self.number_of_dependents_completed = 0
         self.dependents = []
@@ -229,6 +251,9 @@ class Document:
             return self.last_unfilled_field
         elif self.sections[self.current_section_index] == 'deductions':
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
+            return self.last_unfilled_field
+        elif self.sections[self.current_section_index] == 'refund':
+            self.last_unfilled_field = self.find_next_unfilled_slot_refund()
             return self.last_unfilled_field
         else:
             return None
@@ -277,6 +302,12 @@ class Document:
 
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] == 0:
+                return slot
+        return None
+
+    def find_next_unfilled_slot_refund():
+        for slot in self.refund_slots_to_fill:
+            if self.refund_user_info[slot] is None:
                 return slot
         return None
 
@@ -479,6 +510,8 @@ class Document:
                 return 'deduction-success'
             else:
                 return 'deduction-failure'
+        elif self.sections[self.current_section_index] == 'refund':
+            pass
 
 
         return None
