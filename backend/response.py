@@ -214,6 +214,16 @@ class Response:
             'tuition': 'todo'
         }
 
+        self.refund = {
+            'amount-refunded': 'How much of that would you like refunded to you?',
+            'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 estimated tax?',
+            'direct-deposit': 'Would you like this amount transferred to you through direct deposit?',
+            'account-type': 'What type of account would you like to deposit to?',
+            'routing-number': 'What is your routing number?',
+            'account-number': 'What is your account number?',
+            'estimated-tax-penalty': 'TODO'
+        }
+
 
 
     #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION

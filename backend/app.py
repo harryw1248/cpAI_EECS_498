@@ -642,11 +642,19 @@ def exploit_deductions(content):
     return
 
 
-def income_and_finances(content):
-    return
-
-
 def refund_and_owe(content):
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    if current_intent == 'refund_and_owe.monetary_value':
+        pass
+
     return
 
 
@@ -815,6 +823,8 @@ def home():
             return income_finances_fill(content)
         elif intent.startswith('exploit_deduction'):
             return exploit_deductions(content)
+        elif intent.startswith('refund_and_owe'):
+            return refund_and_owe(content)
         elif intent == 'confirm - yes':
             return confirm_yes(content)
         elif intent == 'confirm - no':

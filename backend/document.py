@@ -183,6 +183,28 @@ class Document:
             'student-loan-interest'
         ]
 
+        self.refund_user_info = {
+            'overpaid': None,
+            'amount-refunded': None,
+            'direct-deposit': None,
+            'routing-number': None,
+            'account-type': None,
+            'account-number': None,
+            'overpaid-applied-tax': None,
+            'amount-owed': None,
+            'estimated-tax-penalty': None
+        }
+
+        self.refund_slots_to_fill = [
+            'amount-refunded',
+            'overpaid-applied-tax'
+            'direct-deposit',
+            'account-type',
+            'routing-number',
+            'account-number',
+            'estimated-tax-penalty'
+        ]
+
         self.dependent_being_filled = None
         self.number_of_dependents_completed = 0
         self.dependents = []
@@ -210,6 +232,8 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_income()
         elif self.sections[self.current_section_index] == 'deductions':
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
+        elif self.sections[self.current_section_index] == 'refund':
+            self.last_unfilled_field = self.find_next_unfilled_slot_refund()
         else:
             return None
         return self.last_unfilled_field
@@ -252,6 +276,12 @@ class Document:
     def find_next_unfilled_slot_deductions(self):
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] is None:
+                return slot
+        return None
+
+    def find_next_unfilled_slot_refund():
+        for slot in self.refund_slots_to_fill:
+            if self.refund_user_info[slot] is None:
                 return slot
         return None
 
@@ -445,7 +475,9 @@ class Document:
                 print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-        
+        elif self.sections[self.current_section_index] == 'refund':
+            pass
+
 
     def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
