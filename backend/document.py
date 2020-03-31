@@ -429,7 +429,7 @@ class Document:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
                 if extracted_slot_name == 'student-loan-interest-deduction':
-                    self.deduction_user_info['student-loan-interest'] = extracted_slot_value
+                    self.deduction_user_info['student-loan-interest'] = self.compute_student_loan_deduction(extracted_slot_value)
                 if extracted_slot_name == 'tuition-fees':
                     self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
                     print('Student related deductions: ' + str(
@@ -821,6 +821,12 @@ class Document:
     def compute_tuition_deduction(self, amount):
         if amount >= 4000:
             return 4000
+        else:
+            return amount
+
+    def compute_student_loan_deduction(self, amount):
+        if amount >= 2500:
+            return 2500
         else:
             return amount
 
