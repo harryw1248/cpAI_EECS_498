@@ -51,7 +51,6 @@ def explain_term_yes(content):
     session = content['session']
     global last_output_context
 
-
     with open('response.json') as f:
         data = json.load(f)
 
@@ -85,7 +84,7 @@ def explain_term_repeat(content):
     firebase_data = db.child("TERMINOLOGY").get().val()
 
     next_unfilled_slot = document.find_next_unfilled_slot()
-    
+
     if last_unfilled_field == "":
         response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
         output_context = responses.generate_output_context("given-name", 1, session, document)
@@ -117,7 +116,7 @@ def explain_term_repeat(content):
                     "Whenever you are ready, let's continue. " + response
                 ]
             }
-        },]
+        }, ]
 
     data['output_contexts'] = output_context
     global last_output_context
@@ -377,26 +376,29 @@ def clear():
 
 
 def error_checking(parameters, intent, last_unfilled):
-    #possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
+    # possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
     digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     requires_money_values = ['wages', 'tax-exempt-interest', 'taxable-interest', 'pensions-and-annuities',
-            'pensions-and-annuities-taxable', 'qualified-dividends', 'ordinary-dividends', 'IRA-distributions',
-            'IRA-distributions-taxable', 'capital-gains','taxable-refunds', 'business-income','unemployment-compensation',
-            'other-income', 'total-other-income', 'total-income', 'educator-expenses', 'business-expenses',
-            'health-savings-deductions', 'moving-expenses-armed-forces', 'self-employed-health-insurance',
-            'IRA-deductions', 'tuition-fees', 'adjustments-to-income', 'adjusted-gross-income', 'federal-income-tax-withheld',
-            'earned-income-credit',  'ss-benefits', 'ss-benefits-taxable', 'business-gains', '11a', 'taxable-income']
-
+                             'pensions-and-annuities-taxable', 'qualified-dividends', 'ordinary-dividends',
+                             'IRA-distributions',
+                             'IRA-distributions-taxable', 'capital-gains', 'taxable-refunds', 'business-income',
+                             'unemployment-compensation',
+                             'other-income', 'total-other-income', 'total-income', 'educator-expenses',
+                             'business-expenses',
+                             'health-savings-deductions', 'moving-expenses-armed-forces',
+                             'self-employed-health-insurance',
+                             'IRA-deductions', 'tuition-fees', 'adjustments-to-income', 'adjusted-gross-income',
+                             'federal-income-tax-withheld',
+                             'earned-income-credit', 'ss-benefits', 'ss-benefits-taxable', 'business-gains', '11a',
+                             'taxable-income']
 
     if 'address' in intent:
         value = str(parameters['zip-code'])
         if len(value) != 5:
-            print("len")
             return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
         for digit in value:
             if digit not in digits:
-                print("digits")
-                return 'street_address','You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
+                return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
 
     elif 'social_security' in intent:
         value = str(parameters['social_security'])
@@ -463,7 +465,7 @@ def error_checking(parameters, intent, last_unfilled):
             return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
     elif intent == 'income_and_finances_fill.monetary_value':
-        dollar_value =  str(parameters['value'])
+        dollar_value = str(parameters['value'])
         if '-' in dollar_value:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
 
@@ -512,7 +514,6 @@ def demographics_fill(content):
     elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
         response = responses.get_next_response(next_unfilled_slot, document)
 
-
         if error_message is not None:
             response = error_message + response
     else:
@@ -544,8 +545,7 @@ def demographics_fill(content):
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    print("output_context")
-    print(output_context)
+    print("output_context:", output_context)
     data['output_contexts'] = output_context
     global last_output_context
     last_output_context = output_context
@@ -573,8 +573,6 @@ def income_finances_fill(content):
 
     # Session necessary to generate context identifier
     session = content['session']
-
-    # print(parameters)
 
     # first pass: update params on document object
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
@@ -637,9 +635,51 @@ def explain_instructions(content):
     return
 
 
-def exploit_deductions(content):
+def exploit_deduction(content):
     print("exploiting deductions")
-    return
+    parameters = content['queryResult']['parameters']
+    current_intent = content['queryResult']['intent']['displayName']
+
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
+
+    deduction_result = None
+    if current_intent == 'exploit_deduction_help':
+        for key, value in document.deduction_user_info:
+            if value == 0:
+                deduction_result = key
+                break
+    else:
+        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+
+    session = content['session']
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    if deduction_result is None:
+        if current_intent == 'exploit_deduction_help':
+            response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
+        else:
+            response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+    else:
+        response = responses.get_next_response(deduction_result, document)
+        #if error_message is not None:
+         #   response = error_message + response
+
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    if deduction_result is not None:
+        output_context = responses.generate_output_context(deduction_result, 1, session, document)
+    else:
+        output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
+
+    last_unfilled_field = deduction_result
+    global last_output_context
+    last_output_context = output_context
+    return jsonify(data)
 
 
 def refund_and_owe(content):
@@ -713,7 +753,6 @@ def autofill2(content):
     return jsonify(data)
 
 
-
 def fallback(content):
     global last_unfilled_field
     global responses
@@ -732,10 +771,10 @@ def fallback(content):
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
         last_output_context = data['output_contexts']
         redo_response = responses.get_next_response(last_unfilled_field, document)
-        data['fulfillment_messages'] = [{"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
+        data['fulfillment_messages'] = [
+            {"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
 
     else:
-        # TODO: fix this
         print('something went wrong, last_unfilled_field is none')
     return jsonify(data)
 
@@ -751,12 +790,13 @@ def push_demographic_info_to_database(content):
     users_ref.set(user_json)
     return
 
+
 def misclassified_money_intent(content):
     global last_unfilled_field
     global responses
     global document
     global last_output_context
-    print("misclassified")
+    print("misclassified money intent")
 
     with open('response.json') as f:
         data = json.load(f)
@@ -785,30 +825,30 @@ def home():
             last_output_context = ""
             last_unfilled_field = ""
             print("global last output context: " + str(last_output_context))
-            print("got here")
             return clear()
         elif "monetary" in str(last_output_context) and "explain_term" not in intent:
             if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
                 return misclassified_money_intent(content)
-            elif (intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
+            elif (
+                    intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
             else:
                 return income_finances_fill(content)
-        if intent == 'autofill':
+        elif intent == 'autofill':
             return autofill(content)
         elif intent == 'autofill2':
             return autofill2(content)
         elif intent == 'explain_term':
             return explain_term(content)
+        elif intent.startswith('exploit_deduction'):
+            return exploit_deduction(content)
         elif intent == 'explain_term - yes' or intent == 'explain_previous_term - yes':
             return explain_term_yes(content)
         elif intent == 'explain_term - repeat':
             return explain_term_repeat(content)
         elif intent == 'explain_previous_term':
             return explain_term(content, unstandardize_token(last_unfilled_field))
-        elif intent == 'deductions':
-            return deductions(content)
         elif intent == 'income_and_finances':
             return income_finances_fill(content)
         elif intent == 'refund_and_owe':

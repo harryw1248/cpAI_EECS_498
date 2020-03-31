@@ -21,7 +21,6 @@ class Dependent:
 
     def determine_tax_credit(self):
         age_num = self.slots['dependent-age']
-        print(self.slots['dependent-citizenship'])
         if self.slots['dependent-citizenship'] and age_num < 17:
             self.dependent_child_tax_credit = True
         elif self.slots['dependent-citizenship'] and age_num >= 17:

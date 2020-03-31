@@ -102,7 +102,9 @@ class Response:
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
             '401K': 'prompt_401K',
-            'tuition': 'prompt_tuition'
+            'tuition': 'prompt_tuition',
+            'deduction-success': 'prompt_deduction_begin',
+            'deduction-failure': 'prompt_deduction_begin',
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -209,9 +211,23 @@ class Response:
         ]
 
         self.deductions = {
-            'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. First, do you have any deductions in mind that you might be eligible for?",
-            '401K': 'todo',
-            'tuition': 'todo'
+            'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. "
+                               "First, do you have any deductions in mind that you might be eligible for?",
+            'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
+                                        'was the value of the donation? If not, say 0. Keep in mind that donating '
+                                        'clothing, vehicles, or furniture in good condition can also count!',
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim?'
+                                    'If you want help from us, just say so!',
+            'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
+                            'this time. What other deductions you want to claim?'
+                                    'If you want help from us, just say so!',
+            'state-local-taxes': 'What amount have you paid in state and local taxes?',
+            'mortgage': 'What amount have you paid in home or condo mortgages?',
+            '401K': 'How much have you made in contributions to a 401K?',
+            'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
+            'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
+            'jury-duty': 'Have you served jury duty this year?',
+            'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
         }
 
         self.refund = {
@@ -230,7 +246,6 @@ class Response:
     # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
     # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
-        #print("get_next_response called")
         print("next_unfilled_slot:", next_unfilled_slot)
         if current_document.dependent_being_filled is not None:
             return self.get_next_dependent_response(next_unfilled_slot, current_document.demographic_user_info['num_dependents'], current_document.dependents)
@@ -260,7 +275,7 @@ class Response:
             return self.income_finances[next_unfilled_slot]
         elif next_unfilled_slot in self.deductions:
             return self.deductions[next_unfilled_slot]
-        #print("couldn't find the response for slot:", next_unfilled_slot)
+        print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
     def get_next_dependent_response(self, next_unfilled_slot, dependent_num, dependents):
@@ -290,7 +305,6 @@ class Response:
                 context_identifier = session + "/contexts/" + 'prompt_dual_status_alien'
             else:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_widower'
-
         else:
             print("context: " + str(self.slot_to_output_contexts[slot]))
             context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]

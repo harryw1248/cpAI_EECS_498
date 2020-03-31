@@ -170,17 +170,33 @@ class Document:
         ]
 
         self.deduction_user_info = {
-            'deduction-begin': None,
-            '401K': None,
-            'tuition': None,
-            'student-loan-interest': None
+            'charitable-contributions': 0,
+            'state-local-taxes': 0,
+            'mortgage': 0,
+            '401K': 0,
+            'roth-IRA': 0,
+            'medical-dental-expenses': 0,
+            'jury-duty': 0
         }
 
         self.deduction_slots_to_fill = [
-            'deduction-begin',
+            'charitable-contributions',
+            'state-local-taxes',
+            'mortgage',
             '401K',
-            'tuition',
-            'student-loan-interest'
+            'roth-IRA',
+            'medical-dental-expenses',
+            'jury-duty'
+        ]
+
+        self.available_deductions = [
+            'charitable-contributions',
+            'state-local-taxes',
+            'mortgage',
+            '401K',
+            'roth-IRA',
+            'medical-dental-expenses',
+            'jury-duty'
         ]
 
         self.refund_user_info = {
@@ -216,6 +232,7 @@ class Document:
         self.monetary_list_fields = ["wages", "tax-exempt-interest", "taxable-interest", "pensions-and-annuities",
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
+        self.deduction_stage = 'deduction-begin'
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -232,10 +249,8 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_income()
         elif self.sections[self.current_section_index] == 'deductions':
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
-        elif self.sections[self.current_section_index] == 'refund':
-            self.last_unfilled_field = self.find_next_unfilled_slot_refund()
-        else:
-            return None
+        elif self.sections[self.current_section_idnex] == 'refund':
+            self.last_unfilled_field = self.find_nexT_unfilled_slot_refund()
         return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
@@ -259,7 +274,6 @@ class Document:
                 if status is not None:
                     return status
         if self.number_of_dependents_completed < self.demographic_user_info['num_dependents']:
-            print("Creating a dependent!!")
             self.dependent_being_filled = Dependent()
             self.dependent_being_filled.num = self.number_of_dependents_completed + 1
             self.dependents.append(self.dependent_being_filled)
@@ -272,10 +286,17 @@ class Document:
                 return slot
         return None
 
+    def find_next_unfilled_slot_deductions(self, deduction_result=None):
+        print(self.deduction_stage)
+        if self.deduction_stage == 'deduction-begin':
+            self.deduction_stage = 'user-enters-deductions'
+            return 'deduction-begin'
+        elif self.deduction_stage == 'user-enters-deductions' and deduction_result == 'deduction-success':
 
-    def find_next_unfilled_slot_deductions(self):
+            return 'deduction-success'
+
         for slot in self.deduction_slots_to_fill:
-            if self.deduction_user_info[slot] is None:
+            if self.deduction_user_info[slot] == 0:
                 return slot
         return None
 
@@ -297,7 +318,7 @@ class Document:
                 self.demographic_user_info[slot] = parameters[slot]
 
                 if self.demographic_user_info["num_dependents"] is not None and \
-                    self.demographic_user_info["num_dependents"] > 0:
+                        self.demographic_user_info["num_dependents"] > 0:
                     self.demographic_user_info["claim-you-dependent"] = False
 
         if 'name' in current_intent and "occupation" in parameters:
@@ -335,8 +356,8 @@ class Document:
             else:
                 self.is_married = False
                 self.demographic_user_info['lived-apart'] = True
-                self.demographic_user_info['claim-spouse-dependent'] =  False
-                self.demographic_user_info['spouse-itemize-separate'] =  False
+                self.demographic_user_info['claim-spouse-dependent'] = False
+                self.demographic_user_info['spouse-itemize-separate'] = False
 
         elif "filing_status_married" in current_intent:
             self.demographic_user_info['filing_status'] = parameters['filing-status-married']
@@ -367,7 +388,6 @@ class Document:
             if current_intent == "income_and_finances_fill.monetary_value":
                 extracted_slot_value = parameters['value']
             elif current_intent == "income_and_finances_fill.monetary_value_list":
-                print("inside monetary value list")
                 total = 0
                 for value in parameters['value']:
                     total += value
@@ -394,7 +414,6 @@ class Document:
                     self.income_user_info['pensions-and-annuities'] = 0
                     self.income_user_info['pensions-and-annuities-taxable'] = 0
                 elif extracted_slot_name == 'owns-business':
-                    print("Hello")
                     self.income_user_info['business-expenses'] = 0
                     self.income_user_info['business-income'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
@@ -413,12 +432,12 @@ class Document:
                     self.deduction_user_info['student-loan-interest'] = extracted_slot_value
                 if extracted_slot_name == 'tuition-fees':
                     self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
-                    print('Student related deductions: ' + str(self.deduction_user_info['tuition']+self.deduction_user_info['student-loan-interest']))
+                    print('Student related deductions: ' + str(
+                        self.deduction_user_info['tuition'] + self.deduction_user_info['student-loan-interest']))
                 # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
 
             # compute all other fields
             if extracted_slot_name == 'wages':
-                print("occupation: " + str(self.demographic_user_info['occupation']))
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
                     'occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
@@ -431,8 +450,6 @@ class Document:
             # self.income_user_info["12a"] = self.compute_tax_amount_12a()
             if extracted_slot_name in self.monetary_list_fields:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                # print("extracted slot name is", extracted_slot_name)
-                # print("updated tax-exempt-interest to be", self.income_user_info[extracted_slot_name])
             elif extracted_slot_name == "ss-benefits":
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 final_value = self.compute_ss_benefits(extracted_slot_value)
@@ -475,8 +492,24 @@ class Document:
                 print(self.income_user_info)
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+        elif self.sections[self.current_section_index] == 'deductions':
+            deductions_found = parameters['deduction_types']
+            dollar_values = parameters['dollar_values']
+            success = False
+            for possible_deduction_index in range(len(deductions_found)):
+                possible_deduction = deductions_found[possible_deduction_index]
+                if possible_deduction in self.available_deductions:
+                    self.deduction_user_info[possible_deduction] += dollar_values[possible_deduction_index]
+                    success = True
+            if success:
+                return 'deduction-success'
+            else:
+                return 'deduction-failure'
         elif self.sections[self.current_section_index] == 'refund':
             pass
+
+
+        return None
 
 
     def compute_dependents_worksheet_13a(self):
@@ -646,23 +679,30 @@ class Document:
 
     def compute_standard_deductions(self):
         if self.demographic_user_info['claim-you-dependent'] == False and \
-            self.demographic_user_info['claim-spouse-dependent'] == False and \
-            self.demographic_user_info['claim-you-dependent'] == False:
+                self.demographic_user_info['claim-spouse-dependent'] == False and \
+                self.demographic_user_info['claim-you-dependent'] == False:
 
-            if self.demographic_user_info["filing_status"] is "married filing jointly" or self.demographic_user_info["filing_status"] is "qualifying widow":
+            if self.demographic_user_info["filing_status"] is "married filing jointly" or self.demographic_user_info[
+                "filing_status"] is "qualifying widow":
                 return 24400
-            elif self.demographic_user_info["filing_status"] is "married filing separately" or self.demographic_user_info["filing_status"] is "single":
+            elif self.demographic_user_info["filing_status"] is "married filing separately" or \
+                    self.demographic_user_info["filing_status"] is "single":
                 return 12200
             else:
                 return 18350
         else:
-            if self.demographic_user_info['spouse-itemize-separate'] == True or self.demographic_user_info["dual_status_alien"] == True:
+            if self.demographic_user_info['spouse-itemize-separate'] == True or self.demographic_user_info[
+                "dual_status_alien"] == True:
                 return 0
             else:
-                total_check_boxes = (self.demographic_user_info["age"] > 65 + self.demographic_user_info["blind"] == True + 
-                self.demographic_spouse_info['spouse-age'] is not None and self.demographic_spouse_info['spouse-age'] > 65 +
-                self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info['spouse-blind'] == True)
-                if self.demographic_user_info["claim-spouse-dependent"] == True or self.demographic_user_info['claim-you-dependent'] == True:
+                total_check_boxes = (
+                            self.demographic_user_info["age"] > 65 + self.demographic_user_info["blind"] == True +
+                            self.demographic_spouse_info['spouse-age'] is not None and self.demographic_spouse_info[
+                                'spouse-age'] > 65 +
+                            self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
+                                'spouse-blind'] == True)
+                if self.demographic_user_info["claim-spouse-dependent"] == True or self.demographic_user_info[
+                    'claim-you-dependent'] == True:
                     earned_income = self.income_user_info["wages"]
                     line_2 = 0
                     if earned_income > 750:
@@ -670,9 +710,11 @@ class Document:
                     else:
                         line_2 = 1000
 
-                    if self.demographic_user_info["filing_status"] is "married filing separately" or self.demographic_user_info["filing_status"] is "single":
+                    if self.demographic_user_info["filing_status"] is "married filing separately" or \
+                            self.demographic_user_info["filing_status"] is "single":
                         line_3 = 12200
-                    elif self.demographic_user_info["filing_status"] is "married filing jointly" or self.demographic_user_info["filing_status"] is "qualifying widow":
+                    elif self.demographic_user_info["filing_status"] is "married filing jointly" or \
+                            self.demographic_user_info["filing_status"] is "qualifying widow":
                         line_3 = 24400
                     else:
                         line_3 = 18350
@@ -683,23 +725,24 @@ class Document:
                         return line_4a
                     else:
                         line_4b = 0
-                        if self.demographic_user_info["filing_status"] is "single" or self.demographic_user_info["filing_status"] is 'head of household':
+                        if self.demographic_user_info["filing_status"] is "single" or self.demographic_user_info[
+                            "filing_status"] is 'head of household':
                             line_4b = total_check_boxes * 1650
                         else:
                             line_4b = total_check_boxes * 1300
-                        return  line_4b + line_4a
+                        return line_4b + line_4a
                 elif self.demographic_user_info["age"] > 65 or self.demographic_user_info["blind"] == True:
                     std_deductions = {}
                     if self.demographic_user_info["filing_status"] == "single":
-                        std_deductions = {1: 13850, 2: 15500, 3: 0, 4:0}
+                        std_deductions = {1: 13850, 2: 15500, 3: 0, 4: 0}
                     elif self.demographic_user_info["filing_status"] == "married filing jointly":
-                        std_deductions = {1: 25700, 2: 27000, 3: 28300, 4:29600}
+                        std_deductions = {1: 25700, 2: 27000, 3: 28300, 4: 29600}
                     elif self.demographic_user_info["filing_status"] == "qualifying widow":
-                        std_deductions = {1: 25700, 2: 27000, 3: 0, 4:0}
+                        std_deductions = {1: 25700, 2: 27000, 3: 0, 4: 0}
                     elif self.demographic_user_info["filing_status"] == "married filing separately":
-                        std_deductions = {1: 13500, 2: 14800, 3: 16100, 4:17400}
+                        std_deductions = {1: 13500, 2: 14800, 3: 16100, 4: 17400}
                     else:
-                        std_deductions = {1: 20000, 2: 21650, 3: 0, 4:0}
+                        std_deductions = {1: 20000, 2: 21650, 3: 0, 4: 0}
 
                     return std_deductions[total_check_boxes]
                 else:
@@ -707,13 +750,8 @@ class Document:
 
     def compute_tax_amount_12a(self):
         taxable_income = self.income_user_info["taxable-income"]
-        print("Taxable Income: " + str(taxable_income))
 
         if taxable_income < 0:
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
-            print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
             print("WARNING: TAXABLE INCOME IS NEGATIVE!!!")
@@ -778,7 +816,6 @@ class Document:
             if self.number_of_dependents_completed == 3:
                 if self.income_user_info['adjusted-gross-income'] <= 56844:
                     earned_income_credit = 6660
-        print("earned income credit: " + str(earned_income_credit))
         return earned_income_credit
 
     def compute_tuition_deduction(self, amount):
@@ -822,7 +859,6 @@ class Document:
         self.income_user_info['unemployment-compensation'] = 0
 
         self.current_section_index = 1
-
 
     def update_dummy2(self):
         self.income_user_info['wages'] = 100000
