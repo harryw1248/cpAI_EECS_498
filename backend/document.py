@@ -174,30 +174,36 @@ class Document:
             'charitable-contribution': 0,
             'state-local-taxes': 0,
             'mortgage': 0,
-            '401K': 0,
+            'account_401': 0,
             'roth-IRA': 0,
             'medical-dental-expenses': 0,
-            'jury-duty': 0
+            'jury-duty': 0,
+            'student-loans': 0,
+            'tuition': 0
         }
 
         self.deduction_slots_to_fill = [
             'charitable-contribution',
             'state-local-taxes',
             'mortgage',
-            '401K',
+            'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'student-loans',
+            'tuition'
         ]
 
         self.available_deductions = [
             'charitable-contribution',
             'state-local-taxes',
             'mortgage',
-            '401K',
+            'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'student-loans',
+            'tuition'
         ]
 
         self.refund_user_info = {
@@ -502,16 +508,31 @@ class Document:
         elif self.sections[self.current_section_index] == 'deductions':
             deductions_and_values_found = parameters
             success = False
-            for possible_deduction_index in range(len(deductions_found)):
-                possible_deduction = deductions_found[possible_deduction_index]
-                if possible_deduction in self.available_deductions:
-                    self.deduction_user_info[possible_deduction] += dollar_values[possible_deduction_index]
+
+            possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
+                                   'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
+                                   'tuition_value']
+            value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                       'account_401_value':'401K', 'charitable-value': 'charitable-contribution',
+                'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage', 'roth-IRA-value': 'roth-IRA',
+                                       'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+
+            for possible_deduction_value in possible_deduction_values:
+                if possible_deduction_value in deductions_and_values_found:
+                    for dollar_value in deductions_and_values_found[possible_deduction_value]:
+                        deduction_name = value_to_deduction_name[possible_deduction_value]
+                        self.deduction_user_info[deduction_name] += dollar_value
+                        print("got here!")
                     success = True
+
             if success:
                 return 'deduction-success'
             else:
                 return 'deduction-failure'
+
         elif self.sections[self.current_section_index] == 'refund':
+            extracted_slot_name = last_unfilled_field
+            extracted_slot_value = parameters['value']
             if extracted_slot_name == 'amount-refunded':
                 self.income_user_info['9'] = self.compute_line_9()
             pass

@@ -649,11 +649,23 @@ def exploit_deduction(content):
     global last_unfilled_field
 
     deduction_result = None
-    if current_intent == 'exploit_deduction_help':
-        for key, value in document.deduction_user_info:
+    if current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
+        document.deduction_stage = 'user_done'
+        print("got here 1")
+
+        for key, value in document.deduction_user_info.items():
             if value == 0:
                 deduction_result = key
                 break
+
+    elif document.deduction_stage == 'user_done':
+        document.deduction_user_info[last_unfilled_field] += parameters['value']
+        print("got here 2")
+        for key, value in document.deduction_user_info.items():
+            if value == 0:
+                deduction_result = key
+                break
+
     else:
         deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
 
@@ -663,24 +675,30 @@ def exploit_deduction(content):
         data = json.load(f)
 
     if deduction_result is None:
-        if current_intent == 'exploit_deduction_help':
+        if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
             response = "We're all done maximizing your deductions! Now we just have the easy parts left."
     else:
+        print("got here 3")
+        print(deduction_result)
         response = responses.get_next_response(deduction_result, document)
+        print(response)
         #if error_message is not None:
          #   response = error_message + response
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
     if deduction_result is not None:
         output_context = responses.generate_output_context(deduction_result, 1, session, document)
+        print("got here 4")
+
     else:
         output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
 
     last_unfilled_field = deduction_result
     global last_output_context
     last_output_context = output_context
+    print("hot here 5")
     return jsonify(data)
 
 
@@ -690,6 +708,8 @@ def refund_and_owe(content):
     global document
     global last_intent
     global last_unfilled_field
+    current_intent = content['queryResult']['intent']['displayName']
+
 
     with open('response.json') as f:
         data = json.load(f)
@@ -835,6 +855,8 @@ def home():
                     intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
+            elif intent == 'income_and_finances_fill.monetary_value'  and document.deduction_stage == 'user_done':
+                exploit_deduction(content)
             else:
                 return income_finances_fill(content)
         elif intent == 'autofill':

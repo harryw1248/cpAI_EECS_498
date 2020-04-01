@@ -101,10 +101,17 @@ class Response:
             'schedule-2-line-10': 'prompt_monetary_value',
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
-            '401K': 'prompt_401K',
-            'tuition': 'prompt_tuition',
+            'account_401': 'prompt_monetary_value',
+            'tuition': 'prompt_monetary_value',
             'deduction-success': 'prompt_deduction_begin',
             'deduction-failure': 'prompt_deduction_begin',
+            'charitable-contribution': 'prompt_monetary_value',
+            'state-local-taxes': 'prompt_monetary_value',
+            'mortgage': 'prompt_monetary_value',
+            'roth-IRA': 'prompt_monetary_value',
+            'medical-dental-expenses': 'prompt_monetary_value',
+            'jury-duty': 'prompt_monetary_value',
+            'student-loans': 'prompt_monetary_value'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -216,14 +223,14 @@ class Response:
             'charitable-contribution': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
-            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim?'
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim? '
                                     'If you want help from us, just say so!',
             'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
                             'this time. What other deductions you want to claim?'
                                     'If you want help from us, just say so!',
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
-            '401K': 'How much have you made in contributions to a 401K?',
+            'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
             'jury-duty': 'Have you served jury duty this year?',
