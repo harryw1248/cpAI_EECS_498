@@ -213,7 +213,7 @@ class Response:
         self.deductions = {
             'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. "
                                "First, do you have any deductions in mind that you might be eligible for?",
-            'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
+            'charitable-contribution': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
             'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim?'

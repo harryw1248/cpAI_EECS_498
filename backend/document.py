@@ -170,7 +170,7 @@ class Document:
         ]
 
         self.deduction_user_info = {
-            'charitable-contributions': 0,
+            'charitable-contribution': 0,
             'state-local-taxes': 0,
             'mortgage': 0,
             '401K': 0,
@@ -180,7 +180,7 @@ class Document:
         }
 
         self.deduction_slots_to_fill = [
-            'charitable-contributions',
+            'charitable-contribution',
             'state-local-taxes',
             'mortgage',
             '401K',
@@ -190,7 +190,7 @@ class Document:
         ]
 
         self.available_deductions = [
-            'charitable-contributions',
+            'charitable-contribution',
             'state-local-taxes',
             'mortgage',
             '401K',
@@ -249,8 +249,8 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_income()
         elif self.sections[self.current_section_index] == 'deductions':
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
-        elif self.sections[self.current_section_idnex] == 'refund':
-            self.last_unfilled_field = self.find_nexT_unfilled_slot_refund()
+        elif self.sections[self.current_section_index] == 'refund':
+            self.last_unfilled_field = self.find_next_unfilled_slot_refund()
         return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
@@ -300,7 +300,7 @@ class Document:
                 return slot
         return None
 
-    def find_next_unfilled_slot_refund():
+    def find_next_unfilled_slot_refund(self):
         for slot in self.refund_slots_to_fill:
             if self.refund_user_info[slot] is None:
                 return slot
@@ -499,8 +499,7 @@ class Document:
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
         elif self.sections[self.current_section_index] == 'deductions':
-            deductions_found = parameters['deduction_types']
-            dollar_values = parameters['dollar_values']
+            deductions_and_values_found = parameters
             success = False
             for possible_deduction_index in range(len(deductions_found)):
                 possible_deduction = deductions_found[possible_deduction_index]
