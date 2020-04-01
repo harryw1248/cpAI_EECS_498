@@ -110,6 +110,7 @@ class Document:
             # purely computational fields
             '7b': 0,
             '8b': 0,
+            '9': 0,
             '10': 0,
             '11a': 0,
             '11b': 0,
@@ -380,8 +381,8 @@ class Document:
         if self.sections[self.current_section_index] == 'demographics':
             extracted_slot_name = last_unfilled_field
             extracted_slot_value = parameters['value']
-
             self.update_document_demographics(parameters, current_intent)
+
             if extracted_slot_name == 'age' and extracted_slot_value <= 22:
                 self.deduction_user_info['mortgage'] = 0
 
@@ -512,6 +513,8 @@ class Document:
             else:
                 return 'deduction-failure'
         elif self.sections[self.current_section_index] == 'refund':
+            if extracted_slot_name == 'amount-refunded':
+                self.income_user_info['9'] = self.compute_line_9()
             pass
 
 
@@ -835,6 +838,20 @@ class Document:
             return 2500
         else:
             return amount
+
+    def compute_line_9(self):
+        itemized_deductions = self.deduction_user_info['charitable-contributions'] +\
+            self.deduction_user_info['state-local-taxes'] +\
+            self.deduction_user_info['mortgage'] +\
+            self.deduction_user_info['roth-IRA'] +\
+            self.deduction_user_info['medical-dental-expenses'] +\
+            self.deduction_user_info['jury-duty']
+        if self.income_user_info['10'] > itemized_deductions:
+            return self.income_user_info['10']
+        return itemized_deductions
+        
+        
+
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
