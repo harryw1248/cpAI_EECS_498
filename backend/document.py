@@ -374,10 +374,16 @@ class Document:
                     self.demographic_spouse_info[slot] = parameters[slot]
                     if slot == "spouse-blind":
                         self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
+        
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         if self.sections[self.current_section_index] == 'demographics':
+            extracted_slot_name = last_unfilled_field
+            extracted_slot_value = parameters['value']
+
             self.update_document_demographics(parameters, current_intent)
+            if extracted_slot_name == 'age' and extracted_slot_value <= 22:
+                self.deduction_user_info['mortgage'] = 0
 
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)

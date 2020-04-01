@@ -639,6 +639,8 @@ def exploit_deduction(content):
     print("exploiting deductions")
     parameters = content['queryResult']['parameters']
     current_intent = content['queryResult']['intent']['displayName']
+    print("parameters")
+    print(parameters)
 
     global responses
     global user
@@ -861,8 +863,6 @@ def home():
             return demographics_fill_dependents(content)
         elif intent.startswith('income_and_finances_fill'):
             return income_finances_fill(content)
-        elif intent.startswith('exploit_deduction'):
-            return exploit_deductions(content)
         elif intent.startswith('refund_and_owe'):
             return refund_and_owe(content)
         elif intent == 'confirm - yes':
