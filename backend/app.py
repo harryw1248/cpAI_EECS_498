@@ -32,6 +32,7 @@ last_field_changed = ""
 last_output_context = ""
 
 intent_to_explainable_term = {}
+missed_deduction_values = []
 
 
 def unstandardize_token(token):
@@ -355,6 +356,7 @@ def clear():
     global last_output_context
     global last_intent
     global last_unfilled_field
+    global missed_deduction_values
 
     dummy_user = User()
     user = copy.deepcopy(dummy_user)
@@ -367,10 +369,12 @@ def clear():
     last_unfilled_field = ""
     last_intent = "goodbye"
 
+    missed_deduction_values = []
+
     with open('response.json') as f:
         data = json.load(f)
 
-    data['fulfillment_messages'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, thank you for using CPai!"]}}]
     print(data)
     return jsonify(data)
 
@@ -651,30 +655,43 @@ def exploit_deduction(content):
     print("exploiting deductions")
     parameters = content['queryResult']['parameters']
     current_intent = content['queryResult']['intent']['displayName']
-    print("parameters")
-    print(parameters)
 
     global responses
     global user
     global document
     global last_intent
     global last_unfilled_field
+    global missed_deduction_values
 
     deduction_result = None
-    if current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
+
+    if len(missed_deduction_values) > 0:
+        if document.deduction_user_info[last_unfilled_field] is None:
+            document.deduction_user_info[last_unfilled_field] = parameters['value']
+        else:
+            document.deduction_user_info[last_unfilled_field] += parameters['value']
+
+        missed_deduction_values.pop(0)
+        deduction_result = copy.deepcopy(missed_deduction_values)
+
+        if len(missed_deduction_values) == 0:
+            deduction_result = 'deduction-success'
+    elif current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
         document.deduction_stage = 'user_done'
-        print("got here 1")
 
         for key, value in document.deduction_user_info.items():
-            if value == 0:
+            if value is None:
                 deduction_result = key
                 break
 
     elif document.deduction_stage == 'user_done':
-        document.deduction_user_info[last_unfilled_field] += parameters['value']
-        print("got here 2")
+
+        if document.deduction_user_info[last_unfilled_field] is None:
+            document.deduction_user_info[last_unfilled_field] = parameters['value']
+        else:
+            document.deduction_user_info[last_unfilled_field] += parameters['value']
         for key, value in document.deduction_user_info.items():
-            if value == 0:
+            if value is None:
                 deduction_result = key
                 break
 
@@ -691,26 +708,40 @@ def exploit_deduction(content):
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
             response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+    elif isinstance(deduction_result, list):
+        missed_deduction_values = copy.deepcopy(deduction_result)
+        followups = {'state-local-value': 'How much did you pay in those state and local taxes?', 'jury_duty_amount': 'What amount of money did you get from jury duty?',
+                                       'account_401_value':'How much did you contribute to your 401K?', 'charitable-value': 'How much did you contribute to charity?',
+                'medical_value': 'How much did you spend on your healthcare?', 'mortgage_value': 'How much went towards your mortgage?',
+                     'roth-IRA-value': 'How much did you contribute to your roth IRA?',
+                                       'student_loans_value': 'How much did you repay in student loans?', 'tuition_value': 'How much did tuition cost you?'}
+        response = followups[missed_deduction_values[0]]
     else:
-        print("got here 3")
-        print(deduction_result)
         response = responses.get_next_response(deduction_result, document)
         print(response)
-        #if error_message is not None:
-         #   response = error_message + response
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    if deduction_result is not None:
-        output_context = responses.generate_output_context(deduction_result, 1, session, document)
-        print("got here 4")
 
+    if isinstance(deduction_result, list):
+        output_context = responses.generate_output_context('missed-deduction-value', 1, session, document)
+    elif deduction_result is not None:
+        output_context = responses.generate_output_context(deduction_result, 1, session, document)
     else:
         output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
 
-    last_unfilled_field = deduction_result
+    if isinstance(deduction_result, list):
+        value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                   'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
+                                   'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
+                                   'roth-IRA-value': 'roth-IRA',
+                                   'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+        last_unfilled_field = value_to_deduction_name[deduction_result[0]]
+        print(last_unfilled_field)
+    else:
+        last_unfilled_field = deduction_result
+
     global last_output_context
     last_output_context = output_context
-    print("got here 5")
     return jsonify(data)
 
 
@@ -922,6 +953,7 @@ def home():
         print("intent:", intent)
         global last_unfilled_field
         global last_output_context
+        global missed_deduction_values
         print("global last output context: " + str(last_output_context))
 
         if intent == 'goodbye' or 'goodbye' == content['queryResult']['queryText']:
@@ -936,8 +968,9 @@ def home():
                     intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
-            elif intent == 'income_and_finances_fill.monetary_value'  and document.deduction_stage == 'user_done':
-                exploit_deduction(content)
+            elif intent == 'income_and_finances_fill.monetary_value'  and (document.deduction_stage == 'user_done' or
+                len(missed_deduction_values) > 0):
+                return exploit_deduction(content)
             else:
                 return income_finances_fill(content)
         elif intent == 'autofill':

@@ -118,7 +118,8 @@ class Response:
             'account-type': 'prompt_type_of_account',
             'routing-number': 'prompt_refund_number_value',
             'account-number': 'prompt_refund_number_value',
-            'estimated-tax-penalty': 'prompt_refund_number_value'
+            'estimated-tax-penalty': 'prompt_refund_number_value',
+            'missed-deduction-value': 'prompt_monetary_value'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -240,7 +241,7 @@ class Response:
             'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
-            'jury-duty': 'Have you served jury duty this year?',
+            'jury-duty': 'If you have served jury duty this year, how much were you paid? If you did not serve, say 0.',
             'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
         }
 

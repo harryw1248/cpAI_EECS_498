@@ -523,17 +523,23 @@ class Document:
                 'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage', 'roth-IRA-value': 'roth-IRA',
                                        'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
 
+            missed_values = []
+
             for possible_deduction_value in possible_deduction_values:
                 if possible_deduction_value in deductions_and_values_found:
-                    for dollar_value in deductions_and_values_found[possible_deduction_value]:
-                        deduction_name = value_to_deduction_name[possible_deduction_value]
-                        self.deduction_user_info[deduction_name] += dollar_value
-                        print("got here!")
-                        print("mortgage")
-                        print(self.deduction_user_info['mortgage'])
-                    success = True
+                    deduction_name = value_to_deduction_name[possible_deduction_value]
+                    if len(deductions_and_values_found[possible_deduction_value]) == 0:
+                        missed_values.append(possible_deduction_value)
+                    else:
+                        if self.deduction_user_info[deduction_name] is None:
+                            self.deduction_user_info[deduction_name] = 0
+                        for dollar_value in deductions_and_values_found[possible_deduction_value]:
+                            self.deduction_user_info[deduction_name] += dollar_value
+                        success = True
 
-            if success:
+            if len(missed_values) > 0:
+                return missed_values
+            elif success:
                 return 'deduction-success'
             else:
                 return 'deduction-failure'
