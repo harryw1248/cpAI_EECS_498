@@ -61,6 +61,9 @@ def explain_term_yes(content):
     if last_unfilled_field == "":
         response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
         output_context = responses.generate_output_context("given-name", 1, session, document)
+    elif 'deduction' in last_unfilled_field and document.deduction_stage!= 'user_done':
+        response = "What other deductions you want to claim? If you want help from us, just say so!"
+        output_context = responses.generate_output_context('deduction-success', 1, session, document)
     else:
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
@@ -166,6 +169,11 @@ def explain_term(content, extract=None):
             response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
                        "which brings certain tax deductions.  Does that make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+
+    elif 'deduction' in extract:
+        response = "A deduction is essentially a discount on your taxes that you get by performing actions that " \
+                   "the government sees as bettering society overall. Does that make sense?"
+        data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     global last_intent
     last_intent = 'explain_term'
@@ -303,7 +311,9 @@ def confirm_yes(content):
     next_unfilled_slot = document.find_next_unfilled_slot()
     last_unfilled_field = next_unfilled_slot
     print("next unfilled slot:", next_unfilled_slot)
+
     response += responses.get_next_response(next_unfilled_slot, document)
+
     with open('response.json') as f:
         data = json.load(f)
 
@@ -636,20 +646,12 @@ def income_finances_fill(content):
     return jsonify(data)
 
 
-def demographics_fill_dependents(content):
-    return None
-
-
 def welcome(content):
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
     return jsonify(data)
-
-
-def explain_instructions(content):
-    return
 
 
 def exploit_deduction(content):
@@ -697,7 +699,37 @@ def exploit_deduction(content):
                 break
 
     else:
-        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+        deductions_and_values_found = parameters
+        success = False
+
+        possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
+                                     'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
+                                     'tuition_value']
+        value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                   'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
+                                   'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
+                                   'roth-IRA-value': 'roth-IRA',
+                                   'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+
+        missed_values = []
+        #        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        for possible_deduction_value in possible_deduction_values:
+            if possible_deduction_value in deductions_and_values_found:
+                deduction_name = value_to_deduction_name[possible_deduction_value]
+                if len(deductions_and_values_found[possible_deduction_value]) == 0:
+                    missed_values.append(possible_deduction_value)
+                else:
+                    params = (deduction_name, deductions_and_values_found[possible_deduction_value])
+                    document.update_slot(params, current_intent, last_unfilled_field)
+                    success = True
+
+        if len(missed_values) > 0:
+            deduction_result =  missed_values
+        elif success:
+            deduction_result = 'deduction-success'
+        else:
+            deduction_result = 'deduction-failure'
 
     session = content['session']
 
@@ -799,6 +831,7 @@ def refund_and_owe(content):
 
     last_intent = 'refund_and_owe'
     return jsonify(data)
+
 
 def third_party_and_sign(content):
     return
@@ -908,15 +941,13 @@ def fallback(content):
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
         last_output_context = data['output_contexts']
         redo_response = responses.get_next_response(last_unfilled_field, document)
-        response = ""
-        if "prompt_deduction_begin" in last_output_context[0]['name']:
-            response = ('Sorry, either that does not qualify for a deduction or we do not cover that deduction at this time. ' 
-            'Is there anything else that comes to mind?')
+        if document.sections[document.current_section_index] == 'deductions':
+            data['fulfillment_messages'] = [
+                {"text": {"text": ["Sorry, we don't believe that qualifies you for a deduction. What other "
+                               "deductions you might want to claim? Otherwise, just let us know you need help!"]}}]
         else:
-            response = "Sorry, we did not catch that. " + redo_response
-        
-        data['fulfillment_messages'] = [
-            {"text": {"text": [response]}}]
+            data['fulfillment_messages'] = [
+            {"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
 
     else:
         print('something went wrong, last_unfilled_field is none')
@@ -1007,8 +1038,6 @@ def home():
             third_party_and_sign(content)
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
-        elif intent == 'demographics_fill.dependents':
-            return demographics_fill_dependents(content)
         elif intent.startswith('income_and_finances_fill'):
             return income_finances_fill(content)
         elif intent.startswith('refund_and_owe'):
