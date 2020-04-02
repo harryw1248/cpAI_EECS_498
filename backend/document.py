@@ -512,37 +512,11 @@ class Document:
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
         elif self.sections[self.current_section_index] == 'deductions':
-            deductions_and_values_found = parameters
-            success = False
-
-            possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
-                                   'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
-                                   'tuition_value']
-            value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
-                                       'account_401_value':'401K', 'charitable-value': 'charitable-contribution',
-                'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage', 'roth-IRA-value': 'roth-IRA',
-                                       'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
-
-            missed_values = []
-
-            for possible_deduction_value in possible_deduction_values:
-                if possible_deduction_value in deductions_and_values_found:
-                    deduction_name = value_to_deduction_name[possible_deduction_value]
-                    if len(deductions_and_values_found[possible_deduction_value]) == 0:
-                        missed_values.append(possible_deduction_value)
-                    else:
-                        if self.deduction_user_info[deduction_name] is None:
-                            self.deduction_user_info[deduction_name] = 0
-                        for dollar_value in deductions_and_values_found[possible_deduction_value]:
-                            self.deduction_user_info[deduction_name] += dollar_value
-                        success = True
-
-            if len(missed_values) > 0:
-                return missed_values
-            elif success:
-                return 'deduction-success'
-            else:
-                return 'deduction-failure'
+            (deduction_name, dollar_values) = parameters
+            if self.deduction_user_info[deduction_name] is None:
+                self.deduction_user_info[deduction_name] = 0
+            for dollar_value in dollar_values:
+                self.deduction_user_info[deduction_name] += dollar_value
 
         elif self.sections[self.current_section_index] == 'refund':
             extracted_slot_name = last_unfilled_field
