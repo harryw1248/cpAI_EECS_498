@@ -215,17 +215,16 @@ class Document:
             'account-number': None,
             'overpaid-applied-tax': None,
             'amount-owed': None,
-            'estimated-tax-penalty': None
+            'estimated-tax-penalty': 0
         }
 
         self.refund_slots_to_fill = [
             'amount-refunded',
-            'overpaid-applied-tax'
             'direct-deposit',
             'account-type',
             'routing-number',
             'account-number',
-            'estimated-tax-penalty'
+            'overpaid-applied-tax',
         ]
 
         self.dependent_being_filled = None
@@ -502,7 +501,9 @@ class Document:
                     "18d"]
                 self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + \
                                               self.income_user_info["18e"]
-                print(self.income_user_info)
+                
+                # Determine overpaid information
+                self.compute_overpaid_amount()
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
         elif self.sections[self.current_section_index] == 'deductions':
@@ -532,13 +533,40 @@ class Document:
 
         elif self.sections[self.current_section_index] == 'refund':
             extracted_slot_name = last_unfilled_field
-            extracted_slot_value = parameters['value']
-            if extracted_slot_name == 'amount-refunded':
-                self.income_user_info['9'] = self.compute_line_9()
-            pass
-
+            if current_intent == 'refund_and_owe.number_value':
+                if parameters["number"] == "all":
+                    self.refund_user_info[extracted_slot_name] = self.refund_user_info["overpaid"]
+                else:
+                    self.refund_user_info[extracted_slot_name] = parameters['number']
+            elif current_intent == 'refund_and_owe.bool':
+                if parameters['bool'] == "yes":
+                    self.refund_user_info[extracted_slot_name] = True
+                else:
+                    self.refund_user_info[extracted_slot_name] = False
+                    self.refund_user_info["account-type"] = False
+                    self.refund_user_info["routing-number"] = False
+                    self.refund_user_info["account-number"] = False
+            else:
+                self.refund_user_info[extracted_slot_name] = parameters[extracted_slot_name]
 
         return None
+            
+    def compute_overpaid_amount(self):
+        overpaid = self.income_user_info["19"] - self.income_user_info["16"]
+        if overpaid > 0:
+            self.refund_user_info["overpaid"] = overpaid
+            self.refund_user_info["amount-owed"] = 0
+        else:
+            self.refund_user_info["overpaid"] = 0
+            self.refund_user_info["amount-refunded"] = 0
+            self.refund_user_info["direct-deposit"] = False
+            self.refund_user_info["routing-number"] = False
+            self.refund_user_info["account-type"] = False
+            self.refund_user_info["account-number"] = False
+            self.refund_user_info["overpaid-applied-tax"] = 0
+            self.refund_user_info["amount-owed"] = self.income_user_info["16"] - self.income_user_info["19"]
+            # TODO
+        self.refund_user_info["estimated-tax-penalty"] = 0
 
 
     def compute_dependents_worksheet_13a(self):
@@ -960,9 +988,13 @@ class Document:
         self.income_user_info['13b'] = 0
         self.income_user_info['14'] = 0
         self.income_user_info['15'] = 0
-        self.income_user_info['16'] = 0
+        self.income_user_info['16'] = 500
         self.income_user_info['18d'] = 0
         self.income_user_info['18e'] = 0
-        self.income_user_info['19'] = 0
+        self.income_user_info['19'] = 1500
 
         self.current_section_index = 2
+        self.compute_overpaid_amount()
+
+    def update_dummy3(self):
+        self.current_section_index = 3

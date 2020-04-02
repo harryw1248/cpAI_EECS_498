@@ -111,7 +111,14 @@ class Response:
             'roth-IRA': 'prompt_monetary_value',
             'medical-dental-expenses': 'prompt_monetary_value',
             'jury-duty': 'prompt_monetary_value',
-            'student-loans': 'prompt_monetary_value'
+            'student-loans': 'prompt_monetary_value',
+            'amount-refunded': 'prompt_refund_number_value',
+            'overpaid-applied-tax': 'prompt_refund_number_value',
+            'direct-deposit': 'prompt_refund_bool',
+            'account-type': 'prompt_type_of_account',
+            'routing-number': 'prompt_refund_number_value',
+            'account-number': 'prompt_refund_number_value',
+            'estimated-tax-penalty': 'prompt_refund_number_value'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -241,10 +248,9 @@ class Response:
             'amount-refunded': 'How much of that would you like refunded to you?',
             'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 estimated tax?',
             'direct-deposit': 'Would you like this amount transferred to you through direct deposit?',
-            'account-type': 'What type of account would you like to deposit to?',
+            'account-type': 'Is the account that you\'d like to deposit into a savings or checkings account?',
             'routing-number': 'What is your routing number?',
-            'account-number': 'What is your account number?',
-            'estimated-tax-penalty': 'TODO'
+            'account-number': 'What is your account number?'
         }
 
 
@@ -282,6 +288,9 @@ class Response:
             return self.income_finances[next_unfilled_slot]
         elif next_unfilled_slot in self.deductions:
             return self.deductions[next_unfilled_slot]
+        elif next_unfilled_slot in self.refund:
+            return self.get_next_refund_response(next_unfilled_slot, current_document)
+
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
@@ -301,6 +310,16 @@ class Response:
                 return 'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
+
+    def get_next_refund_response(self, next_unfilled_slot, document):
+        if next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] > 0:
+            return "The amount that you overpaid is ${}. How much of that would you like refunded to you?".format(document.refund_user_info["overpaid"])
+        elif next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] <= 0:
+            return "You owe ${}. To pay, please visit https://www.irs.gov/payments . We're done with your refund/owe section. Does everything look correct?".format(document.refund_user_info["amount-owed"])
+        else:
+            return self.refund[next_unfilled_slot]
+        pass
+
 
     def generate_output_context(self, slot, lifespan, session, current_document):
         #print("generate_output_context called")

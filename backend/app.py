@@ -376,6 +376,8 @@ def clear():
 
 
 def error_checking(parameters, intent, last_unfilled):
+    global document
+
     # possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
     digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     requires_money_values = ['wages', 'tax-exempt-interest', 'taxable-interest', 'pensions-and-annuities',
@@ -474,6 +476,16 @@ def error_checking(parameters, intent, last_unfilled):
         except ValueError:
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
+    if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
+        if len(str(parameters['number'])) != 7:
+            return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
+    elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
+        if len(str(parameters['number'])) != 15:
+            return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
+    elif intent == 'refund_and_owe.number_value' and (last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
+        if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):
+            return last_unfilled, 'You cannot use an amount greater than the amount you overpaid. Please give a\
+                 number equal to or less than ${}.'.format(document.refund_user_info["overpaid"])
     return None, None
 
 
@@ -703,22 +715,57 @@ def exploit_deduction(content):
 
 
 def refund_and_owe(content):
+    # for print debugging
+    parameters = content['queryResult']['parameters']
     global responses
     global user
     global document
     global last_intent
     global last_unfilled_field
+
+    response = None
+
     current_intent = content['queryResult']['intent']['displayName']
 
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+
+    if error_field is None and error_message is None:
+        # first pass: update params on document object
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
+    last_unfilled_field = next_unfilled_slot
+
+    output_context = None
+    if next_unfilled_slot in document.refund_user_info:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+    else:
+        response = "We're all done filling out your refund and amount to owe section. Does everything look correct?"
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
+    if error_message:
+        response = error_message
+
+    last_unfilled_field = next_unfilled_slot
 
     with open('response.json') as f:
         data = json.load(f)
 
-    if current_intent == 'refund_and_owe.monetary_value':
-        pass
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context:", output_context)
+    data['output_contexts'] = output_context
+    global last_output_context
+    last_output_context = output_context
+    global user
 
-    return
-
+    last_intent = 'refund_and_owe'
+    return jsonify(data)
 
 def third_party_and_sign(content):
     return
@@ -773,6 +820,40 @@ def autofill2(content):
     print(last_unfilled_field)
 
     return jsonify(data)
+
+
+def autofill3(content):
+    global last_unfilled_field
+    global responses
+    global document
+
+    print("autofill3")
+    document.update_dummy()
+    document.update_dummy2()
+    document.update_dummy3()
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    next_unfilled_slot = 'amount-refunded'
+    last_unfilled_field = 'amount-refunded'
+    #if document.refund_user_info["overpaid"] > 0:
+    # TODO FIX
+    # else:
+    #     next_unfilled_slot = None
+    #     last_unfilled_field = None
+    response = responses.get_next_response(next_unfilled_slot, document)
+    print("response:", response)
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    global last_output_context
+    last_output_context = data['output_contexts']
+    print(last_output_context)
+    print(last_unfilled_field)
+
+    return jsonify(data)
+
 
 
 def fallback(content):
@@ -863,6 +944,8 @@ def home():
             return autofill(content)
         elif intent == 'autofill2':
             return autofill2(content)
+        elif intent == 'autofill3':
+            return autofill3(content)
         elif intent == 'explain_term':
             return explain_term(content)
         elif intent.startswith('exploit_deduction'):
