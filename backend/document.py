@@ -478,7 +478,7 @@ class Document:
                     "adjustments-to-income"]
                 self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info[
                     "adjustments-to-income"]
-                self.income_user_info["10"] = self.compute_standard_deductions()
+                self.income_user_info["9"] = self.compute_standard_deductions()
                 self.compute_11a_and_11b()
                 print(self.income_user_info)
                 print(self.demographic_user_info)
@@ -901,8 +901,8 @@ class Document:
             self.deduction_user_info['roth-IRA'] +\
             self.deduction_user_info['medical-dental-expenses'] +\
             self.deduction_user_info['jury-duty']
-        if self.income_user_info['10'] > itemized_deductions:
-            return self.income_user_info['10']
+        if self.income_user_info['9'] > itemized_deductions:
+            return self.income_user_info['9']
         return itemized_deductions
         
         
