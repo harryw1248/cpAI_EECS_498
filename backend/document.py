@@ -293,7 +293,7 @@ class Document:
         return None
 
     def find_next_unfilled_slot_deductions(self, deduction_result=None):
-        print(self.deduction_stage)
+        print("DEDUCTION-STAGE:", self.deduction_stage)
         if self.deduction_stage == 'deduction-begin':
             self.deduction_stage = 'user-enters-deductions'
             return 'deduction-begin'

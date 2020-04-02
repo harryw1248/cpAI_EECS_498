@@ -231,7 +231,7 @@ class Response:
             'charitable-contribution': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
-            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim? '
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions do you want to claim? '
                                     'If you want help from us, just say so!',
             'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
                             'this time. What other deductions you want to claim?'

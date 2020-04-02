@@ -56,6 +56,7 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot()
+    print("SUDSDSDDSDSDSDS", next_unfilled_slot)
 
     if last_unfilled_field == "":
         response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
@@ -740,6 +741,7 @@ def exploit_deduction(content):
     else:
         last_unfilled_field = deduction_result
 
+    data['output_contexts'] = output_context
     global last_output_context
     last_output_context = output_context
     return jsonify(data)
@@ -892,6 +894,7 @@ def fallback(content):
     global responses
     global document
     global last_output_context
+    global last_intent
 
     if last_unfilled_field == '':
         last_unfilled_field = document.demographics_slots_to_fill[0]
@@ -905,8 +908,15 @@ def fallback(content):
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
         last_output_context = data['output_contexts']
         redo_response = responses.get_next_response(last_unfilled_field, document)
+        response = ""
+        if "prompt_deduction_begin" in last_output_context[0]['name']:
+            response = ('Sorry, either that does not qualify for a deduction or we do not cover that deduction at this time. ' 
+            'Is there anything else that comes to mind?')
+        else:
+            response = "Sorry, we did not catch that. " + redo_response
+        
         data['fulfillment_messages'] = [
-            {"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
+            {"text": {"text": [response]}}]
 
     else:
         print('something went wrong, last_unfilled_field is none')
