@@ -886,6 +886,14 @@ class Document:
             if self.number_of_dependents_completed == 3:
                 if self.income_user_info['adjusted-gross-income'] <= 56844:
                     earned_income_credit = 6660
+        
+        if self.income_user_info['7b'] == 0:
+            return 0
+        if self.income_user_info['IRA-distributions'] <= 0:
+            return 0
+        if self.income_user_info['tax-exempt-interest'] == 0:
+            return 0
+
         return earned_income_credit
 
     def compute_tuition_deduction(self, amount):
