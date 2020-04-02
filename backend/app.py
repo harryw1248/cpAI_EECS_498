@@ -696,6 +696,11 @@ def exploit_deduction(content):
             if value is None:
                 deduction_result = key
                 break
+        
+        if document.deduction_type_chosen == 'standard deduction':
+            response = "Looks like you'll get more with standard deductions."
+        else:
+            response = "Looks like you'll get more with itemized deductions."
 
     else:
         deductions_and_values_found = parameters

@@ -239,6 +239,7 @@ class Document:
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
         self.deduction_stage = 'deduction-begin'
+        self.deduction_type_chosen = 'standard deduction'
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -897,6 +898,8 @@ class Document:
             self.deduction_user_info['jury-duty']
         if self.income_user_info["9"] > itemized_deductions:
             return self.income_user_info["9"]
+
+        self.deduction_type_chosen = 'itemized deduction'
         return itemized_deductions
         
         
