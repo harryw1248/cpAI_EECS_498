@@ -710,7 +710,7 @@ def exploit_deduction(content):
     last_unfilled_field = deduction_result
     global last_output_context
     last_output_context = output_context
-    print("hot here 5")
+    print("got here 5")
     return jsonify(data)
 
 

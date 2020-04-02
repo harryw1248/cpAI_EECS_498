@@ -171,15 +171,15 @@ class Document:
         ]
 
         self.deduction_user_info = {
-            'charitable-contribution': 0,
-            'state-local-taxes': 0,
-            'mortgage': 0,
-            'account_401': 0,
-            'roth-IRA': 0,
-            'medical-dental-expenses': 0,
-            'jury-duty': 0,
-            'student-loans': 0,
-            'tuition': 0
+            'charitable-contribution': None,
+            'state-local-taxes': None,
+            'mortgage': None,
+            'account_401': None,
+            'roth-IRA': None,
+            'medical-dental-expenses': None,
+            'jury-duty': None,
+            'student-loans': None,
+            'tuition': None
         }
 
         self.deduction_slots_to_fill = [
@@ -302,7 +302,7 @@ class Document:
             return 'deduction-success'
 
         for slot in self.deduction_slots_to_fill:
-            if self.deduction_user_info[slot] == 0:
+            if self.deduction_user_info[slot] is None:
                 return slot
         return None
 
@@ -384,12 +384,17 @@ class Document:
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         if self.sections[self.current_section_index] == 'demographics':
-            extracted_slot_name = last_unfilled_field
-            extracted_slot_value = parameters['value']
             self.update_document_demographics(parameters, current_intent)
 
-            if extracted_slot_name == 'age' and extracted_slot_value <= 22:
-                self.deduction_user_info['mortgage'] = 0
+            extracted_slot_name = last_unfilled_field
+
+            if "age" in parameters:
+                if self.demographic_user_info["age"] <= 22:
+                    self.deduction_user_info['mortgage'] = 0
+                if self.demographic_user_info["age"] <= 20:
+                    self.deduction_user_info['account_401'] = 0
+                if self.demographic_user_info["age"] >= 65:
+                    self.deduction_user_info['jury-duty'] = 0
 
         elif self.sections[self.current_section_index] == 'income':
             print("last unfilled field:", self.last_unfilled_field)
@@ -524,6 +529,8 @@ class Document:
                         deduction_name = value_to_deduction_name[possible_deduction_value]
                         self.deduction_user_info[deduction_name] += dollar_value
                         print("got here!")
+                        print("mortgage")
+                        print(self.deduction_user_info['mortgage'])
                     success = True
 
             if success:
@@ -910,7 +917,7 @@ class Document:
         self.demographic_user_info['zip-code'] = "08894"
         self.demographic_user_info['social_security'] = "123456789"
         self.demographic_user_info['country'] = "USA"
-        self.demographic_user_info["age"] = "67"
+        self.demographic_user_info["age"] = "45"
         self.demographic_user_info['occupation'] = "Plumber"
         self.demographic_user_info["filing_status"] = "single"
         self.demographic_user_info["lived-apart"] = True
@@ -938,6 +945,7 @@ class Document:
         self.current_section_index = 1
 
     def update_dummy2(self):
+        self.demographic_user_info["age"] = "19"
         self.income_user_info['wages'] = 100000
         self.income_user_info['owns-business'] = False
         self.income_user_info['tax-exempt-interest'] = 1000
