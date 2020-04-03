@@ -491,10 +491,10 @@ def error_checking(parameters, intent, last_unfilled):
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
-        if len(str(parameters['number'])) != 7:
+        if len(str(parameters['number'])) != 9:
             return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
-        if len(str(parameters['number'])) != 15:
+        if len(str(parameters['number'])) != 17:
             return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and (last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
         if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):
@@ -745,7 +745,8 @@ def exploit_deduction(content):
         # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:
             document.current_section_index += 1
-            response += "You owe ${}. To pay, please visit https://www.irs.gov/payments . We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(document.refund_user_info["amount-owed"])
+            response += "You owe ${}. To pay, please visit https://www.irs.gov/payments. " \
+                        "We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(document.refund_user_info["amount-owed"])
         else:
             response += responses.get_next_response('amount-refunded', document)
 
@@ -783,6 +784,7 @@ def exploit_deduction(content):
 
     data['output_contexts'] = output_context
 
+    print(document.deduction_user_info)
     global last_output_context
     last_output_context = output_context
     return jsonify(data)

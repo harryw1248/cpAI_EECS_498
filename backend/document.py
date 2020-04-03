@@ -178,7 +178,7 @@ class Document:
             'roth-IRA': None,
             'medical-dental-expenses': None,
             'jury-duty': None,
-            'student-loans': None,
+            'student-loan-interest': None,
             'tuition': None
         }
 
@@ -189,9 +189,7 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty',
-            'student-loans',
-            'tuition'
+            'jury-duty'
         ]
 
         self.available_deductions = [
@@ -201,9 +199,7 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty',
-            'student-loans',
-            'tuition'
+            'jury-duty'
         ]
 
         self.refund_user_info = {
@@ -298,7 +294,6 @@ class Document:
             self.deduction_stage = 'user-enters-deductions'
             return 'deduction-begin'
         elif self.deduction_stage == 'user-enters-deductions' and deduction_result == 'deduction-success':
-
             return 'deduction-success'
 
         for slot in self.deduction_slots_to_fill:
@@ -989,6 +984,8 @@ class Document:
         self.income_user_info['18e'] = 0
         self.income_user_info['19'] = 1500
 
+        self.deduction_user_info['student-loan-interest'] =0
+        self.deduction_user_info['tuition'] = 0
         self.current_section_index = 2
         self.compute_overpaid_amount()
 
