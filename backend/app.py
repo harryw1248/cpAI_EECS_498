@@ -491,10 +491,15 @@ def error_checking(parameters, intent, last_unfilled):
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
-        if len(str(parameters['number'])) != 9:
+        if len(str(parameters['number'])) != 11:
+            print("number is", parameters['number'])
+            print("len is", len(str(parameters['number'])))
             return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
-        if len(str(parameters['number'])) != 17:
+        num = str(parameters['number'])
+        if not num.endswith('e+16'):
+            print("number is", parameters['number'])
+            print("len is", len(str(parameters['number'])))
             return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and (last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
         if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):

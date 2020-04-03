@@ -518,6 +518,12 @@ class Document:
             if current_intent == 'refund_and_owe.number_value':
                 if parameters["number"] == "all":
                     self.refund_user_info[extracted_slot_name] = self.refund_user_info["overpaid"]
+                elif parameters["number"] == 0 and extracted_slot_name == 'amount-refunded':
+                    self.refund_user_info['amount-refunded'] = 0
+                    self.refund_user_info['direct-deposit'] = False
+                    self.refund_user_info['account-type'] = False
+                    self.refund_user_info['routing-number'] = False
+                    self.refund_user_info['account-number'] = False
                 else:
                     self.refund_user_info[extracted_slot_name] = parameters['number']
             elif current_intent == 'refund_and_owe.bool':
