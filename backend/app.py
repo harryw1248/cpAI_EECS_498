@@ -695,6 +695,7 @@ def exploit_deduction(content):
 
         if document.deduction_user_info[last_unfilled_field] is None:
             document.deduction_user_info[last_unfilled_field] = parameters['value']
+
         else:
             document.deduction_user_info[last_unfilled_field] += parameters['value']
         for key, value in document.deduction_user_info.items():
@@ -745,7 +746,11 @@ def exploit_deduction(content):
         if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
-            response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+            document.compute_line_9()
+            if document.deduction_type_chosen == 'standard deduction':
+                response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
+            else:
+                response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
         
         # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:

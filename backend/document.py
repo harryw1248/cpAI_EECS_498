@@ -235,6 +235,7 @@ class Document:
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
         self.deduction_stage = 'deduction-begin'
+        self.deduction_type_chosen = 'standard deduction'
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -299,6 +300,8 @@ class Document:
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] is None:
                 return slot
+        
+        #self.income_user_info["9"] = self.compute_line_9()
         return None
 
     def find_next_unfilled_slot_refund(self):
@@ -884,14 +887,22 @@ class Document:
             return amount
 
     def compute_line_9(self):
-        itemized_deductions = self.deduction_user_info['charitable-contributions'] +\
+        #for key in self.deduction_user_info:
+        #    if self.deduction_user_info[key] is None:
+        #        self.deduction_user_info[key] = 0
+
+        itemized_deductions = self.deduction_user_info['charitable-contribution'] +\
             self.deduction_user_info['state-local-taxes'] +\
             self.deduction_user_info['mortgage'] +\
             self.deduction_user_info['roth-IRA'] +\
             self.deduction_user_info['medical-dental-expenses'] +\
             self.deduction_user_info['jury-duty']
-        if self.income_user_info['9'] > itemized_deductions:
-            return self.income_user_info['9']
+
+        print("standard_deductions: " + str(self.income_user_info["9"]))
+        if self.income_user_info["9"] > itemized_deductions:
+            return self.income_user_info["9"]
+
+        self.deduction_type_chosen = 'itemized deduction'
         return itemized_deductions
         
         
