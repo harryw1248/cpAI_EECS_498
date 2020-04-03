@@ -736,10 +736,19 @@ def exploit_deduction(content):
         data = json.load(f)
 
     if deduction_result is None:
+        document.current_section_index += 1
         if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
             response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+        
+        # Determine whether they need to do the refund or owe section
+        if document.refund_user_info["overpaid"] <= 0:
+            document.current_section_index += 1
+            response += "You owe ${}. To pay, please visit https://www.irs.gov/payments . We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(document.refund_user_info["amount-owed"])
+        else:
+            response += responses.get_next_response('amount-refunded', document)
+
     elif isinstance(deduction_result, list):
         missed_deduction_values = copy.deepcopy(deduction_result)
         followups = {'state-local-value': 'How much did you pay in those state and local taxes?', 'jury_duty_amount': 'What amount of money did you get from jury duty?',
@@ -759,7 +768,7 @@ def exploit_deduction(content):
     elif deduction_result is not None:
         output_context = responses.generate_output_context(deduction_result, 1, session, document)
     else:
-        output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
+        output_context = responses.generate_output_context('amount-refunded', 1, session, document)
 
     if isinstance(deduction_result, list):
         value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
