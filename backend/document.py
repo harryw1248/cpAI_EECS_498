@@ -178,7 +178,7 @@ class Document:
             'roth-IRA': None,
             'medical-dental-expenses': None,
             'jury-duty': None,
-            'student-loans': None,
+            'student-loan-interest': None,
             'tuition': None
         }
 
@@ -189,9 +189,7 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty',
-            'student-loans',
-            'tuition'
+            'jury-duty'
         ]
 
         self.available_deductions = [
@@ -201,9 +199,7 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty',
-            'student-loans',
-            'tuition'
+            'jury-duty'
         ]
 
         self.refund_user_info = {
@@ -239,6 +235,7 @@ class Document:
                                      "pensions-and-annuities-taxable"]
         self.tax_amount = 0
         self.deduction_stage = 'deduction-begin'
+        self.deduction_type_chosen = 'standard deduction'
 
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
@@ -298,12 +295,13 @@ class Document:
             self.deduction_stage = 'user-enters-deductions'
             return 'deduction-begin'
         elif self.deduction_stage == 'user-enters-deductions' and deduction_result == 'deduction-success':
-
             return 'deduction-success'
 
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] is None:
                 return slot
+        
+        #self.income_user_info["9"] = self.compute_line_9()
         return None
 
     def find_next_unfilled_slot_refund(self):
@@ -523,6 +521,12 @@ class Document:
             if current_intent == 'refund_and_owe.number_value':
                 if parameters["number"] == "all":
                     self.refund_user_info[extracted_slot_name] = self.refund_user_info["overpaid"]
+                elif parameters["number"] == 0 and extracted_slot_name == 'amount-refunded':
+                    self.refund_user_info['amount-refunded'] = 0
+                    self.refund_user_info['direct-deposit'] = False
+                    self.refund_user_info['account-type'] = False
+                    self.refund_user_info['routing-number'] = False
+                    self.refund_user_info['account-number'] = False
                 else:
                     self.refund_user_info[extracted_slot_name] = parameters['number']
             elif current_intent == 'refund_and_owe.bool':
@@ -883,14 +887,22 @@ class Document:
             return amount
 
     def compute_line_9(self):
-        itemized_deductions = self.deduction_user_info['charitable-contributions'] +\
+        #for key in self.deduction_user_info:
+        #    if self.deduction_user_info[key] is None:
+        #        self.deduction_user_info[key] = 0
+
+        itemized_deductions = self.deduction_user_info['charitable-contribution'] +\
             self.deduction_user_info['state-local-taxes'] +\
             self.deduction_user_info['mortgage'] +\
             self.deduction_user_info['roth-IRA'] +\
             self.deduction_user_info['medical-dental-expenses'] +\
             self.deduction_user_info['jury-duty']
-        if self.income_user_info['9'] > itemized_deductions:
-            return self.income_user_info['9']
+
+        print("standard_deductions: " + str(self.income_user_info["9"]))
+        if self.income_user_info["9"] > itemized_deductions:
+            return self.income_user_info["9"]
+
+        self.deduction_type_chosen = 'itemized deduction'
         return itemized_deductions
         
         
@@ -989,6 +1001,8 @@ class Document:
         self.income_user_info['18e'] = 0
         self.income_user_info['19'] = 1500
 
+        self.deduction_user_info['student-loan-interest'] =0
+        self.deduction_user_info['tuition'] = 0
         self.current_section_index = 2
         self.compute_overpaid_amount()
 
