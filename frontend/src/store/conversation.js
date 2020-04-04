@@ -4,6 +4,8 @@ export const namespaced = true;
 
 export const state = {
     loadingState: false,
+    sttInProgress: false,
+    sttResponse: "",
     history: [
         {
             id: 0,
@@ -28,7 +30,21 @@ export const mutations = {
 };
 
 export const actions = {
-    speak: ({ commit, dispatch }, message) => {
+    resetSession: ({ rootGetters }) => {
+        axios({
+            method: "get",
+            url: rootGetters.getClientUrl + "reset"
+        })
+            .then(response => {
+                console.log("reset client done", response);
+                alert("Reset Dialogflow!");
+            })
+            .catch(e => {
+                alert("error reset() request to the client - see console msg.");
+                console.log(e); // eslint-disable-line no-console
+            });
+    },
+    speak: ({ commit, dispatch, rootGetters }, message) => {
         commit("ADD_TO_HISTORY", {
             who: "You",
             text: message,
@@ -38,7 +54,7 @@ export const actions = {
 
         axios({
             method: "post",
-            url: "http://localhost:3000/query",
+            url: rootGetters.getClientUrl + "query",
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*"

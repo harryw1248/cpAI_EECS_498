@@ -16,38 +16,41 @@
                 {{ showForm1040 }}
             </div>
 
-            <Form1040
-                v-if="showForm1040"
-                id="form1040"
-                class="border w-full border-gray mt-8 bg-blue-100 mx-2 animated bounceInDown slower"
-                style="overflow-y: auto; position: relative;"
+            <a
+                class="mt-4 ml-1 py-1 px-2 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
+                href="http://localhost:5000/pdf"
             >
-            </Form1040>
+                Download the form as PDF
+            </a>
+            <img v-if="showForm1040" :src="formSrc" />
         </div>
     </div>
 </template>
 
 <script>
 import Chat from "@/components/Chat.vue";
-import Form1040 from "@/components/Form1040.vue";
-import { mapGetters } from "vuex";
+//import Form1040 from "@/components/Form1040.vue";
+import { mapGetters, mapState } from "vuex";
 
 export default {
-  name: "Console",
-  components: {
-    Chat,
-    Form1040
-  },
-  computed: {
-    ...mapGetters({
-      showForm1040: "isForm1040Toggled"
-    })
-  }
+    name: "Console",
+    components: {
+        Chat
+        //Form1040
+    },
+    computed: {
+        ...mapState({
+            formSrc: state => state.document.formSrc
+        }),
+        ...mapGetters({
+            showForm1040: "isForm1040Toggled"
+        })
+    }
 };
 </script>
 
 <style scoped>
 #form1040 {
-  height: 100%;
+    height: 100%;
 }
 </style>
