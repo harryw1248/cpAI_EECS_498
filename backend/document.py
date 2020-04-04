@@ -904,6 +904,12 @@ class Document:
         else:
             self.income_user_info["9"] = itemized_deductions
             self.compute_11a_and_11b()
+            self.income_user_info["12a"] = self.compute_tax_amount_12a()
+            # self.income_user_info["12b"] = extracted_slot_value + self.income_user_info["12a"]
+            self.income_user_info["12b"] = self.income_user_info["schedule-2-line-3"] + self.income_user_info["12a"]
+            self.income_user_info["13b"] = self.income_user_info["schedule-3-line-7"] + self.income_user_info["13a"]
+            self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
+            self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
             return "itemized deduction"
 
         
