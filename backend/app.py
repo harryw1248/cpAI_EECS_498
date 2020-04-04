@@ -748,8 +748,8 @@ def exploit_deduction(content):
         if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
-            document.compute_line_9()
-            if document.deduction_type_chosen == 'standard deduction':
+            type_chosen = document.compute_line_9()
+            if type_chosen == 'standard deduction':
                 response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
             else:
                 response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."

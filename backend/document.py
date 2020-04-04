@@ -716,7 +716,7 @@ class Document:
     def compute_11a_and_11b(self):
         # Line 9: standard deduction or itemized deduction
         # TODO
-        deduction = 0
+        deduction = self.income_user_info["9"]
         qualified_business_income = 0
         # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction + qualified_business_income
@@ -900,10 +900,18 @@ class Document:
 
         print("standard_deductions: " + str(self.income_user_info["9"]))
         if self.income_user_info["9"] > itemized_deductions:
-            return self.income_user_info["9"]
+            return "standard deduction"
+        else:
+            self.income_user_info["9"] = itemized_deductions
+            self.compute_11a_and_11b()
+            self.income_user_info["12a"] = self.compute_tax_amount_12a()
+            # self.income_user_info["12b"] = extracted_slot_value + self.income_user_info["12a"]
+            self.income_user_info["12b"] = self.income_user_info["schedule-2-line-3"] + self.income_user_info["12a"]
+            self.income_user_info["13b"] = self.income_user_info["schedule-3-line-7"] + self.income_user_info["13a"]
+            self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
+            self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
+            return "itemized deduction"
 
-        self.deduction_type_chosen = 'itemized deduction'
-        return itemized_deductions
         
         
 
