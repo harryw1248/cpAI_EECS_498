@@ -119,7 +119,12 @@ class Response:
             'routing-number': 'prompt_refund_number_value',
             'account-number': 'prompt_refund_number_value',
             'estimated-tax-penalty': 'prompt_refund_number_value',
-            'missed-deduction-value': 'prompt_monetary_value'
+            'missed-deduction-value': 'prompt_monetary_value',
+            'third-party': 'prompt_third_party_bool',
+            'third-party-given-name': 'prompt_third_party_name',
+            'third-party-last-name': 'prompt_third_party_name',
+            'phone-number': 'prompt_phone_number',
+            'PIN': 'prompt_pin'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -254,6 +259,14 @@ class Response:
             'account-number': 'What is your account number?'
         }
 
+        self.third_party = {
+            'third-party': 'Do you want to allow another person (other than your paid preparer) to discuss this return with the IRS?',
+            'third-party-given-name': 'What is that person\'s name?',
+            'third-party-last-name': 'What is that person\'s last name?',
+            'phone-number': 'What is their phone number?',
+            'PIN': 'What is their Personal Identification Number (PIN)?'
+        }
+
 
 
     #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
@@ -291,6 +304,8 @@ class Response:
             return self.deductions[next_unfilled_slot]
         elif next_unfilled_slot in self.refund:
             return self.get_next_refund_response(next_unfilled_slot, current_document)
+        elif next_unfilled_slot in self.third_party:
+            return self.third_party[next_unfilled_slot]
 
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None

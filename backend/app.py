@@ -506,6 +506,14 @@ def error_checking(parameters, intent, last_unfilled):
         if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):
             return last_unfilled, 'You cannot use an amount greater than the amount you overpaid. Please give a\
                  number equal to or less than ${}.'.format(document.refund_user_info["overpaid"])
+    
+    if intent == 'third_party.phone_number':
+        print("phone number:", parameters['phone-number'])
+        if len(str(parameters['phone-number'])) != 10:
+            return last_unfilled, 'You entered an invalid phone number. Please type in exactly 10 digits.'
+    elif intent == 'third_party.pin':
+        if len(str(parameters['PIN'])) != 7:
+            return last_unfilled, 'You entered an invalid PIN. Please type in exactly 5 digits.'
     return None, None
 
 
@@ -855,8 +863,57 @@ def refund_and_owe(content):
     return jsonify(data)
 
 
-def third_party_and_sign(content):
-    return
+def third_party(content):
+    parameters = content['queryResult']['parameters']
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
+
+    response = None
+
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+
+    if error_field is None and error_message is None:
+        # first pass: update params on document object
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
+    last_unfilled_field = next_unfilled_slot
+
+    output_context = None
+    if next_unfilled_slot in document.third_party_user_info:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+    else:
+        response = "We're all done filling out your third party section. Does everything look correct?"
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
+    if error_message:
+        response = error_message
+
+    last_unfilled_field = next_unfilled_slot
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context:", output_context)
+    data['output_contexts'] = output_context
+    global last_output_context
+    last_output_context = output_context
+    global user
+
+    last_intent = 'third_party'
+    return jsonify(data)
 
 
 def autofill(content):
@@ -1056,8 +1113,8 @@ def home():
             return income_finances_fill(content)
         elif intent == 'refund_and_owe':
             return refund_and_owe(content)
-        elif intent == 'third_party_and_sign':
-            third_party_and_sign(content)
+        elif intent.startswith('third_party'):
+            return third_party(content)
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
         elif intent.startswith('income_and_finances_fill'):
