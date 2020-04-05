@@ -101,8 +101,25 @@ class Response:
             'schedule-2-line-10': 'prompt_monetary_value',
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
-            '401K': 'prompt_401K',
-            'tuition': 'prompt_tuition'
+            'account_401': 'prompt_monetary_value',
+            'tuition': 'prompt_monetary_value',
+            'deduction-success': 'prompt_deduction_begin',
+            'deduction-failure': 'prompt_deduction_begin',
+            'charitable-contribution': 'prompt_monetary_value',
+            'state-local-taxes': 'prompt_monetary_value',
+            'mortgage': 'prompt_monetary_value',
+            'roth-IRA': 'prompt_monetary_value',
+            'medical-dental-expenses': 'prompt_monetary_value',
+            'jury-duty': 'prompt_monetary_value',
+            'student-loans': 'prompt_monetary_value',
+            'amount-refunded': 'prompt_refund_number_value',
+            'overpaid-applied-tax': 'prompt_refund_number_value',
+            'direct-deposit': 'prompt_refund_bool',
+            'account-type': 'prompt_type_of_account',
+            'routing-number': 'prompt_refund_number_value',
+            'account-number': 'prompt_refund_number_value',
+            'estimated-tax-penalty': 'prompt_refund_number_value',
+            'missed-deduction-value': 'prompt_monetary_value'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -211,20 +228,30 @@ class Response:
         self.deductions = {
             'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. "
                                "First, do you have any deductions in mind that you might be eligible for?",
-            'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
+            'charitable-contribution': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
-            'no-deduction': 'Sorry, either that does not qualify for a deduction or we '
-                            'do not cover that deduction at this time. ',
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions do you want to claim? '
+                                    'If you want help from us, just say so!',
+            'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
+                            'this time. What other deductions you want to claim?'
+                                    'If you want help from us, just say so!',
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
-            '401K': 'How much have you made in contributions to a 401K?',
+            'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
-            'jury-duty': 'Have you served jury duty this year?',
+            'jury-duty': 'If you have served jury duty this year, how much were you paid? If you did not serve, say 0.',
             'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
-            #'tuition': '',
-            #'student-loans': ''
+        }
+
+        self.refund = {
+            'amount-refunded': 'How much of that would you like refunded to you?',
+            'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 estimated tax?',
+            'direct-deposit': 'Would you like this amount transferred to you through direct deposit?',
+            'account-type': 'Is the account that you\'d like to deposit into a savings or checkings account?',
+            'routing-number': 'What is your routing number?',
+            'account-number': 'What is your account number?'
         }
 
 
@@ -262,7 +289,9 @@ class Response:
             return self.income_finances[next_unfilled_slot]
         elif next_unfilled_slot in self.deductions:
             return self.deductions[next_unfilled_slot]
-        #print("couldn't find the response for slot:", next_unfilled_slot)
+        elif next_unfilled_slot in self.refund:
+            return self.get_next_refund_response(next_unfilled_slot, current_document)
+
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
@@ -283,6 +312,16 @@ class Response:
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
 
+    def get_next_refund_response(self, next_unfilled_slot, document):
+        if next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] > 0:
+            return "The amount that you overpaid is ${}. How much of that would you like refunded to you?".format(document.refund_user_info["overpaid"])
+        elif next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] <= 0:
+            return "You owe ${}. To pay, please visit https://www.irs.gov/payments . We're done with your refund/owe section. Does everything look correct?".format(document.refund_user_info["amount-owed"])
+        else:
+            return self.refund[next_unfilled_slot]
+        pass
+
+
     def generate_output_context(self, slot, lifespan, session, current_document):
         #print("generate_output_context called")
 
@@ -293,7 +332,6 @@ class Response:
                 context_identifier = session + "/contexts/" + 'prompt_dual_status_alien'
             else:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_widower'
-
         else:
             print("context: " + str(self.slot_to_output_contexts[slot]))
             context_identifier = session + "/contexts/" + self.slot_to_output_contexts[slot]
