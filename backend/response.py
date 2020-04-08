@@ -101,10 +101,30 @@ class Response:
             'schedule-2-line-10': 'prompt_monetary_value',
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
-            '401K': 'prompt_401K',
-            'tuition': 'prompt_tuition',
+            'account_401': 'prompt_monetary_value',
+            'tuition': 'prompt_monetary_value',
             'deduction-success': 'prompt_deduction_begin',
             'deduction-failure': 'prompt_deduction_begin',
+            'charitable-contribution': 'prompt_monetary_value',
+            'state-local-taxes': 'prompt_monetary_value',
+            'mortgage': 'prompt_monetary_value',
+            'roth-IRA': 'prompt_monetary_value',
+            'medical-dental-expenses': 'prompt_monetary_value',
+            'jury-duty': 'prompt_monetary_value',
+            'student-loans': 'prompt_monetary_value',
+            'amount-refunded': 'prompt_refund_number_value',
+            'overpaid-applied-tax': 'prompt_refund_number_value',
+            'direct-deposit': 'prompt_refund_bool',
+            'account-type': 'prompt_type_of_account',
+            'routing-number': 'prompt_refund_number_value',
+            'account-number': 'prompt_refund_number_value',
+            'estimated-tax-penalty': 'prompt_refund_number_value',
+            'missed-deduction-value': 'prompt_monetary_value',
+            'third-party': 'prompt_third_party_bool',
+            'third-party-given-name': 'prompt_third_party_name',
+            'third-party-last-name': 'prompt_third_party_name',
+            'phone-number': 'prompt_phone_number',
+            'PIN': 'prompt_pin'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -146,16 +166,16 @@ class Response:
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not receive any of these forms, report 0.',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you did not receive any of these forms, report 0.',
             'has-1099-R': 'Have you received 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
-            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
+            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms? Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. What '
                                  'are the gross distributions in field 1? If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R?',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable refunds or credits from this past year?',
             'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your business this past year? If you do not have a business, say zero.',
@@ -213,20 +233,20 @@ class Response:
         self.deductions = {
             'deduction-begin': "Let's figure out whether the standard or itemized deduction will save you more money. "
                                "First, do you have any deductions in mind that you might be eligible for?",
-            'charitable-contributions': 'Have you donated any money to an American charity or non-profit? If so, what '
+            'charitable-contribution': 'Have you donated any money to an American charity or non-profit? If so, what '
                                         'was the value of the donation? If not, say 0. Keep in mind that donating '
                                         'clothing, vehicles, or furniture in good condition can also count!',
-            'deduction-success': 'Congrats, you saved yourself some money! What other deductions you want to claim?'
+            'deduction-success': 'Congrats, you saved yourself some money! What other deductions do you want to claim? '
                                     'If you want help from us, just say so!',
             'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
                             'this time. What other deductions you want to claim?'
                                     'If you want help from us, just say so!',
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
-            '401K': 'How much have you made in contributions to a 401K?',
+            'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
-            'jury-duty': 'Have you served jury duty this year?',
+            'jury-duty': 'If you have served jury duty this year, how much were you paid? If you did not serve, say 0.',
             'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
         }
 
@@ -234,10 +254,17 @@ class Response:
             'amount-refunded': 'How much of that would you like refunded to you?',
             'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 estimated tax?',
             'direct-deposit': 'Would you like this amount transferred to you through direct deposit?',
-            'account-type': 'What type of account would you like to deposit to?',
+            'account-type': 'Is the account that you\'d like to deposit into a savings or checkings account?',
             'routing-number': 'What is your routing number?',
-            'account-number': 'What is your account number?',
-            'estimated-tax-penalty': 'TODO'
+            'account-number': 'What is your account number?'
+        }
+
+        self.third_party = {
+            'third-party': 'Do you want to allow another person (other than your paid preparer) to discuss this return with the IRS?',
+            'third-party-given-name': 'What is that person\'s name?',
+            'third-party-last-name': 'What is that person\'s last name?',
+            'phone-number': 'What is their phone number?',
+            'PIN': 'What is their Personal Identification Number (PIN)?'
         }
 
 
@@ -275,6 +302,11 @@ class Response:
             return self.income_finances[next_unfilled_slot]
         elif next_unfilled_slot in self.deductions:
             return self.deductions[next_unfilled_slot]
+        elif next_unfilled_slot in self.refund:
+            return self.get_next_refund_response(next_unfilled_slot, current_document)
+        elif next_unfilled_slot in self.third_party:
+            return self.third_party[next_unfilled_slot]
+
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None
 
@@ -294,6 +326,16 @@ class Response:
                 return 'What is your ' + self.nth[dependent_num] + " dependent's full name, age, and relation to you?"
         else:   
             return self.demographics_dependent_question[next_unfilled_slot]
+
+    def get_next_refund_response(self, next_unfilled_slot, document):
+        if next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] > 0:
+            return "The amount that you overpaid is ${}. How much of that would you like refunded to you?".format(document.refund_user_info["overpaid"])
+        elif next_unfilled_slot == 'amount-refunded' and document.refund_user_info["overpaid"] <= 0:
+            return "You owe ${}. To pay, please visit https://www.irs.gov/payments . We're done with your refund/owe section. Does everything look correct?".format(document.refund_user_info["amount-owed"])
+        else:
+            return self.refund[next_unfilled_slot]
+        pass
+
 
     def generate_output_context(self, slot, lifespan, session, current_document):
         #print("generate_output_context called")

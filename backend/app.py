@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, send_file
 from document import Document
 from user import User
 from response import Response
@@ -6,6 +6,7 @@ import pyrebase
 import pprint
 import json
 import copy
+import pdf
 
 config = {
     "apiKey": "AeIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
@@ -32,6 +33,8 @@ last_field_changed = ""
 last_output_context = ""
 
 intent_to_explainable_term = {}
+missed_deduction_values = []
+previous_deduction_result = None
 
 
 def unstandardize_token(token):
@@ -55,10 +58,14 @@ def explain_term_yes(content):
         data = json.load(f)
 
     next_unfilled_slot = document.find_next_unfilled_slot()
+    print("SUDSDSDDSDSDSDS", next_unfilled_slot)
 
     if last_unfilled_field == "":
         response = "First we need to gather some basic demographic information. Tell me your name, age, and occupation."
         output_context = responses.generate_output_context("given-name", 1, session, document)
+    elif 'deduction' in last_unfilled_field and document.deduction_stage!= 'user_done':
+        response = "What other deductions you want to claim? If you want help from us, just say so!"
+        output_context = responses.generate_output_context('deduction-success', 1, session, document)
     else:
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
@@ -164,6 +171,11 @@ def explain_term(content, extract=None):
             response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
                        "which brings certain tax deductions.  Does that make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+
+    elif 'deduction' in extract:
+        response = "A deduction is essentially a discount on your taxes that you get by performing actions that " \
+                   "the government sees as bettering society overall. Does that make sense?"
+        data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     global last_intent
     last_intent = 'explain_term'
@@ -301,7 +313,9 @@ def confirm_yes(content):
     next_unfilled_slot = document.find_next_unfilled_slot()
     last_unfilled_field = next_unfilled_slot
     print("next unfilled slot:", next_unfilled_slot)
+
     response += responses.get_next_response(next_unfilled_slot, document)
+
     with open('response.json') as f:
         data = json.load(f)
 
@@ -355,6 +369,7 @@ def clear():
     global last_output_context
     global last_intent
     global last_unfilled_field
+    global missed_deduction_values
 
     dummy_user = User()
     user = copy.deepcopy(dummy_user)
@@ -367,15 +382,19 @@ def clear():
     last_unfilled_field = ""
     last_intent = "goodbye"
 
+    missed_deduction_values = []
+
     with open('response.json') as f:
         data = json.load(f)
 
-    data['fulfillment_messages'] = [{"text": {"text": ["Great, thanks for using CPai!"]}}]
+    data['fulfillment_messages'] = [{"text": {"text": ["Great, thank you for using CPai!"]}}]
     print(data)
     return jsonify(data)
 
 
-def error_checking(parameters, intent, last_unfilled):
+def error_checking(parameters, intent, last_unfilled, queryText= None):
+    global document
+
     # possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
     digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     requires_money_values = ['wages', 'tax-exempt-interest', 'taxable-interest', 'pensions-and-annuities',
@@ -405,6 +424,9 @@ def error_checking(parameters, intent, last_unfilled):
         num_digits = 0
         num_hyphens = 0
 
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+
         for digit in value:
             if digit in digits:
                 num_digits += 1
@@ -425,6 +447,9 @@ def error_checking(parameters, intent, last_unfilled):
         num_digits = 0
         num_hyphens = 0
 
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+
         for digit in value:
             if digit in digits:
                 num_digits += 1
@@ -443,6 +468,9 @@ def error_checking(parameters, intent, last_unfilled):
         value = str(parameters['dependent-ssn'])
         num_digits = 0
         num_hyphens = 0
+
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
 
         for digit in value:
             if digit in digits:
@@ -474,12 +502,51 @@ def error_checking(parameters, intent, last_unfilled):
         except ValueError:
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
+    elif intent == 'income_and_finances_fill.monetary_value_list':
+        print("HELLO I AM HERE")
+        # print(parameters['value'])
+        dollar_value = str(parameters['value'])
+        # print(dollar_value)
+        for value in parameters['value']:
+            dollar_value = str(value)
+            if '-' in dollar_value:
+                return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
+
+            try:
+                float(dollar_value)
+            except ValueError:
+                return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
+
+    if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
+        if len(str(parameters['number'])) != 11:
+            print("number is", parameters['number'])
+            print("len is", len(str(parameters['number'])))
+            return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
+    elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
+        num = str(parameters['number'])
+        if not num.endswith('e+16'):
+            print("number is", parameters['number'])
+            print("len is", len(str(parameters['number'])))
+            return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
+    elif intent == 'refund_and_owe.number_value' and (last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
+        if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):
+            return last_unfilled, 'You cannot use an amount greater than the amount you overpaid. Please give a\
+                 number equal to or less than ${}.'.format(document.refund_user_info["overpaid"])
+    
+    if intent == 'third_party.phone_number':
+        print("phone number:", parameters['phone-number'])
+        if len(str(parameters['phone-number'])) != 10:
+            return last_unfilled, 'You entered an invalid phone number. Please type in exactly 10 digits.'
+    elif intent == 'third_party.pin':
+        if len(str(parameters['PIN'])) != 7:
+            return last_unfilled, 'You entered an invalid PIN. Please type in exactly 5 digits.'
     return None, None
 
 
 def demographics_fill(content):
     # for print debugging
     parameters = content['queryResult']['parameters']
+    queryText = content['queryResult']['queryText']
     global responses
     global user
     global document
@@ -493,7 +560,7 @@ def demographics_fill(content):
     # Session necessary to generate context identifier
     session = content['session']
 
-    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field, queryText)
 
     if error_field is None and error_message is None:
         # first pass: update params on document object
@@ -619,20 +686,12 @@ def income_finances_fill(content):
     return jsonify(data)
 
 
-def demographics_fill_dependents(content):
-    return None
-
-
 def welcome(content):
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": ["Hello!"]}}]
     return jsonify(data)
-
-
-def explain_instructions(content):
-    return
 
 
 def exploit_deduction(content):
@@ -645,66 +704,251 @@ def exploit_deduction(content):
     global document
     global last_intent
     global last_unfilled_field
+    global missed_deduction_values
+    global previous_deduction_result
 
-    deduction_result = None
-    if current_intent == 'exploit_deduction_help':
-        for key, value in document.deduction_user_info:
-            if value == 0:
-                deduction_result = key
-                break
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+
+    if error_field is not None or error_message is not None:
+        deduction_result = copy.deepcopy(previous_deduction_result)
     else:
-        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+        deduction_result = None
+        if len(missed_deduction_values) > 0:
+            if document.deduction_user_info[last_unfilled_field] is None:
+                document.deduction_user_info[last_unfilled_field] = parameters['value']
+            else:
+                document.deduction_user_info[last_unfilled_field] += parameters['value']
+
+            missed_deduction_values.pop(0)
+            deduction_result = copy.deepcopy(missed_deduction_values)
+
+            if len(missed_deduction_values) == 0:
+                deduction_result = 'deduction-success'
+        elif current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
+            document.deduction_stage = 'user_done'
+
+            for key, value in document.deduction_user_info.items():
+                if value is None:
+                    deduction_result = key
+                    break
+
+        elif document.deduction_stage == 'user_done':
+
+            if document.deduction_user_info[last_unfilled_field] is None:
+                document.deduction_user_info[last_unfilled_field] = parameters['value']
+
+            else:
+                document.deduction_user_info[last_unfilled_field] += parameters['value']
+            for key, value in document.deduction_user_info.items():
+                if value is None:
+                    deduction_result = key
+                    break
+
+        else:
+            deductions_and_values_found = parameters
+            success = False
+
+            possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
+                                        'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
+                                        'tuition_value']
+            value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
+                                    'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
+                                    'roth-IRA-value': 'roth-IRA',
+                                    'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+
+            missed_values = []
+            #        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+
+            for possible_deduction_value in possible_deduction_values:
+                if possible_deduction_value in deductions_and_values_found:
+                    deduction_name = value_to_deduction_name[possible_deduction_value]
+                    if len(deductions_and_values_found[possible_deduction_value]) == 0:
+                        missed_values.append(possible_deduction_value)
+                    else:
+                        params = (deduction_name, deductions_and_values_found[possible_deduction_value])
+                        document.update_slot(params, current_intent, last_unfilled_field)
+                        success = True
+
+            if len(missed_values) > 0:
+                deduction_result =  missed_values
+            elif success:
+                deduction_result = 'deduction-success'
+            else:
+                deduction_result = 'deduction-failure'
 
     session = content['session']
+    previous_deduction_result = copy.deepcopy(deduction_result)
 
     with open('response.json') as f:
         data = json.load(f)
 
     if deduction_result is None:
-        if current_intent == 'exploit_deduction_help':
+        document.current_section_index += 1
+        if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
-            response = "We're all done maximizing your deductions! Now we just have the easy parts left."
+            type_chosen = document.compute_line_9()
+            if type_chosen == 'standard deduction':
+                response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
+            else:
+                response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
+        
+        # Determine whether they need to do the refund or owe section
+        if document.refund_user_info["overpaid"] <= 0:
+            document.current_section_index += 1
+            response += "You owe ${}. To pay, please visit https://www.irs.gov/payments. " \
+                        "We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(document.refund_user_info["amount-owed"])
+        else:
+            response += responses.get_next_response('amount-refunded', document)
+
+    elif isinstance(deduction_result, list):
+        missed_deduction_values = copy.deepcopy(deduction_result)
+        followups = {'state-local-value': 'How much did you pay in those state and local taxes?', 'jury_duty_amount': 'What amount of money did you get from jury duty?',
+                                       'account_401_value':'How much did you contribute to your 401K?', 'charitable-value': 'How much did you contribute to charity?',
+                'medical_value': 'How much did you spend on your healthcare?', 'mortgage_value': 'How much went towards your mortgage?',
+                     'roth-IRA-value': 'How much did you contribute to your roth IRA?',
+                                       'student_loans_value': 'How much did you repay in student loans?', 'tuition_value': 'How much did tuition cost you?'}
+        response = followups[missed_deduction_values[0]]
     else:
         response = responses.get_next_response(deduction_result, document)
-        #if error_message is not None:
-         #   response = error_message + response
+        print(response)
 
+    if error_field is not None or error_message is not None:
+        response = error_message + response
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    if deduction_result is not None:
+
+    if isinstance(deduction_result, list):
+        output_context = responses.generate_output_context('missed-deduction-value', 1, session, document)
+    elif deduction_result is not None:
         output_context = responses.generate_output_context(deduction_result, 1, session, document)
     else:
-        output_context = responses.generate_output_context('refund_and_owe_begin', 1, session, document)
+        output_context = responses.generate_output_context('amount-refunded', 1, session, document)
 
-    last_unfilled_field = deduction_result
+    if isinstance(deduction_result, list):
+        value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                   'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
+                                   'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
+                                   'roth-IRA-value': 'roth-IRA',
+                                   'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+        last_unfilled_field = value_to_deduction_name[deduction_result[0]]
+        print(last_unfilled_field)
+    else:
+        last_unfilled_field = deduction_result
+
+    data['output_contexts'] = output_context
+
+    print(document.deduction_user_info)
     global last_output_context
     last_output_context = output_context
     return jsonify(data)
 
 
-def income_and_finances(content):
-    return
-
-
 def refund_and_owe(content):
+    # for print debugging
+    parameters = content['queryResult']['parameters']
     global responses
     global user
     global document
     global last_intent
     global last_unfilled_field
 
+    response = None
+
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+
+    if error_field is None and error_message is None:
+        # first pass: update params on document object
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
+    last_unfilled_field = next_unfilled_slot
+
+    output_context = None
+    if next_unfilled_slot in document.refund_user_info:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+    else:
+        response = "We're all done filling out your refund and amount to owe section. Does everything look correct?"
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
+    if error_message:
+        response = error_message
+
+    last_unfilled_field = next_unfilled_slot
+
     with open('response.json') as f:
         data = json.load(f)
 
-    if current_intent == 'refund_and_owe.monetary_value':
-        pass
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context:", output_context)
+    data['output_contexts'] = output_context
+    global last_output_context
+    last_output_context = output_context
+    global user
+
+    last_intent = 'refund_and_owe'
+    return jsonify(data)
 
 
-    return
+def third_party(content):
+    parameters = content['queryResult']['parameters']
+    global responses
+    global user
+    global document
+    global last_intent
+    global last_unfilled_field
 
+    response = None
 
-def third_party_and_sign(content):
-    return
+    current_intent = content['queryResult']['intent']['displayName']
+
+    # Session necessary to generate context identifier
+    session = content['session']
+
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+
+    if error_field is None and error_message is None:
+        # first pass: update params on document object
+        document.update_slot(parameters, current_intent, last_unfilled_field)
+
+        # second pass: query next thing needed
+        next_unfilled_slot = document.find_next_unfilled_slot()
+    else:
+        next_unfilled_slot = error_field
+    last_unfilled_field = next_unfilled_slot
+
+    output_context = None
+    if next_unfilled_slot in document.third_party_user_info:
+        response = responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
+    else:
+        response = "We're all done filling out your third party section. Does everything look correct?"
+        output_context = responses.generate_output_context('confirm_section', 1, session, document)
+    if error_message:
+        response = error_message
+
+    last_unfilled_field = next_unfilled_slot
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    print("output_context:", output_context)
+    data['output_contexts'] = output_context
+    global last_output_context
+    last_output_context = output_context
+    global user
+
+    last_intent = 'third_party'
+    return jsonify(data)
 
 
 def autofill(content):
@@ -758,11 +1002,46 @@ def autofill2(content):
     return jsonify(data)
 
 
+def autofill3(content):
+    global last_unfilled_field
+    global responses
+    global document
+
+    print("autofill3")
+    document.update_dummy()
+    document.update_dummy2()
+    document.update_dummy3()
+
+    with open('response.json') as f:
+        data = json.load(f)
+
+    session = content['session']
+    next_unfilled_slot = 'amount-refunded'
+    last_unfilled_field = 'amount-refunded'
+    #if document.refund_user_info["overpaid"] > 0:
+    # TODO FIX
+    # else:
+    #     next_unfilled_slot = None
+    #     last_unfilled_field = None
+    response = responses.get_next_response(next_unfilled_slot, document)
+    print("response:", response)
+    data['fulfillment_messages'] = [{"text": {"text": [response]}}]
+    data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
+    global last_output_context
+    last_output_context = data['output_contexts']
+    print(last_output_context)
+    print(last_unfilled_field)
+
+    return jsonify(data)
+
+
+
 def fallback(content):
     global last_unfilled_field
     global responses
     global document
     global last_output_context
+    global last_intent
 
     if last_unfilled_field == '':
         last_unfilled_field = document.demographics_slots_to_fill[0]
@@ -776,8 +1055,13 @@ def fallback(content):
         data['output_contexts'] = responses.generate_output_context(last_unfilled_field, 1, session, document)
         last_output_context = data['output_contexts']
         redo_response = responses.get_next_response(last_unfilled_field, document)
-        data['fulfillment_messages'] = [
-            {"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
+        if document.sections[document.current_section_index] == 'deductions':
+            data['fulfillment_messages'] = [
+                {"text": {"text": ["Sorry, we don't believe that qualifies you for a deduction. What other "
+                               "deductions you might want to claim? Otherwise, just let us know you need help!"]}}]
+        else:
+            data['fulfillment_messages'] = [
+            {"text": {"text": ["Sorry, you may have entered an invalid value. " + redo_response]}}]
 
     else:
         print('something went wrong, last_unfilled_field is none')
@@ -824,6 +1108,7 @@ def home():
         print("intent:", intent)
         global last_unfilled_field
         global last_output_context
+        global missed_deduction_values
         print("global last output context: " + str(last_output_context))
 
         if intent == 'goodbye' or 'goodbye' == content['queryResult']['queryText']:
@@ -838,12 +1123,17 @@ def home():
                     intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
+            elif intent == 'income_and_finances_fill.monetary_value'  and (document.deduction_stage == 'user_done' or
+                len(missed_deduction_values) > 0):
+                return exploit_deduction(content)
             else:
                 return income_finances_fill(content)
         elif intent == 'autofill':
             return autofill(content)
         elif intent == 'autofill2':
             return autofill2(content)
+        elif intent == 'autofill3':
+            return autofill3(content)
         elif intent == 'explain_term':
             return explain_term(content)
         elif intent.startswith('exploit_deduction'):
@@ -856,18 +1146,12 @@ def home():
             return explain_term(content, unstandardize_token(last_unfilled_field))
         elif intent == 'income_and_finances':
             return income_finances_fill(content)
-        elif intent == 'refund_and_owe':
-            return refund_and_owe(content)
-        elif intent == 'third_party_and_sign':
-            third_party_and_sign(content)
+        elif intent.startswith('third_party'):
+            return third_party(content)
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
-        elif intent == 'demographics_fill.dependents':
-            return demographics_fill_dependents(content)
         elif intent.startswith('income_and_finances_fill'):
             return income_finances_fill(content)
-        elif intent.startswith('exploit_deduction'):
-            return exploit_deductions(content)
         elif intent.startswith('refund_and_owe'):
             return refund_and_owe(content)
         elif intent == 'confirm - yes':
@@ -904,6 +1188,23 @@ def getDocument():
     response = make_response(payload)
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
+
+
+@app.route('/jpg', methods=['GET'])
+def getJpg():
+    global document
+    fields = pdf.fillInFields(document)
+    pdf.generatePdf(fields)
+    pdf.generateImage()
+    return send_file('./page.jpg')
+
+
+@app.route('/pdf', methods=['GET'])
+def getPdf():
+    global document
+    fields = pdf.fillInFields(document)
+    pdf.generatePdf(fields)
+    return send_file('./f1040.pdf')
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-import Vue from "vue";
+import store from "../store";
 
 /*******************************/
 /*       Text-to-speech        */
@@ -11,77 +11,64 @@ let textToSpeech = text => {
     speech.volume = 1;
     speech.rate = 1;
     speech.pitch = 1;
-    console.log(speech);
+    // console.log(speech);
     speechSynthesis.speak(speech);
 };
 
 /*******************************/
 /*       Speech-to-text        */
 /*******************************/
-//import MicrophoneStream from "microphone-stream";
-//const { MediaPresenter } = require("sfmediastream");
-const navigator = Vue.prototype.winNavigator;
-//let micStream = null;
-/*
-let presenterMedia = new MediaPresenter(
-    {
-        audio: {
-            channelCount: 1,
-            echoCancellation: false
-        }
-    },
-    1000
-); // 1sec
+const SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+let recognition = new SpeechRecognition();
 
-presenterMedia.onRecordingReady = function(packet) {
-    console.log("Recording started!");
-    console.log("Header size: " + packet.data.size + "bytes");
+let initSpeechToText = () => {
+    recognition.lang = "en-EN";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-    // Every new streamer must receive this header packet
-    //mySocket.emit("bufferHeader", packet);
-};
+    recognition.onresult = e => {
+        let result = "";
+        const last = e.results.length - 1;
+        result = e.results[last][0].transcript;
+        console.log(e.results[0][0].confidence);
+        console.log(result);
+        store.state.conversation.sttResponse = result;
+        store.state.conversation.sttInProgress = false;
 
-presenterMedia.onBufferProcess = function(packet) {
-    console.log("Buffer sent: " + packet[0].size + "bytes");
-    //mySocket.emit("stream", packet);
-};
-*/
-function stopStream() {
-    /*console.log("micStream.stop()");
-    micStream.stop();*/
-    //console.log("stopStream()");
-    //presenterMedia.stopRecording();
-    //presenter.stopRecording();
-}
-
-function startStream() {
-    //presenterMedia.startRecording();
-    /*
-    const handleSuccess = stream => {
-        micStream = new MicrophoneStream();
-        micStream.setStream(stream);
-        console.log("micStream set.");
-
-        presenter = new MediaPresenter();
-        console.log("getUserMedia succesful, created MediaPresenter");
+        setTimeout(() => {
+            store.dispatch("conversation/speak", result);
+            store.state.conversation.sttResponse = "";
+        }, 1000);
     };
 
-    const handleError = err => {
-        console.log("getUserMedia failed.");
+    recognition.onspeechend = () => {
+        recognition.stop();
+        console.log("Recognition Done");
+        store.state.conversation.sttResponse = "";
+        store.state.conversation.sttInProgress = false;
     };
 
-    navigator.getUserMedia(
-        // constraints
-        {
-            video: false,
-            audio: true
-        },
-        handleSuccess,
-        handleError
-    );*/
+    recognition.onnomatch = () => {
+        console.log("No match/recongition.");
+        store.state.conversation.sttInProgress = false;
+    };
+
+    recognition.onerror = e => {
+        console.log(e.error);
+        store.state.conversation.sttResponse = "";
+        store.state.conversation.sttInProgress = false;
+    };
+};
+
+function startSpeaking() {
+    console.log("Recongition started");
+    recognition.start();
+    console.log(store);
+    store.state.conversation.sttInProgress = true;
 }
 
 export default {
-    textToSpeech
-    /*, startStream, stopStream */
+    textToSpeech,
+    startSpeaking,
+    initSpeechToText
 };
