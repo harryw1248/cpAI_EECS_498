@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, send_file
 from document import Document
 from user import User
 from response import Response
@@ -6,6 +6,7 @@ import pyrebase
 import pprint
 import json
 import copy
+import pdf
 
 config = {
     "apiKey": "AeIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
@@ -772,8 +773,8 @@ def exploit_deduction(content):
         if current_intent == 'exploit_deduction.help':
             response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
         else:
-            document.compute_line_9()
-            if document.deduction_type_chosen == 'standard deduction':
+            type_chosen = document.compute_line_9()
+            if type_chosen == 'standard deduction':
                 response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
             else:
                 response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
@@ -1123,6 +1124,23 @@ def getDocument():
     response = make_response(payload)
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
+
+
+@app.route('/jpg', methods=['GET'])
+def getJpg():
+    global document
+    fields = pdf.fillInFields(document)
+    pdf.generatePdf(fields)
+    pdf.generateImage()
+    return send_file('./page.jpg')
+
+
+@app.route('/pdf', methods=['GET'])
+def getPdf():
+    global document
+    fields = pdf.fillInFields(document)
+    pdf.generatePdf(fields)
+    return send_file('./f1040.pdf')
 
 
 if __name__ == "__main__":
