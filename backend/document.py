@@ -335,7 +335,7 @@ class Document:
                 return slot
         return None
 
-    def find_next_unfilled_slot_refund():
+    def find_next_unfilled_slot_refund(self):
         for slot in self.refund_slots_to_fill:
             if self.refund_user_info[slot] is None:
                 return slot

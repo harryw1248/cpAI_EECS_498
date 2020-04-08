@@ -307,20 +307,24 @@ def confirm_yes(content):
     global responses
     global last_unfilled_field
     session = content['session']
-    document.current_section_index += 1
-    response = "Great, let's move on! "
-    print("current section:", document.sections[document.current_section_index])
-    next_unfilled_slot = document.find_next_unfilled_slot()
-    last_unfilled_field = next_unfilled_slot
-    print("next unfilled slot:", next_unfilled_slot)
+    output_context = None
+    if document.sections[document.current_section_index] == 'third-party':
+        response = "Great! We just need your electronic signature, and we'll be done!"
+    else:
+        document.current_section_index += 1
+        response = "Great, let's move on! "
+        print("current section:", document.sections[document.current_section_index])
+        next_unfilled_slot = document.find_next_unfilled_slot()
+        last_unfilled_field = next_unfilled_slot
+        print("next unfilled slot:", next_unfilled_slot)
 
-    response += responses.get_next_response(next_unfilled_slot, document)
+        response += responses.get_next_response(next_unfilled_slot, document)
+        output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
 
     with open('response.json') as f:
         data = json.load(f)
 
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
-    output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     data['output_contexts'] = output_context
     last_intent = 'confirm - yes'
     user.update_demographic_info(document)
@@ -790,9 +794,9 @@ def exploit_deduction(content):
         else:
             type_chosen = document.compute_line_9()
             if type_chosen == 'standard deduction':
-                response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
+                response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left. "
             else:
-                response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
+                response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left. "
         
         # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:
@@ -801,6 +805,7 @@ def exploit_deduction(content):
                         "We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(document.refund_user_info["amount-owed"])
         else:
             response += responses.get_next_response('amount-refunded', document)
+            last_unfilled_field = 'amount-refunded'
 
     elif isinstance(deduction_result, list):
         missed_deduction_values = copy.deepcopy(deduction_result)
@@ -833,7 +838,7 @@ def exploit_deduction(content):
                                    'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
         last_unfilled_field = value_to_deduction_name[deduction_result[0]]
         print(last_unfilled_field)
-    else:
+    elif last_unfilled_field != 'amount-refunded':
         last_unfilled_field = deduction_result
 
     data['output_contexts'] = output_context
@@ -841,6 +846,7 @@ def exploit_deduction(content):
     print(document.deduction_user_info)
     global last_output_context
     last_output_context = output_context
+    print("DEDUCTIONS last_unfilled_field is", last_unfilled_field)
     return jsonify(data)
 
 
