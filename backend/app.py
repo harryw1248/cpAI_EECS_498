@@ -34,6 +34,7 @@ last_output_context = ""
 
 intent_to_explainable_term = {}
 missed_deduction_values = []
+previous_deduction_result = None
 
 
 def unstandardize_token(token):
@@ -704,74 +705,80 @@ def exploit_deduction(content):
     global last_intent
     global last_unfilled_field
     global missed_deduction_values
+    global previous_deduction_result
 
-    deduction_result = None
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
-    if len(missed_deduction_values) > 0:
-        if document.deduction_user_info[last_unfilled_field] is None:
-            document.deduction_user_info[last_unfilled_field] = parameters['value']
-        else:
-            document.deduction_user_info[last_unfilled_field] += parameters['value']
-
-        missed_deduction_values.pop(0)
-        deduction_result = copy.deepcopy(missed_deduction_values)
-
-        if len(missed_deduction_values) == 0:
-            deduction_result = 'deduction-success'
-    elif current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
-        document.deduction_stage = 'user_done'
-
-        for key, value in document.deduction_user_info.items():
-            if value is None:
-                deduction_result = key
-                break
-
-    elif document.deduction_stage == 'user_done':
-
-        if document.deduction_user_info[last_unfilled_field] is None:
-            document.deduction_user_info[last_unfilled_field] = parameters['value']
-
-        else:
-            document.deduction_user_info[last_unfilled_field] += parameters['value']
-        for key, value in document.deduction_user_info.items():
-            if value is None:
-                deduction_result = key
-                break
-
+    if error_field is not None or error_message is not None:
+        deduction_result = copy.deepcopy(previous_deduction_result)
     else:
-        deductions_and_values_found = parameters
-        success = False
+        deduction_result = None
+        if len(missed_deduction_values) > 0:
+            if document.deduction_user_info[last_unfilled_field] is None:
+                document.deduction_user_info[last_unfilled_field] = parameters['value']
+            else:
+                document.deduction_user_info[last_unfilled_field] += parameters['value']
 
-        possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
-                                     'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
-                                     'tuition_value']
-        value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
-                                   'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
-                                   'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
-                                   'roth-IRA-value': 'roth-IRA',
-                                   'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+            missed_deduction_values.pop(0)
+            deduction_result = copy.deepcopy(missed_deduction_values)
 
-        missed_values = []
-        #        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+            if len(missed_deduction_values) == 0:
+                deduction_result = 'deduction-success'
+        elif current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
+            document.deduction_stage = 'user_done'
 
-        for possible_deduction_value in possible_deduction_values:
-            if possible_deduction_value in deductions_and_values_found:
-                deduction_name = value_to_deduction_name[possible_deduction_value]
-                if len(deductions_and_values_found[possible_deduction_value]) == 0:
-                    missed_values.append(possible_deduction_value)
-                else:
-                    params = (deduction_name, deductions_and_values_found[possible_deduction_value])
-                    document.update_slot(params, current_intent, last_unfilled_field)
-                    success = True
+            for key, value in document.deduction_user_info.items():
+                if value is None:
+                    deduction_result = key
+                    break
 
-        if len(missed_values) > 0:
-            deduction_result =  missed_values
-        elif success:
-            deduction_result = 'deduction-success'
+        elif document.deduction_stage == 'user_done':
+
+            if document.deduction_user_info[last_unfilled_field] is None:
+                document.deduction_user_info[last_unfilled_field] = parameters['value']
+
+            else:
+                document.deduction_user_info[last_unfilled_field] += parameters['value']
+            for key, value in document.deduction_user_info.items():
+                if value is None:
+                    deduction_result = key
+                    break
+
         else:
-            deduction_result = 'deduction-failure'
+            deductions_and_values_found = parameters
+            success = False
+
+            possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value', 'charitable-value',
+                                        'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
+                                        'tuition_value']
+            value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
+                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
+                                    'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
+                                    'roth-IRA-value': 'roth-IRA',
+                                    'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+
+            missed_values = []
+            #        deduction_result = document.update_slot(parameters, current_intent, last_unfilled_field)
+
+            for possible_deduction_value in possible_deduction_values:
+                if possible_deduction_value in deductions_and_values_found:
+                    deduction_name = value_to_deduction_name[possible_deduction_value]
+                    if len(deductions_and_values_found[possible_deduction_value]) == 0:
+                        missed_values.append(possible_deduction_value)
+                    else:
+                        params = (deduction_name, deductions_and_values_found[possible_deduction_value])
+                        document.update_slot(params, current_intent, last_unfilled_field)
+                        success = True
+
+            if len(missed_values) > 0:
+                deduction_result =  missed_values
+            elif success:
+                deduction_result = 'deduction-success'
+            else:
+                deduction_result = 'deduction-failure'
 
     session = content['session']
+    previous_deduction_result = copy.deepcopy(deduction_result)
 
     with open('response.json') as f:
         data = json.load(f)
@@ -807,6 +814,8 @@ def exploit_deduction(content):
         response = responses.get_next_response(deduction_result, document)
         print(response)
 
+    if error_field is not None or error_message is not None:
+        response = error_message + response
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     if isinstance(deduction_result, list):
