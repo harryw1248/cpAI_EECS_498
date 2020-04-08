@@ -9,7 +9,8 @@ class Document:
             'demographics',
             'income',
             'deductions',
-            'refund'
+            'refund',
+            'third-party'
         ]
 
         self.demographic_user_info = {
@@ -223,6 +224,22 @@ class Document:
             'overpaid-applied-tax',
         ]
 
+        self.third_party_user_info = {
+            'third-party': None,
+            'third-party-given-name': None,
+            'third-party-last-name': None,
+            'phone-number': None,
+            'PIN': None
+        }
+
+        self.third_party_slots_to_fill = [
+            'third-party',
+            'third-party-given-name',
+            'third-party-given-name',
+            'phone-number',
+            'PIN'
+        ]
+
         self.dependent_being_filled = None
         self.number_of_dependents_completed = 0
         self.dependents = []
@@ -254,6 +271,8 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_deductions()
         elif self.sections[self.current_section_index] == 'refund':
             self.last_unfilled_field = self.find_next_unfilled_slot_refund()
+        elif self.sections[self.current_section_index] == 'third-party':
+            self.last_unfilled_field = self.find_next_unfilled_slot_third_party()
         return self.last_unfilled_field
 
     def find_next_unfilled_slot_demographics(self):
@@ -307,6 +326,12 @@ class Document:
     def find_next_unfilled_slot_refund(self):
         for slot in self.refund_slots_to_fill:
             if self.refund_user_info[slot] is None:
+                return slot
+        return None
+
+    def find_next_unfilled_slot_third_party(self):
+        for slot in self.third_party_slots_to_fill:
+            if self.third_party_user_info[slot] is None:
                 return slot
         return None
 
@@ -541,6 +566,19 @@ class Document:
             else:
                 self.refund_user_info[extracted_slot_name] = parameters[extracted_slot_name]
 
+        elif self.sections[self.current_section_index] == 'third-party':
+            if current_intent == 'third_party.bool':
+                if parameters["third-party"] == "yes":
+                    self.third_party_user_info['third-party'] = True
+                else:
+                    self.third_party_user_info['third-party'] = False
+                    self.third_party_user_info['third-party-given-name'] = False
+                    self.third_party_user_info['third-party-given-name'] = False
+                    self.third_party_user_info['phone-number'] = False
+                    self.third_party_user_info['PIN'] = False        
+            else:
+                self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
+        
         print(self.income_user_info)
         return None
             
