@@ -161,16 +161,16 @@ class Response:
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not receive any of these forms, report 0.',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you did not receive any of these forms, report 0.',
             'has-1099-R': 'Have you received 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
-            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
+            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms? Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. What '
                                  'are the gross distributions in field 1? If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R?',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable refunds or credits from this past year?',
             'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your business this past year? If you do not have a business, say zero.',

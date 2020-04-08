@@ -472,16 +472,17 @@ class Document:
                 ##DONT DELETE THE COMMENTED LINE BELOW
                 self.income_user_info["7b"] = self.compute_line_7b()
                 self.income_user_info["total-income"] = self.compute_line_7b()
-                self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info[
-                    "adjustments-to-income"]
-                self.income_user_info["adjusted-gross-income"] = self.income_user_info["7b"] - self.income_user_info[
-                    "adjustments-to-income"]
+                self.income_user_info["8b"] = max(0, self.income_user_info["7b"] - self.income_user_info[
+                    "adjustments-to-income"])
+                self.income_user_info["adjusted-gross-income"] = max(0, self.income_user_info["7b"] - self.income_user_info[
+                    "adjustments-to-income"])
                 self.income_user_info["9"] = self.compute_standard_deductions()
                 self.compute_11a_and_11b()
-                print(self.income_user_info)
-                print(self.demographic_user_info)
+                # print(self.income_user_info)
+                # print(self.demographic_user_info)
                 self.income_user_info["12a"] = self.compute_tax_amount_12a()
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
+                # print(self.income_user_info)
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.compute_total_other_income()
@@ -540,6 +541,7 @@ class Document:
             else:
                 self.refund_user_info[extracted_slot_name] = parameters[extracted_slot_name]
 
+        print(self.income_user_info)
         return None
             
     def compute_overpaid_amount(self):
@@ -625,7 +627,7 @@ class Document:
                   self.income_user_info['self-employed-health-insurance'] +
                   self.income_user_info['IRA-deductions'])
 
-        if line_6 < line_5:
+        if line_6 > line_5:
             return 0
 
         line_7 = line_5 - line_6
@@ -645,7 +647,7 @@ class Document:
         if line_8 == "skip":
             line_16 = line_7 * 0.85
         else:
-            if line_8 < line_7:
+            if line_8 > line_7:
                 return 0
             else:
                 line_9 = line_7 - line_8
@@ -726,9 +728,14 @@ class Document:
                                                "8b"] - self.income_user_info["11a"], 0)
 
     def compute_standard_deductions(self):
+        total_check_boxes = (int(self.demographic_user_info["age"]) > 65 + self.demographic_user_info["blind"] == True +
+                            self.demographic_spouse_info['spouse-age'] is not None and int(self.demographic_spouse_info[
+                                'spouse-age']) > 65 +
+                            self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
+                                'spouse-blind'] == True)
         if self.demographic_user_info['claim-you-dependent'] == False and \
                 self.demographic_user_info['claim-spouse-dependent'] == False and \
-                self.demographic_user_info['claim-you-dependent'] == False:
+                self.demographic_user_info['claim-you-dependent'] == False and total_check_boxes == 0:
 
             if self.demographic_user_info["filing_status"] is "married filing jointly" or self.demographic_user_info[
                 "filing_status"] is "qualifying widow":
@@ -743,12 +750,12 @@ class Document:
                 "dual_status_alien"] == True:
                 return 0
             else:
-                total_check_boxes = (
-                            self.demographic_user_info["age"] > 65 + self.demographic_user_info["blind"] == True +
-                            self.demographic_spouse_info['spouse-age'] is not None and self.demographic_spouse_info[
-                                'spouse-age'] > 65 +
-                            self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
-                                'spouse-blind'] == True)
+                # total_check_boxes = (
+                #             self.demographic_user_info["age"] > 65 + self.demographic_user_info["blind"] == True +
+                #             self.demographic_spouse_info['spouse-age'] is not None and self.demographic_spouse_info[
+                #                 'spouse-age'] > 65 +
+                #             self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
+                #                 'spouse-blind'] == True)
                 if self.demographic_user_info["claim-spouse-dependent"] == True or self.demographic_user_info[
                     'claim-you-dependent'] == True:
                     earned_income = self.income_user_info["wages"]
