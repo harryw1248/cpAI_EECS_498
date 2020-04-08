@@ -386,7 +386,7 @@ class Document:
 
             extracted_slot_name = last_unfilled_field
 
-            if "age" in parameters:
+            if "age" in parameters and self.demographic_user_info["age"] is not None:
                 if self.demographic_user_info["age"] <= 22:
                     self.deduction_user_info['mortgage'] = 0
                 if self.demographic_user_info["age"] <= 20:

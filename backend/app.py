@@ -390,7 +390,7 @@ def clear():
     return jsonify(data)
 
 
-def error_checking(parameters, intent, last_unfilled):
+def error_checking(parameters, intent, last_unfilled, queryText= None):
     global document
 
     # possible_error_intents = ['address', 'social_security', 'spouse_SSN', 'money-negative']
@@ -422,6 +422,9 @@ def error_checking(parameters, intent, last_unfilled):
         num_digits = 0
         num_hyphens = 0
 
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+
         for digit in value:
             if digit in digits:
                 num_digits += 1
@@ -442,6 +445,9 @@ def error_checking(parameters, intent, last_unfilled):
         num_digits = 0
         num_hyphens = 0
 
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+
         for digit in value:
             if digit in digits:
                 num_digits += 1
@@ -460,6 +466,9 @@ def error_checking(parameters, intent, last_unfilled):
         value = str(parameters['dependent-ssn'])
         num_digits = 0
         num_hyphens = 0
+
+        if value[0] == '-':
+            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
 
         for digit in value:
             if digit in digits:
@@ -491,6 +500,21 @@ def error_checking(parameters, intent, last_unfilled):
         except ValueError:
             return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
+    elif intent == 'income_and_finances_fill.monetary_value_list':
+        print("HELLO I AM HERE")
+        # print(parameters['value'])
+        dollar_value = str(parameters['value'])
+        # print(dollar_value)
+        for value in parameters['value']:
+            dollar_value = str(value)
+            if '-' in dollar_value:
+                return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
+
+            try:
+                float(dollar_value)
+            except ValueError:
+                return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
+
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
         if len(str(parameters['number'])) != 11:
             print("number is", parameters['number'])
@@ -512,6 +536,7 @@ def error_checking(parameters, intent, last_unfilled):
 def demographics_fill(content):
     # for print debugging
     parameters = content['queryResult']['parameters']
+    queryText = content['queryResult']['queryText']
     global responses
     global user
     global document
@@ -525,7 +550,7 @@ def demographics_fill(content):
     # Session necessary to generate context identifier
     session = content['session']
 
-    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
+    error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field, queryText)
 
     if error_field is None and error_message is None:
         # first pass: update params on document object
@@ -969,7 +994,7 @@ def fallback(content):
                                "deductions you might want to claim? Otherwise, just let us know you need help!"]}}]
         else:
             data['fulfillment_messages'] = [
-            {"text": {"text": ["Sorry, you may have an entered an invalid value. " + redo_response]}}]
+            {"text": {"text": ["Sorry, you may have entered an invalid value. " + redo_response]}}]
 
     else:
         print('something went wrong, last_unfilled_field is none')
