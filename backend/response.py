@@ -11,6 +11,8 @@ class Response:
             'geo-state': 'What state do you live in?',
             'zip-code': "What's your ZIP code?",
             'social_security': 'Please type in your social security number (SSN).',
+            'email': 'What is your email?',
+            'user-phone-number': 'What is your phone number?',
             'is-married': 'Are you currently married?',
             'num_dependents': "How many dependents are you claiming?",
             'filing_status_married': 'Are you filing jointly with your spouse or filing separately?',
@@ -24,9 +26,10 @@ class Response:
         }
 
         self.demographics_spouse = {
-            'spouse-given-name': "Since you're married, I will need some of your spouse's information. What is your spouse's name and age?",
+            'spouse-given-name': "Since you're married, I will need some of your spouse's information. What is your spouse's name, age, and occupation?",
             'spouse-last-name': "What is your spouse's last name?",
             'spouse-age': "What is your spouse's age?",
+            'spouse-occupation': "What is your spouse's occupation?",
             'spouse-ssn': "Please type in your spouse's SSN.",
             'spouse-blind': 'Is your spouse blind?',
             'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
@@ -43,6 +46,8 @@ class Response:
             'city': 'prompt_address',
             'zip-code': 'prompt_address',
             'social_security': 'prompt_social_security',
+            'email': 'prompt_email_phone_number',
+            'user-phone-number': 'prompt_email_phone_number', 
             'is-married': 'prompt_is_married',
             'dual_status_alien': "prompt_dual_status_alien",
             'blind': 'prompt_blind',
@@ -54,6 +59,7 @@ class Response:
             'spouse-given-name': "prompt_spouse_name_age",
             'spouse-last-name': "prompt_spouse_name_age",
             'spouse-age': "prompt_spouse_name_age",
+            'spouse-occupation':'prompt_spouse_name_age',
             'spouse-ssn': "prompt_spouse_SSN",
             'spouse-blind': "prompt_spouse_blind",
             'dependent-given-name': "prompt_dependent_info",
