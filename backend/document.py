@@ -434,9 +434,9 @@ class Document:
             # compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
                 if parameters['value'] != "":
-                    extracted_slot_value = parameters['value']
+                    extracted_slot_value = float(parameters['value'])
                 elif parameters['dollar'] != "":
-                    extracted_slot_value = parameters['dollar']["amount"]
+                    extracted_slot_value = float(parameters['dollar']["amount"])
             elif current_intent == "income_and_finances_fill.monetary_value_list":
                 total = 0
                 for value in parameters['value']:
@@ -550,6 +550,8 @@ class Document:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
         elif self.sections[self.current_section_index] == 'deductions':
             (deduction_name, dollar_values) = parameters
+            print("DEDUCTIONS", parameters)
+            print(deduction_name, dollar_values)
             if self.deduction_user_info[deduction_name] is None:
                 self.deduction_user_info[deduction_name] = 0
             for dollar_value in dollar_values:
@@ -949,6 +951,7 @@ class Document:
         #    if self.deduction_user_info[key] is None:
         #        self.deduction_user_info[key] = 0
 
+        print(self.deduction_user_info)
         itemized_deductions = self.deduction_user_info['charitable-contribution'] +\
             self.deduction_user_info['state-local-taxes'] +\
             self.deduction_user_info['mortgage'] +\

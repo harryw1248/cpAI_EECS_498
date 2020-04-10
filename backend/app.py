@@ -494,7 +494,9 @@ def error_checking(parameters, intent, last_unfilled, queryText= None):
 
     elif intent == 'income_and_finances_fill.monetary_value':
         dollar_value = str(parameters['value'])
-        dollar_value_2 = str(parameters['dollar']["amount"])
+        dollar_value_2 = ''
+        if parameters['dollar'] != '':
+            dollar_value_2 = str(parameters['dollar']["amount"])
         if '-' in dollar_value or '-' in dollar_value_2:
             return last_unfilled, 'You entered a negative dollar amount. Only non-negative values are allowed. '
 
@@ -733,9 +735,15 @@ def exploit_deduction(content):
         deduction_result = None
         if len(missed_deduction_values) > 0:
             if document.deduction_user_info[last_unfilled_field] is None:
-                document.deduction_user_info[last_unfilled_field] = parameters['value']
+                if parameters['value'] != '':
+                    document.deduction_user_info[last_unfilled_field] = parameters['value']
+                elif parameters['dollar'] != '':
+                    document.deduction_user_info[last_unfilled_field] = parameters['dollar']['amount']
             else:
-                document.deduction_user_info[last_unfilled_field] += parameters['value']
+                if parameters['value'] != '':
+                    document.deduction_user_info[last_unfilled_field] += parameters['value']
+                elif parameters['dollar'] != '':
+                    document.deduction_user_info[last_unfilled_field] += parameters['dollar']['amount']
 
             missed_deduction_values.pop(0)
             deduction_result = copy.deepcopy(missed_deduction_values)
@@ -753,10 +761,16 @@ def exploit_deduction(content):
         elif document.deduction_stage == 'user_done':
 
             if document.deduction_user_info[last_unfilled_field] is None:
-                document.deduction_user_info[last_unfilled_field] = parameters['value']
+                if parameters['value'] != '':
+                    document.deduction_user_info[last_unfilled_field] = parameters['value']
+                elif parameters['dollar'] != '':
+                    document.deduction_user_info[last_unfilled_field] = parameters['dollar']['amount']
 
             else:
-                document.deduction_user_info[last_unfilled_field] += parameters['value']
+                if parameters['value'] != '':
+                    document.deduction_user_info[last_unfilled_field] += parameters['value']
+                elif parameters['dollar'] != '':
+                    document.deduction_user_info[last_unfilled_field] += parameters['dollar']['amount']
             for key, value in document.deduction_user_info.items():
                 if value is None:
                     deduction_result = key
