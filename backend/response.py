@@ -30,7 +30,7 @@ class Response:
             'spouse-ssn': "Please type in your spouse's SSN.",
             'spouse-blind': 'Is your spouse blind?',
             'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
-            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?'
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?' #adding occupation to training utterances
         }
 
         self.slot_to_output_contexts = { 

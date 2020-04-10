@@ -412,6 +412,7 @@ class Document:
         
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
+        print("YUOLO", parameters)
         if self.sections[self.current_section_index] == 'demographics':
             self.update_document_demographics(parameters, current_intent)
 
@@ -432,11 +433,17 @@ class Document:
 
             # compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
-                extracted_slot_value = parameters['value']
+                if parameters['value'] != "":
+                    extracted_slot_value = parameters['value']
+                elif parameters['dollar'] != "":
+                    extracted_slot_value = parameters['dollar']["amount"]
             elif current_intent == "income_and_finances_fill.monetary_value_list":
                 total = 0
                 for value in parameters['value']:
                     total += value
+
+                for value in parameters['dollar']:
+                    total += value["amount"]
                 extracted_slot_value = total
             elif 'gains_losses' in current_intent:
                 if parameters['gain-or-loss'] == 'loss':
