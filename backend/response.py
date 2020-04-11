@@ -11,6 +11,8 @@ class Response:
             'geo-state': 'What state do you live in?',
             'zip-code': "What's your ZIP code?",
             'social_security': 'Please type in your social security number (SSN).',
+            'email': 'What is your email?',
+            'user-phone-number': 'What is your phone number?',
             'is-married': 'Are you currently married?',
             'num_dependents': "How many dependents are you claiming?",
             'filing_status_married': 'Are you filing jointly with your spouse or filing separately?',
@@ -24,13 +26,14 @@ class Response:
         }
 
         self.demographics_spouse = {
-            'spouse-given-name': "Since you're married, I will need some of your spouse's information. What is your spouse's name and age?",
+            'spouse-given-name': "Since you're married, I will need some of your spouse's information. What is your spouse's name, age, and occupation?",
             'spouse-last-name': "What is your spouse's last name?",
             'spouse-age': "What is your spouse's age?",
+            'spouse-occupation': "What is your spouse's occupation?",
             'spouse-ssn': "Please type in your spouse's SSN.",
             'spouse-blind': 'Is your spouse blind?',
             'claim-spouse-dependent': 'Can someone claim your spouse as a dependent?',
-            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?'
+            'spouse-itemize-separate': 'Is your spouse itemizing on a separate return?' #adding occupation to training utterances
         }
 
         self.slot_to_output_contexts = { 
@@ -43,6 +46,8 @@ class Response:
             'city': 'prompt_address',
             'zip-code': 'prompt_address',
             'social_security': 'prompt_social_security',
+            'email': 'prompt_email_phone_number',
+            'user-phone-number': 'prompt_email_phone_number', 
             'is-married': 'prompt_is_married',
             'dual_status_alien': "prompt_dual_status_alien",
             'blind': 'prompt_blind',
@@ -54,6 +59,7 @@ class Response:
             'spouse-given-name': "prompt_spouse_name_age",
             'spouse-last-name': "prompt_spouse_name_age",
             'spouse-age': "prompt_spouse_name_age",
+            'spouse-occupation':'prompt_spouse_name_age',
             'spouse-ssn': "prompt_spouse_SSN",
             'spouse-blind': "prompt_spouse_blind",
             'dependent-given-name': "prompt_dependent_info",
@@ -119,7 +125,12 @@ class Response:
             'routing-number': 'prompt_refund_number_value',
             'account-number': 'prompt_refund_number_value',
             'estimated-tax-penalty': 'prompt_refund_number_value',
-            'missed-deduction-value': 'prompt_monetary_value'
+            'missed-deduction-value': 'prompt_monetary_value',
+            'third-party': 'prompt_third_party_bool',
+            'third-party-given-name': 'prompt_third_party_name',
+            'third-party-last-name': 'prompt_third_party_name',
+            'phone-number': 'prompt_phone_number',
+            'PIN': 'prompt_pin'
         }
 
         self.demographics_question_order = ['given-name', 'last-name', 'age', 'occupation', 'street_address',
@@ -161,16 +172,16 @@ class Response:
             'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
                                     ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
                                     ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID?. If you did not receive any of these forms, report 0.',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you did not receive any of these forms, report 0.',
             'has-1099-R': 'Have you received 1099-R form(s) this year?',
             'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
-            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms?. Please list them.',
+            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms? Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. What '
                                  'are the gross distributions in field 1? If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R.',
+            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R?',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable refunds or credits from this past year?',
             'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your business this past year? If you do not have a business, say zero.',
@@ -254,6 +265,14 @@ class Response:
             'account-number': 'What is your account number?'
         }
 
+        self.third_party = {
+            'third-party': 'Do you want to allow another person (other than your paid preparer) to discuss this return with the IRS?',
+            'third-party-given-name': 'What is that person\'s name?',
+            'third-party-last-name': 'What is that person\'s last name?',
+            'phone-number': 'What is their phone number?',
+            'PIN': 'What is their Personal Identification Number (PIN)?'
+        }
+
 
 
     #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
@@ -291,6 +310,8 @@ class Response:
             return self.deductions[next_unfilled_slot]
         elif next_unfilled_slot in self.refund:
             return self.get_next_refund_response(next_unfilled_slot, current_document)
+        elif next_unfilled_slot in self.third_party:
+            return self.third_party[next_unfilled_slot]
 
         print("couldn't find the response for slot:", next_unfilled_slot)
         return None
