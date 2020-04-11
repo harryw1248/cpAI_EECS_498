@@ -166,7 +166,6 @@ class Document:
             'tuition-fees',
             # 'adjustments-to-income' ENDS here,
             'ss-benefits',
-
             'federal-income-tax-withheld',
             'earned-income-credit',
             'schedule-2-line-3',
@@ -183,6 +182,7 @@ class Document:
             'roth-IRA': None,
             'medical-dental-expenses': None,
             'jury-duty': None,
+            'damaged-property': None,
             'student-loan-interest': None,
             'tuition': None
         }
@@ -194,7 +194,8 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'damaged-property'
         ]
 
         self.available_deductions = [
@@ -204,7 +205,8 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'damaged-property'
         ]
 
         self.refund_user_info = {
@@ -339,12 +341,6 @@ class Document:
                 return slot
         return None
 
-    def find_next_unfilled_slot_refund(self):
-        for slot in self.refund_slots_to_fill:
-            if self.refund_user_info[slot] is None:
-                return slot
-        return None
-
     def update_document_demographics(self, parameters, current_intent):
         # Check if we are currently working on a dependent
         # Beware of change_field!!!
@@ -455,7 +451,7 @@ class Document:
                     extracted_slot_value = parameters['value']
             else:
                 extracted_slot_value = parameters[extracted_slot_name]
-            print("extracted slot value is", extracted_slot_value)
+            print("extracted slot value is " + str(extracted_slot_value))
 
             # compute yes or no fields
             if extracted_slot_value == 'yes':

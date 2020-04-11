@@ -329,8 +329,6 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
             except ValueError:
                 return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
-
-
     elif intent == 'income_and_finances_fill.monetary_value_list':
         print("HELLO I AM HERE")
         # print(parameters['value'])
@@ -436,7 +434,6 @@ def demographics_fill(content):
                 addition = name + " unfortunately does not qualify for a tax credit. "
 
             response = addition + response
-        print(document)
 
     output_context = None
     if (next_unfilled_slot in document.demographic_user_info
@@ -470,7 +467,6 @@ def demographics_fill(content):
 
 def income_finances_fill(content):
     # for print debugging
-    print("income_finances_fill called")
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -542,7 +538,6 @@ def welcome(content):
 
 
 def exploit_deduction(content):
-    print("exploiting deductions")
     parameters = content['queryResult']['parameters']
     current_intent = content['queryResult']['intent']['displayName']
 
@@ -608,13 +603,13 @@ def exploit_deduction(content):
             success = False
 
             possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value',
-                                         'charitable-value',
-                                         'medical_value', 'mortgage_value', 'roth-IRA-value', 'student_loans_value',
+                                         'charitable-value', 'damage-cost', 'medical_value',
+                                         'mortgage_value', 'roth-IRA-value', 'student_loans_value',
                                          'tuition_value']
             value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                        'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
                                        'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
-                                       'roth-IRA-value': 'roth-IRA',
+                                       'roth-IRA-value': 'roth-IRA', 'damage-cost': 'damaged-property',
                                        'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
 
             missed_values = []
@@ -673,7 +668,8 @@ def exploit_deduction(content):
                      'mortgage_value': 'How much went towards your mortgage?',
                      'roth-IRA-value': 'How much did you contribute to your roth IRA?',
                      'student_loans_value': 'How much did you repay in student loans?',
-                     'tuition_value': 'How much did tuition cost you?'}
+                     'tuition_value': 'How much did tuition cost you?',
+                     'damage-cost': 'How much were your losses valued at?'}
         response = followups[missed_deduction_values[0]]
     else:
         response = responses.get_next_response(deduction_result, document)
@@ -694,7 +690,7 @@ def exploit_deduction(content):
         value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
                                    'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
-                                   'roth-IRA-value': 'roth-IRA',
+                                   'roth-IRA-value': 'roth-IRA', 'damage-cost': 'damaged-property',
                                    'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
         last_unfilled_field = value_to_deduction_name[deduction_result[0]]
         print(last_unfilled_field)
@@ -703,7 +699,6 @@ def exploit_deduction(content):
 
     data['output_contexts'] = output_context
 
-    print(document.deduction_user_info)
     global last_output_context
     last_output_context = output_context
     return jsonify(data)
@@ -847,7 +842,6 @@ def autofill2(content):
     global responses
     global document
 
-    print("autofill2")
     document.update_dummy()
     document.update_dummy2()
 
