@@ -167,42 +167,57 @@ class Response:
         }
 
         self.income_finances = {
-            'wages': 'Please take out your W-2 form. What are your total wages, salaries, and tips as indicated in Box 1?',
+            'wages': 'Please take out your W-2 form. What are your total wages, salaries, and tips '
+                     'as indicated in Box 1?',
             'owns-business': 'Do you own a business?',
             'owns-stocks-bonds': 'Do you own any stocks or bonds?',
-            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is your tax-exempt stated interest shown in box 8? If you '
-                                    ' have Form 1099 OID, what is your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have received Form 1099-DIV, please also list '
-                                    ' the value in Box 11. If you received none of these forms, report 0.',
-            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you did not receive any of these forms, report 0.',
+            'tax-exempt-interest': 'Please take out Form 1099-INT or Form 1099-OID. If you have Form 1099-INT, what is '
+                                   'your tax-exempt stated interest shown in box 8? If you have Form 1099 OID, what is '
+                                   'your tax-exempt OID bond in Box 2 and tax-exempt OID in Box 11? If you have '
+                                   'received Form 1099-DIV, please also list the value in Box 11. If you received none '
+                                   'of these forms, report 0.',
+            'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you '
+                                'did not receive any of these forms, report 0.',
             'has-1099-R': 'Have you received 1099-R form(s) this year?',
-            'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms? Please list them.',
-            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as shown in your 1099-R forms? Please list them.',
+            'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms?'
+                                      ' Please list them.',
+            'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as '
+                                              'shown in your 1099-R forms? Please list them.',
             'has-1099-DIV': 'Did your bank or brokerage firm send you a 1099-DIV form?',
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
-            'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. What '
-                                 'are the gross distributions in field 1? If you do not have an IRA, say zero.',
+            'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. '
+                                 'What are the gross distributions in field 1? If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R?',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
-            'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable refunds or credits from this past year?',
-            'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your business this past year? If you do not have a business, say zero.',
-            'unemployment-compensation': 'Please go to line 7 of Schedule 1. How much did you collect in unemployment compensation this past year?',
-            'other-income': 'Please go to line 8 of Schedule 1. What is the total amount you made or receieved in forms of other income? Ignore the type.',
+            'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable '
+                               'refunds or credits from this past year?',
+            'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your'
+                               ' business this past year? If you do not have a business, say zero.',
+            'unemployment-compensation': 'Please go to line 7 of Schedule 1. How much did you collect in unemployment '
+                                         'compensation this past year?',
+            'other-income': 'Please go to line 8 of Schedule 1. What is the total amount you made or receieved in '
+                            'forms of other income? Ignore the type.',
             'educator-expenses': 'What is your amount of educator expenses in line 10 of Schedule 1?',
             'business-expenses': 'What is your amount of business expenses in line 11 of Schedule 1?',
             'health-savings-deductions': 'What is your amount in health savings expenses in line 12 of Schedule 1?',
             'moving-expenses-armed-forces': 'What is your amount of moving expenses in line 13 of Schedule 1?',
-            'self-employed-health-insurance': 'What is your amount in self employed health insurance in line 16 of Schedule 1?',
+            'self-employed-health-insurance': 'What is your amount in self employed health insurance in line 16 of '
+                                              'Schedule 1?',
             #'penalty-early-withdrawal-savings': 'What is your amount of penalty from early withdrawal from our savings?',
             'IRA-deductions': 'What is your amount in IRA deductions in line 19 of Schedule 1?',
-            'student-loan-interest-deduction': 'What is your student loan interest deduction amount in line 20 of Schedule 1?',
+            'student-loan-interest-deduction': 'What is your student loan interest deduction amount in line 20 of '
+                                               'Schedule 1?',
             'tuition-fees': 'What is your amount of tuition and fees in line 21 of Schedule 1?',
             'federal-income-tax-withheld': 'What is your amount of federal income tax withheld from Forms W-2 and 1099?',
-            'ss-benefits': 'Have you received Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of the forms. If not, say 0.',
-            'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in front of you. What is your additional tax as stated in line 3 of Schedule 2?',
+            'ss-benefits': 'Have you received Forms SSA-1099 and RRB-1099? If so, list the values in box 5 in each of '
+                           'the forms. If not, say 0.',
+            'schedule-2-line-3': 'Now, just a few more questions to go! Please have your Schedule 2 and 3 forms in '
+                                 'front of you. What is your additional tax as stated in line 3 of Schedule 2?',
             'schedule-3-line-7': 'What are your nonrefundable credits as specified on line 7 of Schedule 3?',
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
-            'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of Schedule 3?',
+            'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of'
+                                  ' Schedule 3?',
         }
 
         self.income_finances_order = [
@@ -245,8 +260,8 @@ class Response:
                                         'clothing, vehicles, or furniture in good condition can also count!',
             'deduction-success': 'Congrats, you saved yourself some money! What other deductions do you want to claim? '
                                     'If you want help from us, just say so!',
-            'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that deduction at '
-                            'this time. What other deductions you want to claim?'
+            'deduction-failure': 'Sorry, either that does not qualify for a deduction or we do not cover that '
+                                 'deduction at this time. What other deductions you want to claim?'
                                     'If you want help from us, just say so!',
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
@@ -262,7 +277,8 @@ class Response:
 
         self.refund = {
             'amount-refunded': 'How much of that would you like refunded to you?',
-            'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 estimated tax?',
+            'overpaid-applied-tax': 'How much of the amount you overpaid would you like applied to your 2020 '
+                                    'estimated tax?',
             'direct-deposit': 'Would you like this amount transferred to you through direct deposit?',
             'account-type': 'Is the account that you\'d like to deposit into a savings or checkings account?',
             'routing-number': 'What is your routing number?',
@@ -270,18 +286,14 @@ class Response:
         }
 
         self.third_party = {
-            'third-party': 'Do you want to allow another person (other than your paid preparer) to discuss this return with the IRS?',
+            'third-party': 'Do you want to allow another person (other than your paid preparer) to discuss this return'
+                           ' with the IRS?',
             'third-party-given-name': 'What is that person\'s name?',
             'third-party-last-name': 'What is that person\'s last name?',
             'phone-number': 'What is their phone number?',
             'PIN': 'What is their Personal Identification Number (PIN)?'
         }
 
-
-
-    #TODO: WAIT UNTIL WE GET INFORMATION ABOUT DEPENDENTS TO MAKE HOH OR QUALIFIED WIDOWER CLASSIFICATION
-    # FOR NOW, WE ARE JUST USING UNMARRIED/DEPENDENT = HOH AND DEAD-SPOUSE/DEPEPDENT = QUALIFIED WIDOWER,
-    # BUT WE CAN HOLD OFF ON MAKING THAT JUDGMENT IN THE BACKEND UNTIL WE GET MORE INFO ON DEPENDENT
     def get_next_response(self, next_unfilled_slot, current_document):
         print("next_unfilled_slot:", next_unfilled_slot)
         if current_document.dependent_being_filled is not None:
@@ -348,8 +360,6 @@ class Response:
 
 
     def generate_output_context(self, slot, lifespan, session, current_document):
-        #print("generate_output_context called")
-
         if slot == "filing_status":
             if current_document.is_married:
                 context_identifier = session + "/contexts/" + 'prompt_filing_status_married'

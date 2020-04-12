@@ -436,6 +436,8 @@ class Document:
                     extracted_slot_value = float(parameters['value'])
                 elif parameters['dollar'] != "":
                     extracted_slot_value = float(parameters['dollar']["amount"])
+                else:
+                    extracted_slot_value = ""
             elif current_intent == "income_and_finances_fill.monetary_value_list":
                 total = 0
                 for value in parameters['value']:
@@ -450,7 +452,11 @@ class Document:
                 else:
                     extracted_slot_value = parameters['value']
             else:
-                extracted_slot_value = parameters[extracted_slot_name]
+                try:
+                    extracted_slot_value = parameters[extracted_slot_name]
+                except:
+                    extracted_slot_value = parameters['spouse-blind']
+
             print("extracted slot value is " + str(extracted_slot_value))
 
             # compute yes or no fields
@@ -619,9 +625,9 @@ class Document:
         num_dependents_under_17_citizens = 0
         num_dependents_under_17_non_citizens = 0
         for dependent in self.dependents:
-            if dependent.slots['age'] < 17 and dependent.slots['dependent-citizenship']:
+            if dependent.slots['dependent-age'] < 17 and dependent.slots['dependent-citizenship']:
                 num_dependents_under_17_citizens += 1
-            elif dependent.slots['age'] < 17 and not dependent.slots['dependent-citizenship']:
+            elif dependent.slots['dependent-age'] < 17 and not dependent.slots['dependent-citizenship']:
                 num_dependents_under_17_non_citizens += 1
 
         line3 = num_dependents_under_17_citizens * 2000.0 + num_dependents_under_17_non_citizens * 500.0
