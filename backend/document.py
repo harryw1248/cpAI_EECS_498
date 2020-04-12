@@ -967,9 +967,12 @@ class Document:
                               self.deduction_user_info['roth-IRA'] + \
                               self.deduction_user_info['medical-dental-expenses'] + \
                               self.deduction_user_info['jury-duty'] + \
+                              self.deduction_user_info['student-loan-interest'] + \
+                              self.deduction_user_info['tuition'] + \
                               corrected_damaged_property
 
         print("standard_deductions: " + str(self.income_user_info["9"]))
+        print("itemized_deductions: " + str(itemized_deductions))
         if self.income_user_info["9"] > itemized_deductions:
             return "standard deduction"
         else:
