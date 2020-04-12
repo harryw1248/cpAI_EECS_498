@@ -166,7 +166,6 @@ class Document:
             'tuition-fees',
             # 'adjustments-to-income' ENDS here,
             'ss-benefits',
-
             'federal-income-tax-withheld',
             'earned-income-credit',
             'schedule-2-line-3',
@@ -183,6 +182,7 @@ class Document:
             'roth-IRA': None,
             'medical-dental-expenses': None,
             'jury-duty': None,
+            'damaged-property': None,
             'student-loan-interest': None,
             'tuition': None
         }
@@ -194,7 +194,8 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'damaged-property'
         ]
 
         self.available_deductions = [
@@ -204,7 +205,8 @@ class Document:
             'account_401',
             'roth-IRA',
             'medical-dental-expenses',
-            'jury-duty'
+            'jury-duty',
+            'damaged-property'
         ]
 
         self.refund_user_info = {
@@ -323,8 +325,8 @@ class Document:
         for slot in self.deduction_slots_to_fill:
             if self.deduction_user_info[slot] is None:
                 return slot
-        
-        #self.income_user_info["9"] = self.compute_line_9()
+
+        # self.income_user_info["9"] = self.compute_line_9()
         return None
 
     def find_next_unfilled_slot_refund(self):
@@ -336,12 +338,6 @@ class Document:
     def find_next_unfilled_slot_third_party(self):
         for slot in self.third_party_slots_to_fill:
             if self.third_party_user_info[slot] is None:
-                return slot
-        return None
-
-    def find_next_unfilled_slot_refund(self):
-        for slot in self.refund_slots_to_fill:
-            if self.refund_user_info[slot] is None:
                 return slot
         return None
 
@@ -413,7 +409,6 @@ class Document:
                     self.demographic_spouse_info[slot] = parameters[slot]
                     if slot == "spouse-blind":
                         self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
-        
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         print("YUOLO", parameters)
@@ -456,7 +451,7 @@ class Document:
                     extracted_slot_value = parameters['value']
             else:
                 extracted_slot_value = parameters[extracted_slot_name]
-            print("extracted slot value is", extracted_slot_value)
+            print("extracted slot value is " + str(extracted_slot_value))
 
             # compute yes or no fields
             if extracted_slot_value == 'yes':
@@ -486,7 +481,8 @@ class Document:
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
                 if extracted_slot_name == 'student-loan-interest-deduction':
-                    self.deduction_user_info['student-loan-interest'] = self.compute_student_loan_deduction(extracted_slot_value)
+                    self.deduction_user_info['student-loan-interest'] = self.compute_student_loan_deduction(
+                        extracted_slot_value)
                 if extracted_slot_name == 'tuition-fees':
                     self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
                     print('Student related deductions: ' + str(
@@ -516,8 +512,9 @@ class Document:
                 self.income_user_info["total-income"] = self.compute_line_7b()
                 self.income_user_info["8b"] = max(0, self.income_user_info["7b"] - self.income_user_info[
                     "adjustments-to-income"])
-                self.income_user_info["adjusted-gross-income"] = max(0, self.income_user_info["7b"] - self.income_user_info[
-                    "adjustments-to-income"])
+                self.income_user_info["adjusted-gross-income"] = max(0, self.income_user_info["7b"] -
+                                                                     self.income_user_info[
+                                                                         "adjustments-to-income"])
                 self.income_user_info["9"] = self.compute_standard_deductions()
                 self.compute_11a_and_11b()
                 # print(self.income_user_info)
@@ -547,7 +544,7 @@ class Document:
                     "18d"]
                 self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + \
                                               self.income_user_info["18e"]
-                
+
                 # Determine overpaid information
                 self.compute_overpaid_amount()
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
@@ -594,13 +591,13 @@ class Document:
                     self.third_party_user_info['third-party-given-name'] = False
                     self.third_party_user_info['third-party-given-name'] = False
                     self.third_party_user_info['phone-number'] = False
-                    self.third_party_user_info['PIN'] = False        
+                    self.third_party_user_info['PIN'] = False
             else:
                 self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
-        
+
         print(self.income_user_info)
         return None
-            
+
     def compute_overpaid_amount(self):
         overpaid = self.income_user_info["19"] - self.income_user_info["16"]
         if overpaid > 0:
@@ -617,7 +614,6 @@ class Document:
             self.refund_user_info["amount-owed"] = self.income_user_info["16"] - self.income_user_info["19"]
             # TODO
         self.refund_user_info["estimated-tax-penalty"] = 0
-
 
     def compute_dependents_worksheet_13a(self):
         num_dependents_under_17_citizens = 0
@@ -786,10 +782,11 @@ class Document:
 
     def compute_standard_deductions(self):
         total_check_boxes = (int(self.demographic_user_info["age"]) > 65 + self.demographic_user_info["blind"] == True +
-                            self.demographic_spouse_info['spouse-age'] is not None and int(self.demographic_spouse_info[
-                                'spouse-age']) > 65 +
-                            self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
-                                'spouse-blind'] == True)
+                             self.demographic_spouse_info['spouse-age'] is not None and int(
+                    self.demographic_spouse_info[
+                        'spouse-age']) > 65 +
+                             self.demographic_spouse_info['spouse-blind'] is not None and self.demographic_spouse_info[
+                                 'spouse-blind'] == True)
         if self.demographic_user_info['claim-you-dependent'] == False and \
                 self.demographic_user_info['claim-spouse-dependent'] == False and \
                 self.demographic_user_info['claim-you-dependent'] == False and total_check_boxes == 0:
@@ -928,7 +925,7 @@ class Document:
             if self.number_of_dependents_completed == 3:
                 if self.income_user_info['adjusted-gross-income'] <= 56844:
                     earned_income_credit = 6660
-        
+
         if self.income_user_info['7b'] == 0:
             return 0
         if self.income_user_info['IRA-distributions'] <= 0:
@@ -951,17 +948,17 @@ class Document:
             return amount
 
     def compute_line_9(self):
-        #for key in self.deduction_user_info:
+        # for key in self.deduction_user_info:
         #    if self.deduction_user_info[key] is None:
         #        self.deduction_user_info[key] = 0
 
         print(self.deduction_user_info)
-        itemized_deductions = self.deduction_user_info['charitable-contribution'] +\
-            self.deduction_user_info['state-local-taxes'] +\
-            self.deduction_user_info['mortgage'] +\
-            self.deduction_user_info['roth-IRA'] +\
-            self.deduction_user_info['medical-dental-expenses'] +\
-            self.deduction_user_info['jury-duty']
+        itemized_deductions = self.deduction_user_info['charitable-contribution'] + \
+                              self.deduction_user_info['state-local-taxes'] + \
+                              self.deduction_user_info['mortgage'] + \
+                              self.deduction_user_info['roth-IRA'] + \
+                              self.deduction_user_info['medical-dental-expenses'] + \
+                              self.deduction_user_info['jury-duty']
 
         print("standard_deductions: " + str(self.income_user_info["9"]))
         if self.income_user_info["9"] > itemized_deductions:
@@ -976,10 +973,6 @@ class Document:
             self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
             self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
             return "itemized deduction"
-
-        
-        
-
 
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
@@ -1074,7 +1067,7 @@ class Document:
         self.income_user_info['18e'] = 0
         self.income_user_info['19'] = 1500
 
-        self.deduction_user_info['student-loan-interest'] =0
+        self.deduction_user_info['student-loan-interest'] = 0
         self.deduction_user_info['tuition'] = 0
         self.current_section_index = 2
         self.compute_overpaid_amount()

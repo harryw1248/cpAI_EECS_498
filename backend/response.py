@@ -115,6 +115,7 @@ class Response:
             'state-local-taxes': 'prompt_monetary_value',
             'mortgage': 'prompt_monetary_value',
             'roth-IRA': 'prompt_monetary_value',
+            'damaged-property': 'prompt_monetary_value',
             'medical-dental-expenses': 'prompt_monetary_value',
             'jury-duty': 'prompt_monetary_value',
             'student-loans': 'prompt_monetary_value',
@@ -251,6 +252,9 @@ class Response:
             'mortgage': 'What amount have you paid in home or condo mortgages?',
             'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
+            'damaged-property': 'If you had any property damages in the last year, how much were your losses valued at? ' 
+                                'To calculate this, subtract the value of your property after the incident from its '
+                                'value before the incident. If no property has been damaged, say zero.',
             'medical-dental-expenses': 'How much have you paid in medical care, dental care, or pharmaceutical products?',
             'jury-duty': 'If you have served jury duty this year, how much were you paid? If you did not serve, say 0.',
             'user-done': 'Okay, now I am going to ask you a series of questions to get you maximum tax deductions!'
