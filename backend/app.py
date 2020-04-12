@@ -464,6 +464,7 @@ def error_checking(parameters, intent, last_unfilled, queryText= None):
 
         if num_digits != 9:
             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+    
     elif 'dependent_ssn' in intent:
         value = str(parameters['dependent-ssn'])
         num_digits = 0
@@ -560,6 +561,17 @@ def error_checking(parameters, intent, last_unfilled, queryText= None):
     elif intent == 'third_party.pin':
         if len(str(parameters['PIN'])) != 7:
             return last_unfilled, 'You entered an invalid PIN. Please type in exactly 5 digits.'
+
+    if intent == 'demographics_fill.email_phone_number':
+        email = str(parameters['email'])
+        phone_number = str(parameters["user-phone-number"])
+
+        if email != '' and '@' not in email:
+            return 'email', 'You entered an invalid email.'
+        
+        if phone_number != '' and len(phone_number) != 10:
+            return 'user-phone-number', 'You entered an invalid phone number. Please type in exactly 10 digits.'
+
     return None, None
 
 
