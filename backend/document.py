@@ -40,6 +40,7 @@ class Document:
             'spouse-given-name': None,
             'spouse-last-name': None,
             'spouse-age': None,
+            'spouse-occupation': None,
             'spouse-ssn': None,
             'spouse-blind': None
         }
