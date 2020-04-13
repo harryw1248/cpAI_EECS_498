@@ -652,7 +652,7 @@ class Document:
         else:
             return 0
 
-        line9 = self.tax_amount
+        line9 = self.income_user_info['12b']
         line10 = 0
         if line9 == line10:
             return 0
@@ -981,6 +981,7 @@ class Document:
             self.income_user_info["12a"] = self.compute_tax_amount_12a()
             # self.income_user_info["12b"] = extracted_slot_value + self.income_user_info["12a"]
             self.income_user_info["12b"] = self.income_user_info["schedule-2-line-3"] + self.income_user_info["12a"]
+            self.income_user_info["13a"] = self.set_line_13a()
             self.income_user_info["13b"] = self.income_user_info["schedule-3-line-7"] + self.income_user_info["13a"]
             self.income_user_info["14"] = max(0, self.income_user_info["12b"] - self.income_user_info["13b"])
             self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
