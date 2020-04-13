@@ -178,8 +178,8 @@ class Response:
                                    'of these forms, report 0.',
             'taxable-interest': 'What are your total taxable interest income from Forms 1099-INT and 1099-OID? If you '
                                 'did not receive any of these forms, report 0.',
-            'has-1099-R': 'Have you received 1099-R form(s) this year?',
-            'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of your 1099-R forms?'
+            'has-1099-R': 'Have you received 1099-R form(s) this year relating to pensions and annuities plans?',
+            'pensions-and-annuities': 'What are your total pension or annuity payments from box 1 of these 1099-R forms?'
                                       ' Please list them.',
             'pensions-and-annuities-taxable': 'What are the taxable amounts of you pension or annuity payments as '
                                               'shown in your 1099-R forms? Please list them.',
@@ -187,8 +187,8 @@ class Response:
             'qualified-dividends':  'Looking at form 1099-DIV, what are your qualified dividends from field 1b?',
             'ordinary-dividends': 'Looking at form 1099-DIV, what are your ordinary dividends from field 1a?',
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. '
-                                 'What are the gross distributions in field 1? If you do not have an IRA, say zero.',
-            'IRA-distributions-taxable': 'What is the taxable amount in field 2a of form 1099-R?',
+                                 'What are the gross distributions in box 1 of these forms? If you do not have an IRA, say zero.',
+            'IRA-distributions-taxable': 'What is the taxable amount in box 2a of the 1099-R forms relating to IRAs?',
             'capital-gains': 'What is the amount of stocks or bonds you own?',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable '
                                'refunds or credits from this past year?',
