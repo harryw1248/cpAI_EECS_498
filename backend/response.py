@@ -266,7 +266,7 @@ class Response:
             'state-local-taxes': 'What amount have you paid in state and local taxes?',
             'mortgage': 'What amount have you paid in home or condo mortgages?',
             'account_401': 'How much have you made in contributions to a 401K?',
-            'roth-IRA': 'How much have you made in contributions to a Roth IRA?',
+            'roth-IRA': 'How much have you made in contributions to a Traditional IRA, if any?',
             'damaged-property': 'If you had any property damages in the last year, how much were your losses valued at? ' 
                                 'To calculate this, subtract the value of your property after the incident from its '
                                 'value before the incident. If no property has been damaged, say zero.',
