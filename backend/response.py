@@ -81,11 +81,13 @@ class Response:
             'pensions-and-annuities-taxable': 'prompt_monetary_value_list',
             'capital-gains': "prompt_gains_losses",
             'taxable-refunds': "prompt_monetary_value",
+            'total-qualified-business-income': "prompt_monetary_value",
             'business-income': "prompt_gains_losses",
             'unemployment-compensation':  'prompt_monetary_value',
             'other-income': 'prompt_monetary_value',
             'owns-business': 'prompt_owns_business',
             'owns-stocks-bonds': "prompt_stocks_bonds",
+            'pass-through-business': 'prompt_pass_through_business',
             'has-1099-DIV': 'prompt_has_1099_DIV',
             'qualified-dividends': 'prompt_monetary_value',
             'ordinary-dividends': 'prompt_monetary_value',
@@ -218,6 +220,8 @@ class Response:
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
             'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of'
                                   ' Schedule 3?',
+            'pass-through-business': "Do you own a pass-through-business (sole-proprietors and single-owner LLCs)? Is your income from the business taxed on your personal tax return?",
+            'total-qualified-business-income': 'What is your total qualified income from your business?'
         }
 
         self.income_finances_order = [

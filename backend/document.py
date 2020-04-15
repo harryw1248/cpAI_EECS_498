@@ -71,6 +71,8 @@ class Document:
         self.income_user_info = {
             'wages': None,
             'owns-business': None,
+            'pass-through-business': None,
+            'total-qualified-business-income': None,
             'tax-exempt-interest': None,
             'taxable-interest': None,
             'has-1099-R': None,
@@ -135,6 +137,8 @@ class Document:
         self.income_slots_to_fill = [
             'wages',
             'owns-business',
+            'pass-through-business',
+            'total-qualified-business-income',
             'tax-exempt-interest',
             'taxable-interest',
             'owns-stocks-bonds',
@@ -475,6 +479,10 @@ class Document:
                 elif extracted_slot_name == 'owns-business':
                     self.income_user_info['business-expenses'] = 0
                     self.income_user_info['business-income'] = 0
+                    self.income_user_info['pass-through-business'] = False
+                    self.income_user_info['total-qualified-business-income'] = False
+                elif extracted_slot_name == 'pass-through-business':
+                    self.income_user_info['total-qualified-business-income'] = 0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
@@ -529,6 +537,11 @@ class Document:
                 self.income_user_info["12a"] = self.compute_tax_amount_12a()
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
                 # print(self.income_user_info)
+            
+            elif extracted_slot_name == 'total-qualified-business-income':
+                self.income_user_info[extracted_slot_name] = extracted_slot_value
+                self.income_user_info['10'] = 0.20 * extracted_slot_value
+
             elif extracted_slot_name == 'other-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.compute_total_other_income()
@@ -779,7 +792,7 @@ class Document:
         # Line 9: standard deduction or itemized deduction
         # TODO
         deduction = self.income_user_info["9"]
-        qualified_business_income = 0
+        qualified_business_income = self.income_user_info["10"]
         # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction + qualified_business_income
         self.income_user_info["taxable-income"] = max(self.income_user_info[
