@@ -347,12 +347,12 @@ class Document:
         return None
 
     def update_document_demographics(self, parameters, current_intent):
-        # Check if we are currently working on a dependent
-        # Beware of change_field!!!
+        # Check first if we're working on a dependent, because dependents are their own class
         if self.dependent_being_filled is not None:
             self.dependent_being_filled.update_slots(parameters, current_intent)
             return
 
+        # Otherwise, fill out the corresponding dependent slot with the parameter value extracted from DF
         for slot, value in self.demographic_user_info.items():
             if value is None and slot in parameters and parameters[slot] != '':
                 self.demographic_user_info[slot] = parameters[slot]
@@ -361,10 +361,12 @@ class Document:
                         self.demographic_user_info["num_dependents"] > 0:
                     self.demographic_user_info["claim-you-dependent"] = False
 
+        # Make specific check for unemployment compensation after asking about occupation
         if 'name' in current_intent and "occupation" in parameters:
             if parameters['occupation'] != 'unemployed':
                 self.income_user_info['unemployment-compensation'] = 0
 
+        # Must handle bools differently (tech debt)
         elif current_intent == 'demographics_fill.blind_status':
             self.demographic_user_info['blind'] = True if parameters['blind'] == 'yes' else False
 
@@ -416,12 +418,12 @@ class Document:
                         self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
 
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
-        print("YUOLO", parameters)
         if self.sections[self.current_section_index] == 'demographics':
             self.update_document_demographics(parameters, current_intent)
 
             extracted_slot_name = last_unfilled_field
 
+            # Make assumptions about possible qualifying deductions based on age
             if "age" in parameters and self.demographic_user_info["age"] is not None:
                 if self.demographic_user_info["age"] <= 22:
                     self.deduction_user_info['mortgage'] = 0
@@ -431,6 +433,8 @@ class Document:
                     self.deduction_user_info['jury-duty'] = 0
 
         elif self.sections[self.current_section_index] == 'income':
+            # Note: this section is largely computational and mostly comes straight from the IRS instructions
+
             print("last unfilled field:", self.last_unfilled_field)
             extracted_slot_name = last_unfilled_field
             print("extracted_slot_name: " + str(extracted_slot_name))
@@ -504,7 +508,7 @@ class Document:
                         self.deduction_user_info['tuition'] + self.deduction_user_info['student-loan-interest']))
                 # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
 
-            # compute all other fields
+            # compute all other income fields
             if extracted_slot_name == 'wages':
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
                     'occupation'] != 'educator':
@@ -569,6 +573,7 @@ class Document:
                 self.compute_overpaid_amount()
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
+
         elif self.sections[self.current_section_index] == 'deductions':
             (deduction_name, dollar_values) = parameters
             print("DEDUCTIONS", parameters)
@@ -580,9 +585,13 @@ class Document:
 
         elif self.sections[self.current_section_index] == 'refund':
             extracted_slot_name = last_unfilled_field
+
+            # For amount-refunded, 'routing-number', and 'account-number'
             if current_intent == 'refund_and_owe.number_value':
+                # If they would like to get all of their money refunded, set value to amount overpaid
                 if parameters["number"] == "all":
                     self.refund_user_info[extracted_slot_name] = self.refund_user_info["overpaid"]
+                # If they would like no money refunded, ignore the option to direct-deposit
                 elif parameters["number"] == 0 and extracted_slot_name == 'amount-refunded':
                     self.refund_user_info['amount-refunded'] = 0
                     self.refund_user_info['direct-deposit'] = False
@@ -591,9 +600,13 @@ class Document:
                     self.refund_user_info['account-number'] = False
                 else:
                     self.refund_user_info[extracted_slot_name] = parameters['number']
+
+            # Only slot for this intent is direct-deposit
             elif current_intent == 'refund_and_owe.bool':
                 if parameters['bool'] == "yes":
                     self.refund_user_info[extracted_slot_name] = True
+
+                # If they would not like a refund, ignore the option to direct-deposit
                 else:
                     self.refund_user_info[extracted_slot_name] = False
                     self.refund_user_info["account-type"] = False
@@ -606,6 +619,7 @@ class Document:
             if current_intent == 'third_party.bool':
                 if parameters["third-party"] == "yes":
                     self.third_party_user_info['third-party'] = True
+                # If they would not like to allow a third-party to access the tax form, do not inquire about them
                 else:
                     self.third_party_user_info['third-party'] = False
                     self.third_party_user_info['third-party-given-name'] = False
@@ -619,6 +633,7 @@ class Document:
         return None
 
     def compute_overpaid_amount(self):
+        # This information comes directly from the IRS instructions about refund/owe amounts
         overpaid = self.income_user_info["19"] - self.income_user_info["16"]
         if overpaid > 0:
             self.refund_user_info["overpaid"] = overpaid
@@ -632,7 +647,8 @@ class Document:
             self.refund_user_info["account-number"] = False
             self.refund_user_info["overpaid-applied-tax"] = 0
             self.refund_user_info["amount-owed"] = self.income_user_info["16"] - self.income_user_info["19"]
-            # TODO
+
+        # Make assumptions (for project scope's sake) that estimated-tax-penalty is 0
         self.refund_user_info["estimated-tax-penalty"] = 0
 
     def compute_dependents_worksheet_13a(self):

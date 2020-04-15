@@ -191,7 +191,7 @@ class Response:
             'IRA-distributions': 'If you have an individual retirement account, or IRA, you will have form 1099-R. '
                                  'What are the gross distributions in box 1 of these forms? If you do not have an IRA, say zero.',
             'IRA-distributions-taxable': 'What is the taxable amount in box 2a of the 1099-R forms relating to IRAs?',
-            'capital-gains': 'What is the amount of stocks or bonds you own?',
+            'capital-gains': 'How much did you incur in capital gains or losses? (If you have filled out Schedule D for capital gains, look at line 16).',
             'taxable-refunds': 'Please take out your Schedule 1 form, go to line 1. What is the amount of taxable '
                                'refunds or credits from this past year?',
             'business-income': 'Please go to line 3 of Schedule 1. How much money you have gained or lost from your'

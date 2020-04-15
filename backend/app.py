@@ -48,11 +48,13 @@ def standardize_token(token):
 
 
 def explain_term_yes(content):
+    """Handle conversation logic when the user understands the explanation given from explain_term."""
+
     global last_unfilled_field
     global responses
     global document
-    session = content['session']
     global last_output_context
+    session = content['session']
 
     with open('response.json') as f:
         data = json.load(f)
@@ -78,6 +80,7 @@ def explain_term_yes(content):
 
 
 def explain_term_repeat(content):
+    """Handle logic for when the user did not understand the explanation from explain_term."""
     global last_unfilled_field
     global responses
     global document
@@ -331,10 +334,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
                 return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
     elif intent == 'income_and_finances_fill.monetary_value_list':
-        print("HELLO I AM HERE")
-        # print(parameters['value'])
         dollar_value = str(parameters['value'])
-        # print(dollar_value)
         for value in parameters['value']:
             dollar_value = str(value)
             if '-' in dollar_value:
@@ -358,14 +358,10 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
 
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
         if len(str(parameters['number'])) != 11:
-            print("number is", parameters['number'])
-            print("len is", len(str(parameters['number'])))
             return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
         num = str(parameters['number'])
         if not num.endswith('e+16'):
-            print("number is", parameters['number'])
-            print("len is", len(str(parameters['number'])))
             return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
     elif intent == 'refund_and_owe.number_value' and (
             last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
@@ -374,7 +370,6 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
                  number equal to or less than ${}.'.format(document.refund_user_info["overpaid"])
 
     if intent == 'third_party.phone_number':
-        print("phone number:", parameters['phone-number'])
         if len(str(parameters['phone-number'])) != 10:
             return last_unfilled, 'You entered an invalid phone number. Please type in exactly 10 digits.'
     elif intent == 'third_party.pin':
@@ -411,8 +406,10 @@ def demographics_fill(content):
     # Session necessary to generate context identifier
     session = content['session']
 
+    # Check for valid input
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field, queryText)
-
+    
+    # No error, update information and get new slot to query from user
     if error_field is None and error_message is None:
         # first pass: update params on document object
         document.update_slot(parameters, current_intent, last_unfilled_field)
@@ -423,17 +420,20 @@ def demographics_fill(content):
         next_unfilled_slot = error_field
     last_unfilled_field = next_unfilled_slot
 
+    # Must handle dependents separately since they are their own class
     if document.dependent_being_filled is not None:
         response = responses.get_next_dependent_response(next_unfilled_slot, document.dependent_being_filled.num,
                                                          document.dependents)
         if error_field == 'dependent-ssn':
             response = error_message + response
 
+    # Next slot is a demographic slot, get the appropriate response
     elif next_unfilled_slot in document.demographic_user_info or next_unfilled_slot in document.demographic_spouse_info:
         response = responses.get_next_response(next_unfilled_slot, document)
-
         if error_message is not None:
             response = error_message + response
+
+    # No more slots remaining to fill, proceed to next section of form
     else:
         response = "We're all done filling out your demographics. Let's move onto your income section! "
         if len(document.dependents) > 0:
@@ -447,6 +447,7 @@ def demographics_fill(content):
 
             response = addition + response
 
+    # Set output contexts so that the next utterance can only match with the intents what we're asking about
     output_context = None
     if (next_unfilled_slot in document.demographic_user_info
             or next_unfilled_slot in document.demographic_spouse_info
@@ -471,15 +472,12 @@ def demographics_fill(content):
     last_output_context = output_context
     global user
 
-    # data[]  # set followup event
     last_intent = 'demographics_fill'
     user.update_demographic_info(document)
     return jsonify(data)
 
 
 def income_finances_fill(content):
-    print("I AM BEING asdasdasdas")
-    # for print debugging
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -515,6 +513,8 @@ def income_finances_fill(content):
             response = error_message + response
 
     output_context = None
+
+    # Set output contexts so that the next utterance can only match with the intents what we're asking about
     if (next_unfilled_slot in document.income_user_info):
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
@@ -551,7 +551,6 @@ def welcome(content):
 
 
 def exploit_deduction(content):
-    print("HOLALL")
     parameters = content['queryResult']['parameters']
     current_intent = content['queryResult']['intent']['displayName']
 
@@ -735,6 +734,7 @@ def refund_and_owe(content):
     # Session necessary to generate context identifier
     session = content['session']
 
+    # Check for invalid input
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
     if error_field is None and error_message is None:
@@ -747,6 +747,7 @@ def refund_and_owe(content):
         next_unfilled_slot = error_field
     last_unfilled_field = next_unfilled_slot
 
+    # Set output contexts so that the next utterance can only match with the intents what we're asking about
     output_context = None
     if next_unfilled_slot in document.refund_user_info:
         response = responses.get_next_response(next_unfilled_slot, document)
@@ -802,6 +803,7 @@ def third_party(content):
         next_unfilled_slot = error_field
     last_unfilled_field = next_unfilled_slot
 
+    # Set output contexts so that the next utterance can only match with the intents what we're asking about
     output_context = None
     if next_unfilled_slot in document.third_party_user_info:
         response = responses.get_next_response(next_unfilled_slot, document)
@@ -829,6 +831,7 @@ def third_party(content):
 
 
 def autofill(content):
+    """Automatically move to the income section."""
     global last_unfilled_field
     global responses
     global document
@@ -853,6 +856,7 @@ def autofill(content):
 
 
 def autofill2(content):
+    """Automatically move to the deductions section."""
     global last_unfilled_field
     global responses
     global document
@@ -879,6 +883,7 @@ def autofill2(content):
 
 
 def autofill3(content):
+    """Automatically move to the refund/owe section."""
     global last_unfilled_field
     global responses
     global document
@@ -894,11 +899,6 @@ def autofill3(content):
     session = content['session']
     next_unfilled_slot = 'amount-refunded'
     last_unfilled_field = 'amount-refunded'
-    # if document.refund_user_info["overpaid"] > 0:
-    # TODO FIX
-    # else:
-    #     next_unfilled_slot = None
-    #     last_unfilled_field = None
     response = responses.get_next_response(next_unfilled_slot, document)
     print("response:", response)
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
@@ -1029,7 +1029,6 @@ def home():
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
         elif intent.startswith('income_and_finances_fill'):
-            print("I ESSSSS")
             return income_finances_fill(content)
         elif intent.startswith('refund_and_owe'):
             return refund_and_owe(content)
