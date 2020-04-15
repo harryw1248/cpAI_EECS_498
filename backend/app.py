@@ -478,6 +478,7 @@ def demographics_fill(content):
 
 
 def income_finances_fill(content):
+    print("I AM BEING asdasdasdas")
     # for print debugging
     parameters = content['queryResult']['parameters']
     global responses
@@ -550,6 +551,7 @@ def welcome(content):
 
 
 def exploit_deduction(content):
+    print("HOLALL")
     parameters = content['queryResult']['parameters']
     current_intent = content['queryResult']['intent']['displayName']
 
@@ -634,6 +636,7 @@ def exploit_deduction(content):
                         missed_values.append(possible_deduction_value)
                     else:
                         params = (deduction_name, deductions_and_values_found[possible_deduction_value])
+                        print("params", params)
                         document.update_slot(params, current_intent, last_unfilled_field)
                         success = True
 
@@ -996,7 +999,7 @@ def home():
                     intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
-            elif intent == 'income_and_finances_fill.monetary_value' and (document.deduction_stage == 'user_done' or
+            elif (intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list')  and (document.deduction_stage == 'user_done' or
                                                                           len(missed_deduction_values) > 0):
                 return exploit_deduction(content)
             else:
@@ -1026,6 +1029,7 @@ def home():
         elif intent.startswith('demographics_fill'):
             return demographics_fill(content)
         elif intent.startswith('income_and_finances_fill'):
+            print("I ESSSSS")
             return income_finances_fill(content)
         elif intent.startswith('refund_and_owe'):
             return refund_and_owe(content)
