@@ -320,7 +320,6 @@ class Document:
         return None
 
     def find_next_unfilled_slot_deductions(self, deduction_result=None):
-        print("DEDUCTION-STAGE:", self.deduction_stage)
         if self.deduction_stage == 'deduction-begin':
             self.deduction_stage = 'user-enters-deductions'
             return 'deduction-begin'
@@ -435,9 +434,7 @@ class Document:
         elif self.sections[self.current_section_index] == 'income':
             # Note: this section is largely computational and mostly comes straight from the IRS instructions
 
-            print("last unfilled field:", self.last_unfilled_field)
             extracted_slot_name = last_unfilled_field
-            print("extracted_slot_name: " + str(extracted_slot_name))
 
             # compute extracted slot value
             if current_intent == "income_and_finances_fill.monetary_value":
@@ -466,7 +463,6 @@ class Document:
                 except:
                     extracted_slot_value = parameters['spouse-blind']
 
-            print("extracted slot value is " + str(extracted_slot_value))
 
             # compute yes or no fields
             if extracted_slot_value == 'yes':
@@ -504,9 +500,6 @@ class Document:
                         extracted_slot_value)
                 if extracted_slot_name == 'tuition-fees':
                     self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
-                    print('Student related deductions: ' + str(
-                        self.deduction_user_info['tuition'] + self.deduction_user_info['student-loan-interest']))
-                # self.income_user_info['adjusted-gross-income'] = self.income_user_info['total-income'] - self.income_user_info['adjustments-to-income']
 
             # compute all other income fields
             if extracted_slot_name == 'wages':
@@ -536,11 +529,8 @@ class Document:
                                                                          "adjustments-to-income"])
                 self.income_user_info["9"] = self.compute_standard_deductions()
                 self.compute_11a_and_11b()
-                # print(self.income_user_info)
-                # print(self.demographic_user_info)
                 self.income_user_info["12a"] = self.compute_tax_amount_12a()
                 self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
-                # print(self.income_user_info)
             
             elif extracted_slot_name == 'total-qualified-business-income':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
