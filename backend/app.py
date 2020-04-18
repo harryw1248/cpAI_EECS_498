@@ -16,6 +16,7 @@ import pprint
 import json
 import copy
 import pdf
+import numpy as np
 
 config = {
     "apiKey": "AeIzaSyBFSeIw9rHMwh59tlEbAM3fcjVPL2ieu70",
@@ -620,18 +621,22 @@ def exploit_deduction(content):
             # Fill document with the value extracted from DF
             # If the value is None, we have yet to determine whether the user qualifies for that deduction
             if document.deduction_user_info[last_unfilled_field] is None:
-                # This field has not been used yet/no deductions claimed yet, so set deduction value as such
-                if parameters['value'] != '':
-                    document.deduction_user_info[last_unfilled_field] = parameters['value']
-                elif parameters['dollar'] != '':
-                    document.deduction_user_info[last_unfilled_field] = parameters['dollar']['amount']
-            # We already have an existing dollar value for that field, so add to the current value
+                if len(parameters['value']) != 0:
+                    document.deduction_user_info[last_unfilled_field] = np.sum(parameters['value'])
+                elif len(parameters['dollar']) != 0:
+                    val = 0
+                    for item in parameters['dollar']:
+                        val += item['amount']
+                    document.deduction_user_info[last_unfilled_field] = val
+            # Field is not empty, add to existing value
             else:
-                if parameters['value'] != '':
-                    document.deduction_user_info[last_unfilled_field] += parameters['value']
-                elif parameters['dollar'] != '':
-                    document.deduction_user_info[last_unfilled_field] += parameters['dollar']['amount']
-
+                if len(parameters['value']) != 0:
+                    document.deduction_user_info[last_unfilled_field] += np.sum(parameters['value'])
+                elif len(parameters['dollar']) != 0:
+                    val = 0
+                    for item in parameters['dollar']:
+                        val += item['amount']
+                    document.deduction_user_info[last_unfilled_field] += val
             # Took care of the missed dollar value for the deduction, so no need to worry about it anymore
             missed_deduction_values.pop(0)
 
@@ -654,20 +659,26 @@ def exploit_deduction(content):
 
         # AFTER user has asked for help: prompt for deduction information sequentially
         elif document.deduction_stage == 'user_done':
-            
+            print(last_unfilled_field)
             # Set the values extracted from DF response
             # Field is empty
             if document.deduction_user_info[last_unfilled_field] is None:
-                if parameters['value'] != '':
-                    document.deduction_user_info[last_unfilled_field] = parameters['value']
-                elif parameters['dollar'] != '':
-                    document.deduction_user_info[last_unfilled_field] = parameters['dollar']['amount']
+                if len(parameters['value']) != 0:
+                    document.deduction_user_info[last_unfilled_field] = np.sum(parameters['value'])
+                elif len(parameters['dollar']) != 0:
+                    val = 0
+                    for item in parameters['dollar']:
+                        val += item['amount']
+                    document.deduction_user_info[last_unfilled_field] = val
             # Field is not empty, add to existing value
             else:
-                if parameters['value'] != '':
-                    document.deduction_user_info[last_unfilled_field] += parameters['value']
-                elif parameters['dollar'] != '':
-                    document.deduction_user_info[last_unfilled_field] += parameters['dollar']['amount']
+                if len(parameters['value']) != 0:
+                    document.deduction_user_info[last_unfilled_field] += np.sum(parameters['value'])
+                elif len(parameters['dollar']) != 0:
+                    val = 0
+                    for item in parameters['dollar']:
+                        val += item['amount']
+                    document.deduction_user_info[last_unfilled_field] += val
             
             # Find next deduction item to inquire about
             for key, value in document.deduction_user_info.items():
