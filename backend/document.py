@@ -983,7 +983,7 @@ class Document:
         corrected_mortgage = min(self.deduction_user_info['mortgage'], 750000)
         corrected_ira = 0
         corrected_medical = max(0, self.deduction_user_info['medical-dental-expenses'] - 0.075 *self.income_user_info['adjusted-gross-income'])
-        if self.demographic_user_info['age'] <= 49:
+        if int(self.demographic_user_info['age']) <= 49:
             corrected_ira = min(6000, self.deduction_user_info['roth-IRA'])
         else:
             corrected_ira = min(7000, self.deduction_user_info['roth-IRA'])
@@ -1104,6 +1104,7 @@ class Document:
 
         self.income_user_info['7b'] = 0
         self.income_user_info['8b'] = 0
+        self.income_user_info['9'] = 1000
         self.income_user_info['10'] = 0
         self.income_user_info['11a'] = 0
         self.income_user_info['11b'] = 0
