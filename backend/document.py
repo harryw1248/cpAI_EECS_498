@@ -620,6 +620,7 @@ class Document:
                 self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
 
         print(self.income_user_info)
+        print(self.deduction_user_info)
         return None
 
     def compute_overpaid_amount(self):
@@ -799,7 +800,6 @@ class Document:
         # TODO
         deduction = self.income_user_info["9"]
         qualified_business_income = self.income_user_info["10"]
-        # Line 10: Qualified business income deduction is assumed to be zero
         self.income_user_info["11a"] = deduction + qualified_business_income
         self.income_user_info["taxable-income"] = max(self.income_user_info[
                                                           "8b"] - self.income_user_info["11a"], 0)
@@ -979,16 +979,34 @@ class Document:
         #        self.deduction_user_info[key] = 0
 
         corrected_damaged_property = max(0, self.deduction_user_info['damaged-property'] - 100 - 0.10*self.income_user_info['adjusted-gross-income'])
+        corrected_charitable_donations = min(0.50 * self.income_user_info['adjusted-gross-income'], self.deduction_user_info['charitable-contribution'])
+        corrected_mortgage = min(self.deduction_user_info['mortgage'], 750000)
+        corrected_ira = 0
+        corrected_medical = max(0, self.deduction_user_info['medical-dental-expenses'] - 0.075 *self.income_user_info['adjusted-gross-income'])
+        if self.demographic_user_info['age'] <= 49:
+            corrected_ira = min(6000, self.deduction_user_info['roth-IRA'])
+        else:
+            corrected_ira = min(7000, self.deduction_user_info['roth-IRA'])
+
+        corrected_student_loans = min(2500, self.deduction_user_info['student-loan-interest'])
+
+        corrected_tuition = 0
+        if self.income_user_info["wages"] <= 65000:
+            corrected_ira = min(6000, self.deduction_user_info['tuition'])
+        elif self.income_user_info["wages"] <= 80000:
+            corrected_ira = min(2000, self.deduction_user_info['tuition'])
+
+        corrected_state_local = min(10000, self.deduction_user_info['state-local-taxes'])
 
         print(self.deduction_user_info)
-        itemized_deductions = self.deduction_user_info['charitable-contribution'] + \
-                              self.deduction_user_info['state-local-taxes'] + \
-                              self.deduction_user_info['mortgage'] + \
-                              self.deduction_user_info['roth-IRA'] + \
-                              self.deduction_user_info['medical-dental-expenses'] + \
+        itemized_deductions = corrected_charitable_donations + \
+                              corrected_state_local + \
+                              corrected_mortgage + \
+                              corrected_ira + \
+                              corrected_medical + \
                               self.deduction_user_info['jury-duty'] + \
-                              self.deduction_user_info['student-loan-interest'] + \
-                              self.deduction_user_info['tuition'] + \
+                              corrected_student_loans + \
+                              corrected_tuition + \
                               corrected_damaged_property
 
         print("standard_deductions: " + str(self.income_user_info["9"]))
