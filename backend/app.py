@@ -252,6 +252,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
                              'earned-income-credit', 'ss-benefits', 'ss-benefits-taxable', 'business-gains', '11a',
                              'taxable-income']
 
+    # Address: zip code should be 5 numbers
     if 'address' in intent:
         value = str(parameters['zip-code'])
         if len(value) != 5:
@@ -260,6 +261,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
             if digit not in digits:
                 return 'street_address', 'You entered an invalid ZIP code. A valid ZIP code consists of five numbers. '
 
+    # SSN should be 9 digits
     elif 'social_security' in intent:
         value = str(parameters['social_security'])
         num_digits = 0
@@ -283,6 +285,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
         if num_digits != 9:
             return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
+    # Spouse-SSN should be 9 digits
     elif 'spouse_SSN' in intent:
         value = str(parameters['spouse-ssn'])
         num_digits = 0
@@ -306,6 +309,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
         if num_digits != 9:
             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
     
+    # Dependent-SSN should be 9 digits
     elif 'dependent_ssn' in intent:
         value = str(parameters['dependent-ssn'])
         num_digits = 0
@@ -329,6 +333,7 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
         if num_digits != 9:
             return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
+    # Monetary-value intent should have non-negative numbers
     elif intent == 'income_and_finances_fill.monetary_value':
         dollar_value = str(parameters['value'])
         dollar_value_2 = ''
@@ -339,13 +344,13 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
 
         try:
             float(dollar_value)
-            # float(dollar_value_2)
         except ValueError:
             try:
                 float(dollar_value_2)
             except ValueError:
                 return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
+    # Monetary-value-list should have non-negative numbers
     elif intent == 'income_and_finances_fill.monetary_value_list':
         dollar_value = str(parameters['value'])
         for value in parameters['value']:
@@ -368,26 +373,33 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
             except ValueError:
                 return last_unfilled, 'You entered an invalid dollar amount. Non-numeric characters are not allowed. '
 
+    # Routing number should be 9 digits
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
-        if len(str(parameters['number'])) != 11:
+        if len(str(parameters['number'])) != 11: # accounts for the trailing '.0'
             return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
+    # Account number should be 17 digits
     elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
         num = str(parameters['number'])
         if not num.endswith('e+16'):
             return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
+    # User tries to get more money refunded than they're allowed
     elif intent == 'refund_and_owe.number_value' and (
             last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
         if type(parameters['number']) != str and (parameters['number'] > document.refund_user_info["overpaid"]):
             return last_unfilled, 'You cannot use an amount greater than the amount you overpaid. Please give a\
                  number equal to or less than ${}.'.format(document.refund_user_info["overpaid"])
 
+    # Phone number should be 10 digits
     if intent == 'third_party.phone_number':
         if len(str(parameters['phone-number'])) != 10:
             return last_unfilled, 'You entered an invalid phone number. Please type in exactly 10 digits.'
+    # PIN should be 5 digits
     elif intent == 'third_party.pin':
         if len(str(parameters['PIN'])) != 7:
             return last_unfilled, 'You entered an invalid PIN. Please type in exactly 5 digits.'
 
+    # Email should be formatted with @
+    # Phone number should be 10 digits
     if intent == 'demographics_fill.email_phone_number':
         email = str(parameters['email'])
         phone_number = str(parameters["user-phone-number"])
@@ -398,10 +410,12 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
         if phone_number != '' and len(phone_number) != 10:
             return 'user-phone-number', 'You entered an invalid phone number. Please type in exactly 10 digits.'
 
+    # No errors
     return None, None
 
 
 def demographics_fill(content):
+    """Handle any DialogFlow intents that deal with the demographics section."""
     parameters = content['queryResult']['parameters']
     queryText = content['queryResult']['queryText']
     global responses
@@ -488,6 +502,7 @@ def demographics_fill(content):
 
 
 def income_finances_fill(content):
+    """Handle any DialogFlow intents that deal with the income section."""
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -757,7 +772,7 @@ def exploit_deduction(content):
 
 
 def refund_and_owe(content):
-    # for print debugging
+    """Handle any DialogFlow intents that deal with the refund and owe section."""
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -814,6 +829,7 @@ def refund_and_owe(content):
 
 
 def third_party(content):
+    """Handle any DialogFlow intents that deal with the third party permission section."""
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -951,6 +967,7 @@ def autofill3(content):
 
 
 def fallback(content):
+    """Error handling for when Dialogflow could not categorize the utterance into any intent (while factoring in output contexts)."""
     global last_unfilled_field
     global responses
     global document
@@ -1009,6 +1026,7 @@ def misclassified_money_intent(content):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    """Primary link that DialogFlow fulfillment is connected to and will make a call to every time an intent is matched with webhook fulfillment turned on."""
     if request.method == 'POST':
         content = request.json
 
