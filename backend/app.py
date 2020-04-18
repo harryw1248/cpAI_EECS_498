@@ -1,3 +1,12 @@
+"""
+App.py
+Contains the Flask web application that runs our business logic
+DialogFlow fulfilment webhook routes through home(), which uses the extracted intent to direct to the appropriate
+    subfunction that performs slot extraction, updates the user info, and redirects the conversational flow
+Also allows for communication with the Firebase database to extract terminology definitions
+"""
+
+
 from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, send_file
 from document import Document
 from user import User
@@ -144,7 +153,8 @@ def explain_term_repeat(content):
 def explain_term(content, extract=None):
     """
     Explain a term that the user is asking about. 
-    The extract parameter is for when explain_term needs to be called from the server-end instead of being called from DialogFlow.
+    The extract parameter is for when explain_term needs to be called
+    from the server-end instead of being called from DialogFlow.
     """
     global last_term_explained
 
@@ -167,7 +177,8 @@ def explain_term(content, extract=None):
     if tokenized_extract not in firebase_data:
         data['fulfillment_messages'] = \
             [{"text": {"text": [
-                "Sorry, I don't have a working definition for " + extract + ". Do you want to go back to filling out the form?"]}}]
+                "Sorry, I don't have a working definition for " + extract +
+                ". Do you want to go back to filling out the form?"]}}]
     # Definition exists
     else:
         response = "Great question, " + extract + " is " + firebase_data[tokenized_extract][
@@ -178,10 +189,11 @@ def explain_term(content, extract=None):
     if extract == "filing status":
         global document
         if document.demographic_user_info['is-married']:
-            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file separately, " \
-                       "each of you will fill out your own tax form. Most of the time, we'll encourage you to file " \
-                       "together, but if one of you has significant itemized deductions, it may be better to file together. " \
-                       "Later on, we'll let you know if it's better to file separetely. Does that make sense?"
+            response = "If you file jointly, you and your spouse will fill out one tax form together. If you file " \
+                       "separately, each of you will fill out your own tax form. Most of the time, we'll encourage " \
+                       "you to file together, but if one of you has significant itemized deductions, it may be better" \
+                       " to file together. Later on, we'll let you know if it's better to file separetely. Does that " \
+                       "make sense?"
             data['fulfillment_messages'] = [{"text": {"text": [response]}}]
         else:
             response = "If you file had a spouse die within the past two years, you can file as a qualifying widower," \
@@ -275,7 +287,8 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
                 num_digits += 1
 
                 if num_digits > 9:
-                    return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+                    return 'social_security', 'You entered an invalid SSN. Valid SSNs are exactly ' \
+                                              'nine numbers in length. '
 
             elif digit == '-':
                 num_hyphens += 1
@@ -376,12 +389,14 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
     # Routing number should be 9 digits
     if intent == 'refund_and_owe.number_value' and last_unfilled == 'routing-number':
         if len(str(parameters['number'])) != 11: # accounts for the trailing '.0'
-            return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for your routing number.'
+            return last_unfilled, 'You entered an invalid routing number. Please type in exactly 9 digits for ' \
+                                  'your routing number.'
     # Account number should be 17 digits
     elif intent == 'refund_and_owe.number_value' and last_unfilled == 'account-number':
         num = str(parameters['number'])
         if not num.endswith('e+16'):
-            return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits for your routing number.'
+            return last_unfilled, 'You entered an invalid account number. Please type in exactly 17 digits ' \
+                                  'for your routing number.'
     # User tries to get more money refunded than they're allowed
     elif intent == 'refund_and_owe.number_value' and (
             last_unfilled == 'overpaid-applied-tax' or last_unfilled == 'amount-refunded'):
@@ -589,42 +604,45 @@ def exploit_deduction(content):
     global missed_deduction_values
     global previous_deduction_result
 
-    # Check for valid parameter values
+    # Check for invalid parameter values, such as a negative dollar amount
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
-    # Ignore current result and return to old deduction information
+    # If error is found, ignore current result and retain old deduction information to prompt user again
     if error_field is not None or error_message is not None:
         deduction_result = copy.deepcopy(previous_deduction_result)
 
     # No errors, proceed with deduction handling
     else:
         deduction_result = None
-        # Handle list of deductions that the user may qualify for
+        # List that contains the deductions that the user claimed on their own, but for which they did not provide
+        # a dollar value (i.e., I paid state and local taxes OR I had healthcare expenses)
         if len(missed_deduction_values) > 0:
             # Fill document with the value extracted from DF
             # If the value is None, we have yet to determine whether the user qualifies for that deduction
             if document.deduction_user_info[last_unfilled_field] is None:
-                # Set document data to the value DF sent us
+                # This field has not been used yet/no deductions claimed yet, so set deduction value as such
                 if parameters['value'] != '':
                     document.deduction_user_info[last_unfilled_field] = parameters['value']
                 elif parameters['dollar'] != '':
                     document.deduction_user_info[last_unfilled_field] = parameters['dollar']['amount']
-            # We already have an existing value for that field, so add to the current value
+            # We already have an existing dollar value for that field, so add to the current value
             else:
                 if parameters['value'] != '':
                     document.deduction_user_info[last_unfilled_field] += parameters['value']
                 elif parameters['dollar'] != '':
                     document.deduction_user_info[last_unfilled_field] += parameters['dollar']['amount']
 
-
+            # Took care of the missed dollar value for the deduction, so no need to worry about it anymore
             missed_deduction_values.pop(0)
+
+            # Store the array of pending missed deduction values
             deduction_result = copy.deepcopy(missed_deduction_values)
 
-            # No more fields left for that specific deduction
+            # All user-claimed deductions have currently been assigned a dollar value, so go back to normal flow
             if len(missed_deduction_values) == 0:
                 deduction_result = 'deduction-success'
 
-        # User is asking for help with deductions for the first time
+        # User is asking for help with deductions right off the bat, without trying to claim deductions on their own
         elif current_intent == 'exploit_deduction.help' and document.deduction_stage != 'user_done':
             document.deduction_stage = 'user_done'
 
@@ -634,7 +652,7 @@ def exploit_deduction(content):
                     deduction_result = key
                     break
 
-        # AFTER user has asked for help: do deduction handling sequentially
+        # AFTER user has asked for help: prompt for deduction information sequentially
         elif document.deduction_stage == 'user_done':
             
             # Set the values extracted from DF response
@@ -657,73 +675,104 @@ def exploit_deduction(content):
                     deduction_result = key
                     break
 
-        # Try using user-suggested deduction (that we did not prompt about)
+        # User claims deductions on their own without our help; we make sure it qualifies and we handle that deduction
         else:
+            # Parameters given by DialogFlow should hold relevant deductions and corresponding dollar values
             deductions_and_values_found = parameters
+
             success = False
 
+            # Deductions that we handle and they can qualify for
             possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value',
                                          'charitable-value', 'damage-cost', 'medical_value',
                                          'mortgage_value', 'roth-IRA-value', 'student_loans_value',
                                          'tuition_value']
+
+            # Maps the DialogFlow parameter given to us by the JSON object to its name in the Document class
             value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                        'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
                                        'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
                                        'roth-IRA-value': 'roth-IRA', 'damage-cost': 'damaged-property',
                                        'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
 
-            # Get the list of deductions that we haven't asked the user about yet
+            # List will hold any deductions claimed by the user for which they didn't provide dollar value
             missed_values = []
+
+            # Loop through and check if any reported deductions are valid
             for possible_deduction_value in possible_deduction_values:
                 if possible_deduction_value in deductions_and_values_found:
                     deduction_name = value_to_deduction_name[possible_deduction_value]
+
+                    # If user claimed a deduction on their own but forgot to include dollar value, add to the
+                    # missed_values vector and handle it next time
                     if len(deductions_and_values_found[possible_deduction_value]) == 0:
                         missed_values.append(possible_deduction_value)
+
+                    # Otherwise, if they qualify for deduction and have a valid dollar value, update informatoin
                     else:
                         params = (deduction_name, deductions_and_values_found[possible_deduction_value])
                         document.update_slot(params, current_intent, last_unfilled_field)
                         success = True
 
-            # User still has deductions that they could potentially qualify for
+            # User claimed deductions without designating dollar value, will handle in next question
             if len(missed_values) > 0:
                 deduction_result = missed_values
-            # We have determined a value for every deduction that we support
+
+            # User claimed valid deductions and had corresponding dollar value for each
             elif success:
                 deduction_result = 'deduction-success'
-            # Something went wrong
+
+            # User claimed an invalid deduction (i.e., "I walked my neighbor's dog")
             else:
                 deduction_result = 'deduction-failure'
 
     session = content['session']
     previous_deduction_result = copy.deepcopy(deduction_result)
 
+    # Load the JSON object template that will be sent back to DialogFlow
     with open('response.json') as f:
         data = json.load(f)
 
     # There are no deductions left that the user could possibly qualify for. Move onto the next section.
     if deduction_result is None:
-        document.current_section_index += 1
-        if current_intent == 'exploit_deduction.help':
-            response = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. But don't worry, we're almost done with your taxes!"
-        else:
-            type_chosen = document.compute_line_9()
-            if type_chosen == 'standard deduction':
-                response = "We're all done maximizing your deductions! Looks like you'll get more with standard deductions. Now we just have the easy parts left."
-            else:
-                response = "We're all done maximizing your deductions! Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
 
-        # Determine whether they need to do the refund or owe section
+        # Increment section index to the refund and owe section
+        document.current_section_index += 1
+
+        # Calculate best option (standard or itemized)
+        type_chosen = document.compute_line_9()
+
+        # Inform user about whether the standard or itemized deduction will save them more money:
+        if type_chosen == 'standard deduction':
+            response = "Looks like you'll get more with standard deductions. Now we just have the easy parts left."
+        else:
+            response = "Looks like you'll get more with itemized deductions. Now we just have the easy parts left."
+
+        # User asked for help but they already claimed all possible deductions so agent can't help them at this point
+        if current_intent == 'exploit_deduction.help':
+            addition = "Well this is embarassing. I unfortunately can't find any more eligible deductions for you. " \
+                       "Don't worry though! "
+
+        else:
+            addition = "We're all done maximizing your deductions! "
+
+        response = addition + response
+
+            # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:
             document.current_section_index += 1
             response += "You owe ${}. To pay, please visit https://www.irs.gov/payments. " \
-                        "We're done with your refund/owe section. We're almost done! Please sign the form electronically".format(
-                document.refund_user_info["amount-owed"])
+                        "We're done with your refund/owe section. We're almost done! Please sign the form " \
+                        "electronically".format(document.refund_user_info["amount-owed"])
         else:
             response += responses.get_next_response('amount-refunded', document)
 
-    # User still has deductions left that they might qualify for. Find the appropriate follow-up question
+    # User claimed valid deduction without specifying dollar value. Find the appropriate follow-up question by
+    # remembering original context
     elif isinstance(deduction_result, list):
         missed_deduction_values = copy.deepcopy(deduction_result)
+
+        # Maps the pertinent deduction to its followup
         followups = {'state-local-value': 'How much did you pay in those state and local taxes?',
                      'jury_duty_amount': 'What amount of money did you get from jury duty?',
                      'account_401_value': 'How much did you contribute to your 401K?',
@@ -735,6 +784,8 @@ def exploit_deduction(content):
                      'tuition_value': 'How much did tuition cost you?',
                      'damage-cost': 'How much were your losses valued at?'}
         response = followups[missed_deduction_values[0]]
+
+    # Proceed as normal through the deductions flow
     else:
         response = responses.get_next_response(deduction_result, document)
 
@@ -744,16 +795,21 @@ def exploit_deduction(content):
     data['fulfillment_messages'] = [{"text": {"text": [response]}}]
 
     # Set appropriate output contexts
-    # If the deduction we're going to inquire about next is a list, we have to handle that different because it's a different intent with 
-        # a different list parameter (as opposed to single value) 
+    # If the deduction we're going to inquire about next is a list, that means that the user forgot to specify dollar
+    # value, so we set the output context appropriately for the followup
     if isinstance(deduction_result, list):
         output_context = responses.generate_output_context('missed-deduction-value', 1, session, document)
+
+    # Either user claimed valid deduction with dollar value OR wanted help OR claimed invalid deduction
     elif deduction_result is not None:
         output_context = responses.generate_output_context(deduction_result, 1, session, document)
+
+    # User finished deductions section and needs to move on to refund-and-owe
     else:
         output_context = responses.generate_output_context('amount-refunded', 1, session, document)
 
-    # Setting the last_unfilled_field must be adjusted to handle lists
+    # If deduction claimed didn't have corresponding dollar value, remember it for the future because the followup
+    # will provide information about it
     if isinstance(deduction_result, list):
         value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
@@ -806,7 +862,8 @@ def refund_and_owe(content):
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
-        response = "We're all done filling out your refund and amount to owe section. Let's move onto third party permissions! "
+        response = "We're all done filling out your refund and amount to owe section. " \
+                   "Let's move onto third party permissions! "
         response += responses.third_party['third-party']
         output_context = responses.generate_output_context('third-party', 1, session, document)
         document.current_section_index += 1
@@ -862,7 +919,8 @@ def third_party(content):
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
-        response = "We're all done filling out your third party section. All that's left is for you to sign, and we'll be done!"
+        response = "We're all done filling out your third party section. All that's " \
+                   "left is for you to sign, and we'll be done!"
         document.current_section_index += 1
     if error_message:
         response = error_message
@@ -967,14 +1025,16 @@ def autofill3(content):
 
 
 def fallback(content):
-    """Error handling for when Dialogflow could not categorize the utterance into any intent (while factoring in output contexts)."""
+    """Error handling for when Dialogflow could not categorize the utterance
+    into any intent (while factoring in output contexts)."""
     global last_unfilled_field
     global responses
     global document
     global last_output_context
     global last_intent
 
-    # If last_unfilled_field has not been set yet, set it to the first slot we ever inquire about (the first slot of demographics)
+    # If last_unfilled_field has not been set yet, set it to the first slot we
+    # ever inquire about (the first slot of demographics)
     if last_unfilled_field == '':
         last_unfilled_field = document.demographics_slots_to_fill[0]
 
@@ -1004,8 +1064,8 @@ def fallback(content):
 
 def misclassified_money_intent(content):
     """
-    Handle situations in income where Dialogflow incorrectly classifies as a money intention because the user put in a weird value.
-    Must be handled differently than error checking because the intent itself is wrong, not just the value
+    Handle situations in income where Dialogflow incorrectly classifies as a money intention because the user put in a
+    weird value. Must be handled differently than error checking because the intent itself is wrong, not just the value.
     """
     global last_unfilled_field
     global responses
@@ -1026,7 +1086,8 @@ def misclassified_money_intent(content):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    """Primary link that DialogFlow fulfillment is connected to and will make a call to every time an intent is matched with webhook fulfillment turned on."""
+    """Primary link that DialogFlow fulfillment is connected to and will make a call
+    to every time an intent is matched with webhook fulfillment turned on."""
     if request.method == 'POST':
         content = request.json
 
@@ -1042,14 +1103,16 @@ def home():
             return clear()
         # Handle bug where DF misclassifies an intent as a money intent
         elif "monetary" in str(last_output_context) and "explain_term" not in intent:
-            if intent != 'income_and_finances_fill.monetary_value' and intent != 'income_and_finances_fill.monetary_value_list':
+            if intent != 'income_and_finances_fill.monetary_value' and \
+                    intent != 'income_and_finances_fill.monetary_value_list':
                 return misclassified_money_intent(content)
-            elif (
-                    intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list') \
+            elif (intent == 'income_and_finances_fill.monetary_value' or
+                  intent == 'income_and_finances_fill.monetary_value_list') \
                     and content['queryResult']['queryText'] == 'no':
                 return misclassified_money_intent(content)
-            elif (intent == 'income_and_finances_fill.monetary_value' or intent == 'income_and_finances_fill.monetary_value_list')  and (document.deduction_stage == 'user_done' or
-                                                                          len(missed_deduction_values) > 0):
+            elif (intent == 'income_and_finances_fill.monetary_value' or
+                  intent == 'income_and_finances_fill.monetary_value_list')  \
+                    and (document.deduction_stage == 'user_done' or len(missed_deduction_values) > 0):
                 return exploit_deduction(content)
             else:
                 return income_finances_fill(content)
