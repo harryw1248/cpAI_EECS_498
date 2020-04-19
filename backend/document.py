@@ -116,22 +116,22 @@ class Document:
             'schedule-3-line-14': None,
 
             # purely computational fields
-            '7b': 0,
-            '8b': 0,
-            '9': 0,
-            '10': 0,
-            '11a': 0,
-            '11b': 0,
-            '12a': 0,
-            '12b': 0,
-            '13a': 0,
-            '13b': 0,
-            '14': 0,
-            '15': 0,
-            '16': 0,
-            '18d': 0,
-            '18e': 0,
-            '19': 0
+            '7b': None,
+            '8b': None,
+            '9': None,
+            '10': None,
+            '11a': None,
+            '11b': None,
+            '12a': None,
+            '12b': None,
+            '13a': None,
+            '13b': None,
+            '14': None,
+            '15': None,
+            '16': None,
+            '18d': None,
+            '18e': None,
+            '19': None
         }
 
         self.income_slots_to_fill = [
@@ -189,6 +189,7 @@ class Document:
             'jury-duty': None,
             'damaged-property': None,
             'student-loans': None,
+            'tuition': None
         }
 
         self.deduction_slots_to_fill = [
@@ -471,25 +472,25 @@ class Document:
             elif extracted_slot_value == 'no':
                 self.income_user_info[extracted_slot_name] = False
                 if extracted_slot_name == 'has-1099-DIV' and not self.income_user_info['owns-stocks-bonds']:
-                    self.income_user_info['ordinary-dividends'] = False
-                    self.income_user_info['qualified-dividends'] = False
-                    self.income_user_info['capital-gains'] = False
+                    self.income_user_info['ordinary-dividends'] = 0.0
+                    self.income_user_info['qualified-dividends'] = 0.0
+                    self.income_user_info['capital-gains'] = 0.0
                 elif extracted_slot_name == 'has-1099-R':
-                    self.income_user_info['pensions-and-annuities'] = 0
-                    self.income_user_info['pensions-and-annuities-taxable'] = 0
+                    self.income_user_info['pensions-and-annuities'] = 0.0
+                    self.income_user_info['pensions-and-annuities-taxable'] = 0.0
                 elif extracted_slot_name == 'owns-business':
-                    self.income_user_info['business-expenses'] = 0
-                    self.income_user_info['business-income'] = 0
+                    self.income_user_info['business-expenses'] = 0.0
+                    self.income_user_info['business-income'] = 0.0
                     self.income_user_info['pass-through-business'] = False
-                    self.income_user_info['total-qualified-business-income'] = False
+                    self.income_user_info['total-qualified-business-income'] = 0.0
                 elif extracted_slot_name == 'pass-through-business':
-                    self.income_user_info['total-qualified-business-income'] = 0
+                    self.income_user_info['total-qualified-business-income'] = 0.0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
             elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
                     or extracted_slot_value == 0:
-                self.income_user_info['IRA-distributions'] = 0
-                self.income_user_info['IRA-distributions-taxable'] = 0
+                self.income_user_info['IRA-distributions'] = 0.0
+                self.income_user_info['IRA-distributions-taxable'] = 0.0
             elif extracted_slot_name == 'IRA-deductions' or \
                     extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
@@ -504,7 +505,7 @@ class Document:
             if extracted_slot_name == 'wages':
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
                     'occupation'] != 'educator':
-                    self.income_user_info['educator-expenses'] = 0
+                    self.income_user_info['educator-expenses'] = 0.0
             if extracted_slot_name == 'tuition-fees':
                 self.income_user_info['tuition-fees'] = extracted_slot_value
                 if self.income_user_info['tuition-fees'] > 4000:
@@ -569,7 +570,7 @@ class Document:
             (deduction_name, dollar_values) = parameters
 
             if self.deduction_user_info[deduction_name] is None:
-                self.deduction_user_info[deduction_name] = 0
+                self.deduction_user_info[deduction_name] = 0.0
             for dollar_value in dollar_values:
                 self.deduction_user_info[deduction_name] += dollar_value
 
@@ -583,11 +584,11 @@ class Document:
                     self.refund_user_info[extracted_slot_name] = self.refund_user_info["overpaid"]
                 # If they would like no money refunded, ignore the option to direct-deposit
                 elif parameters["number"] == 0 and extracted_slot_name == 'amount-refunded':
-                    self.refund_user_info['amount-refunded'] = 0
-                    self.refund_user_info['direct-deposit'] = False
-                    self.refund_user_info['account-type'] = False
-                    self.refund_user_info['routing-number'] = False
-                    self.refund_user_info['account-number'] = False
+                    self.refund_user_info['amount-refunded'] = 0.0
+                    self.refund_user_info['direct-deposit'] = ''
+                    self.refund_user_info['account-type'] = ''
+                    self.refund_user_info['routing-number'] = ''
+                    self.refund_user_info['account-number'] = ''
                 else:
                     self.refund_user_info[extracted_slot_name] = parameters['number']
 
@@ -599,9 +600,9 @@ class Document:
                 # If they would not like a refund, ignore the option to direct-deposit
                 else:
                     self.refund_user_info[extracted_slot_name] = False
-                    self.refund_user_info["account-type"] = False
-                    self.refund_user_info["routing-number"] = False
-                    self.refund_user_info["account-number"] = False
+                    self.refund_user_info["account-type"] = ''
+                    self.refund_user_info["routing-number"] = ''
+                    self.refund_user_info["account-number"] = ''
             else:
                 self.refund_user_info[extracted_slot_name] = parameters[extracted_slot_name]
 
@@ -612,13 +613,14 @@ class Document:
                 # If they would not like to allow a third-party to access the tax form, do not inquire about them
                 else:
                     self.third_party_user_info['third-party'] = False
-                    self.third_party_user_info['third-party-given-name'] = False
-                    self.third_party_user_info['third-party-given-name'] = False
-                    self.third_party_user_info['phone-number'] = False
-                    self.third_party_user_info['PIN'] = False
+                    self.third_party_user_info['third-party-given-name'] = ''
+                    self.third_party_user_info['third-party-given-name'] = ''
+                    self.third_party_user_info['phone-number'] = ''
+                    self.third_party_user_info['PIN'] = ''
             else:
                 self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
 
+        print(self.income_user_info)
         return None
 
     def compute_overpaid_amount(self):
@@ -630,10 +632,10 @@ class Document:
         else:
             self.refund_user_info["overpaid"] = 0
             self.refund_user_info["amount-refunded"] = 0
-            self.refund_user_info["direct-deposit"] = False
-            self.refund_user_info["routing-number"] = False
-            self.refund_user_info["account-type"] = False
-            self.refund_user_info["account-number"] = False
+            self.refund_user_info["direct-deposit"] = ''
+            self.refund_user_info["routing-number"] = ''
+            self.refund_user_info["account-type"] = ''
+            self.refund_user_info["account-number"] = ''
             self.refund_user_info["overpaid-applied-tax"] = 0
             self.refund_user_info["amount-owed"] = self.income_user_info["16"] - self.income_user_info["19"]
 
@@ -796,8 +798,8 @@ class Document:
     def compute_11a_and_11b(self):
         # Line 9: standard deduction or itemized deduction
         # TODO
-        deduction = self.income_user_info["9"]
-        qualified_business_income = self.income_user_info["10"]
+        deduction = self.income_user_info["9"] 
+        qualified_business_income = (self.income_user_info["10"] or 0)
         self.income_user_info["11a"] = deduction + qualified_business_income
         self.income_user_info["taxable-income"] = max(self.income_user_info[
                                                           "8b"] - self.income_user_info["11a"], 0)
