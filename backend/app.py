@@ -1209,7 +1209,7 @@ def getJpg():
     """Used by the frontend to generate a jpg for the user."""
     global document
     fields = pdf.fillInFields(document)
-    pdf.generatePdf(fields)
+    pdf.generatePdf(fields, document)
     pdf.generateImage()
     return send_file('./page.jpg')
 
@@ -1219,8 +1219,8 @@ def getPdf():
     """Used by the frontend to generate a pdf for the user."""
     global document
     fields = pdf.fillInFields(document)
-    pdf.generatePdf(fields)
-    return send_file('./f1040.pdf')
+    pdf.generatePdf(fields, document)
+    return send_file('./f1040_signed.pdf')
 
 
 if __name__ == "__main__":
