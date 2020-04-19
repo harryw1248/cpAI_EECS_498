@@ -122,7 +122,6 @@ class Response:
             'schedule-3-line-14': 'prompt_monetary_value',
             'deduction-begin': 'prompt_deduction_begin',
             'account_401': 'prompt_monetary_value_list',
-            'tuition': 'prompt_monetary_value',
             'deduction-success': 'prompt_deduction_begin',
             'deduction-failure': 'prompt_deduction_begin',
             'charitable-contribution': 'prompt_monetary_value_list',
@@ -309,6 +308,7 @@ class Response:
             'mortgage': 'What amount have you paid in home or condo mortgages?',
             'account_401': 'How much have you made in contributions to a 401K?',
             'roth-IRA': 'How much have you made in contributions to a Traditional IRA, if any?',
+            'student-loans': 'How much did you repay in student loans?',
             'damaged-property': 'If you had any property damages in the last year, how much were your losses valued at?' 
                                 ' To calculate this, subtract the value of your property after the incident from its '
                                 'value before the incident. If no property has been damaged, say zero.',

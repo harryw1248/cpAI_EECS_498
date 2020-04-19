@@ -697,14 +697,14 @@ def exploit_deduction(content):
             possible_deduction_values = ['state-local-value', 'jury_duty_amount', 'account_401_value',
                                          'charitable-value', 'damage-cost', 'medical_value',
                                          'mortgage_value', 'roth-IRA-value', 'student_loans_value',
-                                         'tuition_value']
+                                         ]
 
             # Maps the DialogFlow parameter given to us by the JSON object to its name in the Document class
             value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                        'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
                                        'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
                                        'roth-IRA-value': 'roth-IRA', 'damage-cost': 'damaged-property',
-                                       'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+                                       'student_loans_value': 'student-loans'}
 
             # List will hold any deductions claimed by the user for which they didn't provide dollar value
             missed_values = []
@@ -746,7 +746,6 @@ def exploit_deduction(content):
 
     # There are no deductions left that the user could possibly qualify for. Move onto the next section.
     if deduction_result is None:
-
         # Increment section index to the refund and owe section
         document.current_section_index += 1
 
@@ -769,7 +768,8 @@ def exploit_deduction(content):
 
         response = addition + response
 
-            # Determine whether they need to do the refund or owe section
+        document.compute_overpaid_amount()
+        # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:
             document.current_section_index += 1
             response += "You owe ${}. To pay, please visit https://www.irs.gov/payments. " \
@@ -778,6 +778,7 @@ def exploit_deduction(content):
         else:
             response += responses.get_next_response('amount-refunded', document)
 
+    
     # User claimed valid deduction without specifying dollar value. Find the appropriate follow-up question by
     # remembering original context
     elif isinstance(deduction_result, list):
@@ -792,7 +793,6 @@ def exploit_deduction(content):
                      'mortgage_value': 'How much went towards your mortgage?',
                      'roth-IRA-value': 'How much did you contribute to your roth IRA?',
                      'student_loans_value': 'How much did you repay in student loans?',
-                     'tuition_value': 'How much did tuition cost you?',
                      'damage-cost': 'How much were your losses valued at?'}
         response = followups[missed_deduction_values[0]]
 
@@ -821,12 +821,14 @@ def exploit_deduction(content):
 
     # If deduction claimed didn't have corresponding dollar value, remember it for the future because the followup
     # will provide information about it
-    if isinstance(deduction_result, list):
+    if deduction_result is None:
+        last_unfilled_field = 'amount-refunded'
+    elif isinstance(deduction_result, list):
         value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
                                    'medical_value': 'medical-dental-expenses', 'mortgage_value': 'mortgage',
                                    'roth-IRA-value': 'roth-IRA', 'damage-cost': 'damaged-property',
-                                   'student_loans_value': 'student-loans', 'tuition_value': 'tuition'}
+                                   'student_loans_value': 'student-loans'}
         last_unfilled_field = value_to_deduction_name[deduction_result[0]]
     else:
         last_unfilled_field = deduction_result
@@ -840,6 +842,7 @@ def exploit_deduction(content):
 
 def refund_and_owe(content):
     """Handle any DialogFlow intents that deal with the refund and owe section."""
+    print("INSIDE REFUND AND OWE")
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -859,6 +862,8 @@ def refund_and_owe(content):
 
     if error_field is None and error_message is None:
         # Update params on document object
+        print("TRYING TO UPDATE REFUND SLOT", last_unfilled_field)
+        print("current field is", current_intent)
         document.update_slot(parameters, current_intent, last_unfilled_field)
 
         # Query next thing needed

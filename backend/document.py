@@ -188,8 +188,7 @@ class Document:
             'medical-dental-expenses': None,
             'jury-duty': None,
             'damaged-property': None,
-            'student-loan-interest': None,
-            'tuition': None
+            'student-loans': None,
         }
 
         self.deduction_slots_to_fill = [
@@ -200,6 +199,7 @@ class Document:
             'roth-IRA',
             'medical-dental-expenses',
             'jury-duty',
+            'student-loans',
             'damaged-property'
         ]
 
@@ -211,7 +211,8 @@ class Document:
             'roth-IRA',
             'medical-dental-expenses',
             'jury-duty',
-            'damaged-property'
+            'student-loans',
+            'damaged-property',
         ]
 
         self.refund_user_info = {
@@ -489,24 +490,27 @@ class Document:
                     or extracted_slot_value == 0:
                 self.income_user_info['IRA-distributions'] = 0
                 self.income_user_info['IRA-distributions-taxable'] = 0
-            elif extracted_slot_name == 'tuition-fees' or extracted_slot_name == 'IRA-deductions' or \
+            elif extracted_slot_name == 'IRA-deductions' or \
                     extracted_slot_name == 'IRA-deductions' or extracted_slot_name == 'self-employed-health-insurance' or \
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
-                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses' or extracted_slot_name == 'student-loan-interest-deduction':
+                    extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses' or extracted_slot_name == 'student-loans':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
                 self.income_user_info['adjustments-to-income'] += extracted_slot_value
-                if extracted_slot_name == 'student-loan-interest-deduction':
-                    self.deduction_user_info['student-loan-interest'] = self.compute_student_loan_deduction(
+                if extracted_slot_name == 'student-loans':
+                    self.deduction_user_info['student-loans'] = self.compute_student_loan_deduction(
                         extracted_slot_value)
-                if extracted_slot_name == 'tuition-fees':
-                    self.deduction_user_info['tuition'] = self.compute_tuition_deduction(extracted_slot_value)
 
             # compute all other income fields
             if extracted_slot_name == 'wages':
                 if self.demographic_user_info['occupation'] != 'teacher' and self.demographic_user_info[
                     'occupation'] != 'educator':
                     self.income_user_info['educator-expenses'] = 0
-            # if extracted_slot_name == 'tuition-fees':
+            if extracted_slot_name == 'tuition-fees':
+                self.income_user_info['tuition-fees'] = extracted_slot_value
+                if self.income_user_info['tuition-fees'] > 4000:
+                    self.deduction_user_info['tuition-fees'] = 4000
+                else:
+                    self.deduction_user_info['tuition'] = self.income_user_info['tuition-fees']
             # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()
             # ##DONT DELETE THE COMMENTED LINE BELOW
             # self.income_user_info["8b"] = self.income_user_info["7b"] - self.income_user_info["adjustments-to-income"]
@@ -558,16 +562,12 @@ class Document:
                     "18d"]
                 self.income_user_info["19"] = self.income_user_info['federal-income-tax-withheld'] + \
                                               self.income_user_info["18e"]
-
-                # Determine overpaid information
-                self.compute_overpaid_amount()
             elif extracted_slot_value != 'yes' and extracted_slot_value != 'no':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
 
         elif self.sections[self.current_section_index] == 'deductions':
             (deduction_name, dollar_values) = parameters
-            print("DEDUCTIONS", parameters)
-            print(deduction_name, dollar_values)
+
             if self.deduction_user_info[deduction_name] is None:
                 self.deduction_user_info[deduction_name] = 0
             for dollar_value in dollar_values:
@@ -619,8 +619,6 @@ class Document:
             else:
                 self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
 
-        print(self.income_user_info)
-        print(self.deduction_user_info)
         return None
 
     def compute_overpaid_amount(self):
@@ -988,7 +986,7 @@ class Document:
         else:
             corrected_ira = min(7000, self.deduction_user_info['roth-IRA'])
 
-        corrected_student_loans = min(2500, self.deduction_user_info['student-loan-interest'])
+        corrected_student_loans = min(2500, self.deduction_user_info['student-loans'])
 
         corrected_tuition = 0
         if self.income_user_info["wages"] <= 65000:
@@ -1114,12 +1112,12 @@ class Document:
         self.income_user_info['13b'] = 0
         self.income_user_info['14'] = 0
         self.income_user_info['15'] = 0
-        self.income_user_info['16'] = 500
+        self.income_user_info['16'] = 521
         self.income_user_info['18d'] = 0
         self.income_user_info['18e'] = 0
-        self.income_user_info['19'] = 1500
+        self.income_user_info['19'] = 2512
 
-        self.deduction_user_info['student-loan-interest'] = 0
+        # self.deduction_user_info['student-loans'] = 0
         self.deduction_user_info['tuition'] = 0
         self.current_section_index = 2
         self.compute_overpaid_amount()
