@@ -102,7 +102,7 @@ class Document:
             'IRA-deductions': None,
             'student-loan-interest-deduction': None,
             'tuition-fees': None,
-            'adjustments-to-income': 0,
+            'adjustments-to-income': None,
             'adjusted-gross-income': None,
             'federal-income-tax-withheld': None,
             'earned-income-credit': None,
@@ -495,7 +495,7 @@ class Document:
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses' or extracted_slot_name == 'student-loans':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                self.income_user_info['adjustments-to-income'] += extracted_slot_value
+                self.income_user_info['adjustments-to-income'] = (self.income_user_info['adjustments-to-income'] or 0) + extracted_slot_value
                 if extracted_slot_name == 'student-loans':
                     self.deduction_user_info['student-loans'] = self.compute_student_loan_deduction(
                         extracted_slot_value)
