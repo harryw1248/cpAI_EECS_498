@@ -159,6 +159,7 @@ def explain_term(content, extract=None):
     """
     global last_term_explained
 
+    # print(content, extract)
     # Grab the term that the user is confused about
     if extract is None:
         extract = content['queryResult']['parameters']['terminology']
@@ -166,6 +167,9 @@ def explain_term(content, extract=None):
     # Set last_term_explained global so it can be used in other functions
     tokenized_extract = standardize_token(extract)
     last_term_explained = tokenized_extract
+
+    print(tokenized_extract)
+    print(last_term_explained)
 
     # Load firebase dictionary with all of the terms
     firebase_data = db.child("TERMINOLOGY").get().val()
@@ -1123,13 +1127,15 @@ def home():
         global last_output_context
         global missed_deduction_values
 
+        print("INTENT", intent)
+
         # If user says goodbye, clear all information to start fresh
         if intent == 'goodbye' or 'goodbye' == content['queryResult']['queryText']:
             last_output_context = ""
             last_unfilled_field = ""
             return clear()
         # Handle bug where DF misclassifies an intent as a money intent
-        elif "monetary" in str(last_output_context) and "explain_term" not in intent:
+        elif "monetary" in str(last_output_context) and "explain_term" not in intent and "explain_previous_term" not in intent:
             if intent != 'income_and_finances_fill.monetary_value' and \
                     intent != 'income_and_finances_fill.monetary_value_list':
                 return misclassified_money_intent(content)
