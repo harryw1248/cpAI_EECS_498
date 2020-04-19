@@ -3,8 +3,15 @@ import pandas as pd
 import xlrd
 
 
+'''
+Class for representing fields in 1040 tax form
+Stores information about the user
+Autocomputes tax form fields based on user's information
+'''
 class Document:
     def __init__(self):
+
+        #subsections of tax form
         self.sections = [
             'demographics',
             'income',
@@ -13,6 +20,12 @@ class Document:
             'third-party'
         ]
 
+        '''
+        Dict for each section to track field values
+        List for each section to define order in which fields will be queried
+        '''
+
+        #demographic fields of user (some are not explicitly queried from user)
         self.demographic_user_info = {
             'given-name': None,
             'last-name': None,
@@ -36,6 +49,7 @@ class Document:
             'spouse-itemize-separate': None,
         }
 
+        #demographic information on user's spouse if applicable
         self.demographic_spouse_info = {
             'spouse-given-name': None,
             'spouse-last-name': None,
@@ -45,6 +59,7 @@ class Document:
             'spouse-blind': None
         }
 
+        #demographic fields that are explicitly queried from user
         self.demographics_slots_to_fill = [
             'given-name',
             'last-name',
@@ -68,6 +83,7 @@ class Document:
             'spouse-itemize-separate',
         ]
 
+        #income fields of user (some are not explicitly queried from user)
         self.income_user_info = {
             'wages': None,
             'owns-business': None,
@@ -134,6 +150,7 @@ class Document:
             '19': None
         }
 
+        #income fields that are explicitly queried from user
         self.income_slots_to_fill = [
             'wages',
             'owns-business',
@@ -179,6 +196,7 @@ class Document:
             'schedule-3-line-14'
         ]
 
+        #deduction fields of user (some are not explicitly queried from user)
         self.deduction_user_info = {
             'charitable-contribution': None,
             'state-local-taxes': None,
@@ -191,6 +209,7 @@ class Document:
             'student-loans': None
         }
 
+        #deduction fields that are explicitly queried from user
         self.deduction_slots_to_fill = [
             'charitable-contribution',
             'state-local-taxes',
@@ -203,6 +222,7 @@ class Document:
             'damaged-property'
         ]
 
+        #dictionary of possible deductions user can claim
         self.available_deductions = [
             'charitable-contribution',
             'state-local-taxes',
@@ -215,6 +235,7 @@ class Document:
             'damaged-property',
         ]
 
+        #refund fields of user (some are not explicitly queried from user)
         self.refund_user_info = {
             'overpaid': None,
             'amount-refunded': None,
@@ -227,6 +248,7 @@ class Document:
             'estimated-tax-penalty': 0
         }
 
+        #refund fields that are explicitly queried from user
         self.refund_slots_to_fill = [
             'amount-refunded',
             'direct-deposit',
@@ -236,6 +258,7 @@ class Document:
             'overpaid-applied-tax',
         ]
 
+        #third party fields of user 
         self.third_party_user_info = {
             'third-party': None,
             'third-party-given-name': None,
@@ -244,6 +267,7 @@ class Document:
             'PIN': None
         }
 
+        #third party fields of user 
         self.third_party_slots_to_fill = [
             'third-party',
             'third-party-given-name',
@@ -266,6 +290,7 @@ class Document:
         self.deduction_stage = 'deduction-begin'
         self.deduction_type_chosen = 'standard deduction'
 
+    #check if field is valid
     def check_status(self, slot, slot_dictionary):
         if slot not in slot_dictionary:
             return "Error"
@@ -274,6 +299,7 @@ class Document:
         else:
             return None
 
+    #finds the next unfilled field that needs to be queried (across all sections)
     def find_next_unfilled_slot(self):
         if self.sections[self.current_section_index] == 'demographics':
             self.last_unfilled_field = self.find_next_unfilled_slot_demographics()
@@ -287,6 +313,7 @@ class Document:
             self.last_unfilled_field = self.find_next_unfilled_slot_third_party()
         return self.last_unfilled_field
 
+    #finds the next unfilled field in demographic section 
     def find_next_unfilled_slot_demographics(self):
         # Get the next unfilled slot for the current dependent
         if self.dependent_being_filled is not None:
@@ -314,12 +341,14 @@ class Document:
             return self.dependent_being_filled.find_next_unfilled_slot()
         return None
 
+    #finds the next unfilled field in income section 
     def find_next_unfilled_slot_income(self):
         for slot in self.income_slots_to_fill:
             if self.income_user_info[slot] is None:
                 return slot
         return None
 
+    #finds the next unfilled field in deductions section 
     def find_next_unfilled_slot_deductions(self, deduction_result=None):
         if self.deduction_stage == 'deduction-begin':
             self.deduction_stage = 'user-enters-deductions'
@@ -334,18 +363,21 @@ class Document:
         # self.income_user_info["9"] = self.compute_line_9()
         return None
 
+    #finds the next unfilled field in refund section
     def find_next_unfilled_slot_refund(self):
         for slot in self.refund_slots_to_fill:
             if self.refund_user_info[slot] is None:
                 return slot
         return None
 
+    #finds the next unfilled field in third party section
     def find_next_unfilled_slot_third_party(self):
         for slot in self.third_party_slots_to_fill:
             if self.third_party_user_info[slot] is None:
                 return slot
         return None
-
+    
+    #updates designated demographic field
     def update_document_demographics(self, parameters, current_intent):
         # Check first if we're working on a dependent, because dependents are their own class
         if self.dependent_being_filled is not None:
@@ -417,6 +449,7 @@ class Document:
                     if slot == "spouse-blind":
                         self.demographic_spouse_info[slot] = True if parameters[slot] == 'yes' else False
 
+    #updates designated field (field can be in any section of document)
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
         if self.sections[self.current_section_index] == 'demographics':
             self.update_document_demographics(parameters, current_intent)
@@ -621,6 +654,11 @@ class Document:
 
         print(self.income_user_info)
         return None
+
+    '''
+    Functions below are for autocomputing various fields based on info provided by user
+    Meant to reduce number of questions asked of user
+    '''
 
     def compute_overpaid_amount(self):
         # This information comes directly from the IRS instructions about refund/owe amounts
@@ -1024,6 +1062,10 @@ class Document:
             self.income_user_info["16"] = self.income_user_info["14"] + self.income_user_info["15"]
             return "itemized deduction"
 
+    '''
+    Functions below are for autofilling information about the user
+    Makes testing easier
+    '''
     def update_dummy(self):
         self.demographic_user_info["given-name"] = "Bob"
         self.demographic_user_info["last-name"] = "Jones"
