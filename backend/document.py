@@ -188,8 +188,7 @@ class Document:
             'medical-dental-expenses': None,
             'jury-duty': None,
             'damaged-property': None,
-            'student-loans': None,
-            'tuition': None
+            'student-loans': None
         }
 
         self.deduction_slots_to_fill = [
@@ -509,7 +508,7 @@ class Document:
             if extracted_slot_name == 'tuition-fees':
                 self.income_user_info['tuition-fees'] = extracted_slot_value
                 if self.income_user_info['tuition-fees'] > 4000:
-                    self.deduction_user_info['tuition-fees'] = 4000
+                    self.deduction_user_info['tuition'] = 4000
                 else:
                     self.deduction_user_info['tuition'] = self.income_user_info['tuition-fees']
             # self.income_user_info['earned-income-credit'] = self.compute_earned_income_credit()

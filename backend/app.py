@@ -301,51 +301,59 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
 
     # Spouse-SSN should be 9 digits
     elif 'spouse_SSN' in intent:
-        value = str(parameters['spouse-ssn'])
-        num_digits = 0
-        num_hyphens = 0
+        # value = str(parameters['spouse-ssn'])
+        # num_digits = 0
+        # num_hyphens = 0
 
-        if value[0] == '-':
-            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+        # if value[0] == '-':
+        #     return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
 
-        for digit in value:
-            if digit in digits:
-                num_digits += 1
+        # for digit in value:
+        #     if digit in digits:
+        #         num_digits += 1
 
-                if num_digits > 9:
-                    return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        #         if num_digits > 9:
+        #             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
-            elif digit == '-':
-                num_hyphens += 1
-            else:
-                return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        #     elif digit == '-':
+        #         num_hyphens += 1
+        #     else:
+        #         return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
-        if num_digits != 9:
-            return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        # if num_digits != 9:
+        #     return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        
+        # TODO: remove this once spouse ssn is fixed
+        if len(str(parameters['spouse-ssn'])) != 11:  # accounts for the trailing '.0'
+            return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length.'
     
     # Dependent-SSN should be 9 digits
     elif 'dependent_ssn' in intent:
-        value = str(parameters['dependent-ssn'])
-        num_digits = 0
-        num_hyphens = 0
+        # value = str(parameters['dependent-ssn'])
+        # num_digits = 0
+        # num_hyphens = 0
 
-        if value[0] == '-':
-            return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
+        # if value[0] == '-':
+        #     return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
 
-        for digit in value:
-            if digit in digits:
-                num_digits += 1
+        # for digit in value:
+        #     if digit in digits:
+        #         num_digits += 1
 
-                if num_digits > 9:
-                    return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        #         if num_digits > 9:
+        #             return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
-            elif digit == '-':
-                num_hyphens += 1
-            else:
-                return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        #     elif digit == '-':
+        #         num_hyphens += 1
+        #     else:
+        #         return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
 
-        if num_digits != 9:
-            return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+        # if num_digits != 9:
+        #     return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
+
+        # TODO: remove this once dependent ssn is fixed
+        if len(str(parameters['dependent-ssn'])) != 11:
+            return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length.'
 
     # Monetary-value intent should have non-negative numbers
     elif intent == 'income_and_finances_fill.monetary_value':
@@ -659,7 +667,6 @@ def exploit_deduction(content):
 
         # AFTER user has asked for help: prompt for deduction information sequentially
         elif document.deduction_stage == 'user_done':
-            print(last_unfilled_field)
             # Set the values extracted from DF response
             # Field is empty
             if document.deduction_user_info[last_unfilled_field] is None:
@@ -771,10 +778,12 @@ def exploit_deduction(content):
         document.compute_overpaid_amount()
         # Determine whether they need to do the refund or owe section
         if document.refund_user_info["overpaid"] <= 0:
-            document.current_section_index += 1
             response += "You owe ${}. To pay, please visit https://www.irs.gov/payments. " \
-                        "We're done with your refund/owe section. We're almost done! Please sign the form " \
-                        "electronically".format(document.refund_user_info["amount-owed"])
+                        "We're done with your refund/owe section! ".format(document.refund_user_info["amount-owed"])
+            response += responses.third_party['third-party']
+            document.current_section_index += 1
+            output_context = responses.generate_output_context(
+            'third-party', 1, session, document)
         else:
             response += responses.get_next_response('amount-refunded', document)
 
@@ -822,7 +831,10 @@ def exploit_deduction(content):
     # If deduction claimed didn't have corresponding dollar value, remember it for the future because the followup
     # will provide information about it
     if deduction_result is None:
-        last_unfilled_field = 'amount-refunded'
+        if document.refund_user_info["overpaid"] <= 0:
+            last_unfilled_field = 'third-party'
+        else:
+            last_unfilled_field = 'amount-refunded'
     elif isinstance(deduction_result, list):
         value_to_deduction_name = {'state-local-value': 'state-local-taxes', 'jury_duty_amount': 'jury-duty',
                                    'account_401_value': '401K', 'charitable-value': 'charitable-contribution',
@@ -842,7 +854,7 @@ def exploit_deduction(content):
 
 def refund_and_owe(content):
     """Handle any DialogFlow intents that deal with the refund and owe section."""
-    print("INSIDE REFUND AND OWE")
+
     parameters = content['queryResult']['parameters']
     global responses
     global user
@@ -862,8 +874,7 @@ def refund_and_owe(content):
 
     if error_field is None and error_message is None:
         # Update params on document object
-        print("TRYING TO UPDATE REFUND SLOT", last_unfilled_field)
-        print("current field is", current_intent)
+
         document.update_slot(parameters, current_intent, last_unfilled_field)
 
         # Query next thing needed
@@ -882,6 +893,7 @@ def refund_and_owe(content):
                    "Let's move onto third party permissions! "
         response += responses.third_party['third-party']
         output_context = responses.generate_output_context('third-party', 1, session, document)
+        next_unfilled_slot = 'third-party'
         document.current_section_index += 1
     if error_message:
         response = error_message
@@ -935,8 +947,7 @@ def third_party(content):
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(next_unfilled_slot, 1, session, document)
     else:
-        response = "We're all done filling out your third party section. All that's " \
-                   "left is for you to sign, and we'll be done!"
+        response = "We're all done filling out your third party section. You're now finished with your entire 1040! All that's left is for you to export as a pdf."
         document.current_section_index += 1
     if error_message:
         response = error_message
