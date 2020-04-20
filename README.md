@@ -113,9 +113,10 @@ Google Dialogflow requires that the backend uses HTTP over TLS. You can either c
 
 ## Frontend setup guide
 
-The frontend can be built and _statically hosted_ on the web. The built environment tested was Ubuntu 18.04 LTS running on AWS EC2 instance (the same setup used for client and backend) and the following needs to be installed:
+The frontend can be built and _statically hosted_ on the web. The build environment tested was Ubuntu 18.04 LTS running on AWS EC2 instance (the same setup used for client and backend) and the following packages need to be installed:
 
 > node.js
+
 > yarn
 
 1. Replace the urls for backend and client in `frontend/store/index.js`:
