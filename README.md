@@ -9,7 +9,6 @@ CPai is composed of 4 parts:
 
 ## Import CPai Dialogflow engine
 
----
 
 Open the existing agent you would like to export from/import into in DialogFlow
 On the left-hand list, go to the top and click on the settings icon next to your agent name
@@ -28,7 +27,6 @@ However, in this guide, we will use AWS EC2 instances (Ubuntu).
 
 ## Client Setup Guide
 
----
 
 1. Launch a new EC2 instance by choosing Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64-bit x86).
 
@@ -81,7 +79,6 @@ yarn start
 
 ## Backend Setup Guide
 
----
 
 We tested the backend with both python3.7 and python3.6. For this setup, use the default Python3.6 that ships with Ubuntu18.04.
 
