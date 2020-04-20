@@ -1,28 +1,11 @@
 # CPai Setup Guide
 
-## CPai Introduction
-CPai is a chatbot that uses Conversational Artificial Intelligence and Natural Language Processing to help people fill out their taxes. CPai adjusts the questions it asks based on the information users provides. It aims to minimize the number of questions asked to make filling out taxes easier. CPai can also help explain complicated tax terms and maximize the amount of deductions for a person. This makes CPai an effective tax assistant.   
-
-
 CPai is composed of 4 parts:
 
 1. Dialogflow service provided by Google
 2. Backend written in Python/Flask
 3. Client written in Javascript(Node) - this is another backend that hosts Google Client for interacting with Dialogflow
 4. Frontend written in Javascript(Vue)
-
-## Import CPai Dialogflow engine
-
-Open the existing agent you would like to export from/import into in DialogFlow
-On the left-hand list, go to the top and click on the settings icon next to your agent name
-
-<img src='dialogflow1.png'/>
-
-Click on the Export/Import tab
-
-<img src='dialogflow2.png'/>
-
-If exporting, “Export as zip”, if importing, “Import from zip” and choose `cpai_dialogflow_engine.zip`.
 
 The backend and client can be hosted on any NIX server as long as their dependencies can be installed.
 However, in this guide, we will use AWS EC2 instances (Ubuntu).
@@ -115,26 +98,4 @@ sudo python3 -m flask run --host=0.0.0.0 --port=<target port> > ~/log &
 
 Google Dialogflow requires that the backend uses HTTP over TLS. You can either configure your EC2 instance to forward all HTTP requests to HTTPS after running the backend app on port 80 or directly run the python app on port 443. As a work around, you may also run `ngrok` which can forward all external traffic to our EC2 instance over HTTP/TLS.
 
-## Frontend setup guide
-
-The frontend can be built and _statically hosted_ on the web. The build environment tested was Ubuntu 18.04 LTS running on AWS EC2 instance (the same setup used for client and backend) and the following packages need to be installed:
-
-> node.js
-
-> yarn
-
-1. Replace the urls for backend and client in `frontend/store/index.js`:
-
-```js
-16:         clientUrl: "http://localhost:3000/",
-17:         backendUrl: "http://localhost:5000/",
-```
-
-2. Build the frontend
-
-```sh
-yarn install
-yarn build
-```
-
-3. Upload the content inside `dist` folder to your choice of webserver.
+5. Make sure that "Webhook" fullfillment url on Dialogflow console is pointing to the url of this backend.
