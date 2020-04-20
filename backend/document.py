@@ -1108,7 +1108,7 @@ class Document:
         self.income_user_info['wages'] = 100000
         self.income_user_info['owns-business'] = False
         self.income_user_info['pass-through-business'] = False,
-        self.income_user_info['total-qualified-business-income']: 0.0,
+        self.income_user_info['total-qualified-business-income']: 0.0
         self.income_user_info['tax-exempt-interest'] = 1000
         self.income_user_info['taxable-interest'] = 50000
         self.income_user_info['has-1099-R'] = False
