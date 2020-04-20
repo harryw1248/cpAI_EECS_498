@@ -1,14 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Welcome from "@/views/Welcome.vue";
 Vue.use(VueRouter);
 
 const routes = [
     {
         path: "/",
         name: "Welcome",
-        component: Welcome,
-        redirect: { name: "Console" }
+        redirect: { name: "Console" },
     },
     {
         path: "/console",
@@ -17,12 +15,12 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import(/* webpackChunkName: "about" */ "../views/Console.vue")
-    }
+            import(/* webpackChunkName: "about" */ "../views/Console.vue"),
+    },
 ];
 
 const router = new VueRouter({
-    routes
+    routes,
 });
 
 export default router;

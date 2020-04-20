@@ -9,12 +9,10 @@ CPai is composed of 4 parts:
 
 ## Import CPai Dialogflow engine
 
-
 Open the existing agent you would like to export from/import into in DialogFlow
 On the left-hand list, go to the top and click on the settings icon next to your agent name
 
 <img src='dialogflow1.png'/>
-
 
 Click on the Export/Import tab
 
@@ -26,7 +24,6 @@ The backend and client can be hosted on any NIX server as long as their dependen
 However, in this guide, we will use AWS EC2 instances (Ubuntu).
 
 ## Client Setup Guide
-
 
 1. Launch a new EC2 instance by choosing Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64-bit x86).
 
@@ -79,7 +76,6 @@ yarn start
 
 ## Backend Setup Guide
 
-
 We tested the backend with both python3.7 and python3.6. For this setup, use the default Python3.6 that ships with Ubuntu18.04.
 
 1. Launch a new EC2 instance by choosing Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64-bit x86).
@@ -115,44 +111,25 @@ sudo python3 -m flask run --host=0.0.0.0 --port=<target port> > ~/log &
 
 Google Dialogflow requires that the backend uses HTTP over TLS. You can either configure your EC2 instance to forward all HTTP requests to HTTPS after running the backend app on port 80 or directly run the python app on port 443. As a work around, you may also run `ngrok` which can forward all external traffic to our EC2 instance over HTTP/TLS.
 
+## Frontend setup guide
 
+The frontend can be built and _statically hosted_ on the web. The built environment tested was Ubuntu 18.04 LTS running on AWS EC2 instance (the same setup used for client and backend) and the following needs to be installed:
 
-## Client Setup Guide
----
-## How to run frontend
+> node.js
+> yarn
 
-### Install "yarn"
+1. Replace the urls for backend and client in `frontend/store/index.js`:
+
+```js
+16:         clientUrl: "http://localhost:3000/",
+17:         backendUrl: "http://localhost:5000/",
+```
+
+2. Build the frontend
 
 ```sh
-curl -o- -L https://yarnpkg.com/install.sh | bash
-````
-
-### 1. Run the client
-
-```sh
-cd client
 yarn install
+yarn build
 ```
 
-Then run the following (copy/paste them into your terminal)
-
-```
-export GOOGLE_APPLICATION_CREDENTIALS="cpAI-24a315a29ddb.json"
-export CPAI_CLIENT_SECRET="rZBCihS0FEG84jnHGh8XD9Z5lGWg0GQe"
-```
-
-Finally to run:
-
-```
-yarn start
-```
-
-### 2. run the actual frontend (on another terminal window)
-
-```
-yarn install
-yarn serve
-```
-
-Then go to http://localhost:8080/
-(use chrome)
+3. Upload the content inside `dist` folder to your choice of webserver.
