@@ -178,6 +178,12 @@ def fillInFields(document):
     elif document.demographic_user_info['filing_status'] == "qualifying widow":
         fields["þÿc1_01[4]"]['check'] = True
 
+    if document.demographic_user_info['claim-you-dependent'] is not None:
+        fields["þÿc1_04[0]"]['check'] = document.demographic_user_info['claim-you-dependent']
+
+    if document.demographic_user_info['claim-spouse-dependent'] is not None:
+        fields["þÿc1_05[0]"]['check'] = document.demographic_user_info['claim-spouse-dependent']
+
     if len(document.dependents) > 0 and document.dependents[0].slots['dependent-given-name'] is not None and document.dependents[0].slots['dependent-last-name'] is not None: 
         fields["þÿf1_14[0]"]['V'] = nonePipe(document.dependents[0].slots['dependent-given-name'][0]) + ' ' +  nonePipe(document.dependents[0].slots['dependent-last-name'][0])
         fields["þÿf1_15[0]"]['V'] = nonePipe(document.dependents[0].slots['dependent-ssn'])
