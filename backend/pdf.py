@@ -143,7 +143,7 @@ def fillInFields(document):
         # Identity Protection PIN for you
         "þÿf2_27[0]": {'V': ''},
         # Spouse's occupation
-        #"þÿf2_28[0]": {'V': nonePipe(document.demographic_spouse_info['spouse-occupation'])},
+        "þÿf2_28[0]": {'V': nonePipe(document.demographic_spouse_info['spouse-occupation'])},
         # Identity Protection PIN for your spouse
         "þÿf2_29[0]": {'V': ''},
         # Phone no.
@@ -178,28 +178,28 @@ def fillInFields(document):
     elif document.demographic_user_info['filing_status'] == "qualifying widow":
         fields["þÿc1_01[4]"]['check'] = True
 
-    if len(document.dependents) > 0:
+    if len(document.dependents) > 0 and document.dependents[0].slots['dependent-given-name'] is not None and document.dependents[0].slots['dependent-last-name'] is not None: 
         fields["þÿf1_14[0]"]['V'] = nonePipe(document.dependents[0].slots['dependent-given-name'][0]) + ' ' +  nonePipe(document.dependents[0].slots['dependent-last-name'][0])
         fields["þÿf1_15[0]"]['V'] = nonePipe(document.dependents[0].slots['dependent-ssn'])
         fields["þÿf1_16[0]"]['V'] = nonePipe(document.dependents[0].slots['dependent-relation'])
         fields["þÿc1_12[0]"]['check'] = document.dependents[0].dependent_child_tax_credit     # child tax credit 1
         fields["þÿc1_13[0]"]['check'] = document.dependents[0].dependent_credit_for_others     # Credit for other dependents 1
 
-    if len(document.dependents) > 1:
+    if len(document.dependents) > 1 and document.dependents[1].slots['dependent-given-name'] is not None and document.dependents[1].slots['dependent-last-name'] is not None:
         fields["þÿf1_17[0]"]['V'] = nonePipe(document.dependents[1].slots['dependent-given-name'][0])  + ' ' + nonePipe(document.dependents[1].slots['dependent-last-name'][0])
         fields["þÿf1_18[0]"]['V'] = nonePipe(document.dependents[1].slots['dependent-ssn'])
         fields["þÿf1_19[0]"]['V'] = nonePipe(document.dependents[1].slots['dependent-relation'] )
         fields["þÿc1_14[0]"]['check'] = document.dependents[1].dependent_child_tax_credit    # child tax credit 2
         fields["þÿc1_15[0]"]['check'] = document.dependents[1].dependent_credit_for_others    # Credit for other dependents 2
 
-    if len(document.dependents) > 2:
+    if len(document.dependents) > 2 and document.dependents[2].slots['dependent-given-name'] is not None and document.dependents[2].slots['dependent-last-name'] is not None:
         fields["þÿf1_20[0]"][''] = nonePipe(document.dependents[2].slots['dependent-given-name'][0]) + '  ' + nonePipe(document.dependents[2].slots['dependent-last-name'])
         fields["þÿf1_21[0]"][''] = nonePipe(document.dependents[2].slots['dependent-ssn'])
         fields["þÿf1_22[0]"][''] = nonePipe(document.dependents[2].slots['dependent-relation'])
         fields["þÿc1_16[0]"]['check'] = document.dependents[2].dependent_child_tax_credit    # child tax credit 3
         fields["þÿc1_17[0]"]['check'] = document.dependents[2].dependent_credit_for_others    # Credit for other dependents 3
 
-    if len(document.dependents) > 3:
+    if len(document.dependents) > 3 and document.dependents[3].slots['dependent-given-name'] is not None and document.dependents[3].slots['dependent-last-name'] is not None:
         fields["þÿf1_23[0]"][''] = nonePipe(document.dependents[3].slots['dependent-given-name'][0]) + ' ' + nonePipe(document.dependents[3].slots['dependent-last-name'][0])
         fields["þÿf1_24[0]"][''] = nonePipe(document.dependents[3].slots['dependent-ssn'])
         fields["þÿf1_25[0]"][''] = nonePipe(document.dependents[3].slots['dependent-relation'])
