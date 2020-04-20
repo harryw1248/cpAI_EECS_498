@@ -13,11 +13,14 @@ CPai is composed of 4 parts:
 
 Open the existing agent you would like to export from/import into in DialogFlow
 On the left-hand list, go to the top and click on the settings icon next to your agent name
-<img src='/instruction/dialogflow1.png'>
+
+<img src='dialogflow1.png'/>
+
 
 Click on the Export/Import tab
 
-<img src='/instruction/dialogflow2.png'>
+<img src='dialogflow2.png'/>
+
 If exporting, “Export as zip”, if importing, “Import from zip” and choose `cpai_dialogflow_engine.zip`.
 
 The backend and client can be hosted on any NIX server as long as their dependencies can be installed.
@@ -96,7 +99,7 @@ We tested the backend with both python3.7 and python3.6. For this setup, use the
 
 -`poppler-utils` is required for a Python module used for converting PDFs to JPEGs.
 
-````
+```sh
 sudo apt install -y gcc
 sudo apt install -y python3-pip
 sudo apt install -y poppler-utils
@@ -105,13 +108,13 @@ pip3 install wheel
 pip3 install -r requirements.txt
 export FLASK_APP=app.py
 export FLASK_ENV=production
-``
+```
 
 4. Run the backend:
 
 ```sh
 sudo python3 -m flask run --host=0.0.0.0 --port=<target port> > ~/log &
-```sh
+```
 
 Google Dialogflow requires that the backend uses HTTP over TLS. You can either configure your EC2 instance to forward all HTTP requests to HTTPS after running the backend app on port 80 or directly run the python app on port 443. As a work around, you may also run `ngrok` which can forward all external traffic to our EC2 instance over HTTP/TLS.
 
