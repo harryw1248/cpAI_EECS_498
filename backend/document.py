@@ -519,8 +519,9 @@ class Document:
                     self.income_user_info['total-qualified-business-income'] = 0.0
                 # elif extracted_slot_name == 'owns-stocks-bonds':
                 #     self.income_user_info['capital-gains'] = False
-            elif extracted_slot_name == 'IRA-distributions' and extracted_slot_value == 'zero' or extracted_slot_value == '0' \
-                    or extracted_slot_value == 0:
+            elif extracted_slot_name == 'IRA-distributions' and (extracted_slot_value == 'zero' or
+                                                                 extracted_slot_value == '0'
+                                                                 or extracted_slot_value == 0):
                 self.income_user_info['IRA-distributions'] = 0.0
                 self.income_user_info['IRA-distributions-taxable'] = 0.0
             elif extracted_slot_name == 'IRA-deductions' or \
@@ -528,7 +529,16 @@ class Document:
                     extracted_slot_name == 'moving-expenses-armed-forces' or extracted_slot_name == 'health-savings-deductions' or \
                     extracted_slot_name == 'business-expenses' or extracted_slot_name == 'educator-expenses' or extracted_slot_name == 'student-loans':
                 self.income_user_info[extracted_slot_name] = extracted_slot_value
-                self.income_user_info['adjustments-to-income'] = (self.income_user_info['adjustments-to-income'] or 0) + extracted_slot_value
+                if self.income_user_info['adjustments-to-income'] is not None and extracted_slot_value is not None:
+                    self.income_user_info['adjustments-to-income'] += extracted_slot_value
+                    print("HERE 1111111       !!!!!!!1")
+                elif self.income_user_info['adjustments-to-income'] is  None and extracted_slot_value is not None:
+                    self.income_user_info['adjustments-to-income'] = extracted_slot_value
+                    print("HERE 222222       !!!!!!!1")
+                else:
+                    print("HERE 33333       !!!!!!!1")
+                    self.income_user_info['adjustments-to-income'] = 0
+
                 if extracted_slot_name == 'student-loans':
                     self.deduction_user_info['student-loans'] = self.compute_student_loan_deduction(
                         extracted_slot_value)
@@ -650,7 +660,13 @@ class Document:
                     self.third_party_user_info['phone-number'] = ''
                     self.third_party_user_info['PIN'] = ''
             else:
-                self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
+                if last_unfilled_field in parameters:
+                    self.third_party_user_info[last_unfilled_field] = parameters[last_unfilled_field]
+                else:
+                    # I added this right before I pushed just in case
+                    if last_unfilled_field == 'third-party' and 'refund_owe' in current_intent:
+                        self.third_party_user_info['third-party'] = False
+
 
         print(self.income_user_info)
         return None
@@ -749,12 +765,12 @@ class Document:
 
         line_7 = line_5 - line_6
         line_8 = 0
-        if self.demographic_user_info["filing_status"] is 'married filing jointly':
+        if self.demographic_user_info["filing_status"] == 'married filing jointly':
             line_8 = 32000
-        elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info[
-            "filing_status"] is 'qualifying widow':
+        elif self.demographic_user_info["filing_status"] == 'head of household' or self.demographic_user_info[
+            "filing_status"] == 'qualifying widow':
             line_8 = 25000
-        elif self.demographic_user_info["filing_status"] is 'married filing separately' and self.demographic_user_info[
+        elif self.demographic_user_info["filing_status"] == 'married filing separately' and self.demographic_user_info[
             "lived-apart"] == True:
             line_8 = 25000
         else:
@@ -770,18 +786,18 @@ class Document:
                 line_9 = line_7 - line_8
 
             line_10 = 0
-            if self.demographic_user_info["filing_status"] is 'married filing jointly':
+            if self.demographic_user_info["filing_status"] == 'married filing jointly':
                 line_10 = 12000
-            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info[
+            elif self.demographic_user_info["filing_status"] == 'head of household' or self.demographic_user_info[
                 "filing_status"] is 'qualifying widow':
                 line_10 = 9000
-            elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
+            elif self.demographic_user_info["filing_status"] == 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
-            elif self.demographic_user_info["filing_status"] is 'head of household' or self.demographic_user_info[
+            elif self.demographic_user_info["filing_status"] == 'head of household' or self.demographic_user_info[
                 "filing_status"] is 'qualifying widow':
                 line_10 = 9000
-            elif self.demographic_user_info["filing_status"] is 'married filing separately' and \
+            elif self.demographic_user_info["filing_status"] == 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
 
@@ -813,6 +829,9 @@ class Document:
                 mult_ = float(row[filing_status + ' multiplication'])
                 subtraction_ = float(row[filing_status + ' subtraction'])
                 return taxable_income * mult_ - subtraction_
+            else:
+                print("Error tax computation worksheet")
+                return None
 
     def compute_total_other_income(self):
         self.income_user_info["total-other-income"] = (
@@ -854,11 +873,11 @@ class Document:
                 self.demographic_user_info['claim-spouse-dependent'] == False and \
                 self.demographic_user_info['claim-you-dependent'] == False and total_check_boxes == 0:
 
-            if self.demographic_user_info["filing_status"] is "married filing jointly" or self.demographic_user_info[
-                "filing_status"] is "qualifying widow":
+            if self.demographic_user_info["filing_status"] == "married filing jointly" or self.demographic_user_info[
+                "filing_status"] == "qualifying widow":
                 return 24400
-            elif self.demographic_user_info["filing_status"] is "married filing separately" or \
-                    self.demographic_user_info["filing_status"] is "single":
+            elif self.demographic_user_info["filing_status"] == "married filing separately" or \
+                    self.demographic_user_info["filing_status"] == "single":
                 return 12200
             else:
                 return 18350
@@ -882,11 +901,11 @@ class Document:
                     else:
                         line_2 = 1000
 
-                    if self.demographic_user_info["filing_status"] is "married filing separately" or \
-                            self.demographic_user_info["filing_status"] is "single":
+                    if self.demographic_user_info["filing_status"] == "married filing separately" or \
+                            self.demographic_user_info["filing_status"] == "single":
                         line_3 = 12200
-                    elif self.demographic_user_info["filing_status"] is "married filing jointly" or \
-                            self.demographic_user_info["filing_status"] is "qualifying widow":
+                    elif self.demographic_user_info["filing_status"] == "married filing jointly" or \
+                            self.demographic_user_info["filing_status"] == "qualifying widow":
                         line_3 = 24400
                     else:
                         line_3 = 18350
@@ -897,8 +916,8 @@ class Document:
                         return line_4a
                     else:
                         line_4b = 0
-                        if self.demographic_user_info["filing_status"] is "single" or self.demographic_user_info[
-                            "filing_status"] is 'head of household':
+                        if self.demographic_user_info["filing_status"] == "single" or self.demographic_user_info[
+                            "filing_status"] == 'head of household':
                             line_4b = total_check_boxes * 1650
                         else:
                             line_4b = total_check_boxes * 1300
@@ -936,9 +955,11 @@ class Document:
             tax_data = pd.DataFrame(data=data)
             for index, row in tax_data.iterrows():
                 if taxable_income >= int(row['At Least']) and taxable_income < int(row['But Less Than']):
-                    if filing_status is "married filing jointly" or filing_status is "qualifying widow":
+                    if filing_status == "married filing jointly" or filing_status == "qualifying widow":
                         self.tax_amount = int(row["married filing jointly"])
                     else:
+                        print(row)
+                        print(int(row[filing_status]))
                         self.tax_amount = int(row[filing_status])
         self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
         return self.tax_amount
@@ -958,9 +979,9 @@ class Document:
 
     def compute_earned_income_credit(self):
         earned_income_credit = 0
-        if self.demographic_user_info["filing_status"] is 'head of household' or \
-                self.demographic_user_info["filing_status"] is 'qualifying widow' or \
-                self.demographic_user_info["filing_status"] is 'single':
+        if self.demographic_user_info["filing_status"] == 'head of household' or \
+                self.demographic_user_info["filing_status"] == 'qualifying widow' or \
+                self.demographic_user_info["filing_status"] == 'single':
 
             if self.number_of_dependents_completed == 0:
                 if self.income_user_info['adjusted-gross-income'] <= 15820:
@@ -975,7 +996,7 @@ class Document:
                 if self.income_user_info['adjusted-gross-income'] <= 50594:
                     earned_income_credit = 6660
 
-        elif self.demographic_user_info["filing_status"] is 'married filing jointly':
+        elif self.demographic_user_info["filing_status"] == 'married filing jointly':
             if self.number_of_dependents_completed == 0:
                 if self.income_user_info['adjusted-gross-income'] <= 21710:
                     earned_income_credit = 538
