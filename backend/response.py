@@ -395,19 +395,19 @@ class Response:
             if dependent_num > 1:
                 # Tax credit 1: Dependent child tax credit
                 if dependents[dependent_num-2].dependent_child_tax_credit:
-                    return dependents[dependent_num-2].slots['dependent-given-name'] + ' qualifies you for a child ' \
+                    return dependents[dependent_num-2].slots['dependent-given-name'][0] + ' qualifies you for a child ' \
                            'tax credit. What is your ' + self.nth[dependent_num] + " dependent's full name, age, and " \
                            "relation to you?"
 
                 # Tax credit 2: Dependent credit for others
                 elif dependents[dependent_num-2].dependent_credit_for_others:
-                    return dependents[dependent_num-2].slots['dependent-given-name'] +' qualifies you for a dependent' \
+                    return dependents[dependent_num-2].slots['dependent-given-name'][0] +' qualifies you for a dependent' \
                             ' credit for others. What is your ' + self.nth[dependent_num] + " dependent's full name, " \
                             "age, and relation to you?"
 
                 # Last dependent did not qualify for tax credit
                 else:
-                    return 'Unforunately, ' + dependents[dependent_num-2].slots['dependent-given-name'] +\
+                    return 'Unforunately, ' + dependents[dependent_num-2].slots['dependent-given-name'][0] +\
                            ' does not qualify you for a tax credit. What is your ' + self.nth[dependent_num] + \
                            " dependent's full name, age, and relation to you?"
 

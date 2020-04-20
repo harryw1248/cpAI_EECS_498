@@ -13,12 +13,11 @@
             <div v-if="!showForm1040">
                 <div>Your Intelligent Accountant</div>
                 <div>An Easy Way to Complete Your Taxes</div>
-                {{ showForm1040 }}
             </div>
 
             <a
                 class="mt-4 ml-1 py-1 px-2 bg-blue-600 hover:bg-blue-500 text-center bg-gray-100 text-white font-semibold rounded-lg shadow-lg focus:outline-none"
-                href="http://localhost:5000/pdf"
+                :href="backendUrl + 'pdf'"
             >
                 Download the form as PDF
             </a>
@@ -29,23 +28,22 @@
 
 <script>
 import Chat from "@/components/Chat.vue";
-//import Form1040 from "@/components/Form1040.vue";
 import { mapGetters, mapState } from "vuex";
 
 export default {
     name: "Console",
     components: {
-        Chat
-        //Form1040
+        Chat,
     },
     computed: {
         ...mapState({
-            formSrc: state => state.document.formSrc
+            formSrc: (state) => state.document.formSrc,
+            backendUrl: (state) => state.backendUrl,
         }),
         ...mapGetters({
-            showForm1040: "isForm1040Toggled"
-        })
-    }
+            showForm1040: "isForm1040Toggled",
+        }),
+    },
 };
 </script>
 

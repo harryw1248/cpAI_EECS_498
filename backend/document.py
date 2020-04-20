@@ -1095,7 +1095,8 @@ class Document:
             'spouse-last-name': "Foster",
             'spouse-age': "56",
             'spouse-ssn': "123987654",
-            'spouse-blind': False
+            'spouse-blind': False,
+            'spouse-occupation': "doctor",
         }
 
         self.income_user_info['unemployment-compensation'] = 0
@@ -1106,6 +1107,8 @@ class Document:
         self.demographic_user_info["age"] = "19"
         self.income_user_info['wages'] = 100000
         self.income_user_info['owns-business'] = False
+        self.income_user_info['pass-through-business'] = False,
+        self.income_user_info['total-qualified-business-income'] = 0.0
         self.income_user_info['tax-exempt-interest'] = 1000
         self.income_user_info['taxable-interest'] = 50000
         self.income_user_info['has-1099-R'] = False

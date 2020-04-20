@@ -305,57 +305,11 @@ def error_checking(parameters, intent, last_unfilled, queryText=None):
 
     # Spouse-SSN should be 9 digits
     elif 'spouse_SSN' in intent:
-        # value = str(parameters['spouse-ssn'])
-        # num_digits = 0
-        # num_hyphens = 0
-
-        # if value[0] == '-':
-        #     return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
-
-        # for digit in value:
-        #     if digit in digits:
-        #         num_digits += 1
-
-        #         if num_digits > 9:
-        #             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-
-        #     elif digit == '-':
-        #         num_hyphens += 1
-        #     else:
-        #         return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-
-        # if num_digits != 9:
-        #     return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-        
-        # TODO: remove this once spouse ssn is fixed
         if len(str(parameters['spouse-ssn'])) != 11:  # accounts for the trailing '.0'
             return 'spouse-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length.'
     
     # Dependent-SSN should be 9 digits
     elif 'dependent_ssn' in intent:
-        # value = str(parameters['dependent-ssn'])
-        # num_digits = 0
-        # num_hyphens = 0
-
-        # if value[0] == '-':
-        #     return 'social_security', 'You entered an invalid SSN. Valid SSNs cannot be negative. '
-
-        # for digit in value:
-        #     if digit in digits:
-        #         num_digits += 1
-
-        #         if num_digits > 9:
-        #             return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-
-        #     elif digit == '-':
-        #         num_hyphens += 1
-        #     else:
-        #         return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-
-        # if num_digits != 9:
-        #     return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length. '
-
-        # TODO: remove this once dependent ssn is fixed
         if len(str(parameters['dependent-ssn'])) != 11:
             return 'dependent-ssn', 'You entered an invalid SSN. Valid SSNs are exactly nine numbers in length.'
 
@@ -490,7 +444,7 @@ def demographics_fill(content):
     else:
         response = "We're all done filling out your demographics. Let's move onto your income section! "
         if len(document.dependents) > 0:
-            name = document.dependents[-1].slots['dependent-given-name']
+            name = document.dependents[-1].slots['dependent-given-name'][0]
             if document.dependents[-1].dependent_child_tax_credit:
                 addition = name + " qualifies for a child tax credit. "
             elif document.dependents[-1].dependent_credit_for_others:

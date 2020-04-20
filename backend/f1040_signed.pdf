@@ -345,7 +345,11 @@ endobj
 endobj
 
 70 0 obj
+<<<<<<< HEAD
 <</Annots 363 0 R/Contents[364 0 R 1173 0 R 1174 0 R 1176 0 R 1178 0 R 1179 0 R 1180 0 R]/CropBox[0 0 612 792]/MediaBox[0 0 612 792]/Parent 6 0 R/Resources<</Font<</C0_0 365 0 R/C0_1 366 0 R/T1_0 367 0 R/T1_1 368 0 R/T1_2 369 0 R>>/ProcSet[/PDF/Text]/XObject<</fzImg0 1172 0 R/fzImg1 1172 0 R/fzImg2 1175 0 R/fzImg3 1177 0 R/fzImg4 1177 0 R/fzImg5 1177 0 R>>>>/Rotate 0/StructParents 70/Type/Page>>
+=======
+<</Annots 363 0 R/Contents[364 0 R 1173 0 R 1175 0 R 1177 0 R 1179 0 R 1180 0 R 1181 0 R]/CropBox[0 0 612 792]/MediaBox[0 0 612 792]/Parent 6 0 R/Resources<</Font<</C0_0 365 0 R/C0_1 366 0 R/T1_0 367 0 R/T1_1 368 0 R/T1_2 369 0 R>>/ProcSet[/PDF/Text]/XObject<</fzImg0 1172 0 R/fzImg1 1174 0 R/fzImg2 1176 0 R/fzImg3 1178 0 R/fzImg4 1178 0 R/fzImg5 1178 0 R>>>>/Rotate 0/StructParents 70/Type/Page>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 71 0 obj
@@ -1737,6 +1741,7 @@ endobj
 endobj
 
 394 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 440 0 R/Q 2/Rect[410.4 744.001 481.65 756]/StructParent 75/Subtype/Widget/T<FEFF00660032005F00300032005B0030005D>/Type/Annot/V()/AP<</N 1125 0 R>>>>
 endobj
 
@@ -1770,6 +1775,41 @@ endobj
 
 402 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 442 0 R/Q 2/Rect[410.4 636.001 481.65 648]/StructParent 83/Subtype/Widget/T<FEFF00660032005F00310030005B0030005D>/Type/Annot/V()/AP<</N 1133 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 440 0 R/Q 2/Rect[410.4 744.001 481.65 756]/StructParent 75/Subtype/Widget/T<FEFF00660032005F00300032005B0030005D>/Type/Annot/V(0)/AP<</N 1125 0 R>>>>
+endobj
+
+395 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 731.999 576 744]/StructParent 76/Subtype/Widget/T<FEFF00660032005F00300033005B0030005D>/Type/Annot/V(0)/AP<</N 1126 0 R>>>>
+endobj
+
+396 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 441 0 R/Q 2/Rect[410.4 720 481.65 731.999]/StructParent 77/Subtype/Widget/T<FEFF00660032005F00300034005B0030005D>/Type/Annot/V(0)/AP<</N 1127 0 R>>>>
+endobj
+
+397 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 707.998 576 719.999]/StructParent 78/Subtype/Widget/T<FEFF00660032005F00300035005B0030005D>/Type/Annot/V(0)/AP<</N 1128 0 R>>>>
+endobj
+
+398 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 696.002 576 708.001]/StructParent 79/Subtype/Widget/T<FEFF00660032005F00300036005B0030005D>/Type/Annot/V(0)/AP<</N 1129 0 R>>>>
+endobj
+
+399 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 684 576 695.999]/StructParent 80/Subtype/Widget/T<FEFF00660032005F00300037005B0030005D>/Type/Annot/V(0)/AP<</N 1130 0 R>>>>
+endobj
+
+400 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 672.001 576 684]/StructParent 81/Subtype/Widget/T<FEFF00660032005F00300038005B0030005D>/Type/Annot/V(0)/AP<</N 1131 0 R>>>>
+endobj
+
+401 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 660.002 576 672.001]/StructParent 82/Subtype/Widget/T<FEFF00660032005F00300039005B0030005D>/Type/Annot/V(0)/AP<</N 1132 0 R>>>>
+endobj
+
+402 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 442 0 R/Q 2/Rect[410.4 636.001 481.65 648]/StructParent 83/Subtype/Widget/T<FEFF00660032005F00310030005B0030005D>/Type/Annot/V(0)/AP<</N 1133 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 403 0 obj
@@ -1781,6 +1821,7 @@ endobj
 endobj
 
 405 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 442 0 R/Q 2/Rect[410.4 600.001 481.65 612]/StructParent 86/Subtype/Widget/T<FEFF00660032005F00310033005B0030005D>/Type/Annot/V()/AP<</N 1136 0 R>>>>
 endobj
 
@@ -1794,6 +1835,21 @@ endobj
 
 408 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 564.001 576 576]/StructParent 89/Subtype/Widget/T<FEFF00660032005F00310036005B0030005D>/Type/Annot/V()/AP<</N 1139 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 442 0 R/Q 2/Rect[410.4 600.001 481.65 612]/StructParent 86/Subtype/Widget/T<FEFF00660032005F00310033005B0030005D>/Type/Annot/V(0)/AP<</N 1136 0 R>>>>
+endobj
+
+406 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 587.999 576 599.999]/StructParent 87/Subtype/Widget/T<FEFF00660032005F00310034005B0030005D>/Type/Annot/V(0)/AP<</N 1137 0 R>>>>
+endobj
+
+407 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 576 576 587.999]/StructParent 88/Subtype/Widget/T<FEFF00660032005F00310035005B0030005D>/Type/Annot/V(2512)/AP<</N 1138 0 R>>>>
+endobj
+
+408 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 564.001 576 576]/StructParent 89/Subtype/Widget/T<FEFF00660032005F00310036005B0030005D>/Type/Annot/V(2512)/AP<</N 1139 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 409 0 obj
@@ -1801,7 +1857,11 @@ endobj
 endobj
 
 410 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 552.002 576 564.001]/StructParent 91/Subtype/Widget/T<FEFF00660032005F00310037005B0030005D>/Type/Annot/V()/AP<</N 1142 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 552.002 576 564.001]/StructParent 91/Subtype/Widget/T<FEFF00660032005F00310037005B0030005D>/Type/Annot/V(0.0)/AP<</N 1142 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 411 0 obj
@@ -1821,11 +1881,19 @@ endobj
 endobj
 
 415 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[410.4 516.002 481.65 528.001]/StructParent 96/Subtype/Widget/T<FEFF00660032005F00320030005B0030005D>/Type/Annot/V()/AP<</N 1149 0 R>>>>
 endobj
 
 416 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 504 576 515.999]/StructParent 97/Subtype/Widget/T<FEFF00660032005F00320031005B0030005D>/Type/Annot/V()/AP<</N 1150 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[410.4 516.002 481.65 528.001]/StructParent 96/Subtype/Widget/T<FEFF00660032005F00320030005B0030005D>/Type/Annot/V(2512)/AP<</N 1149 0 R>>>>
+endobj
+
+416 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 439 0 R/Q 2/Rect[504 504 576 515.999]/StructParent 97/Subtype/Widget/T<FEFF00660032005F00320031005B0030005D>/Type/Annot/V(0)/AP<</N 1150 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 417 0 obj
@@ -1833,7 +1901,11 @@ endobj
 endobj
 
 418 0 obj
+<<<<<<< HEAD
 <</AP<</N<</Off 1152 0 R/1 1153 0 R>>>>/AS/Off/DA(/ZaDb 5.6 Tf 0 g /ZaDb 5.6 Tf 0 g )/F 4/FT/Btn/MK<</CA(4)>>/P 70 0 R/Parent 445 0 R/Rect[491.6 481.002 499.6 489.002]/StructParent 99/Subtype/Widget/T<FEFF00630032005F00300036005B0030005D>/Type/Annot>>
+=======
+<</AP<</N<</Off 1152 0 R/On 1153 0 R>>>>/AS/On/DA(/ZaDb 5.6 Tf 0 g /ZaDb 5.6 Tf 0 g )/F 4/FT/Btn/MK<</CA(4)>>/P 70 0 R/Parent 445 0 R/Rect[491.6 481.002 499.6 489.002]/StructParent 99/Subtype/Widget/T<FEFF00630032005F00300036005B0030005D>/Type/Annot/V/On>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 419 0 obj
@@ -1853,7 +1925,11 @@ endobj
 endobj
 
 423 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 446 0 R/Q 0/Rect[325 396 459.8 415.999]/StructParent 104/Subtype/Widget/T<FEFF00660032005F00320036005B0030005D>/Type/Annot/V()/AP<</N 1158 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 446 0 R/Q 0/Rect[325 396 459.8 415.999]/StructParent 104/Subtype/Widget/T<FEFF00660032005F00320036005B0030005D>/Type/Annot/V(Plumber)/AP<</N 1158 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 424 0 obj
@@ -1861,7 +1937,11 @@ endobj
 endobj
 
 425 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 446 0 R/Q 0/Rect[325 366.001 459.8 386]/StructParent 106/Subtype/Widget/T<FEFF00660032005F00320038005B0030005D>/Type/Annot/V()/AP<</N 1159 0 R>>>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 70 0 R/Parent 446 0 R/Q 0/Rect[325 366.001 459.8 386]/StructParent 106/Subtype/Widget/T<FEFF00660032005F00320038005B0030005D>/Type/Annot/V(doctor)/AP<</N 1159 0 R>>>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 426 0 obj
@@ -1961,11 +2041,19 @@ endobj
 endobj
 
 450 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 0/Rect[36 666 236.6 680.001]/StructParent 7/Subtype/Widget/T<FEFF00660031005F00300032005B0030005D>/Type/Annot/V()>>
 endobj
 
 451 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 0/Rect[238.6 666 467 680.001]/StructParent 8/Subtype/Widget/T<FEFF00660031005F00300033005B0030005D>/Type/Annot/V()>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 0/Rect[36 666 236.6 680.001]/StructParent 7/Subtype/Widget/T<FEFF00660031005F00300032005B0030005D>/Type/Annot/V(Bob)>>
+endobj
+
+451 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 0/Rect[238.6 666 467 680.001]/StructParent 8/Subtype/Widget/T<FEFF00660031005F00300033005B0030005D>/Type/Annot/V(Jones)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 452 0 obj
@@ -1993,6 +2081,7 @@ endobj
 endobj
 
 458 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[410.4 312.001 481.65 324]/StructParent 66/Subtype/Widget/T<FEFF00660031005F00340032005B0030005D>/Type/Annot/V()>>
 endobj
 
@@ -2006,6 +2095,21 @@ endobj
 
 461 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[504 276.001 576 288]/StructParent 69/Subtype/Widget/T<FEFF00660031005F00340035005B0030005D>/Type/Annot/V()>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[410.4 312.001 481.65 324]/StructParent 66/Subtype/Widget/T<FEFF00660031005F00340032005B0030005D>/Type/Annot/V(30817.0)>>
+endobj
+
+459 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[410.4 300.002 481.65 312.001]/StructParent 67/Subtype/Widget/T<FEFF00660031005F00340033005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+460 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[504 288 576 300]/StructParent 68/Subtype/Widget/T<FEFF00660031005F00340034005B0030005D>/Type/Annot/V(30817.0)>>
+endobj
+
+461 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 448 0 R/Q 2/Rect[504 276.001 576 288]/StructParent 69/Subtype/Widget/T<FEFF00660031005F00340035005B0030005D>/Type/Annot/V(0)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 462 0 obj
@@ -2295,7 +2399,11 @@ endstream
 endobj
 
 501 0 obj
+<<<<<<< HEAD
 <</AP<</D<</1 643 0 R/Off 644 0 R>>/N<</1 645 0 R>>>>/AS/Off/DA(/ZaDb 5.6 Tf 0 g /ZaDb 5.6 Tf 0 g )/F 4/FT/Btn/MK<</CA(4)>>/P 462 0 R/Parent 449 0 R/Rect[95.599 716.002 103.599 724.002]/StructParent 1/Subtype/Widget/T<FEFF00630031005F00300031005B0030005D>/Type/Annot>>
+=======
+<</AP<</D<</1 643 0 R/Off 644 0 R>>/N<</1 645 0 R>>>>/AS/On/DA(/ZaDb 5.6 Tf 0 g /ZaDb 5.6 Tf 0 g )/F 4/FT/Btn/MK<</CA(4)>>/P 462 0 R/Parent 449 0 R/Rect[95.599 716.002 103.599 724.002]/StructParent 1/Subtype/Widget/T<FEFF00630031005F00300031005B0030005D>/Type/Annot/V/On>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 502 0 obj
@@ -2319,6 +2427,7 @@ endobj
 endobj
 
 507 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 25165824/MK<<>>/MaxLen 9/P 462 0 R/Parent 452 0 R/Q 0/Rect[468 666 576 680.001]/StructParent 9/Subtype/Widget/T<FEFF00660031005F00300034005B0030005D>/Type/Annot/V()>>
 endobj
 
@@ -2336,6 +2445,25 @@ endobj
 
 511 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 630 0 R/Q 0/Rect[36 617.998 416.6 631.999]/StructParent 13/Subtype/Widget/T<FEFF00660031005F00300038005B0030005D>/Type/Annot/V()>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 25165824/MK<<>>/MaxLen 9/P 462 0 R/Parent 452 0 R/Q 0/Rect[468 666 576 680.001]/StructParent 9/Subtype/Widget/T<FEFF00660031005F00300034005B0030005D>/Type/Annot/V(123456789)>>
+endobj
+
+508 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 452 0 R/Q 0/Rect[36 641.999 236.6 656]/StructParent 10/Subtype/Widget/T<FEFF00660031005F00300035005B0030005D>/Type/Annot/V(Jane)>>
+endobj
+
+509 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 452 0 R/Q 0/Rect[238.6 641.999 467 656]/StructParent 11/Subtype/Widget/T<FEFF00660031005F00300036005B0030005D>/Type/Annot/V(Foster)>>
+endobj
+
+510 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 25165824/MK<<>>/MaxLen 9/P 462 0 R/Parent 453 0 R/Q 0/Rect[468 641.999 576 656]/StructParent 12/Subtype/Widget/T<FEFF00660031005F00300037005B0030005D>/Type/Annot/V(123987654)>>
+endobj
+
+511 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 630 0 R/Q 0/Rect[36 617.998 416.6 631.999]/StructParent 13/Subtype/Widget/T<FEFF00660031005F00300038005B0030005D>/Type/Annot/V(64 Reinhart Street)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 512 0 obj
@@ -2343,7 +2471,11 @@ endobj
 endobj
 
 513 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 630 0 R/Q 0/Rect[36 594 467 608.001]/StructParent 15/Subtype/Widget/T<FEFF00660031005F00310030005B0030005D>/Type/Annot/V(  )>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 630 0 R/Q 0/Rect[36 594 467 608.001]/StructParent 15/Subtype/Widget/T<FEFF00660031005F00310030005B0030005D>/Type/Annot/V(Oakland California 08894)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 514 0 obj
@@ -2479,6 +2611,7 @@ endobj
 endobj
 
 547 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 444.002 576 456.001]/StructParent 49/Subtype/Widget/T<FEFF00660031005F00320036005B0030005D>/Type/Annot/V()>>
 endobj
 
@@ -2520,6 +2653,49 @@ endobj
 
 557 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 384.001 576 396]/StructParent 59/Subtype/Widget/T<FEFF00660031005F00330036005B0030005D>/Type/Annot/V()>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 444.002 576 456.001]/StructParent 49/Subtype/Widget/T<FEFF00660031005F00320036005B0030005D>/Type/Annot/V(100000)>>
+endobj
+
+548 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[252 432 323.25 443.999]/StructParent 50/Subtype/Widget/T<FEFF00660031005F00320037005B0030005D>/Type/Annot/V(1000)>>
+endobj
+
+549 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 432 576 443.999]/StructParent 51/Subtype/Widget/T<FEFF00660031005F00320038005B0030005D>/Type/Annot/V(50000)>>
+endobj
+
+550 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[252 420.001 323.25 432]/StructParent 52/Subtype/Widget/T<FEFF00660031005F00320039005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+551 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 420.001 576 432]/StructParent 53/Subtype/Widget/T<FEFF00660031005F00330030005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+552 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[252 408.002 323.25 420.001]/StructParent 54/Subtype/Widget/T<FEFF00660031005F00330031005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+553 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 408.002 576 420.001]/StructParent 55/Subtype/Widget/T<FEFF00660031005F00330032005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+554 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[252 396 323.25 407.999]/StructParent 56/Subtype/Widget/T<FEFF00660031005F00330033005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+555 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 396 576 407.999]/StructParent 57/Subtype/Widget/T<FEFF00660031005F00330034005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+556 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[252 384.001 323.25 396]/StructParent 58/Subtype/Widget/T<FEFF00660031005F00330035005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+557 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 384.001 576 396]/StructParent 59/Subtype/Widget/T<FEFF00660031005F00330036005B0030005D>/Type/Annot/V(0)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 558 0 obj
@@ -2527,6 +2703,7 @@ endobj
 endobj
 
 559 0 obj
+<<<<<<< HEAD
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 372.002 576 384.001]/StructParent 61/Subtype/Widget/T<FEFF00660031005F00330037005B0030005D>/Type/Annot/V()>>
 endobj
 
@@ -2544,6 +2721,25 @@ endobj
 
 563 0 obj
 <</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 324 576 335.999]/StructParent 65/Subtype/Widget/T<FEFF00660031005F00340031005B0030005D>/Type/Annot/V()>>
+=======
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 372.002 576 384.001]/StructParent 61/Subtype/Widget/T<FEFF00660031005F00330037005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+560 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 360 576 371.999]/StructParent 62/Subtype/Widget/T<FEFF00660031005F00330038005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+561 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 348.001 576 360]/StructParent 63/Subtype/Widget/T<FEFF00660031005F00330039005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+562 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 336.002 576 348.001]/StructParent 64/Subtype/Widget/T<FEFF00660031005F00340030005B0030005D>/Type/Annot/V(0)>>
+endobj
+
+563 0 obj
+<</DA(/HelveticaLTStd-Bold 8.00 Tf 0.000 0.000 0.502 rg)/F 4/FT/Tx/Ff 8388608/MK<<>>/P 462 0 R/Parent 457 0 R/Q 2/Rect[504 324 576 335.999]/StructParent 65/Subtype/Widget/T<FEFF00660031005F00340031005B0030005D>/Type/Annot/V(0)>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endobj
 
 564 0 obj
@@ -5768,7 +5964,11 @@ endstream
 endobj
 
 1125 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5779,8 +5979,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 69.25 3.5995117 Td
 () Tj
+=======
+64.802 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5789,7 +5994,11 @@ endstream
 endobj
 
 1126 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 12.000977]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 95>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 12.000977]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5800,8 +6009,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.6004883 Td
 () Tj
+=======
+65.552 3.6004883 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5810,7 +6024,11 @@ endstream
 endobj
 
 1127 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5821,8 +6039,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 69.25 3.5995117 Td
 () Tj
+=======
+64.802 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5831,7 +6054,11 @@ endstream
 endobj
 
 1128 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 12.001038]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 95>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 12.001038]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5842,8 +6069,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.6005188 Td
 () Tj
+=======
+65.552 3.6005188 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5852,7 +6084,11 @@ endstream
 endobj
 
 1129 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 93>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 98>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5863,8 +6099,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.599481 Td
 () Tj
+=======
+65.552 3.599481 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5873,7 +6114,11 @@ endstream
 endobj
 
 1130 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 94>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 99>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5884,8 +6129,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.5995117 Td
 () Tj
+=======
+65.552 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5894,7 +6144,11 @@ endstream
 endobj
 
 1131 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 94>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 99>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5905,8 +6159,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.5995117 Td
 () Tj
+=======
+65.552 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5915,7 +6174,11 @@ endstream
 endobj
 
 1132 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 93>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 98>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5926,8 +6189,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.599481 Td
 () Tj
+=======
+65.552 3.599481 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5936,7 +6204,11 @@ endstream
 endobj
 
 1133 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -5947,8 +6219,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 69.25 3.5995117 Td
 () Tj
+=======
+64.802 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -5999,7 +6276,11 @@ endstream
 endobj
 
 1136 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6010,8 +6291,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 69.25 3.5995117 Td
 () Tj
+=======
+64.802 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6020,7 +6306,11 @@ endstream
 endobj
 
 1137 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 12]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 82>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 12]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 87>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6031,8 +6321,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.6 Td
 () Tj
+=======
+65.552 3.6 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6041,7 +6336,11 @@ endstream
 endobj
 
 1138 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 94>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6052,8 +6351,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.5995117 Td
 () Tj
+=======
+52.208 3.5995117 Td
+(2512) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6062,7 +6366,11 @@ endstream
 endobj
 
 1139 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 94>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 102>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6073,8 +6381,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.5995117 Td
 () Tj
+=======
+52.208 3.5995117 Td
+(2512) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6109,7 +6422,11 @@ endstream
 endobj
 
 1142 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 93>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 99>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6120,8 +6437,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.599481 Td
 () Tj
+=======
+58.88 3.599481 Td
+(0.0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6224,7 +6546,11 @@ endstream
 endobj
 
 1149 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 99>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 71.25 11.998962]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 104>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6235,8 +6561,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 69.25 3.599481 Td
 () Tj
+=======
+51.458 3.599481 Td
+(2512) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6245,7 +6576,11 @@ endstream
 endobj
 
 1150 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 94>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 72 11.999023]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 99>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6256,8 +6591,13 @@ n
 BT
 0 0 .502 rg
 /Helv 8 Tf
+<<<<<<< HEAD
 70 3.5995117 Td
 () Tj
+=======
+65.552 3.5995117 Td
+(0) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6382,7 +6722,11 @@ endstream
 endobj
 
 1158 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 134.79999 19.998993]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 134.79999 19.998993]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 107>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6394,7 +6738,11 @@ BT
 0 0 .502 rg
 /Helv 8 Tf
 2 7.599497 Td
+<<<<<<< HEAD
 () Tj
+=======
+(Plumber) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6403,7 +6751,11 @@ endstream
 endobj
 
 1159 0 obj
+<<<<<<< HEAD
 <</Type/XObject/Subtype/Form/BBox[0 0 134.79999 19.998993]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 100>>
+=======
+<</Type/XObject/Subtype/Form/BBox[0 0 134.79999 19.998993]/Matrix[1 0 -0 1 0 0]/Resources<</Font<</Helv 1123 0 R>>>>/Length 106>>
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 stream
 /Tx BMC
 q
@@ -6415,7 +6767,11 @@ BT
 0 0 .502 rg
 /Helv 8 Tf
 2 7.599497 Td
+<<<<<<< HEAD
 () Tj
+=======
+(doctor) Tj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 ET
 Q
 EMC
@@ -6646,7 +7002,17 @@ endobj
 1172 0 obj
 <</DecodeParms<<>>/Type/XObject/Subtype/Image/Width 250/Height 25/BitsPerComponent 8/ColorSpace/DeviceRGB/Length 18750>>
 stream
+<<<<<<< HEAD
 яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя
+=======
+яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяюююФФФЄЄЄњњњЁЁЁТТТяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяйййллляяяяяяяяяяяяяяяяяяяяяяяяяяяьььИИИ­­­ЄЄЄ···СССсссяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяюююZZZЬЬЬЯЯЯ¬¬¬EEEАААяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяЬЬЬpppяяяяяяяяяяяяяяяяяяяяяяяяууу===:::PPPBBB888\\\щщщяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяЯЯЯяяяЇЇЇ\\\яяяяяяяяяУУУсссяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяъъъ000IIInnnяяяяяяяяяяяяяяяяяяяяяяяяэээяяяяяяяяяЎЎЎdddяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя@@@ВВВяяяяяяяяяяяя
+
+
+ВВВяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя€€€(((±±±§§§яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяlllsssяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяШШШяяяяяяяяяяяяооо   СССяяяяяяяяяяяяяяяяяяяяяяяяяяякккЅЅЅdddшшшяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя333ћћћяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяrrroooяяяяяяяяяяяяsss777яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяsssFFFМММ‡‡‡яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяцццПППяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяыыыБББяяяяяяЭЭЭdddKKKииияяяяяяяяяяяяяяяяяяяяяяяяяяясссЕЕЕYYYчччяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяВВВыыыяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяіііЃЃЃhhh888GGGѕѕѕяяяяяяяяяяяяяяяяяяяяяьььяяяяяяяяяЋЋЋ///ЊЊЊЕЕЕяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя………AAAяяяяяяяяяяяяяяяьььяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээЪЪЪчччяяяяяяяяяъъъMMMяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяWWWVVVчччшшшкккИИИђђђlllЮЮЮяяяяяяяяяяяя’’’OOOTTTэээююю###222›››яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяIII|||яяяяяяяяяяяя’’’OOOTTTэээяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя»»»>>>ЂЂЂ(((юююяяяяяяЧЧЧяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяххх
+
+
+   яяяяяяяяяяяяяяяммм777ыыыяяяяяяттт(((ьььtttзззЙЙЙЇЇЇЧЧЧ```»»»яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяьььВВВяяяяяяяяяттт(((ьььtttзззппп–––ыыыщщщ555‡‡‡яяяяяяяяя¦¦¦&&&бббцццэээяяяяяя„„„ннняяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя¬¬¬   жжжяяяяяяяяяяяяяяяяяяEEEОООцццAAASSSяяяeeeыыыyyy<<<яяяCCCЅЅЅ---яяяяяяяяяяяяяяяяяяяяяжжжпппяяяяяяЖЖЖыыыяяяцццAAASSSяяяeeeыыы‘‘‘   жжж]]]ЌЌЌ@@@сссяяяСССМММэээ^^^{{{яяяяяяѕѕѕААА...ҐҐҐяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя[[[...яяяяяяяяяяяяяяяяяяыыыСССuuuHHHннн777иииtttяяя,,,ѓѓѓяяяGGGяяя222яяяяяяхххяяяяяяяяяккк»»»яяяяяяѓѓѓUUUяяяяяяuuuHHHннн777иииtttяяяddd---„„„йййяяя™™™цццяяяDDDdddвввOOOvvvэээюююЛЛЛ———яяя```YYYяяяяяячччяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяъъъvvvяяяяяяяяяяяяяяяяяя†††   ыыы§§§яяяaaaIIIдддннн···яяяPPPхххMMMяяяШШШјјјяяяяяяяяя–––ыыыяяяяяя;;;¬¬¬яяяыыы§§§яяяaaaIIIдддннн%%%ЪЪЪяяяяяяmmm===яяяггг   iiiyyyЬЬЬяяяяяяћћћёёёяяяЂЂЂ+++яяяТТТРРРяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяЩЩЩ   ЅЅЅяяяяяяяяяяяяыыы~~~єєєЩЩЩ   ЬЬЬяяя   PPPЃЃЃ›››   ТТТяяяГГГSSS’’’ЗЗЗђђђяяяяяяяяяяяяppp111яяяяяяиииъъъяяяЩЩЩ   ЬЬЬяяя   PPPЃЃЃ›››   “““яяяяяяяяя***’’’яяя«««   ъъъяяяяяяяяяЙЙЙўўўttt№№№ЄЄЄ………)))ИИИ®®®яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя¦¦¦щщщяяяяяябббђђђ###µµµяяяиии”””‹‹‹uuuяяяяяяЬЬЬ   ИИИяяяуууTTT№№№ЬЬЬяяяяяяяяяяяяяяяhhh999яяяяяя€€€‹‹‹яяяяяяиии”””‹‹‹uuuяяяяяя^^^888юююяяяяяяяяя(((ЂЂЂ«««°°°ЗЗЗяяяюююЄЄЄ¤¤¤ХХХ...шшшннн---ZZZгггяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя€€€>>>DDD777   }}}уууяяяяяяяяя§§§hhhґґґяяяяяяяяяююю000KKKЎЎЎQQQЬЬЬяяяяяяяяяяяяяяяяяяяяяћћћФФФФФФGGGщщщяяяяяяяяя§§§hhhґґґяяяяяяяяяииидддяяяяяяяяяяяяЮЮЮЎЎЎЫЫЫяяя°°°FFFlllЃЃЃУУУяяяяяя‰‰‰444>>>XXXсссяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяякккlllJJJ\\\{{{ѕѕѕыыыяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяоооќќќ§§§цццяяяяяяяяяяяяяяяяяяяяяяяяэээ‰‰‰SSSррряяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 endstream
 endobj
 
@@ -6658,13 +7024,27 @@ endstream
 endobj
 
 1174 0 obj
+<<<<<<< HEAD
+=======
+<</DecodeParms<<>>/Type/XObject/Subtype/Image/Width 250/Height 25/BitsPerComponent 8/ColorSpace/DeviceRGB/Length 18750>>
+stream
+яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяьььИИИ­­­ЄЄЄ···СССсссяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяьььССС»»»БББХХХиииъъъсссшшшяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяууу===:::PPPBBB888\\\щщщяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяйййlll555888      qqqяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээяяяяяяяяяЎЎЎdddяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяиииCCCбббяяяччч***ъъъцццЦЦЦгггяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяlllsssяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяuuuЉЉЉяяяяяяќќќkkkяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяззз555пппяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя333ћћћяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя]]]™™™яяяяяя000АААяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяIII<<<яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяцццПППяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяХХХҐҐҐяяяНННэээяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя···ЗЗЗяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяВВВыыыяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяlllhhhяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя333ZZZяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяятттяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя………AAAяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээЪЪЪчччяяяяяяяяяяяяяяяяяяяяяяяяЗЗЗђђђ]]]ЈЈЈ»»»ЮЮЮяяяяяяяяяяяяяяяьььяяяяяяяяяяяяъъъMMMяяяяяяяяяяяяѕѕѕЬЬЬяяяяяяяяяяяяяяяэээЪЪЪчччяяяяяя¤¤¤‚‚‚яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяIII|||яяяяяяяяяшшш‹‹‹iii___їїїяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя»»»>>>ЂЂЂ(((юююяяяяяяяяяяяяяяяяяя§§§@@@111xxxЃЃЃ’’’ЭЭЭяяяяяяяяяяяя’’’OOOTTTэээяяяяяяЧЧЧяяяяяяяяяДДДBBB===»»»···ЄЄЄшшшяяя»»»>>>ЂЂЂ(((юююяяя‰‰‰ZZZъъъяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяьььВВВяяяяяяиии555ЈЈЈяяяЬЬЬ666яяяяяяппп–––ыыыщщщ555‡‡‡яяяяяяяяя¦¦¦&&&бббцццэээяяяяяяяяяяяяяяяяяяяяяяяяQQQTTTяяяяяяяяяяяяяяяяяяяяяттт(((ьььtttзззяяяяяя„„„ннняяяяяяййй°°°РРРааацццяяя¦¦¦&&&бббцццэээяяя•••ќќќBBBшшшяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяжжжпппяяяяяяЖЖЖыыыяяяццц666ЉЉЉяяяяяяЫЫЫёёёяяяяяя‘‘‘   жжж]]]ЌЌЌ@@@сссяяяСССМММэээ^^^{{{яяяяяяяяяяяяяяяяяяяяяяяяоооќќќяяяяяяяяяяяяяяяцццAAASSSяяяeeeыыыяяяѕѕѕААА...ҐҐҐяяяяяяҐҐҐ333яяяяяяяяяяяяСССМММэээ^^^{{{яяяиииµµµяяяЇЇЇяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяккк»»»яяяяяяѓѓѓUUUяяяяяяttt333эээяяяууу!!!№№№яяяяяяddd---„„„йййяяя™™™цццяяяDDDdddвввOOOvvvэээюююфффяяяяяяяяяяяяяяяяяя›››   еееяяяяяяяяяяяяяяяuuuHHHннн777иииtttяяяЛЛЛ———яяя```YYYяяяяяяVVVЉЉЉяяяяяяяяяяяяDDDdddвввOOOvvvэээююю   ьььЮЮЮ   ГГГяяяяяячччяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя–––ыыыяяяяяя;;;¬¬¬яяяеее«««яяяяяя\\\333юююяяя¬¬¬%%%ЪЪЪяяяяяяmmm===яяяггг   iiiyyyЬЬЬяяяяяяћћћпппяяяяяяяяяяяяяяяяяяFFF)))яяяяяяяяяяяяяяяыыы§§§яяяaaaIIIдддЛЛЛёёёяяяЂЂЂ+++яяяТТТїїїяяяяяяяяя···   iiiyyyЬЬЬяяяяяяћћћГГГяяяyyyщщщяяяиии®®®яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяppp111яяяяяяиииъъъяяя———шшшяяяљљљ   ўўўяяяХХХ•••   “““яяяяяяяяя***’’’яяя«««   ъъъяяяяяяяяяЙЙЙЇЇЇяяяяяяяяяяяяяяяяяятттlllяяяяяяяяяяяяяяяЩЩЩ   ЬЬЬяяя   PPPЃЃЃ›››ttt№№№ЄЄЄ………)))ИИИ®®®   УУУяяяяяяааа­­­   ъъъяяяяяяяяяЙЙЙЇЇЇяяяяяяqqqяяятттѓѓѓюююяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяhhh999яяяяяя€€€‹‹‹яяяяяя†††ююю–––±±±ђђђ±±±|||^^^888юююяяяяяяяяя(((ЂЂЂ«««°°°ЗЗЗяяяюююЄЄЄ¤¤¤яяяяяяяяяяяяяяяяяяяяяБББ   ЄЄЄяяяяяяяяяяяяяяяиии”””‹‹‹uuuяяяяяяХХХ...шшшннн---ZZZгггыыы¬¬¬яяяМММ‡‡‡иииЗЗЗяяяюююЄЄЄ¤¤¤яяяяяяяяяhhh­­­pppхххяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяћћћФФФФФФGGGщщщяяяяяяЬЬЬ---===јјјяяяґґґrrr¶¶¶яяяииидддяяяяяяяяяяяяЮЮЮЎЎЎЫЫЫяяя°°°FFFlllЃЃЃУУУяяяяяяяяяяяяяяяяяяяяяяяяВВВ   ЧЧЧяяяяяяяяяяяяяяяяяя§§§hhhґґґяяяяяяяяяяяя‰‰‰444>>>XXXсссяяяяяяЋЋЋ'''TTTџџџяяяяяя°°°FFFlllЃЃЃУУУяяяяяяяяяяяяККК………ёёёяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээ‰‰‰SSSррряяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяячччiiiтттяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя
+endstream
+endobj
+
+1175 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</Length 38>>
 stream
  q 150 0 0 15 100 367 cm /fzImg1 Do Q 
 endstream
 endobj
 
+<<<<<<< HEAD
 1175 0 obj
+=======
+1176 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</DecodeParms<<>>/Type/XObject/Subtype/Image/Width 250/Height 25/BitsPerComponent 8/ColorSpace/DeviceRGB/Length 18750>>
 stream
 яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя&&&
@@ -6674,13 +7054,18 @@ stream
 endstream
 endobj
 
+<<<<<<< HEAD
 1176 0 obj
+=======
+1177 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</Length 38>>
 stream
  q 120 0 0 12 235 332 cm /fzImg2 Do Q 
 endstream
 endobj
 
+<<<<<<< HEAD
 1177 0 obj
 <</DecodeParms<<>>/Type/XObject/Subtype/Image/Width 100/Height 25/BitsPerComponent 8/ColorSpace/DeviceRGB/Length 7500>>
 stream
@@ -6689,20 +7074,38 @@ endstream
 endobj
 
 1178 0 obj
+=======
+1178 0 obj
+<</DecodeParms<<>>/Type/XObject/Subtype/Image/Width 100/Height 25/BitsPerComponent 8/ColorSpace/DeviceRGB/Length 7500>>
+stream
+яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяУУУЃЃЃЁЁЁ]]]ТТТяяяяяяяяяяяяЧЧЧtttҐҐҐЉЉЉяяяяяяяяяУУУЃЃЃЁЁЁ]]]ТТТяяяяяяяяяяяяЧЧЧtttҐҐҐЉЉЉяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяЧЧЧtttҐҐҐЉЉЉяяяяяяяяяяяяяяяяяя«««ЮЮЮяяяяяяяяяяяяяяяяяяяяяяяяяяяУУУЃЃЃЁЁЁ]]]ТТТяяяяяяяяяяяяЧЧЧtttҐҐҐЉЉЉяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяящщщ555щщщяяяааа333яяяяяяяяяЫЫЫEEEчччяяяяяяFFFСССяяящщщ555щщщяяяааа333яяяяяяяяяЫЫЫEEEчччяяяяяяFFFСССяяяяяяяяяяяяяяяяяяяяяяяяяяяЫЫЫEEEчччяяяяяяFFFСССяяяяяяяяяяяяЦЦЦ999яяяяяяяяяяяяяяяяяяяяяяяяяяящщщ555щщщяяяааа333яяяяяяяяяЫЫЫEEEчччяяяяяяFFFСССяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяДДДLLLяяяяяяшшшяяяяяяяяяBBBАААяяяяяяяяяqqqѓѓѓяяяДДДLLLяяяяяяшшшяяяяяяяяяBBBАААяяяяяяяяяqqqѓѓѓяяяяяяяяяяяяяяяяяяяяяяяяяяяBBBАААяяяяяяяяяqqqѓѓѓяяяяяяяяяЫЫЫAAAbbbяяяяяяяяяяяяяяяяяяяяяяяяяяяДДДLLLяяяяяяшшшяяяяяяяяяBBBАААяяяяяяяяяqqqѓѓѓяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяаааnnnяяяяяяЦЦЦ(((яяяяяя°°°444яяяяяяяяяяяяxxxsssяяяаааnnnяяяяяяЦЦЦ(((яяяяяя°°°444яяяяяяяяяяяяxxxsssяяяяяяяяяяяяяяяяяяяяяяяя°°°444яяяяяяяяяяяяxxxsssяяяяяяЫЫЫzzz‚‚‚———яяяяяяяяяяяяяяяяяяяяяяяяяяяаааnnnяяяяяяЦЦЦ(((яяяяяя°°°444яяяяяяяяяяяяxxxsssяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээяяяяяя€€€lllяяяяяяQQQ‹‹‹яяяяяяяяяяяя]]]ЊЊЊяяяяяяэээяяяяяя€€€lllяяяяяяQQQ‹‹‹яяяяяяяяяяяя]]]ЊЊЊяяяяяяяяяяяяяяяяяяяяяяяяQQQ‹‹‹яяяяяяяяяяяя]]]ЊЊЊяяяФФФ„„„юююFFFКККяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяэээяяяяяя€€€lllяяяяяяQQQ‹‹‹яяяяяяяяяяяя]]]ЊЊЊяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяыыы   ТТТяяящщщ			ЙЙЙяяяяяяяяяяяя000¬¬¬яяяяяяяяяяяяыыы   ТТТяяящщщ			ЙЙЙяяяяяяяяяяяя000¬¬¬яяяяяяяяяяяяяяяяяяяяящщщ			ЙЙЙяяяяяяяяяяяя000¬¬¬ЦЦЦtttдддиииоооъъъяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяыыы   ТТТяяящщщ			ЙЙЙяяяяяяяяяяяя000¬¬¬яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя™™™aaaяяяяяяЪЪЪ   цццяяяяяяяяяйййррряяяяяяяяяяяя™™™aaaяяяяяяЪЪЪ   цццяяяяяяяяяйййррряяяяяяяяяяяяяяяяяяяяяЪЪЪ   цццяяяяяяяяяйййрррLLLHHHNNN888vvvщщщяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя™™™aaaяяяяяяЪЪЪ   цццяяяяяяяяяйййррряяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяггг111пппяяяяяяВВВяяяяяяяяяяяяђђђOOOяяяяяяяяяяяяггг111пппяяяяяяВВВяяяяяяяяяяяяђђђOOOяяяеее’’’~~~zzz’’’мммяяяВВВяяяяяяяяяяяяђђђOOOяяяяяяяяяяяяљљљ[[[яяяяяяеее’’’~~~zzz’’’мммяяяяяяяяяяяяггг111пппяяяяяяВВВяяяяяяяяяяяяђђђOOOяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяящщщOOOРРРяяяяяяяяяТТТюююяяяяяяъъъ"""УУУяяяяяяяяящщщOOOРРРяяяяяяяяяТТТюююяяяяяяъъъ"""УУУяяяяяяяяяяяяяяяяяяяяяяяяТТТюююяяяяяяъъъ"""УУУяяяяяяяяяяяяiii†††яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяящщщOOOРРРяяяяяяяяяТТТюююяяяяяяъъъ"""УУУяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяннн“““†††EEEќќќыыыяяяъъъяяяьььКККяяяяяя|||ЃЃЃяяяннн“““†††EEEќќќыыыяяяъъъяяяьььКККяяяяяя|||ЃЃЃяяяяяяяяяяяяяяяяяяяяяяяяяяяьььКККяяяяяя|||ЃЃЃяяяяяяяяяяяяяяя===«««яяяяяяяяяяяяяяяяяяяяяяяяннн“““†††EEEќќќыыыяяяъъъяяяьььКККяяяяяя|||ЃЃЃяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяззз“““’’’¶¶¶VVV'''```яяяяяяііі:::«««www‡‡‡яяяяяяззз“““’’’¶¶¶VVV'''```яяяяяяііі:::«««www‡‡‡яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяііі:::«««www‡‡‡яяяяяяяяяяяяяяяяяя###ЙЙЙяяяяяяяяяяяяяяяяяяяяяяяяззз“““’’’¶¶¶VVV'''```яяяяяяііі:::«««www‡‡‡яяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяхххТТТщщщяяяяяяяяяпппРРРуууяяяяяяяяяяяяяяяяяяяяяяяяхххТТТщщщяяяяяяяяяпппРРРуууяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяпппРРРуууяяяяяяяяяяяяяяяяяяяяяооочччяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяхххТТТщщщяяяяяяяяяпппРРРуууяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяяя
+endstream
+endobj
+
+1179 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</Length 42>>
 stream
  q 50 0 0 12.5 275 398.25 cm /fzImg3 Do Q 
 endstream
 endobj
 
+<<<<<<< HEAD
 1179 0 obj
+=======
+1180 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</Length 42>>
 stream
  q 50 0 0 12.5 275 368.25 cm /fzImg4 Do Q 
 endstream
 endobj
 
+<<<<<<< HEAD
 1180 0 obj
+=======
+1181 0 obj
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 <</Length 42>>
 stream
  q 50 0 0 12.5 390 330.75 cm /fzImg5 Do Q 
@@ -6710,7 +7113,11 @@ endstream
 endobj
 
 xref
+<<<<<<< HEAD
 0 1181
+=======
+0 1182
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 0000000000 65536 f 
 0000000016 00000 n 
 0000000353 00000 n 
@@ -7106,6 +7513,7 @@ xref
 0000056602 00000 n 
 0000056876 00000 n 
 0000057143 00000 n 
+<<<<<<< HEAD
 0000057411 00000 n 
 0000057674 00000 n 
 0000057942 00000 n 
@@ -7897,4 +8305,798 @@ trailer
 <</Size 1181/Info 1 0 R/Root 2 0 R/ID[<C65C7F17F3C7B64D85249ED638242285><616EEABA7CF8C1F09E919715A791B157>]>>
 startxref
 278207
+=======
+0000057412 00000 n 
+0000057676 00000 n 
+0000057945 00000 n 
+0000058213 00000 n 
+0000058481 00000 n 
+0000058745 00000 n 
+0000059009 00000 n 
+0000059277 00000 n 
+0000059546 00000 n 
+0000059818 00000 n 
+0000060086 00000 n 
+0000060355 00000 n 
+0000060623 00000 n 
+0000060890 00000 n 
+0000061157 00000 n 
+0000061427 00000 n 
+0000061697 00000 n 
+0000061976 00000 n 
+0000062238 00000 n 
+0000062496 00000 n 
+0000062780 00000 n 
+0000063056 00000 n 
+0000063320 00000 n 
+0000063589 00000 n 
+0000063864 00000 n 
+0000064133 00000 n 
+0000064394 00000 n 
+0000064656 00000 n 
+0000064972 00000 n 
+0000065245 00000 n 
+0000065561 00000 n 
+0000065833 00000 n 
+0000066149 00000 n 
+0000066421 00000 n 
+0000066689 00000 n 
+0000066962 00000 n 
+0000067235 00000 n 
+0000067504 00000 n 
+0000067775 00000 n 
+0000068051 00000 n 
+0000068334 00000 n 
+0000068630 00000 n 
+0000068781 00000 n 
+0000068889 00000 n 
+0000069009 00000 n 
+0000069285 00000 n 
+0000069477 00000 n 
+0000069637 00000 n 
+0000069797 00000 n 
+0000069905 00000 n 
+0000070013 00000 n 
+0000070189 00000 n 
+0000070341 00000 n 
+0000070462 00000 n 
+0000070650 00000 n 
+0000070810 00000 n 
+0000071059 00000 n 
+0000071311 00000 n 
+0000071507 00000 n 
+0000071651 00000 n 
+0000071803 00000 n 
+0000071931 00000 n 
+0000072043 00000 n 
+0000072339 00000 n 
+0000072597 00000 n 
+0000072853 00000 n 
+0000073102 00000 n 
+0000073349 00000 n 
+0000073750 00000 n 
+0000074322 00000 n 
+0000075691 00000 n 
+0000076834 00000 n 
+0000077944 00000 n 
+0000078664 00000 n 
+0000079503 00000 n 
+0000080355 00000 n 
+0000081388 00000 n 
+0000082477 00000 n 
+0000082618 00000 n 
+0000083815 00000 n 
+0000085013 00000 n 
+0000086210 00000 n 
+0000087411 00000 n 
+0000088571 00000 n 
+0000089766 00000 n 
+0000090959 00000 n 
+0000091334 00000 n 
+0000093542 00000 n 
+0000093883 00000 n 
+0000094824 00000 n 
+0000095109 00000 n 
+0000095511 00000 n 
+0000095812 00000 n 
+0000096501 00000 n 
+0000096809 00000 n 
+0000097657 00000 n 
+0000098008 00000 n 
+0000099834 00000 n 
+0000100154 00000 n 
+0000100851 00000 n 
+0000100879 00000 n 
+0000101181 00000 n 
+0000101331 00000 n 
+0000101402 00000 n 
+0000101686 00000 n 
+0000101767 00000 n 
+0000102336 00000 n 
+0000102627 00000 n 
+0000102915 00000 n 
+0000103203 00000 n 
+0000103491 00000 n 
+0000103779 00000 n 
+0000104022 00000 n 
+0000104286 00000 n 
+0000104537 00000 n 
+0000104791 00000 n 
+0000105056 00000 n 
+0000105325 00000 n 
+0000105577 00000 n 
+0000105846 00000 n 
+0000106093 00000 n 
+0000106343 00000 n 
+0000106591 00000 n 
+0000106868 00000 n 
+0000107141 00000 n 
+0000107422 00000 n 
+0000107703 00000 n 
+0000107991 00000 n 
+0000108280 00000 n 
+0000108569 00000 n 
+0000108858 00000 n 
+0000109147 00000 n 
+0000109428 00000 n 
+0000109679 00000 n 
+0000109943 00000 n 
+0000110197 00000 n 
+0000110482 00000 n 
+0000110767 00000 n 
+0000111018 00000 n 
+0000111282 00000 n 
+0000111536 00000 n 
+0000111821 00000 n 
+0000112106 00000 n 
+0000112357 00000 n 
+0000112621 00000 n 
+0000112875 00000 n 
+0000113160 00000 n 
+0000113445 00000 n 
+0000113696 00000 n 
+0000113960 00000 n 
+0000114214 00000 n 
+0000114499 00000 n 
+0000114784 00000 n 
+0000115040 00000 n 
+0000115293 00000 n 
+0000115544 00000 n 
+0000115794 00000 n 
+0000116041 00000 n 
+0000116295 00000 n 
+0000116546 00000 n 
+0000116796 00000 n 
+0000117043 00000 n 
+0000117293 00000 n 
+0000117540 00000 n 
+0000117829 00000 n 
+0000118080 00000 n 
+0000118327 00000 n 
+0000118574 00000 n 
+0000118825 00000 n 
+0000119072 00000 n 
+0000119265 00000 n 
+0000119439 00000 n 
+0000119719 00000 n 
+0000119788 00000 n 
+0000119981 00000 n 
+0000120155 00000 n 
+0000120435 00000 n 
+0000120555 00000 n 
+0000120715 00000 n 
+0000120835 00000 n 
+0000120955 00000 n 
+0000121075 00000 n 
+0000121268 00000 n 
+0000121442 00000 n 
+0000121722 00000 n 
+0000121915 00000 n 
+0000122089 00000 n 
+0000122369 00000 n 
+0000122562 00000 n 
+0000122736 00000 n 
+0000123016 00000 n 
+0000123209 00000 n 
+0000123383 00000 n 
+0000123663 00000 n 
+0000123856 00000 n 
+0000124030 00000 n 
+0000124310 00000 n 
+0000124503 00000 n 
+0000124677 00000 n 
+0000124957 00000 n 
+0000125150 00000 n 
+0000125324 00000 n 
+0000125604 00000 n 
+0000125797 00000 n 
+0000125971 00000 n 
+0000126251 00000 n 
+0000126444 00000 n 
+0000126618 00000 n 
+0000126898 00000 n 
+0000127042 00000 n 
+0000127235 00000 n 
+0000127409 00000 n 
+0000127689 00000 n 
+0000127882 00000 n 
+0000128056 00000 n 
+0000128336 00000 n 
+0000128529 00000 n 
+0000128703 00000 n 
+0000128983 00000 n 
+0000129176 00000 n 
+0000129350 00000 n 
+0000129630 00000 n 
+0000129786 00000 n 
+0000129979 00000 n 
+0000130153 00000 n 
+0000130433 00000 n 
+0000130626 00000 n 
+0000130800 00000 n 
+0000131080 00000 n 
+0000131273 00000 n 
+0000131447 00000 n 
+0000131727 00000 n 
+0000131887 00000 n 
+0000132080 00000 n 
+0000132254 00000 n 
+0000132534 00000 n 
+0000132674 00000 n 
+0000132867 00000 n 
+0000133041 00000 n 
+0000133321 00000 n 
+0000133514 00000 n 
+0000133688 00000 n 
+0000133968 00000 n 
+0000134161 00000 n 
+0000134335 00000 n 
+0000134615 00000 n 
+0000134808 00000 n 
+0000134982 00000 n 
+0000135262 00000 n 
+0000135455 00000 n 
+0000135629 00000 n 
+0000135909 00000 n 
+0000136102 00000 n 
+0000136276 00000 n 
+0000136556 00000 n 
+0000136749 00000 n 
+0000136923 00000 n 
+0000137203 00000 n 
+0000137462 00000 n 
+0000137721 00000 n 
+0000137980 00000 n 
+0000138173 00000 n 
+0000138347 00000 n 
+0000138627 00000 n 
+0000138820 00000 n 
+0000138994 00000 n 
+0000139274 00000 n 
+0000139467 00000 n 
+0000139641 00000 n 
+0000139921 00000 n 
+0000140114 00000 n 
+0000140288 00000 n 
+0000140568 00000 n 
+0000140761 00000 n 
+0000140935 00000 n 
+0000141215 00000 n 
+0000141408 00000 n 
+0000141582 00000 n 
+0000141862 00000 n 
+0000142055 00000 n 
+0000142229 00000 n 
+0000142509 00000 n 
+0000142702 00000 n 
+0000142876 00000 n 
+0000143156 00000 n 
+0000143216 00000 n 
+0000143503 00000 n 
+0000143630 00000 n 
+0000143802 00000 n 
+0000143874 00000 n 
+0000143946 00000 n 
+0000144028 00000 n 
+0000144101 00000 n 
+0000144180 00000 n 
+0000144251 00000 n 
+0000144330 00000 n 
+0000144929 00000 n 
+0000145000 00000 n 
+0000145061 00000 n 
+0000145121 00000 n 
+0000145182 00000 n 
+0000145243 00000 n 
+0000145304 00000 n 
+0000145364 00000 n 
+0000145425 00000 n 
+0000145486 00000 n 
+0000145547 00000 n 
+0000145608 00000 n 
+0000145668 00000 n 
+0000145729 00000 n 
+0000145790 00000 n 
+0000145851 00000 n 
+0000145912 00000 n 
+0000145973 00000 n 
+0000146034 00000 n 
+0000146092 00000 n 
+0000146146 00000 n 
+0000146200 00000 n 
+0000146254 00000 n 
+0000146308 00000 n 
+0000146362 00000 n 
+0000146416 00000 n 
+0000146470 00000 n 
+0000146524 00000 n 
+0000146578 00000 n 
+0000146632 00000 n 
+0000146686 00000 n 
+0000146740 00000 n 
+0000146794 00000 n 
+0000146848 00000 n 
+0000146909 00000 n 
+0000146993 00000 n 
+0000147053 00000 n 
+0000147113 00000 n 
+0000147173 00000 n 
+0000147233 00000 n 
+0000147284 00000 n 
+0000147345 00000 n 
+0000147399 00000 n 
+0000147450 00000 n 
+0000147511 00000 n 
+0000147565 00000 n 
+0000147616 00000 n 
+0000147677 00000 n 
+0000147731 00000 n 
+0000147782 00000 n 
+0000147843 00000 n 
+0000147897 00000 n 
+0000147951 00000 n 
+0000148012 00000 n 
+0000148073 00000 n 
+0000148134 00000 n 
+0000148195 00000 n 
+0000148256 00000 n 
+0000148317 00000 n 
+0000148378 00000 n 
+0000148439 00000 n 
+0000148500 00000 n 
+0000148561 00000 n 
+0000148622 00000 n 
+0000148683 00000 n 
+0000148744 00000 n 
+0000148805 00000 n 
+0000148866 00000 n 
+0000148927 00000 n 
+0000148988 00000 n 
+0000149049 00000 n 
+0000149110 00000 n 
+0000149171 00000 n 
+0000149232 00000 n 
+0000149293 00000 n 
+0000149354 00000 n 
+0000149415 00000 n 
+0000149476 00000 n 
+0000149537 00000 n 
+0000149598 00000 n 
+0000149659 00000 n 
+0000149720 00000 n 
+0000149781 00000 n 
+0000149842 00000 n 
+0000149903 00000 n 
+0000149964 00000 n 
+0000150025 00000 n 
+0000150086 00000 n 
+0000150147 00000 n 
+0000150208 00000 n 
+0000150269 00000 n 
+0000150330 00000 n 
+0000150391 00000 n 
+0000150452 00000 n 
+0000150513 00000 n 
+0000150574 00000 n 
+0000150635 00000 n 
+0000150696 00000 n 
+0000150757 00000 n 
+0000150818 00000 n 
+0000150879 00000 n 
+0000150940 00000 n 
+0000151001 00000 n 
+0000151062 00000 n 
+0000151123 00000 n 
+0000151184 00000 n 
+0000151245 00000 n 
+0000151306 00000 n 
+0000151367 00000 n 
+0000151428 00000 n 
+0000151489 00000 n 
+0000151550 00000 n 
+0000151611 00000 n 
+0000151672 00000 n 
+0000151732 00000 n 
+0000151793 00000 n 
+0000151854 00000 n 
+0000151915 00000 n 
+0000151975 00000 n 
+0000152036 00000 n 
+0000152097 00000 n 
+0000152151 00000 n 
+0000152205 00000 n 
+0000152259 00000 n 
+0000152313 00000 n 
+0000152366 00000 n 
+0000152419 00000 n 
+0000152472 00000 n 
+0000152525 00000 n 
+0000152578 00000 n 
+0000152657 00000 n 
+0000152710 00000 n 
+0000152763 00000 n 
+0000152816 00000 n 
+0000152895 00000 n 
+0000152948 00000 n 
+0000153001 00000 n 
+0000153054 00000 n 
+0000153107 00000 n 
+0000153186 00000 n 
+0000153239 00000 n 
+0000153318 00000 n 
+0000153371 00000 n 
+0000153424 00000 n 
+0000153503 00000 n 
+0000153556 00000 n 
+0000153609 00000 n 
+0000153688 00000 n 
+0000153741 00000 n 
+0000153794 00000 n 
+0000153847 00000 n 
+0000153900 00000 n 
+0000153979 00000 n 
+0000154032 00000 n 
+0000154085 00000 n 
+0000154164 00000 n 
+0000154217 00000 n 
+0000154270 00000 n 
+0000154323 00000 n 
+0000154402 00000 n 
+0000154455 00000 n 
+0000154508 00000 n 
+0000154587 00000 n 
+0000154640 00000 n 
+0000154693 00000 n 
+0000154746 00000 n 
+0000154799 00000 n 
+0000154878 00000 n 
+0000154931 00000 n 
+0000154984 00000 n 
+0000155063 00000 n 
+0000155116 00000 n 
+0000155169 00000 n 
+0000155222 00000 n 
+0000155275 00000 n 
+0000155354 00000 n 
+0000155407 00000 n 
+0000155460 00000 n 
+0000155539 00000 n 
+0000155592 00000 n 
+0000155645 00000 n 
+0000155698 00000 n 
+0000155751 00000 n 
+0000155830 00000 n 
+0000155883 00000 n 
+0000155936 00000 n 
+0000155989 00000 n 
+0000156050 00000 n 
+0000156129 00000 n 
+0000156225 00000 n 
+0000156318 00000 n 
+0000156411 00000 n 
+0000156504 00000 n 
+0000156597 00000 n 
+0000156690 00000 n 
+0000156760 00000 n 
+0000156830 00000 n 
+0000156900 00000 n 
+0000156970 00000 n 
+0000157040 00000 n 
+0000157166 00000 n 
+0000157245 00000 n 
+0000157370 00000 n 
+0000157449 00000 n 
+0000157578 00000 n 
+0000157657 00000 n 
+0000157777 00000 n 
+0000157856 00000 n 
+0000157977 00000 n 
+0000158056 00000 n 
+0000158126 00000 n 
+0000158196 00000 n 
+0000158266 00000 n 
+0000158336 00000 n 
+0000158406 00000 n 
+0000158532 00000 n 
+0000158611 00000 n 
+0000158736 00000 n 
+0000158815 00000 n 
+0000158944 00000 n 
+0000159023 00000 n 
+0000159143 00000 n 
+0000159222 00000 n 
+0000159343 00000 n 
+0000159422 00000 n 
+0000159492 00000 n 
+0000159562 00000 n 
+0000159632 00000 n 
+0000159702 00000 n 
+0000159772 00000 n 
+0000159898 00000 n 
+0000159977 00000 n 
+0000160102 00000 n 
+0000160181 00000 n 
+0000160310 00000 n 
+0000160389 00000 n 
+0000160509 00000 n 
+0000160588 00000 n 
+0000160709 00000 n 
+0000160788 00000 n 
+0000160858 00000 n 
+0000160928 00000 n 
+0000160998 00000 n 
+0000161068 00000 n 
+0000161138 00000 n 
+0000161264 00000 n 
+0000161343 00000 n 
+0000161468 00000 n 
+0000161547 00000 n 
+0000161676 00000 n 
+0000161755 00000 n 
+0000161875 00000 n 
+0000161954 00000 n 
+0000162075 00000 n 
+0000162154 00000 n 
+0000162297 00000 n 
+0000162439 00000 n 
+0000162590 00000 n 
+0000162737 00000 n 
+0000162885 00000 n 
+0000162938 00000 n 
+0000162991 00000 n 
+0000163044 00000 n 
+0000163097 00000 n 
+0000163150 00000 n 
+0000163211 00000 n 
+0000163272 00000 n 
+0000163333 00000 n 
+0000163386 00000 n 
+0000163439 00000 n 
+0000163492 00000 n 
+0000163546 00000 n 
+0000163607 00000 n 
+0000163668 00000 n 
+0000163747 00000 n 
+0000163800 00000 n 
+0000163891 00000 n 
+0000164010 00000 n 
+0000164153 00000 n 
+0000164214 00000 n 
+0000164275 00000 n 
+0000164336 00000 n 
+0000164397 00000 n 
+0000164458 00000 n 
+0000164519 00000 n 
+0000164580 00000 n 
+0000164641 00000 n 
+0000164702 00000 n 
+0000164763 00000 n 
+0000164824 00000 n 
+0000164877 00000 n 
+0000164956 00000 n 
+0000165009 00000 n 
+0000165088 00000 n 
+0000165141 00000 n 
+0000165194 00000 n 
+0000165273 00000 n 
+0000165326 00000 n 
+0000165405 00000 n 
+0000165458 00000 n 
+0000165512 00000 n 
+0000165574 00000 n 
+0000165636 00000 n 
+0000165698 00000 n 
+0000165760 00000 n 
+0000165822 00000 n 
+0000165884 00000 n 
+0000165946 00000 n 
+0000166007 00000 n 
+0000166060 00000 n 
+0000166140 00000 n 
+0000166194 00000 n 
+0000166274 00000 n 
+0000166328 00000 n 
+0000166408 00000 n 
+0000166462 00000 n 
+0000166517 00000 n 
+0000166580 00000 n 
+0000166643 00000 n 
+0000166716 00000 n 
+0000166789 00000 n 
+0000166844 00000 n 
+0000166925 00000 n 
+0000166980 00000 n 
+0000167061 00000 n 
+0000167116 00000 n 
+0000167172 00000 n 
+0000167245 00000 n 
+0000167355 00000 n 
+0000167429 00000 n 
+0000167503 00000 n 
+0000167577 00000 n 
+0000167651 00000 n 
+0000167725 00000 n 
+0000167799 00000 n 
+0000167854 00000 n 
+0000167935 00000 n 
+0000167990 00000 n 
+0000168071 00000 n 
+0000168126 00000 n 
+0000168207 00000 n 
+0000168262 00000 n 
+0000168343 00000 n 
+0000168398 00000 n 
+0000168479 00000 n 
+0000168534 00000 n 
+0000168615 00000 n 
+0000168670 00000 n 
+0000168751 00000 n 
+0000168824 00000 n 
+0000168897 00000 n 
+0000168970 00000 n 
+0000169025 00000 n 
+0000169106 00000 n 
+0000169161 00000 n 
+0000169242 00000 n 
+0000169297 00000 n 
+0000169378 00000 n 
+0000169432 00000 n 
+0000169512 00000 n 
+0000169566 00000 n 
+0000169646 00000 n 
+0000169709 00000 n 
+0000169772 00000 n 
+0000169835 00000 n 
+0000169898 00000 n 
+0000169961 00000 n 
+0000170024 00000 n 
+0000170087 00000 n 
+0000170150 00000 n 
+0000170213 00000 n 
+0000170276 00000 n 
+0000170339 00000 n 
+0000170402 00000 n 
+0000170465 00000 n 
+0000170546 00000 n 
+0000170601 00000 n 
+0000170656 00000 n 
+0000170737 00000 n 
+0000170792 00000 n 
+0000170873 00000 n 
+0000170928 00000 n 
+0000171009 00000 n 
+0000171064 00000 n 
+0000171145 00000 n 
+0000171199 00000 n 
+0000171280 00000 n 
+0000171335 00000 n 
+0000171398 00000 n 
+0000171461 00000 n 
+0000171524 00000 n 
+0000171587 00000 n 
+0000171650 00000 n 
+0000171713 00000 n 
+0000171776 00000 n 
+0000171839 00000 n 
+0000171893 00000 n 
+0000171947 00000 n 
+0000172001 00000 n 
+0000172055 00000 n 
+0000172110 00000 n 
+0000172164 00000 n 
+0000172219 00000 n 
+0000172274 00000 n 
+0000173314 00000 n 
+0000173457 00000 n 
+0000173506 00000 n 
+0000173555 00000 n 
+0000173604 00000 n 
+0000174083 00000 n 
+0000174431 00000 n 
+0000174966 00000 n 
+0000175058 00000 n 
+0000176247 00000 n 
+0000176491 00000 n 
+0000177647 00000 n 
+0000216257 00000 n 
+0000217216 00000 n 
+0000217416 00000 n 
+0000217617 00000 n 
+0000218497 00000 n 
+0000219300 00000 n 
+0000219475 00000 n 
+0000219669 00000 n 
+0000219779 00000 n 
+0000220027 00000 n 
+0000220147 00000 n 
+0000220242 00000 n 
+0000220450 00000 n 
+0000220570 00000 n 
+0000220778 00000 n 
+0000220898 00000 n 
+0000221106 00000 n 
+0000221198 00000 n 
+0000221450 00000 n 
+0000221715 00000 n 
+0000221975 00000 n 
+0000222240 00000 n 
+0000222500 00000 n 
+0000222757 00000 n 
+0000223015 00000 n 
+0000223273 00000 n 
+0000223530 00000 n 
+0000223795 00000 n 
+0000224056 00000 n 
+0000224319 00000 n 
+0000224584 00000 n 
+0000224823 00000 n 
+0000225085 00000 n 
+0000225347 00000 n 
+0000225467 00000 n 
+0000225675 00000 n 
+0000225933 00000 n 
+0000226200 00000 n 
+0000226320 00000 n 
+0000226528 00000 n 
+0000226648 00000 n 
+0000226856 00000 n 
+0000227123 00000 n 
+0000227390 00000 n 
+0000227648 00000 n 
+0000227913 00000 n 
+0000228033 00000 n 
+0000228241 00000 n 
+0000228361 00000 n 
+0000228569 00000 n 
+0000228811 00000 n 
+0000229073 00000 n 
+0000229347 00000 n 
+0000229620 00000 n 
+0000229881 00000 n 
+0000230135 00000 n 
+0000230399 00000 n 
+0000230679 00000 n 
+0000230799 00000 n 
+0000231007 00000 n 
+0000231127 00000 n 
+0000231335 00000 n 
+0000231598 00000 n 
+0000231873 00000 n 
+0000232160 00000 n 
+0000232444 00000 n 
+0000251352 00000 n 
+0000251442 00000 n 
+0000270350 00000 n 
+0000270440 00000 n 
+0000289348 00000 n 
+0000289438 00000 n 
+0000297095 00000 n 
+0000297189 00000 n 
+0000297283 00000 n 
+
+trailer
+<</Size 1182/Info 1 0 R/Root 2 0 R/ID[<C65C7F17F3C7B64D85249ED638242285><D0F17C7D84131A41FE02958190FA57F4>]>>
+startxref
+297377
+>>>>>>> 10761fcff7a447dd67b5b7e480439391a5ef8185
 %%EOF
