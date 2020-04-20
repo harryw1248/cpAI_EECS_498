@@ -1,5 +1,9 @@
 # CPai Setup Guide
 
+## CPai Introduction
+CPai is a chatbot that uses Conversational Artificial Intelligence and Natural Language Processing to help people fill out their taxes. CPai adjusts the questions it asks based on the information users provides. It aims to minimize the number of questions asked to make filling out taxes easier. CPai can also help explain complicated tax terms and maximize the amount of deductions for a person. This makes CPai an effective tax assistant.   
+
+
 CPai is composed of 4 parts:
 
 1. Dialogflow service provided by Google
