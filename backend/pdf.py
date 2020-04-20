@@ -210,6 +210,12 @@ def fillInFields(document):
         fields["þÿc2_06[0]"]['check'] = document.third_party_user_info['third-party']
         fields["þÿc2_06[1]"]['check'] = not document.third_party_user_info['third-party']
 
+    if document.refund_user_info['account-type'] is not None:
+        if document.refund_user_info['account-type'] == 'checking':
+            fields["þÿc2_05[0]"]['check'] = True
+        if document.refund_user_info['account-type'] == 'savings': 
+            fields["þÿc2_05[1]"]['check'] = True
+
     return fields
 
 
