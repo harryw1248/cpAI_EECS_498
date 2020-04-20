@@ -94,8 +94,8 @@ def fillInFields(document):
         "þÿf1_39[0]": {'V': nonePipe(document.income_user_info['7b'])}, #7b
         "þÿf1_40[0]": {'V': nonePipe(document.income_user_info['adjustments-to-income'])}, #8a
         "þÿf1_41[0]": {'V': nonePipe(document.income_user_info['8b'])}, #8b
-        "þÿf1_42[0]": {'V': ''}, #9
-        "þÿf1_43[0]": {'V': ''}, #10
+        "þÿf1_42[0]": {'V': nonePipe(document.income_user_info['9'])}, #9
+        "þÿf1_43[0]": {'V': nonePipe(document.income_user_info['10'])}, #10
         "þÿf1_44[0]": {'V': nonePipe(document.income_user_info['11a'])}, #11a
         "þÿf1_45[0]": {'V': nonePipe(document.income_user_info['11b'])}, #11b
         "þÿc2_01[0]": {'check': False}, #12A checkbox1
