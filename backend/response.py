@@ -240,8 +240,7 @@ class Response:
             'schedule-2-line-10': 'What are your other taxes as indicated on line 10 of Schedule 2?',
             'schedule-3-line-14': 'What are your other payments and refundable credits as specified on line 14 of'
                                   ' Schedule 3?',
-            'pass-through-business': "Do you own a pass-through-business (sole-proprietors and single-owner LLCs)? "
-                                     "Is your income from the business taxed on your personal tax return?",
+            'pass-through-business': "Do you own a pass-through-business?",
             'total-qualified-business-income': 'What is your total qualified income from your business?'
         }
 

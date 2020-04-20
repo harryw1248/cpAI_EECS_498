@@ -789,13 +789,13 @@ class Document:
             if self.demographic_user_info["filing_status"] == 'married filing jointly':
                 line_10 = 12000
             elif self.demographic_user_info["filing_status"] == 'head of household' or self.demographic_user_info[
-                "filing_status"] is 'qualifying widow':
+                "filing_status"] == 'qualifying widow':
                 line_10 = 9000
             elif self.demographic_user_info["filing_status"] == 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
                 line_10 = 9000
             elif self.demographic_user_info["filing_status"] == 'head of household' or self.demographic_user_info[
-                "filing_status"] is 'qualifying widow':
+                "filing_status"] == 'qualifying widow':
                 line_10 = 9000
             elif self.demographic_user_info["filing_status"] == 'married filing separately' and \
                     self.demographic_user_info["lived-apart"] == True:
