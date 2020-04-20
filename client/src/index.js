@@ -1,21 +1,6 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
-/*
-import session from "express-session";
-
-const { CPAI_CLIENT_SECRET = CPAI_CLIENT_SECRET } = process.env;
-app.use(
-    session({
-        secret: CPAI_CLIENT_SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 // 24 hours,
-        }
-    })
-);
-*/
 
 const app = express();
 
@@ -23,15 +8,6 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-/*
-const users = [{ id: 1, username: "cpai", password: "superduper" }];
-
-app.post("/login", (req, res) => {
-    const { username, password } = req.body;
-    console.log(username, password);
-});
-*/
 
 // Imports the Google Cloud client library.
 const { Storage } = require("@google-cloud/storage");
@@ -66,9 +42,9 @@ async function runQuery(sessionInfo, query) {
                 // The query to send to the dialogflow agent
                 text: query,
                 // The language used by the client (en-US)
-                languageCode: "en-US"
-            }
-        }
+                languageCode: "en-US",
+            },
+        },
     };
 
     // Send request and log result
@@ -88,7 +64,7 @@ async function runQuery(sessionInfo, query) {
     const responseData = {
         responseText,
         intent: result.intent.displayName,
-        params: resultFields
+        params: resultFields,
     };
 
     return responseData;
@@ -107,7 +83,7 @@ async function gCloudConnect() {
         const [buckets] = results;
 
         console.log("Buckets:");
-        buckets.forEach(bucket => {
+        buckets.forEach((bucket) => {
             console.log(bucket.name);
         });
     } catch (err) {
@@ -132,10 +108,11 @@ async function query(req, res) {
 }
 app.post("/query", query);
 
-app.listen(3000, async function() {
+app.listen(3000, async function () {
     console.log("node client on port 3000!");
     console.log("ready");
     await gCloudConnect();
-    sessionInfo = await newSession("cpai-dweaie");
+    const projectId = process.env.GCP_PROJECT_ID; //cpai-dweaie
+    sessionInfo = await newSession(projectId);
     console.log(sessionInfo);
 });
