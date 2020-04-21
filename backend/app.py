@@ -725,6 +725,7 @@ def exploit_deduction(content):
 
         # Calculate best option (standard or itemized)
         type_chosen = document.compute_line_9()
+        document.truncate_decimals()
 
         # Inform user about whether the standard or itemized deduction will save them more money:
         if type_chosen == 'standard deduction':
@@ -1158,7 +1159,7 @@ def home():
 def getDocument():
     """Used by the frontend to grab the relevant document information to display on the tax form."""
     global document
-    document.truncate_decimals()
+    # document.truncate_decimals()
     payload = dict()
 
     payload['demographics'] = {

@@ -671,6 +671,7 @@ class Document:
                         self.third_party_user_info['third-party'] = False
 
 
+        self.truncate_decimals()
         print(self.income_user_info)
         return value
 
