@@ -119,31 +119,33 @@ def explain_term_repeat(content):
         response = responses.get_next_response(next_unfilled_slot, document)
         output_context = responses.generate_output_context(last_unfilled_field, 1, session, document)
 
-    data['fulfillment_messages'] = [
-        {
-            "text": {
-                "text": [
-                    "I am sorry to hear that. Here is a link that should provide you with some more details: \n" + firebase_data[last_term_explained]["link"] + "\n"
-                ]
-            }
-        },
-        # {
-        #     "card": {
-        #         "buttons": [
-        #             {
-        #                 "text": firebase_data[last_term_explained]["link"],
-        #                 "postback": firebase_data[last_term_explained]["link"]
-        #             }
-        #         ]
-        #     }
-        # },
-        {
-            "text": {
-                "text": [
-                    "Whenever you are ready, let's continue. " + response
-                ]
-            }
-        }, ]
+    # data['fulfillment_messages'] = [
+    #     {
+    #         "text": {
+    #             "text": [
+    #                 "I am sorry to hear that. Here is a link that should provide you with some more details: \n" + firebase_data[last_term_explained]["link"] + "\n"
+    #             ]
+    #         }
+    #     },
+    #     # {
+    #     #     "card": {
+    #     #         "buttons": [
+    #     #             {
+    #     #                 "text": firebase_data[last_term_explained]["link"],
+    #     #                 "postback": firebase_data[last_term_explained]["link"]
+    #     #             }
+    #     #         ]
+    #     #     }
+    #     # },
+    #     {
+    #         "text": {
+    #             "text": [
+    #                 "Whenever you are ready, let's continue. " + response
+    #             ]
+    #         }
+    #     }, ]
+
+    data['fulfillment_messages'] = [{"text": {"text": ["I am sorry to hear that. Here is a link that should provide you with some more details: \n" + firebase_data[last_term_explained]["link"] + "\n" + "Whenever you are ready, let's continue. " + response]}}]
 
     data['output_contexts'] = output_context
     global last_output_context
