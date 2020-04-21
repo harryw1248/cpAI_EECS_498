@@ -13,11 +13,11 @@ The frontend for CPai is a typical SPA (single-page web app) built in Vue.js, a 
 
 The practical entry point is `App.vue` which includes a Vue Router which automatically direct users to `/console` route which will display Console component implemented in `view/Console.vue`.
 
-The Console component has a sub-component Chat implemeneted in `component/Chat.js`. `Chat.js` component will use the Vuex functions to handle any incoming/outgoing data.
+The Console component has a sub-component Chat implemented in `component/Chat.js`. `Chat.js` component will use the Vuex functions to handle any incoming/outgoing data.
 
 ### Vuex
 
-In addition to the core Vue.js modules, we also sue Vuex, a state management library implementing FLUX pattern enforcing a unidirectional data flow.
+In addition to the core Vue.js modules, we also use Vuex, a state management library implementing FLUX pattern enforcing a unidirectional data flow.
 
 As such, all external data will flow through Vuex modules found under `store`. In particular, `conversation.js` module contains an instance of `Axios` to send and fetch data from the Client that hosts Google API client.
 
