@@ -1045,10 +1045,6 @@ class Document:
             return amount
 
     def compute_line_9(self):
-        # for key in self.deduction_user_info:
-        #    if self.deduction_user_info[key] is None:
-        #        self.deduction_user_info[key] = 0
-
         corrected_damaged_property = max(0, self.deduction_user_info['damaged-property'] - 100 - 0.10*self.income_user_info['adjusted-gross-income'])
         corrected_charitable_donations = min(0.50 * self.income_user_info['adjusted-gross-income'], self.deduction_user_info['charitable-contribution'])
         corrected_mortgage = min(self.deduction_user_info['mortgage'], 750000)
