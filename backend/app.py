@@ -725,7 +725,7 @@ def exploit_deduction(content):
 
         # Calculate best option (standard or itemized)
         type_chosen = document.compute_line_9()
-        document.truncate_decimals()
+        # document.truncate_decimals()
 
         # Inform user about whether the standard or itemized deduction will save them more money:
         if type_chosen == 'standard deduction':
