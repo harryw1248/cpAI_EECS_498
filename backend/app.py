@@ -756,7 +756,7 @@ def exploit_deduction(content):
             response += responses.third_party['third-party']
             document.current_section_index += 1
             output_context = responses.generate_output_context(
-            'third-party', 1, session, document)
+                'third-party', 1, session, document)
         else:
             response += responses.get_next_response('amount-refunded', document)
 
@@ -809,6 +809,8 @@ def exploit_deduction(content):
     if deduction_result is None:
         if document.refund_user_info["overpaid"] <= 0:
             last_unfilled_field = 'third-party'
+            output_context = responses.generate_output_context(
+                'third-party', 1, session, document)
         else:
             last_unfilled_field = 'amount-refunded'
     elif isinstance(deduction_result, list):
