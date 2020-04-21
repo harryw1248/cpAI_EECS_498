@@ -13,8 +13,6 @@ The frontend can be built and _statically hosted_ on the web. The build environm
 
 1. Launch a new EC2 instance by choosing Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64-bit x86).
 
--   Configure your security group so that SSH and TCP PORT 3000 are allowed.
-
 2. SSH into the newly launched EC2 instance and update the system:
 
 ```sh
