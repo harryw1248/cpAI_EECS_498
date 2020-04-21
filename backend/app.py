@@ -468,6 +468,7 @@ def demographics_fill(content):
 
     last_unfilled_field = next_unfilled_slot
 
+    print(document.dependents)
     # Open the template response form
     with open('response.json') as f:
         data = json.load(f)
@@ -686,11 +687,15 @@ def exploit_deduction(content):
             for possible_deduction_value in possible_deduction_values:
                 if possible_deduction_value in deductions_and_values_found:
                     deduction_name = value_to_deduction_name[possible_deduction_value]
+                    print(deduction_name)
 
                     # If user claimed a deduction on their own but forgot to include dollar value, add to the
                     # missed_values vector and handle it next time
                     if len(deductions_and_values_found[possible_deduction_value]) == 0:
                         missed_values.append(possible_deduction_value)
+
+                    elif (parameters[deduction_name] is None) or (parameters[deduction_name] == '') or (len(parameters[deduction_name]) == 0):
+                        success = False
 
                     # Otherwise, if they qualify for deduction and have a valid dollar value, update informatoin
                     else:
