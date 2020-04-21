@@ -27,6 +27,12 @@ For example, whenever there is an interaction involving Chat component, a timest
 
 Any STT and TTS functions are implemented in `SpeechService.js`. For STT, whenever there is a response from a browser, it will push the new data into our Vuex store notifying Chat component to reactively display the recongized speech in the text form and change the microphone icon.
 
+### CSS/Other plugins
+
+We use Tailwind, a utility-based CSS framework and Vue Spinnner(https://github.com/greyby/vue-spinner) all licensed under MIT.
+
+Vue Spinner is used in Chat component for displaying a loading state.
+
 ## Frontend setup guide
 
 The frontend can be built and _statically hosted_ on the web. The build environment tested was Ubuntu 18.04 LTS running on AWS EC2 instance (the same setup used for client and backend).
