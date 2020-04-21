@@ -451,6 +451,7 @@ class Document:
 
     #updates designated field (field can be in any section of document)
     def update_slot(self, parameters, current_intent, last_unfilled_field=None):
+        value = None
         if self.sections[self.current_section_index] == 'demographics':
             self.update_document_demographics(parameters, current_intent)
 
@@ -612,8 +613,10 @@ class Document:
             (deduction_name, dollar_values) = parameters
 
             if self.deduction_user_info[deduction_name] is None:
+                value = 0
                 self.deduction_user_info[deduction_name] = 0.0
             for dollar_value in dollar_values:
+                value += dollar_value
                 self.deduction_user_info[deduction_name] += dollar_value
 
         elif self.sections[self.current_section_index] == 'refund':
@@ -668,8 +671,15 @@ class Document:
                         self.third_party_user_info['third-party'] = False
 
 
+        self.truncate_decimals()
         print(self.income_user_info)
-        return None
+        return value
+
+
+    def truncate_decimals(self):
+        for key, value in self.income_user_info.items():
+            if value is not None and  not isinstance(value, str):
+                self.income_user_info[key] = '%.2f' % value
 
     '''
     Functions below are for autocomputing various fields based on info provided by user

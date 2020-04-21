@@ -571,6 +571,8 @@ def exploit_deduction(content):
     global missed_deduction_values
     global previous_deduction_result
 
+    value = 0
+
     # Check for invalid parameter values, such as a negative dollar amount
     error_field, error_message = error_checking(parameters, current_intent, last_unfilled_field)
 
@@ -594,6 +596,7 @@ def exploit_deduction(content):
                     for item in parameters['dollar']:
                         val += item['amount']
                     document.deduction_user_info[last_unfilled_field] = val
+                    value = copy.deepcopy(val)
             # Field is not empty, add to existing value
             else:
                 if len(parameters['value']) != 0:
@@ -603,6 +606,7 @@ def exploit_deduction(content):
                     for item in parameters['dollar']:
                         val += item['amount']
                     document.deduction_user_info[last_unfilled_field] += val
+                    value = copy.deepcopy(val)
             # Took care of the missed dollar value for the deduction, so no need to worry about it anymore
             missed_deduction_values.pop(0)
 
@@ -630,20 +634,24 @@ def exploit_deduction(content):
             if document.deduction_user_info[last_unfilled_field] is None:
                 if len(parameters['value']) != 0:
                     document.deduction_user_info[last_unfilled_field] = np.sum(parameters['value'])
+                    value = np.sum(parameters['value'])
                 elif len(parameters['dollar']) != 0:
                     val = 0
                     for item in parameters['dollar']:
                         val += item['amount']
                     document.deduction_user_info[last_unfilled_field] = val
+                    value = copy.deepcopy(val)
             # Field is not empty, add to existing value
             else:
                 if len(parameters['value']) != 0:
                     document.deduction_user_info[last_unfilled_field] += np.sum(parameters['value'])
+                    value = np.sum(parameters['value'])
                 elif len(parameters['dollar']) != 0:
                     val = 0
                     for item in parameters['dollar']:
                         val += item['amount']
                     document.deduction_user_info[last_unfilled_field] += val
+                    value = copy.deepcopy(val)
             
             # Find next deduction item to inquire about
             for key, value in document.deduction_user_info.items():
@@ -687,7 +695,8 @@ def exploit_deduction(content):
                     # Otherwise, if they qualify for deduction and have a valid dollar value, update informatoin
                     else:
                         params = (deduction_name, deductions_and_values_found[possible_deduction_value])
-                        document.update_slot(params, current_intent, last_unfilled_field)
+                        test = document.update_slot(params, current_intent, last_unfilled_field)
+                        value = copy.deepcopy(test)
                         success = True
 
             # User claimed deductions without designating dollar value, will handle in next question
@@ -716,6 +725,7 @@ def exploit_deduction(content):
 
         # Calculate best option (standard or itemized)
         type_chosen = document.compute_line_9()
+        document.truncate_decimals()
 
         # Inform user about whether the standard or itemized deduction will save them more money:
         if type_chosen == 'standard deduction':
@@ -765,7 +775,10 @@ def exploit_deduction(content):
 
     # Proceed as normal through the deductions flow
     else:
-        response = responses.get_next_response(deduction_result, document)
+        if deduction_result == "deduction-success":
+            response = 'Congrats, you potentially saved yourself $' + str('%.2f' % value) + '! What other deductions do you want to claim? If you want help from us, just say so!'
+        else:
+            response = responses.get_next_response(deduction_result, document)
 
     # Check for errors that might happen with the values that DF returned
     if error_field is not None or error_message is not None:
@@ -1146,7 +1159,7 @@ def home():
 def getDocument():
     """Used by the frontend to grab the relevant document information to display on the tax form."""
     global document
-
+    # document.truncate_decimals()
     payload = dict()
 
     payload['demographics'] = {
