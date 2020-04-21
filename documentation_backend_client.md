@@ -16,7 +16,7 @@ However, in this guide, we will use AWS EC2 instances (Ubuntu).
 
 -   Configure your security group so that SSH and TCP PORT 3000 are allowed.
 
-2. SSH into the newly launched EC2 instance and update the system:
+2. SSH into the newly launched EC2 instance and update the system (enter yes to any prompts):
 
 ```sh
 > sudo apt update; sudo apt -y upgrade;
@@ -41,12 +41,12 @@ curl -o- -L https://yarnpkg.com/install.sh | bash
 yarn install
 ```
 
-5. Export your Google Client Credentials/Secret:
+5. Export your Google Client Credentials(this points to the credential json file)/Secret:
    Please follow and obtain your credentials here: https://cloud.google.com/dialogflow/docs/quick/setup#nodejs
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS="cpAI-24a315a29ddb.json"
-export CPAI_CLIENT_SECRET="rZBCihS0FEG84jnHGh8XD9Z5lGWg0GQe"
+export GOOGLE_APPLICATION_CREDENTIALS="<CREDENTIAL FILE.json>"
+export CPAI_CLIENT_SECRET="<YOUR SECRET KEY>"
 ```
 
 6. Export the name of your Dialogflow project:
@@ -98,4 +98,4 @@ sudo python3 -m flask run --host=0.0.0.0 --port=<target port> > ~/log &
 
 Google Dialogflow requires that the backend uses HTTP over TLS. You can either configure your EC2 instance to forward all HTTP requests to HTTPS after running the backend app on port 80 or directly run the python app on port 443. As a work around, you may also run `ngrok` which can forward all external traffic to our EC2 instance over HTTP/TLS.
 
-5. Make sure that "Webhook" fullfillment url on Dialogflow console is pointing to the url of this backend.
+5. Make sure that "Webhook" fullfillment url on Dialogflow console is pointing to the url of this backend (please refer to the platform documentation).
