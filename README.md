@@ -27,6 +27,8 @@ If exporting, “Export as zip”, if importing, “Import from zip” and choos
 The backend and client can be hosted on any NIX server as long as their dependencies can be installed.
 However, in this guide, we will use AWS EC2 instances (Ubuntu).
 
+When your backend is setup, you will need to change your fulfillment link on DialogFlow to match your webhook. For all intents that will need to communicate with the backend, you will need to turn on web fulfillment at the bottom.
+
 ## Client Setup Guide
 
 1. Launch a new EC2 instance by choosing Ubuntu Server 18.04 LTS (HVM), SSD Volume Type - ami-0fc20dd1da406780b (64-bit x86).
