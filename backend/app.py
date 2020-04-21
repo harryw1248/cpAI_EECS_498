@@ -775,7 +775,7 @@ def exploit_deduction(content):
     # Proceed as normal through the deductions flow
     else:
         if deduction_result == "deduction-success":
-            response = 'Congrats, you saved yourself $' + str('%.2f' % value) + '! What other deductions do you want to claim? If you want help from us, just say so!'
+            response = 'Congrats, you potentially saved yourself $' + str('%.2f' % value) + '! What other deductions do you want to claim? If you want help from us, just say so!'
         else:
             response = responses.get_next_response(deduction_result, document)
 
