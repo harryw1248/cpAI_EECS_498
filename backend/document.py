@@ -940,6 +940,7 @@ class Document:
                     return 0
 
     def compute_tax_amount_12a(self):
+        print("I REACHED HERE!")
         taxable_income = self.income_user_info["taxable-income"]
 
         if taxable_income < 0:
@@ -961,7 +962,8 @@ class Document:
                         print(row)
                         print(int(row[filing_status]))
                         self.tax_amount = int(row[filing_status])
-        self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
+        else:
+            self.tax_amount = self.tax_computation_worksheet(taxable_income, filing_status)
         return self.tax_amount
 
     def compute_line_7b(self):
