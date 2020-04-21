@@ -123,20 +123,20 @@ def explain_term_repeat(content):
         {
             "text": {
                 "text": [
-                    "I am sorry to hear that. Here is a link that should provide you with some more details:"
+                    "I am sorry to hear that. Here is a link that should provide you with some more details: \n" + firebase_data[last_term_explained]["link"] + "\n"
                 ]
             }
         },
-        {
-            "card": {
-                "buttons": [
-                    {
-                        "text": firebase_data[last_term_explained]["link"],
-                        "postback": firebase_data[last_term_explained]["link"]
-                    }
-                ]
-            }
-        },
+        # {
+        #     "card": {
+        #         "buttons": [
+        #             {
+        #                 "text": firebase_data[last_term_explained]["link"],
+        #                 "postback": firebase_data[last_term_explained]["link"]
+        #             }
+        #         ]
+        #     }
+        # },
         {
             "text": {
                 "text": [
