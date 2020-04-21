@@ -679,7 +679,8 @@ class Document:
     def truncate_decimals(self):
         for key, value in self.income_user_info.items():
             if value is not None and  not isinstance(value, str):
-                self.income_user_info[key] = round(value,2)
+                test = '%.2f' % value
+                self.income_user_info[key] = float(test)
 
     '''
     Functions below are for autocomputing various fields based on info provided by user
